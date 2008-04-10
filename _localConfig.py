@@ -1,249 +1,125 @@
-/* Default Styles */
-html, body {
-	background: 
-	margin: 0;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 90%;
-	line-height: 1.1em;
-}
-/* End of Default Styles */
+#
+# Script:   localConfig.py
+# Version:   0.12
+# Description:
+#            Customisable elements for Cheshire for Archives v3.x
+#
+# Language:  Python
+# Author:    John Harrison <john.harrison@liv.ac.uk>
+# Date:      18 June 2007
+#
+# Copyright: &copy; University of Liverpool 2005-2007
+#
+# Version History:
+# 0.01 - 13/04/2005 - JH - Basic configurable elements coded by John
+# 0.02 - 23/05/2005 - JH - Additions for email host/port, cache filepaths/URLs
+# 0.03 - 10/06/2005 - JH - Result row reconfigured TITLE links to Summary, FULL links to Full-text
+#                        - Preference switches from 0/1 to False/True
+# 0.04 - 23/06/2005 - JH - Release synchronised with eadSearchHandler v0.06
+# 0.05 - 22/11/2005 - JH - Additional elements added for eadAdminHandler
+#                        - File size measurement adjusted to give a 10% buffer when generating multiple page display
+#                        - Synchronised for release with eadSearchHandler v0.08
+# 0.06 - 17/01/2006 - JH - extra global variables added for configuring email - sync'ed with release of v0.11
+# 0.07 - 29/01/2006 - JH - oops, typo bug fixes
+# 0.08 - 16/02/2006 - JH - Modifications to result row display
+# 0.09 - 25/07/2006 - JH - Mods to subject resolve result rows
+#                        - Switch to completely remove measure of relevance
+# 0.10 - 03/01/2006 - JH - HTML Fragments moved out to separate file, htmlFragments.py and imported
+#                        - script URL now defined here (overwritten in adminHandler)
+# 0.11 - 16/05/2007 - JH - Change to default settings for switches
+# 0.12 - 18/06/2007 - JH - sourceDir setting removed - now derived from documentFactory setting
+#
+#
+# Changes to original:
+# You should make a note of any changes that you make to the originally distributed file here.
+# This will make it easier to remeber which fields need to be modified next time you update the software.
+#
+#
+#
+
+# Preference switches - True => ON, False => OFF
+result_graphics = True
+display_relevance = True
+graphical_relevance = False
+display_splash_screen_popup = False
+
+# Path to Cheshire Root - i.e. where Cheshire3 was installed
+cheshirePath = "/home/cheshire"
+
+# Institutionally specific configurables
+repository_name = "DNB Bibliographic Database"
+repository_link = ""                        # must begin http://
+repository_logo = ""             # should begin http:// unless on this server
+
+# URL of relevance graphic
+relevance_graphic = '/images/star.gif'
+
+# server and email settings - you should check these with your computing services people.
+localhost = '138.253.81.47'
+outgoing_email_username = 'cheshire'
+outgoing_email_host = "mail1.liv.ac.uk"
+outgoing_email_port = 25                           # 25 is the default for most mail servers
+
+# Logfile paths
+logpath = cheshirePath + '/cheshire3/www/dnb/logs'
+searchlogfilepath = logpath + '/searchHandler.log'
+adminlogfilepath = logpath + '/adminHandler.log'
+
+# Path where HTML fragments (browse.html, email.html, resolve.html, search.html)
+# and template.ssi are located
+htmlPath = cheshirePath + '/cheshire3/www/dnb/html'
+templatePath = htmlPath + '/template.ssi'
+
+# The approximate maximum desired page size when displaying full records (in kB)
+maximum_page_size = 50
+
+# The filepath where the HTML for finding aids and contents should be cached 
+# N.B. This must be accessible by apache, so should be a sub-directory of htdocs
+baseHtmlPath = cheshirePath + '/install/htdocs/dnb'
+cache_path = baseHtmlPath + '/html'
+toc_cache_path = baseHtmlPath + '/tocs'
+# URLs
+script = '/scan.html'
+cache_url = '/dnb/html'
+toc_cache_url = '/dnb/tocs'
+
+# useful URIs
+namespaceUriHash = {
+    'dc': 'http://purl.org/dc/elements/1.0',
+    'srw_dc': "info:srw/schema/1/dc-v1.1"
+    }
+
+# List of words which should not be used when conducting similar searches
+# New words should be added inside the inverted commas, and separated by whitespace
+stopwords = 'a and by for in is of on s th the to'
+
+# HTML Fragments
+from htmlFragments import *
+
+# reflect switch preferences in HTML fragments
+if ( result_graphics ):
+    search_result_row = search_result_row.replace( '%FULL%', full_tag ).replace( '%EMAIL%', email_tag ).replace( '%SIMILAR%', similar_tag )
+    search_component_row = search_component_row.replace( '%FULL%', full_tag ).replace( '%EMAIL%', email_tag ).replace( '%SIMILAR%', similar_tag )
+else:
+    search_result_row = search_result_row.replace( '%FULL%', 'Full text' ).replace( '%EMAIL%', 'e-mail' ).replace( '%SIMILAR%', 'Similar' )
+    search_component_row = search_component_row.replace( '%FULL%', 'Full text' ).replace( '%EMAIL%', 'e-mail' ).replace( '%SIMILAR%', 'Similar' )
+
+if ( display_splash_screen_popup ):
+    search_result_row = search_result_row.replace('%SPLASH%', 'onclick="splashScreen()"')
+    search_component_row = search_component_row.replace('%SPLASH%', 'onclick="splashScreen()"')
+else:
+    search_result_row = search_result_row.replace('%SPLASH%', '')
+    search_component_row = search_component_row.replace('%SPLASH%', '')
 
 
-/* Text Area */
-#pagecontent {
-	position: absolute;
-	top: 73px;
-	left: 0px;
-	background: #fff;
-}
-/* End of Text Area */
+# Some bits to ensure that objects are of the correct python object type - DO NOT EDIT THESE
+# split similar search stoplist at whitespace
+try:
+    similar_search_stoplist = similar_search_stopwords.split()
+except:
+    similar_search_stoplist = []
 
+# calculation for approx max page size in bytes - DO NOT edit
+# maximum size in kb * bytes in a kb - size of template in bytes
+max_page_size_bytes = (maximum_page_size * 1024) - 4943
 
-/* Hyperlinks */
-a:link {	color: #214C9D; }
-a:visited {	color: #214C9D; }
-a:focus, a:hover, a:active {	color: #666;}
-/* End of Hyperlinks */
-
-
-#titlebarcontent A{
-	text-decoration: none;
-	color: #ffffff;
-	padding: 2px;
-}
-#titlebarcontent A:hover{
-	text-decoration: none;
-	color: #ffffff;
-	padding: 2px;
-}
-#titlebarcontent A:visited{
-	text-decoration: none;
-	color: #ffffff;
-	padding: 2px;
-}
-/* End of Breadcrumb navigation */
-
-/* Changing Content */
-#subcontent {
-	position: absolute;
-	top: 1.6em;
-	border-top: solid #000000 1px;
-	left: 0px;
-	width: 800px;
-	voice-family: "\"}\""; 
-  	voice-family:inherit;
-	/*width: 790px;*/
-	background: #fff ;
-}
-#subcontentleft{
-	float: left;
-	width: 620px;
-	padding: 0px;
-	padding-bottom: 1em;
-}
-#subcontentleft img{
-	float: left;
-	padding: 10px 10px 10px 0;
-}
-#subcontentleftnav{
-	float: left;
-	background: #b3eef8;
-	width: 135px;
-	max-width: 135px;
-	/*height: 466px;*/
-	padding: 0;
-	margin: 0;
-	background: url(./menu_bg2.jpg) left top repeat-y; 
-}
-#subcontentleftnav p {
-	line-height: 1em;
-}
-#subcontentleftnav p a{
-	border: 1px #ccc dotted;
-	display: block;
-	width: 125px;
-	padding: 5px 2px 7px 2px;
-	margin: 2px;
-	background: #DAE8FF;
-	color: #3C5A92;
-	opacity: 85;
-	filter:alpha(opacity=85);
-	font-weight: bold;
-	text-decoration: none;
-}
-#subcontentleftnav p a:hover {
-	background: #3C5A92;
-	color: #fff;
-}
-#subcontentleftcontent{
-	float: right;
-	width: 470px;
-}
-/*#subcontentleftcontent img{
-	float: right;
-	padding: 3px;
-	border: 1px #000 solid;
-	margin: 3px;
-}	*/
-
-#subcontentright img{
-	float: left;
-	padding: 5px 5px 10px 0;
-	margin: 0;
-}
-
-
-#footer {
-	float: none;
-	width: 800px;
-	border-top: 1px #216976 dotted;
-	font-size: 85%;
-	text-align: center;
-	clear: both; 
-	padding-bottom: 0.5em;
-}
-
-.newschunk {
-	border: 1px #216976 dotted;
-	display: block;
-	padding-left: 10px;
-	padding-right: 6px;
-	margin-bottom: 10px;
-}
-
-.smallprint {
-	font-size: 80%;
-	color: #4c7a87;
-}
-
-h1 {		
-	background:#415FA5;
-	color:#C0D4F9;
-	font-size: 140%;
-	margin-top: 3em;
-	padding: 10px;
-	}
-h2 {
-	font-size: 100%;
-	color: #fe9a01;
-	line-height: 1em;
-	margin-top: 1em;
-}
-h3 {
-	font-size: 90%;
-	color: #2e535c;
-}
-li {
-	list-style: outside url(./bullet.gif);
-	margin-left: 7px;
-	margin-top: 5px;
-	
-}
-ul {
-	padding: 0 0.5em 0 0.5em;
-	margin-left: 0;
-}
-
-
-
-table {
- 
- 	width:100%;
-	
-	
-
-}
-
-#termListTable table {
-
-}
-
-
-
-th {
-	text-align: center;
-	background:#415FA5;
-	color: #fff;
-	padding: 0.5em 0 0.5em 0;
-}	
-
-}
-#subcontentleftcontent table {
-	width: 460px;
-	table-layout:fixed;
-	max-width: 460px;
-	font-size: 90%;
-}
-#subcontentleftcontent table .tablename {
-	width: 180px;
-
-}
-#subcontentleftcontent table .tablecontact {
-	width: 180px;
-
-}
-#subcontentleftcontent table .tableinstitute {
-	width: 110px;
-
-}
-#subcontentleftcontent table hr {
-	border:1px #eee dotted;
-
-}
-
-#searchbox {
-	background: #fff;
-}
-#searchbox img {
-	float: none;
-	display: block;
-}
-
-/* added by John for easier-to-click links */
-a.recslink,
-a.termlink {
-  padding-left: 0.8em;
-  padding-right: 1em;
-  margin: 1px;
-  border: 1px outset black;
-  min-width: 50px;
-  text-decoration: none;
-}
-
-a.recslink:link, a.recslink:visited,
-a.termlink:link, a.termlink:visited	
-{
-  background-color: #deddf4;
-}	
-
-a.termlink:hover, a.termlink:active, a.termlink:visited:hover,
-a.recslink:hover, a.recslink:active, a.recslink:visited:hover
-{
-  background-color: #ffe2b5;
-}
-.navbarlayout
-{
-width: 15%;
-vertical-align: top;
-text-align: center;
-}
