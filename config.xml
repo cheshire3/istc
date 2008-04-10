@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<config type="database" id="db_istc">
+  <objectType>database.SimpleDatabase</objectType>
+  <paths>
+    <path type="defaultPath">dbs/istc</path>
+    <path type="metadataPath">stores/metadata.bdb</path>
+    <object type="recordStore" ref="recordStore"/>
+    <object type="indexStore" ref="indexStore"/>
+    <object type="functionLogger" ref="defaultLogger"/>
+  </paths>
+
+  <subConfigs>
+    <subConfig type="recordStore" id="recordStore">
+      <objectType>recordStore.BdbRecordStore</objectType>
+      <paths>
+       <path type="defaultPath">stores</path>
+       <object type="idNormalizer" ref = "StringIntNormalizer"/>
+       <object type="inTransformer" ref="XmlTransformer"/>
+        <object type="outParser" ref="LxmlParser"/>
+      </paths>
+    </subConfig>
+
+    <subConfig type="indexStore" id="indexStore">
+      <objectType>indexStore.BdbIndexStore</objectType>
+      <paths>
+         <path type="defaultPath">indexes</path>
+         <path type="tempPath">temp</path>
+         <path type="recordStoreHash">recordStore</path>  
+      </paths> 
+    </subConfig>
+
+    <subConfig type="protocolMap" id="CQLProtocolMap">
+      <objectType>protocolMap.CQLProtocolMap</objectType>
+      <paths>
+        <path type="zeerexPath">zeerex_srw.xml</path>
+      </paths>
+    </subConfig>
+
+
+ <!-- pre-parsers -->
+            <subConfig type="preParser" id="emptyEmphTagStripPreParser">
+                <objectType>preParser.RegexpSmashPreParser</objectType>
+                <options>
+                        <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
+                </options>
+            </subConfig>
+
+
+            <subConfig type="preParser" id="AmpPreParser">
+              <objectType>preParser.AmpPreParser</objectType>
+            </subConfig>
+         
+<!-- indexes -->
+
+    <subConfig type="index" id = "idx-title">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>fld245/a</xpath>
+	<xpath>fld130/a</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+      <options>
+	<setting type="sortStore">1</setting>
+      </options>
+
+    </subConfig>
+
+ <subConfig type="index" id = "idx-author">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>fld100/a</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+ <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+
+    <subConfig type="index" id = "idx-title-keyword">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+       <xpath>fld245/a</xpath>
+	<xpath>fld130/a</xpath>
+        <process>
+            <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="PossessiveNormalizer"/>
+          <object type="normalizer" ref="EnglishStemNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+    </subConfig>
+
+ <subConfig type="index" id = "idx-all-fields">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	<xpath>varflds</xpath>
+        <process>
+	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="PossessiveNormalizer"/>
+          <object type="normalizer" ref="EnglishStemNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+       <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+
+    <subConfig type="index" id = "idx-ISTC-number">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	<xpath>fld001</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+	  <object type="normalizer" ref="SpaceNormalizer"/> 
+        </process>
+      </source>
+       <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+
+
+    <subConfig type="index" id = "idx-date">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	<xpath>fld260/c</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+	  <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+       <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+
+<subConfig type="index" id = "idx-location">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>fld260/a</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+ <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    <!-- workflows - override default workflows -->
+    <path type="includeConfigs">workflow.xml</path>
+  </subConfigs>
+
+</config>
+
