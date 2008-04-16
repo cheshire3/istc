@@ -8,7 +8,7 @@ from baseObjects import Session
 from utils import flattenTexts
 from www_utils import *
 #from wwwSearch import *
-from localConfig import *
+from istcLocalConfig import *
 
 import urllib
 
@@ -709,11 +709,8 @@ class istcHandler:
         rp = int(form.get('responsePosition', numreq/2))
         qString = '%s %s "%s"' % (idx, rel, scanTerm)
         t = []
-##       if (idx == 'c3.idx-classification-personal'):
-##             db = serv.get_object(session, 'db_leipzig_classification')
-##         else:
+
         db = serv.get_object(session, 'db_istc')
-        #db2 = serv.get_object(session, 'db_leipzig_classification')
         try:
             scanClause = CQLParser.parse(qString)
            
