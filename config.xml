@@ -36,6 +36,58 @@
       </paths>
     </subConfig>
 
+	<subConfig type="authStore" id="istcAuthStore">
+		<objectType>objectStore.BdbObjectStore</objectType>
+		<paths>
+			<path type="databasePath">istcAuthStore.bdb</path>
+		</paths>
+	</subConfig>
+
+	<subConfig type="recordStore" id="editingStore">
+		<objectType>recordStore.BdbRecordStore</objectType>
+		<paths>
+			<path type="defaultPath">stores</path>
+			<path type="databasePath">editingStore.bdb</path>
+			<path type="metadataPath">editingStoreMetadata.bdb</path>
+			<object type="inTransformer" ref="XmlTransformer" />
+			<object type="outParser" ref="LxmlParser" />
+		</paths>
+	</subConfig>
+
+	<!-- transformers -->
+ 
+ 	<!-- injest transformers -->
+ <subConfig type="transformer" id="dataTransformer">
+ 	<objectType>transformer.LxmlXsltTransformer</objectType>
+      <paths>
+         <path type="xsltPath">xsl/toMarcXml.xsl</path>
+      </paths>
+ </subConfig>
+ 
+ 	<subConfig type="transformer" id="indentingTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/reindent.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<!-- display transformers -->
+ 
+	<subConfig type="transformer" id="recordTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="formCreationTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/istcForm.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	
 
  <!-- pre-parsers -->
             <subConfig type="preParser" id="emptyEmphTagStripPreParser">
@@ -58,9 +110,11 @@
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
       </paths> 
-      <source>
+      <source><!--
         <xpath>fld245/a</xpath>
-	<xpath>fld130/a</xpath>
+		<xpath>fld130/a</xpath>
+		--><xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
@@ -81,7 +135,8 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-        <xpath>fld100/a</xpath>
+        <!--<xpath>fld100/a</xpath>
+        --><xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
@@ -100,9 +155,11 @@
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
       </paths> 
-      <source>
-       <xpath>fld245/a</xpath>
-	<xpath>fld130/a</xpath>
+      <source><!--
+        <xpath>fld245/a</xpath>
+		<xpath>fld130/a</xpath>
+		--><xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
         <process>
             <object type="workflow" ref="KeywordExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
@@ -120,7 +177,9 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-	<xpath>varflds</xpath>
+	<!-- <xpath>varflds</xpath> -->
+	<xpath>controlfield</xpath>
+	<xpath>datafield</xpath>
         <process>
 	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
@@ -141,7 +200,8 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-	<xpath>fld001</xpath>
+	<!--<xpath>fld001</xpath>-->
+	<xpath>controlfield[@tag='001']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
 	  <object type="normalizer" ref="SpaceNormalizer"/> 
@@ -160,7 +220,8 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-	<xpath>fld260/c</xpath>
+	<!--<xpath>fld260/c</xpath>-->
+	<xpath>datafield[@tag='260']/subfield[@code='c']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
 	  <object type="normalizer" ref="SpaceNormalizer"/>
@@ -179,7 +240,8 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-        <xpath>fld260/a</xpath>
+        <!-- <xpath>fld260/a</xpath> -->
+        <xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
