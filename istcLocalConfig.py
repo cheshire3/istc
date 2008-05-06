@@ -44,7 +44,7 @@ graphical_relevance = False
 display_splash_screen_popup = False
 
 # Path to Cheshire Root - i.e. where Cheshire3 was installed
-cheshirePath = "/home/cheshire"
+cheshirePath = "/home/cheshire/cheshire3"
 
 # Institutionally specific configurables
 repository_name = "DNB Bibliographic Database"
@@ -61,7 +61,7 @@ outgoing_email_host = "mail1.liv.ac.uk"
 outgoing_email_port = 25                           # 25 is the default for most mail servers
 
 # Logfile paths
-logpath = cheshirePath + '/cheshire3/www/dnb/logs'
+logpath = cheshirePath + '/cheshire3/www/istc/logs'
 searchlogfilepath = logpath + '/searchHandler.log'
 adminlogfilepath = logpath + '/adminHandler.log'
 
@@ -75,7 +75,7 @@ maximum_page_size = 50
 
 # The filepath where the HTML for finding aids and contents should be cached 
 # N.B. This must be accessible by apache, so should be a sub-directory of htdocs
-baseHtmlPath = cheshirePath + '/install/htdocs/dnb'
+baseHtmlPath = cheshirePath + '/install/htdocs/istc'
 cache_path = baseHtmlPath + '/html'
 toc_cache_path = baseHtmlPath + '/tocs'
 # URLs

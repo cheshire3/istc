@@ -112,3 +112,36 @@ td.comphit {
 	border: 1px solid black;
 }
 
+#keyboard {
+  	border: solid black 1px;
+	position: relative;	
+	top: 140px;
+	left: 10px;
+	width: 9cm;
+   	background: #C00;
+}
+
+
+
+td button {
+	width: 0.8cm;
+	}
+
+#keyboardcontrolbar {
+	height: 20px;
+	color: white;
+	}
+	
+
+#chartable {
+	padding: 7px;
+	background: #e5e5e5;
+	}
+
+.float {
+	float: left;	
+}
+
+.header {
+	font-weight: bold;
+	}

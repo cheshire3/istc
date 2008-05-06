@@ -81,3 +81,42 @@ function toggleShow(callLink, elementId){
 	}
 	return;
 }
+
+// search display functions
+
+function expandRefs(){
+	var short = document.getElementById('abbrRefs');
+	var long = document.getElementById('fullRefs');
+	long.style.display = 'block';
+	short.style.display = 'none';
+	
+}
+
+function collapseRefs(){
+	var short = document.getElementById('abbrRefs');
+	var long = document.getElementById('fullRefs');
+	long.style.display = 'none';
+	short.style.display = 'block';
+}
+
+//================================================================================================
+//keyboard related functions
+
+function toggleKeyboard(){
+  	var keyboard = ($('keyboard')); 
+    keyboard.style.top = '100px';
+    keyboard.style.left = '10px';
+  	keyboard.toggle();  
+  	showCharTable();
+}
+
+
+function showCharTable(){
+  	($('chartable')).style.display = 'block';
+}
+
+
+function hideCharTable(){
+  	($('chartable')).style.display = 'none';
+}
+
