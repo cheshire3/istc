@@ -22,6 +22,7 @@
 	<xsl:variable name="lib">
 		<xsl:text>Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands</xsl:text>
 	</xsl:variable>
+
 	 
 	 
 	 <lang:name abbr="eng">English</lang:name>
@@ -187,18 +188,18 @@
 
 	<xsl:template name="language">
 		<tr>
-		<td class="header"><xsl:text>Language:</xsl:text></td>
-		<td>
-		 <xsl:variable name="lang">
-			<xsl:value-of select="substring(//controlfield[@tag='008']/text(), 36, 3)"/>
-		</xsl:variable>
-		<xsl:if test="document('')/xsl:stylesheet/lang:name[@abbr=$lang]"> 
-			<xsl:value-of select="document('')/xsl:stylesheet/lang:name[@abbr=$lang]"/>
-		</xsl:if>
-		<xsl:else>
-			<xsl:value-of select="$lang"/>
-		</xsl:else>
-		</td>
+			<td class="header"><xsl:text>Language:</xsl:text></td>
+			<td>
+			 <xsl:variable name="lang">
+				<xsl:value-of select="substring(//controlfield[@tag='008']/text(), 36, 3)"/>
+			</xsl:variable>
+			<xsl:if test="document('')/xsl:stylesheet/lang:name[@abbr=$lang]"> 
+				<xsl:value-of select="document('')/xsl:stylesheet/lang:name[@abbr=$lang]"/>
+			</xsl:if>
+			<xsl:else>
+				<xsl:value-of select="$lang"/>
+			</xsl:else>
+			</td>
 		</tr>
 	</xsl:template>
 	
@@ -389,7 +390,7 @@
 			</xsl:if>
 			<xsl:if test="//datafield[@tag='996']">
 				<tr>
-					<td class="subheader"><xsl:text>Netherlands:</xsl:text></td>					
+					<td align="right" class="subheader"><xsl:text>Netherlands:</xsl:text></td>					
 				<td>
 				<xsl:for-each select="//datafield[@tag='996']/subfield">
 					<xsl:value-of select="."/><xsl:text>; </xsl:text>
@@ -401,11 +402,21 @@
 				<tr>
 					<td align="right" class="subheader"><xsl:text>U.S.A:</xsl:text></td>					
 				<td>
-				<xsl:for-each select="//datafield[@tag='952']/subfield">
-					<xsl:variable name="ref">
-						<xsl:value-of select="current()"/>
-					</xsl:variable>			
-					<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $ref))/record//full"/><xsl:text>; </xsl:text>
+				<xsl:for-each select="//datafield[@tag='952']/subfield[@code='a']">
+					<xsl:choose>
+						 <xsl:when test="contains(current(), ' ')">
+							<xsl:variable name="usaref"> 
+								<xsl:value-of select="substring-before(current(), ' ')"/>								
+						 	</xsl:variable>	
+						 	<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $usaref))/record//full"/><xsl:text>; </xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:variable name="usaref">
+								<xsl:value-of select="current()"/>
+							</xsl:variable>
+							<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $usaref))/record//full"/><xsl:text>; </xsl:text>
+						</xsl:otherwise> 		
+					</xsl:choose>
 				</xsl:for-each>
 				</td>
 				</tr>
