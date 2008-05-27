@@ -165,9 +165,7 @@ class istcHandler:
                     date = flattenTexts(elms[0])
                 except:
                     date= ""
-
-
-          #      html= html + '<a href="/istc/record.html?q=%s&r=0">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % ( identifier.strip(), title, author, imprint, date)            
+          
                 html= html + '<a href="/istc/search?operation=record&q=%s&r=0">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % ( identifier.strip(), title, author, imprint, date)            
             
         else:
@@ -178,6 +176,7 @@ class istcHandler:
     def display_rec(self, session, form):
        
         txr = db.get_object(session, 'recordTxr')
+        menuTxr = db.get_object(session, 'menuTxr')
         identifier = form['q'].value
                 
         try:
@@ -192,10 +191,14 @@ class istcHandler:
         if len(rs):
             rec = rs[0].fetch_record(session)
             
+            #create extra bits for navigation menu            
+            menu = menuTxr.process_record(session, rec)
+            #transform main record
             doc = txr.process_record(session, rec)
-            return ('Record Details', doc.get_raw(session))
+            return ('Record Details', doc.get_raw(session), menu.get_raw(session))
         else:
             raise ValueError(identifier)
+            
             
     def get_fullRefs(self, session, form):
         ref = form.get('q', None)
@@ -223,326 +226,7 @@ class istcHandler:
         return recRefs        
         
         
-    def handle_record(self, session, form):
-        a = re.compile('<(.*?)>(.*?)</.*?>')
-        b = re.compile('<(.*?)/>')
-        links = re.compile('(http:.*?\s)')
-        ilc = ""
-        identifier = form['q'].value
-        try:
-            refValue = int(form['r'].value)
-        except:
-            refValue = 0
-            
-        langcodes = { 'eng':'English', 'heb': 'Hebrew', 'bre':'Breton', 'cat':'Catalan','chu':'"Church Slavonic"', 'cze': 'Czech', 'dan':'Danish', 'dut':'Dutch', 'fri':'Frisian', 'frm':'French','ger':'German','grc':'Greek','ita':'Italian', 'lat': 'Latin', 'por':'Portuguese', 'sar': 'Sardinian', 'spa': 'Spanish', 'swe':'Swedish' }
 
-        locationCodeList = ["//fld951", "//fld995", "//fld957", "//fld997" , "//fld954" , "//fld955" , "//fld996" , "//fld952" , "//fld958" , "//fld953" , "//fld994"]
-        locationCodeDic = {"//fld951": "British Isles", "//fld952": "U.S.A", "//fld953" : "Other", "//fld954": "Italy", "//fld957": "France", "//fld955": "Spain/Portugal","//fld958": "Other Europe", "//fld994":"Doubtful", "//fld995": "Belgium", "//fld996": "Netherlands", "//fld997": "Germany"}
-        
-        session.database = 'db_istc'
-        q = CQLParser.parse('c3.idx-ISTC-number exact "%s"' % (identifier))
-        rs = db.search(session, q)
-        html = ""
-        if len(rs):
-
-            rec = rs[0].fetch_record(session)
-            # Print out of record - get appropriate elements #
-            try:
-                elms = rec.process_xpath(session, '//fld008')
-                field8 = flattenTexts(elms[0])
-            except:
-                field8 = "" 
-            try:
-                elms = rec.process_xpath(session, '//fld001')
-                istcTitle =("<strong>ISTC Number:</strong>")
-                identification ="<tr><td>%s</td><td> %s </td></tr>" %  (istcTitle, flattenTexts(elms[0]))
-            except:
-                identification =""
-
-            try:
-                    elms = rec.process_xpath(session, '//fld100/a')
-                    authorBrowse = flattenTexts(elms[0])
-                    author = "<tr><td><strong>Author: </strong></td><td> %s </td></tr>" % authorBrowse
-                    
-            except:
-                try:
-                    elms = rec.process_xpath(session, '//fld100')
-                    authorBrowse = flattenTexts(elms[0])
-                    author = "<tr><td><strong>Author:</strong></td><td> %s</td></tr>" % authorBrowse
-                except:
-                    authorBrowse = ""
-                    author = ""
-
-            otherAuthorList = []
-            try:
-                elms = rec.process_xpath(session, '//fld700')
-                otherAuthor = "<tr><td><strong>Other Author:</strong></td><td> %s</td></tr>" % flattenTexts(elms[0])
-                for elm in elms[1:len(elms)]:
-                    try:
-                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
-                        otherAuthorList.append(ref)
-                    except:
-                        pass
-                    
-                otherAuthor = "(%s, %s)" % (otherAuthor, "".join(otherAuthorList))
-            except:
-                otherAuthor = ""
-                
-            author = "%s %s" % (author, otherAuthor)
-                                            
-                 
-            try:
-                elms = rec.process_xpath(session, '//fld245/a')
-                titleBrowse = flattenTexts(elms[0])
-                title = "<tr><td><strong>Title:</strong></td><td> %s <td></tr>" %  titleBrowse
-                    
-            except:
-                try:
-                    elms = rec.process_xpath(session, '//fld130/a')
-                    titleBrowse =  flattenTexts(elms[0])
-                    title = "<tr><td><strong>Title:</strong></td><td> %s </td></tr>" % titleBrowse
-                except:
-                    title = ""
-            imprintList = []
-            try:
-                elms = rec.process_xpath(session, '//fld260')
-                imprintList.append("<tr><td><strong>Imprint:</strong></td><td> %s <td></tr>" %  flattenTexts(elms[0]))
-                for elm in elms[1:len(elms)]:
-                    try:
-                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
-                        imprintList.append(ref)
-                    except:
-                        pass
-                imprint = "".join(imprintList)
-                    
-            except:
-                imprint = ""
-           
-            try:
-                processedFormat = ""
-                elms = rec.process_xpath(session, '//fld300')
-                rawFormat =  flattenTexts(elms[0]).strip()
-           
-                processedFormat = rawFormat.replace("bdsde","Broadside").replace("Bdsde","Broadside").replace("4~~","4<sup>to</sup>").replace("8~~","8<sup>vo</sup>").replace("f~~", "f<sup>o</sup>").replace("~~", "<sup>mo</sup>")
-                           
-                format = "<tr><td><strong>Format:</strong></td><td> %s <td></tr>" %  processedFormat
-                
-            except:
-                format = ""
-                
-            try:
-                language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  langcodes[field8[35:38]]
-            except:
-                try:
-                    language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  field8[35:38]
-                except:
-                    language = ""
-                    
-            referenceList =[]
-            ref = ""
-            refAction = "expand"
-            refNum = 1
-            try:
-                elms = rec.process_xpath(session, '//fld510')
-            
-                for elm in elms:
-                    try:
-                        ref = flattenTexts(elm)
-                    except:
-                        ref = ""
-
-                    try:
-                        if ref.find("ILC") != -1:
-                            ilcList = (ref.strip()).split(" ")
-                            while len(ilcList[1]) < 4:
-                                ilcList[1] = "%s%s" % ("0", ilcList[1])
-                            ilc = " ".join(ilcList)
-                    except:
-                        pass        
-            
-                    if refValue != 0:
-                        try:
-                            session.database = db3.id
-                            refSearch = ref.strip().split(" ")
-
-                            q3 = CQLParser.parse('c3.idx-refs-code exact "%s"' % (refSearch[0].strip()))
-                            rs3 = db3.search(session, q3)
-                            if len(rs3):
-                                recRefs = rs3[0].fetch_record(session)
-                                ref = "%s" % recRefs.process_xpath(session, '//full/text()')[0]
-                                ref = "<br/>%s - %s" % (" ".join(refSearch), ref)
-                                refAction = "condense"
-                                refNum = 0
-                        except:
-                            pass
-                                            
-                    referenceList.append(ref.strip())
-
-                references = "<tr><td><strong>References:</strong></td><td>%s <br/><a href=\"/istc/record.html?q=%s&r=%d\">Click here to %s the references</a></td></tr>" % ("; ".join(referenceList), identifier, refNum, refAction) 
-            except:
-                references = ""
-                
-            reproductionsList = []
-            try:    
-                elms = rec.process_xpath(session, '//fld530')
-                                
-                for elm in elms:
-                    try:
-                        ref = flattenTexts(elm)
-                        matchLinks = links.findall(ref)
-                        for item in matchLinks:
-                           ref = ref.replace(item, "<br/><a target=\"_new\" href=\"%s\">Click here to link visit the website</a>" % item )
-                        reproductionsList.append(ref.strip())
-                    except:
-                        pass
-                if reproductionsList != []:
-                    reproductions = "<tr><td><strong>Reproductions:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(reproductionsList)), "</td></tr>")
-                else:
-                    reproductions = ""
-            except:
-                reproductions = ""
-            
-                
-            noteList =[]
-            try:
-                elms = rec.process_xpath(session, '//fld500')
-                for elm in elms:
-                    try:
-                        ref = flattenTexts(elm)
-                        if ref.find("Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands") != -1 and ilc !="":
-                            ref = " %s <br/><a target=\"_new\" href=\"http://watermark.kb.nl/findWM.asp?biblio=%s&max=50&boolean=AND&search2=Search&exact=TRUE\"> Click here to visit the website.</a>" % (ref, ilc)
- 
-                        noteList.append(ref.strip())
-                    except:
-                        pass
-                elms = rec.process_xpath(session, '//fld505')
-                for elm in elms:
-                    try:
-                        ref = flattenTexts(elm)
-                        noteList.append(ref.strip())
-                    except:
-                        pass
-                if noteList != []:
-                    notes = "<tr><td><strong>Notes:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(noteList)), "</td></tr>")
-                else:
-                    notes = ""
-            except:
-                notes = ""
-                
-                
-                
-                
-                
-            shelfmarkList = []
-            try:    
-                elms = rec.process_xpath(session, '//fld852')
-                                
-                for elm in elms:
-                    try:
-                        ref = flattenTexts(elm)
-
-                        shelfmarkList.append(ref.strip())
-                    except:
-                        pass
-                if shelfmarkList != []:
-                    shelfmark = "<tr><td><strong>British Library Shelfmark:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(shelfmarkList)), "</td></tr>")
-                else:
-                    shelfmark = ""
-            except:
-                shelfmark = ""
-                
-                
-                
-            locationList = []
-
-            ### locations ####
-            addLocationList = []
-            for item in locationCodeList:
-               
-                try:    
-                    elms = rec.process_xpath(session, item)
-                   
-                    if item.strip() != "//fld952":
-                        ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
-                        
-                    else:
-                        americanRef = flattenTexts(elms[0])
-                        session.database = db2.id
-                        q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
-                        rs2 = db2.search(session, q2)
-                        if len(rs2):
-                            recUsa = rs2[0].fetch_record(session)    
-                            try:
-                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], recUsa.process_xpath(session, '//full/text()')[0])
-                            except:
-                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
-                                
-                    addLocationList.append(ref)
-                    
-                    for elm in elms[1:len(elms)]:
-                        try:
-                            if item.strip() == "//fld952":    
-                                americanRef = flattenTexts(elm)
-                                session.database = db2.id
-                                q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
-                                rs2 = db2.search(session, q2)
-                                recUsa = rs2[0].fetch_record(session)
-                                ref = "; %s" % recUsa.process_xpath(session, '//full/text()')[0]
-                               
-                            else:
-                                ref = "; %s" % (flattenTexts(elm)).strip()
-                            addLocationList.append(ref)
-                        except:
-                            pass
-                   
-                except:
-                    pass
-            locationList.append("".join(addLocationList))
-
-            #### Locations join #####
-            
-            if locationList != [] and locationList != [''] :
-                
-                locations = "<tr><td><strong>Locations:</strong></td><td>%s" % ("</td></tr>".join(locationList))
-            else:
-                locations = ""
-
-            # stuff for the twin display
-            
-            html = "%s <table cellpadding = \"5\"> %s %s %s %s %s %s %s %s %s %s %s </table><br/><hr/>" % (html, author, title, imprint, format, language, identification, references, reproductions, notes, shelfmark, locations)
-            if authorBrowse != "":
-                try:
-                    authorExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Author</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-author&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (authorBrowse.strip(), authorBrowse.strip())
-                except:
-                    authorExtra = ""
-            else:
-                authorExtra = ""
-
-            if titleBrowse != "":
-                try:
-                    titleExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Title</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-title&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (titleBrowse.strip(), titleBrowse.strip())
-                except:
-                    titleExtra = ""
-            else:
-                titleExtra = ""
-            try:
-                elm = flattenTexts(rec.process_xpath(session, '//fld260/b')[0]).strip()
-                printerExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-printer&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
-            except:
-                printerExtra=""
-            try:
-                elm = flattenTexts(rec.process_xpath(session, '//fld260/a')[0]).strip()
-                printerLocationExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer Location</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-location&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
-            except:
-                printerLocationExtra=""
-
-            other = "<tr><td valign=\"middle\" class=\"text\"><strong>&nbsp;&nbsp;For this record</strong></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"search.html\">Email<img src=\"images/arrow_next.gif\" alt=\"\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"></a><br></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"print.html\">Print<img src=\"images/link_print.gif\" alt=\"Print\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"><br></a></td></tr><td align=\"right\" valign=\"middle\"><hr/><tr></tr><tr class=\"menuheading\"><td align=\"right\" valign=\"middle\" ><a href=\"editRecord.html\">Edit This Record<br/>(administrators only)</a></td></tr>"
-
-            extra = "%s %s %s %s <tr><td align=\"right\" valign=\"middle\"><hr align=\"right\" size=\"1\" noshade></td></tr> %s" % (authorExtra, titleExtra, printerExtra, printerLocationExtra, other)
-
-
-        return ('Record details', html, extra)
-        #return (references.encode('utf8'), html)
        
 
     def browse(self, form):
@@ -719,11 +403,13 @@ class istcHandler:
         operation = form.get('operation', None)
         e = ""
         if (operation == 'record'):
-            (t, d) = self.display_rec(session, form)
+            (t, d, e) = self.display_rec(session, form)
 #            (t, d) = self.handle_record(session, form)
         elif (operation == 'search'):
             cql = self.generate_query(form)
             (t, d) = self.handle_istc(session, cql)
+        elif (operation == 'scan'):
+            (t, d) = self.browse(form)
         elif (operation == 'references'):
             content = self.get_fullRefs(session, form)
             self.send_xml(content, req)
@@ -770,7 +456,7 @@ class istcHandler:
 #                t = "Search"
 #  
             
-        extra = ''
+        extra = '' #TODO check if this is needed - not sure %EXTRA% ever exists
  #       raise ValueError(d)
  #       d = d.encode('utf8')
  #       d = d.replace('iso-8859-1', 'utf-8')
@@ -820,3 +506,330 @@ def handler(req):
         cgitb.Hook(file = req).handle()
     return apache.OK
 
+
+
+##old bits
+
+#    def handle_record(self, session, form):
+#        a = re.compile('<(.*?)>(.*?)</.*?>')
+#        b = re.compile('<(.*?)/>')
+#        links = re.compile('(http:.*?\s)')
+#        ilc = ""
+#        identifier = form['q'].value
+#        try:
+#            refValue = int(form['r'].value)
+#        except:
+#            refValue = 0
+#            
+#        langcodes = { 'eng':'English', 'heb': 'Hebrew', 'bre':'Breton', 'cat':'Catalan','chu':'"Church Slavonic"', 'cze': 'Czech', 'dan':'Danish', 'dut':'Dutch', 'fri':'Frisian', 'frm':'French','ger':'German','grc':'Greek','ita':'Italian', 'lat': 'Latin', 'por':'Portuguese', 'sar': 'Sardinian', 'spa': 'Spanish', 'swe':'Swedish' }
+#
+#        locationCodeList = ["//fld951", "//fld995", "//fld957", "//fld997" , "//fld954" , "//fld955" , "//fld996" , "//fld952" , "//fld958" , "//fld953" , "//fld994"]
+#        locationCodeDic = {"//fld951": "British Isles", "//fld952": "U.S.A", "//fld953" : "Other", "//fld954": "Italy", "//fld957": "France", "//fld955": "Spain/Portugal","//fld958": "Other Europe", "//fld994":"Doubtful", "//fld995": "Belgium", "//fld996": "Netherlands", "//fld997": "Germany"}
+#        
+#        session.database = 'db_istc'
+#        q = CQLParser.parse('c3.idx-ISTC-number exact "%s"' % (identifier))
+#        rs = db.search(session, q)
+#        html = ""
+#        if len(rs):
+#
+#            rec = rs[0].fetch_record(session)
+#            # Print out of record - get appropriate elements #
+#            try:
+#                elms = rec.process_xpath(session, '//fld008')
+#                field8 = flattenTexts(elms[0])
+#            except:
+#                field8 = "" 
+#            try:
+#                elms = rec.process_xpath(session, '//fld001')
+#                istcTitle =("<strong>ISTC Number:</strong>")
+#                identification ="<tr><td>%s</td><td> %s </td></tr>" %  (istcTitle, flattenTexts(elms[0]))
+#            except:
+#                identification =""
+#
+#            try:
+#                    elms = rec.process_xpath(session, '//fld100/a')
+#                    authorBrowse = flattenTexts(elms[0])
+#                    author = "<tr><td><strong>Author: </strong></td><td> %s </td></tr>" % authorBrowse
+#                    
+#            except:
+#                try:
+#                    elms = rec.process_xpath(session, '//fld100')
+#                    authorBrowse = flattenTexts(elms[0])
+#                    author = "<tr><td><strong>Author:</strong></td><td> %s</td></tr>" % authorBrowse
+#                except:
+#                    authorBrowse = ""
+#                    author = ""
+#
+#            otherAuthorList = []
+#            try:
+#                elms = rec.process_xpath(session, '//fld700')
+#                otherAuthor = "<tr><td><strong>Other Author:</strong></td><td> %s</td></tr>" % flattenTexts(elms[0])
+#                for elm in elms[1:len(elms)]:
+#                    try:
+#                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
+#                        otherAuthorList.append(ref)
+#                    except:
+#                        pass
+#                    
+#                otherAuthor = "(%s, %s)" % (otherAuthor, "".join(otherAuthorList))
+#            except:
+#                otherAuthor = ""
+#                
+#            author = "%s %s" % (author, otherAuthor)
+#                                            
+#                 
+#            try:
+#                elms = rec.process_xpath(session, '//fld245/a')
+#                titleBrowse = flattenTexts(elms[0])
+#                title = "<tr><td><strong>Title:</strong></td><td> %s <td></tr>" %  titleBrowse
+#                    
+#            except:
+#                try:
+#                    elms = rec.process_xpath(session, '//fld130/a')
+#                    titleBrowse =  flattenTexts(elms[0])
+#                    title = "<tr><td><strong>Title:</strong></td><td> %s </td></tr>" % titleBrowse
+#                except:
+#                    title = ""
+#            imprintList = []
+#            try:
+#                elms = rec.process_xpath(session, '//fld260')
+#                imprintList.append("<tr><td><strong>Imprint:</strong></td><td> %s <td></tr>" %  flattenTexts(elms[0]))
+#                for elm in elms[1:len(elms)]:
+#                    try:
+#                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
+#                        imprintList.append(ref)
+#                    except:
+#                        pass
+#                imprint = "".join(imprintList)
+#                    
+#            except:
+#                imprint = ""
+#           
+#            try:
+#                processedFormat = ""
+#                elms = rec.process_xpath(session, '//fld300')
+#                rawFormat =  flattenTexts(elms[0]).strip()
+#           
+#                processedFormat = rawFormat.replace("bdsde","Broadside").replace("Bdsde","Broadside").replace("4~~","4<sup>to</sup>").replace("8~~","8<sup>vo</sup>").replace("f~~", "f<sup>o</sup>").replace("~~", "<sup>mo</sup>")
+#                           
+#                format = "<tr><td><strong>Format:</strong></td><td> %s <td></tr>" %  processedFormat
+#                
+#            except:
+#                format = ""
+#                
+#            try:
+#                language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  langcodes[field8[35:38]]
+#            except:
+#                try:
+#                    language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  field8[35:38]
+#                except:
+#                    language = ""
+#                    
+#            referenceList =[]
+#            ref = ""
+#            refAction = "expand"
+#            refNum = 1
+#            try:
+#                elms = rec.process_xpath(session, '//fld510')
+#            
+#                for elm in elms:
+#                    try:
+#                        ref = flattenTexts(elm)
+#                    except:
+#                        ref = ""
+#
+#                    try:
+#                        if ref.find("ILC") != -1:
+#                            ilcList = (ref.strip()).split(" ")
+#                            while len(ilcList[1]) < 4:
+#                                ilcList[1] = "%s%s" % ("0", ilcList[1])
+#                            ilc = " ".join(ilcList)
+#                    except:
+#                        pass        
+#            
+#                    if refValue != 0:
+#                        try:
+#                            session.database = db3.id
+#                            refSearch = ref.strip().split(" ")
+#
+#                            q3 = CQLParser.parse('c3.idx-refs-code exact "%s"' % (refSearch[0].strip()))
+#                            rs3 = db3.search(session, q3)
+#                            if len(rs3):
+#                                recRefs = rs3[0].fetch_record(session)
+#                                ref = "%s" % recRefs.process_xpath(session, '//full/text()')[0]
+#                                ref = "<br/>%s - %s" % (" ".join(refSearch), ref)
+#                                refAction = "condense"
+#                                refNum = 0
+#                        except:
+#                            pass
+#                                            
+#                    referenceList.append(ref.strip())
+#
+#                references = "<tr><td><strong>References:</strong></td><td>%s <br/><a href=\"/istc/record.html?q=%s&r=%d\">Click here to %s the references</a></td></tr>" % ("; ".join(referenceList), identifier, refNum, refAction) 
+#            except:
+#                references = ""
+#                
+#            reproductionsList = []
+#            try:    
+#                elms = rec.process_xpath(session, '//fld530')
+#                                
+#                for elm in elms:
+#                    try:
+#                        ref = flattenTexts(elm)
+#                        matchLinks = links.findall(ref)
+#                        for item in matchLinks:
+#                           ref = ref.replace(item, "<br/><a target=\"_new\" href=\"%s\">Click here to link visit the website</a>" % item )
+#                        reproductionsList.append(ref.strip())
+#                    except:
+#                        pass
+#                if reproductionsList != []:
+#                    reproductions = "<tr><td><strong>Reproductions:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(reproductionsList)), "</td></tr>")
+#                else:
+#                    reproductions = ""
+#            except:
+#                reproductions = ""
+#            
+#                
+#            noteList =[]
+#            try:
+#                elms = rec.process_xpath(session, '//fld500')
+#                for elm in elms:
+#                    try:
+#                        ref = flattenTexts(elm)
+#                        if ref.find("Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands") != -1 and ilc !="":
+#                            ref = " %s <br/><a target=\"_new\" href=\"http://watermark.kb.nl/findWM.asp?biblio=%s&max=50&boolean=AND&search2=Search&exact=TRUE\"> Click here to visit the website.</a>" % (ref, ilc)
+# 
+#                        noteList.append(ref.strip())
+#                    except:
+#                        pass
+#                elms = rec.process_xpath(session, '//fld505')
+#                for elm in elms:
+#                    try:
+#                        ref = flattenTexts(elm)
+#                        noteList.append(ref.strip())
+#                    except:
+#                        pass
+#                if noteList != []:
+#                    notes = "<tr><td><strong>Notes:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(noteList)), "</td></tr>")
+#                else:
+#                    notes = ""
+#            except:
+#                notes = ""
+#                
+#                
+#                
+#                
+#                
+#            shelfmarkList = []
+#            try:    
+#                elms = rec.process_xpath(session, '//fld852')
+#                                
+#                for elm in elms:
+#                    try:
+#                        ref = flattenTexts(elm)
+#
+#                        shelfmarkList.append(ref.strip())
+#                    except:
+#                        pass
+#                if shelfmarkList != []:
+#                    shelfmark = "<tr><td><strong>British Library Shelfmark:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(shelfmarkList)), "</td></tr>")
+#                else:
+#                    shelfmark = ""
+#            except:
+#                shelfmark = ""
+#                
+#                
+#                
+#            locationList = []
+#
+#            ### locations ####
+#            addLocationList = []
+#            for item in locationCodeList:
+#               
+#                try:    
+#                    elms = rec.process_xpath(session, item)
+#                   
+#                    if item.strip() != "//fld952":
+#                        ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
+#                        
+#                    else:
+#                        americanRef = flattenTexts(elms[0])
+#                        session.database = db2.id
+#                        q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
+#                        rs2 = db2.search(session, q2)
+#                        if len(rs2):
+#                            recUsa = rs2[0].fetch_record(session)    
+#                            try:
+#                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], recUsa.process_xpath(session, '//full/text()')[0])
+#                            except:
+#                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
+#                                
+#                    addLocationList.append(ref)
+#                    
+#                    for elm in elms[1:len(elms)]:
+#                        try:
+#                            if item.strip() == "//fld952":    
+#                                americanRef = flattenTexts(elm)
+#                                session.database = db2.id
+#                                q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
+#                                rs2 = db2.search(session, q2)
+#                                recUsa = rs2[0].fetch_record(session)
+#                                ref = "; %s" % recUsa.process_xpath(session, '//full/text()')[0]
+#                               
+#                            else:
+#                                ref = "; %s" % (flattenTexts(elm)).strip()
+#                            addLocationList.append(ref)
+#                        except:
+#                            pass
+#                   
+#                except:
+#                    pass
+#            locationList.append("".join(addLocationList))
+#
+#            #### Locations join #####
+#            
+#            if locationList != [] and locationList != [''] :
+#                
+#                locations = "<tr><td><strong>Locations:</strong></td><td>%s" % ("</td></tr>".join(locationList))
+#            else:
+#                locations = ""
+#
+#            # stuff for the twin display
+#            
+#            html = "%s <table cellpadding = \"5\"> %s %s %s %s %s %s %s %s %s %s %s </table><br/><hr/>" % (html, author, title, imprint, format, language, identification, references, reproductions, notes, shelfmark, locations)
+#            
+#            
+#            
+#            if authorBrowse != "":
+#                try:
+#                    authorExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Author</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-author&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (authorBrowse.strip(), authorBrowse.strip())
+#                except:
+#                    authorExtra = ""
+#            else:
+#                authorExtra = ""
+#
+#            if titleBrowse != "":
+#                try:
+#                    titleExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Title</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-title&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (titleBrowse.strip(), titleBrowse.strip())
+#                except:
+#                    titleExtra = ""
+#            else:
+#                titleExtra = ""
+#            try:
+#                elm = flattenTexts(rec.process_xpath(session, '//fld260/b')[0]).strip()
+#                printerExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-printer&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
+#            except:
+#                printerExtra=""
+#            try:
+#                elm = flattenTexts(rec.process_xpath(session, '//fld260/a')[0]).strip()
+#                printerLocationExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer Location</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-location&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
+#            except:
+#                printerLocationExtra=""
+#
+#            other = "<tr><td valign=\"middle\" class=\"text\"><strong>&nbsp;&nbsp;For this record</strong></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"search.html\">Email<img src=\"images/arrow_next.gif\" alt=\"\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"></a><br></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"print.html\">Print<img src=\"images/link_print.gif\" alt=\"Print\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"><br></a></td></tr><td align=\"right\" valign=\"middle\"><hr/><tr></tr><tr class=\"menuheading\"><td align=\"right\" valign=\"middle\" ><a href=\"editRecord.html\">Edit This Record<br/>(administrators only)</a></td></tr>"
+#
+#            extra = "%s %s %s %s <tr><td align=\"right\" valign=\"middle\"><hr align=\"right\" size=\"1\" noshade></td></tr> %s" % (authorExtra, titleExtra, printerExtra, printerLocationExtra, other)
+#
+#
+#        return ('Record details', html, extra)
+#        #return (references.encode('utf8'), html)

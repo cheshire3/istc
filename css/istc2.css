@@ -29,6 +29,9 @@ p	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
 ul	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
 table	{font-family:Verdana,Arial,Helvetica,Sans serif; color:#000000}
 
+br {clear:both}
+
+
 #nav {
 	margin-bottom: 3px;
 	font-family: Arial, Helvetica, sans-serif;
@@ -145,3 +148,54 @@ td button {
 .header {
 	font-weight: bold;
 	}
+
+/* Relating to multiple entry fields */
+
+.added {
+	width: 400px;
+	background: #F2F2F2;
+	border: solid 1px #000000;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 0px;	
+}
+
+.added ul {
+	list-style-type: none;
+	margin-left: 0px;
+  	padding-left: 0px
+	}
+	
+
+.icons {
+	float: left;
+	padding-right: 5px;
+	padding-left: 3px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+
+}
+
+.tablecontainer {
+	float: left;
+	margin-top: 8px;
+}
+
+.tablecontainer .label {
+	width: 75px;
+}
+
+.mebutton {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 50px;
+}
+
+td .mebutton {
+	margin-left: 0px;	
+}
+
+.multipleEntry {
+	margin-left: 80px;
+}
+

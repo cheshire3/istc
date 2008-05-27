@@ -22,11 +22,23 @@ class IstcEditingHandler:
     def __init__(self, lgr):
         self.logger = lgr
     
+    
     def send_html(self, text, req, code=200):
         req.content_type = 'text/html; charset=utf-8'
         req.content_length = len(text)
         req.send_http_header()
         req.write(text)
+
+
+    def send_xml(self, data, req, code=200):
+        req.content_type = 'text/xml'
+        req.content_length = len(data)
+        req.send_http_header()
+        if (type(data) == unicode):
+            data = data.encode('utf-8')
+        req.write(data)
+        req.flush()       
+    #- end send_xml()
 
 
     def generate_file(self, form):
@@ -36,117 +48,7 @@ class IstcEditingHandler:
         page = formTxr.process_record(session, rec).get_raw(session)
         page = structure.replace('%CONTENT%', page)
         return page
-
-
-    def build_marc(self, form):
-        tree = etree.fromstring('<record></record>')
-#        ctype = form.get('ctype', None)
-#        level = form.get('location', None)
-#        collection = False;
-#        if (level == 'collectionLevel'):
-#            collection = True;
-#            tree = etree.fromstring('<ead><eadheader></eadheader><archdesc></archdesc></ead>')           
-#            header = tree.xpath('/ead/eadheader')[0]
-#            target = self._create_path(header, 'eadid')
-#            if form.get('eadid', '') != '':
-#                self._add_text(target, form.get('eadid', ''))
-#            else :
-#                self._add_text(target, form.get('pui', ''))
-#            target = self._create_path(header, 'filedesc/titlestmt/titleproper')
-#            self._add_text(target, form.get('did/unittitle', ''))     
-#            if form.get('filedesc/titlestmt/sponsor', '') != '': 
-#                target = self._create_path(header, 'filedesc/titlestmt/sponsor')   
-#                self._add_text(target, form.get('filedesc/titlestmt/sponsor', '')) 
-#            target = self._create_path(header, 'profiledesc/creation')
-#            if session.user.realName != '' :
-#                userName = session.user.realName
-#            else :
-#                userName = session.user.username
-#            self._add_text(target, 'Created by %s using the cheshire for archives ead creation tool ' % userName)
-#            target = self._create_path(header, 'profiledesc/creation/date')
-#            self._add_text(target, '%s' % datetime.date.today())
-#        else :
-#            tree = etree.fromstring('<%s id="%s"></%s>' % (ctype, level, ctype))           
-        list = form.list     
-        for field in list :
-            if field.name not in []:        
-                #do did level stuff              
-                node = tree.xpath('/record]')[0]
-                if field.name.find('controlaccess') == 0 :
-                    self._create_controlaccess(node, field.name, field.value) 
-                elif field.name.find('did/langmaterial') == 0 :
-                    did = self._create_path(node, 'did')
-                    self._create_langmaterial(did, field.value)
-                else :
-                    if (field.value.strip() != '' and field.value.strip() != ' '):
-                        target = self._create_path(node, field.name)
-                        self._add_text(target, field.value)
-        return tree    
-    #- end build_marc
-    
-    
-    def _create_path(self, startNode, nodePath):              
-        if (startNode.xpath(nodePath)):
-            if (nodePath.find('@') == -1):
-                return startNode.xpath(nodePath)[0]
-            else :  
-                if len(startNode.xpath(nodePath[:nodePath.rfind('/')])) > 0:
-                    parent = startNode.xpath(nodePath[:nodePath.rfind('/')])[0]
-                else :
-                    parent = startNode
-                attribute = nodePath[nodePath.rfind('@')+1:]
-                return [parent, attribute]
-        elif (nodePath.find('@') == 0):
-            return self._add_attribute(startNode, nodePath[1:])
-        elif (nodePath.find('/') == -1) :
-            if nodePath.find('[') != -1 :
-                newNode = etree.Element(nodePath[:nodePath.find('[')])   
-            else :
-                newNode = etree.Element(nodePath)                     
-            return self._append_element(startNode, newNode)
-        else :
-            newNodePath = ''.join(nodePath[:nodePath.rfind('/')]) 
-            nodeString = ''.join(nodePath[nodePath.rfind('/')+1:])  
-            if (nodeString.find('@') != 0):      
-                if nodeString.find('[') != -1 :
-                    newNode = etree.Element(nodeString[:nodeString.find('[')])
-                else :
-                    newNode = etree.Element(nodeString)
-                return self._append_element(self._create_path(startNode, newNodePath), newNode)
-            else:
-                return self._add_attribute(self._create_path(startNode, newNodePath), nodeString[1:])  
-            
-                        
-    def _append_element(self, parentNode, childNode):    
-        parentNode.append(childNode)
-        return childNode
-
-    
-    def _add_attribute(self, parentNode, attribute):
-        parentNode.attrib[attribute] = ""
-        return [parentNode, attribute]
-
-
-    def _add_text(self, parent, textValue):
-        if not (textValue.find('&') == -1):
-            textValue = textValue.replace('&', '&#38;')
-        textValue = textValue.lstrip()      
-        if isinstance(parent, etree._Element):
-            for c in parent.getchildren() :
-                parent.remove(c)
-            value = '<foo>%s</foo>' % textValue      
-            try :
-                nodetree = etree.fromstring(value)               
-            except :
-                self.errorFields.append(parent.tag)
-                parent.text = textValue
-            else :
-                parent.text = nodetree.text
-                for n in nodetree :
-                    parent.append(n)
-        else :
-            parent[0].attrib[parent[1]] = textValue
-            
+         
             
     def display(self, form):
         rec = self.save(form)
@@ -165,19 +67,169 @@ class IstcEditingHandler:
             editStore.commit_storing(session)
             return rec
         
+        
+    def _walk_directory(self, d, type='checkbox'):
+        # we want to keep all dirs at the top, followed by all files
+        outD = []
+        outF = []
+        filelist = os.listdir(d)
+        filelist.sort()
+        for f in filelist:
+            if (os.path.isdir(os.path.join(d,f))):
+                outD.extend(['<li title="%s">%s' % (os.path.join(d,f),f),
+                            '<ul class="hierarchy">',
+                            '\n'.join(self._walk_directory(os.path.join(d, f), type)),
+                            '</ul></li>'
+                            ])
+            else:
+                fp = os.path.join(d,f)
+                outF.extend(['<li>'
+                            ,'<span class="fileops"><input type="%s" name="filepath" value="%s"/></span>' % (type, fp)
+                            ,'<span class="filename">%s</span>' % (f)
+                            ,'</li>'
+                            ])
+
+        return outD + outF
+        
+        #- end walk_directory()
+    
+    
+    def _walk_store(self, storeName, type='checkbox', userStore=None):
+        store = db.get_object(session, storeName)
+        if not userStore:
+            out = []
+            for s in store :
+                out.extend(['<li>'
+                           ,'<span class="fileops"><input type="%s" name="recid" value="%s"/></span>' % (type, s.id)
+                           ,'<span class="filename">%s</span>' % s.id
+                           ,'</li>'
+                           ])
+            return out
+        else :
+            out = []
+            names = []
+            userStore = db.get_object(session, userStore)
+            total = 0;
+            for user in userStore :
+                name = user.username
+                names.append(name)
+                if name == session.user.username or session.user.has_flag(session, 'info:srw/operation/1/create', 'eadAuthStore'):
+                    disabled = ''
+                else :
+                    disabled = 'disabled="disabled"'
+                userFiles = ['<li title=%s><span>%s</span>' % (name, name), '<ul class="hierarchy">'] 
+                for s in store:
+                    if s.id[s.id.rfind('-')+1:] == name:
+                        userFiles.extend(['<li>'
+                                           ,'<span class="fileops"><input type="%s" name="recid" value="%s" %s/></span>' % (type, s.id, disabled)
+                                           ,'<span class="filename">%s</span>' % s.id
+                                           ,'</li>'
+                                           ])
+                        total += 1;
+                userFiles.append('</ul></li>')
+                out.append(''.join(userFiles))
+            if total < store.get_dbSize(session):
+                if session.user.has_flag(session, 'info:srw/operation/1/create', 'eadAuthStore'):
+                    disabled = ''
+                else :
+                    disabled = 'disabled="disabled"'
+                for s in store:
+                    if s.id[s.id.rfind('-')+1:] not in names:
+                        out.extend(['<li title=deletedUsers><span>Deleted Users</span>', '<ul class="hierarchy">', '<li>'
+                                                   ,'<span class="fileops"><input type="%s" name="recid" value="%s" %s/></span>' % (type, s.id, disabled)
+                                                   ,'<span class="filename">%s</span>' % s.id
+                                                   ,'</li>'])
+            return out
+                
+    
+    def edit_file(self, form):
+        f = form.get('filepath', None)
+        if not f or not len(f.value):
+            #TODO: create appropriate html file - this is for admin
+            return read_file('upload.html')
+        ws = re.compile('[\s]+')
+        xml = ws.sub(' ', read_file(f))
+        doc = StringDocument(xml)      
+        rec = xmlp.process_document(session, doc)
+        
+        # TODO: handle file not successfully parsed
+        if not isinstance(rec, LxmlRecord):
+            return rec     
+        istcNo = rec.process_xpath(session, '//controlfield[@tag="001"]/text()')[0]
+        rec.id = istcNo
+        editStore.store_record(session, rec)
+        editStore.commit_storing(session) 
+        structure = read_file('editTemplate.html')
+        page = formTxr.process_record(session, rec).get_raw(session)
+        page = structure.replace('%CONTENT%', page)
+        return page
+
+           
+    def show_editMenu(self):
+        global sourceDir
+        self.logger.log('Create/Edit Options')
+        page = read_file('editmenu.html')
+        files = self._walk_directory(sourceDir, 'radio')
+        recids = self._walk_store('editingStore', 'radio')  
+
+        assignmentOptn = ''
+        return multiReplace(page, {'%%%SOURCEDIR%%%': sourceDir, '%%%FILES%%%': ''.join(files), '%%%RECORDS%%%': ''.join(recids), '%%%USROPTNS%%%': assignmentOptn})
+ 
+ 
+    def _cleverTitleCase(self, txt):
+        words = txt.split()
+        for x in range(len(words)):
+            if (x == 0 and not words[x][0].isdigit()) or (words[x][0].isalpha()) and (words[x] not in ['de']):
+                words[x] = words[x].title()
+        return ' '.join(words)
+ 
+ 
+##########################################################################################
+# AJAX calls 
+#
+
+
+    def _get_suggestions(self, form):
+        letters = form.get('s', None)
+        index = form.get('i', None)
+        q = CQLParser.parse('c3.%s = %s' % (index, letters))
+        idx = db.get_object(session, '%s' % index)
+        terms = db.scan(session, q, -1, direction="=")
+        output = []
+        for t in terms:
+            term = self._cleverTitleCase(t[0])
+            output.append('<option value="%s">%s (%i)</option>' % (term, term, t[1][1]))
+            #TODO: check that t[1][1] is actually no of occs not no of recs (may need to be t[1][2])
+        return '<select>%s</select>' % ''.join(output)
             
+            
+#
+# End of AJAX calls        
+##########################################################################################      
+        
+                
     def handle(self, req):
         form = FieldStorage(req, True)  
         tmpl = read_file(templatePath)
         content = None      
         operation = form.get('operation', None)
-        if (operation == 'display'):
-            content = self.display(req)
-            self.send_html(content, req)
+        if (operation) : 
+            if (operation == 'display'):
+                content = self.display(req)
+                self.send_html(content, req)
+            elif (operation == 'create'):
+                content = self.generate_file(form)
+                self.send_html(content, req)
+            elif (operation == 'edit'):
+                content = self.edit_file(form)
+                self.send_html(content, req)
+            elif (operation == 'suggest'):
+                content = self._get_suggestions(form)
+                self.send_xml(content, req)
         else:
-            content = self.generate_file(form)
+            content = self.show_editMenu()
+            # send the display
             self.send_html(content, req)
-
     
 rebuild = True
 serv = None
@@ -193,7 +245,7 @@ formTxr = None
 indentingTxr = None
 
 def build_architecture(data=None):
-    global session, serv, db, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr
+    global session, serv, db, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
     
     session = Session()
     session.database = 'db_istc'
@@ -201,7 +253,7 @@ def build_architecture(data=None):
     session.user = None
     serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
     db = serv.get_object(session, 'db_istc')
-    baseDocFac = db.get_object(session, 'defaultDocumentFactory')
+    baseDocFac = db.get_object(session, 'baseDocumentFactory')
     sourceDir = baseDocFac.get_default(session, 'data')
     editStore = db.get_object(session, 'editingStore')
     recordStore = db.get_object(session, 'recordStore')
