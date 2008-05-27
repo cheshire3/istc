@@ -10,6 +10,17 @@
   </paths>
 
   <subConfigs>
+  
+  <subConfig type="documentFactory" id="baseDocumentFactory">
+            <objectType>documentFactory.SimpleDocumentFactory</objectType>
+            <options>
+                <default type="data">/home/cheshire/cheshire3/cheshire3/dbs/istc/data</default>
+                <default type="format">dir</default>
+                <default type="cache">0</default>
+            </options>
+        </subConfig>
+  
+  
     <subConfig type="recordStore" id="recordStore">
       <objectType>recordStore.BdbRecordStore</objectType>
       <paths>
@@ -80,6 +91,13 @@
 	    </paths>
 	</subConfig>
 	
+	<subConfig type="transformer" id="menuTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/menuDisplay.xsl</path>
+	    </paths>
+	</subConfig>
+	
 	<subConfig type="transformer" id="formCreationTxr">
 	    <objectType>transformer.LxmlXsltTransformer</objectType>
 	    <paths>
@@ -135,8 +153,7 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-        <!--<xpath>fld100/a</xpath>
-        --><xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
+		<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
@@ -232,6 +249,46 @@
 	<setting type="sortStore">1</setting>
       </options>
     </subConfig>
+    
+    <subConfig type="index" id = "idx-printer">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+	  <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+       <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    
+     <subConfig type="index" id = "idx-printer-keyword">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+        <process>
+          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+	  <object type="normalizer" ref="SpaceNormalizer"/>
+	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+       <options>
+	<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
 
 <subConfig type="index" id = "idx-location">
       <objectType>index.ArrayIndex</objectType>
@@ -240,7 +297,6 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-        <!-- <xpath>fld260/a</xpath> -->
         <xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
