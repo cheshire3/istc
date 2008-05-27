@@ -184,7 +184,7 @@ function createIcons(s){
    var d = "'" + s + nameCount + "'";
    var s = "'" + s + "'";
    /* the delete icon */
-   innerHTMLString = '<a onclick ="deleteEntry(' + d + ');" title="delete entry"><img src = "/images/deleteSmall1.gif" id="delete' + nameCount + '"/></a>'; 
+   innerHTMLString = '<a onclick ="deleteEntry(' + d + ');" title="delete entry"><img src = "/istc/images/deleteSmall1.gif" id="delete' + nameCount + '"/></a>'; 
 	
 	/*the reorder icon */
    innerHTMLString += '<span class="handle">move</span>'; 
