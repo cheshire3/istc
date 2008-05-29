@@ -29,7 +29,7 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<select name="authorsel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100">Personal</option></select><br />
-						<input class="menuField" type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author" id="author" size="39"></input><br />
+						<input class="menuField" type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" name="author" id="author" size="39"></input><br />
 						
 					</xsl:otherwise>
 				</xsl:choose>      
@@ -51,8 +51,8 @@
 			<div id="addedimprints" style="display:none" class="added"><ul id="addedimprintslist"></ul></div>
 				<div id="imprintstable" class="tablecontainer">
 					<table id="table_imprints"><tbody>
-						<tr><td class="label">Place:</td><td> <input type="text" onkeyup="suggest(event, this.id)" onfocus="setCurrent(this);" name="imprints_a" id="imprints_a" size="36"></input><br/></td></tr>
-						<tr><td class="label">Printer:</td><td> <input type="text" onkeyup="suggest(event, this.id)" onfocus="setCurrent(this);" name="imprints_b" id="imprints_b" size="36"></input><br/></td></tr>
+						<tr><td class="label">Place:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_a" id="imprints_a" size="36"></input><br/></td></tr>
+						<tr><td class="label">Printer:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_b" id="imprints_b" size="36"></input><br/></td></tr>
 						<tr><td class="label">Date:</td><td> <input type="text" onfocus="setCurrent(this);" name="imprints_c" id="imprints_c" size="36"></input><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('imprints');" value="Add"></input></td><td></td></tr>
 				    	</tbody></table>
