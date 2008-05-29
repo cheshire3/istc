@@ -215,9 +215,11 @@ var optionSel = 0;
 
 
 
-function suggest(e, id){
+function suggest(id, e){
+
 	var suggestBox = ($('suggestBox'));
 	var tid = id;
+	
 	if (keyCheck(e) == 38){
 		optionSel = optionSel - 1;
 		if (optionSel < 0){
@@ -235,7 +237,7 @@ function suggest(e, id){
 	else if (keyCheck(e) == 13){
 		selectClick(suggestBox, tid);
 	}
-	else {		
+	else {	
 		var element =($(id));
 		var index = indexMap[id];
 		//delete any existing boxes		
@@ -249,22 +251,25 @@ function suggest(e, id){
 			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
 				terms = response.substring(8,response.indexOf('</select>'));
-				length = terms.split('<option').length-1;
-				if (length > 10){
-				//only display 10 at a time
-					length = 10;
+				termList = terms.split(' | ');
+				len = parseInt(terms.split(' | ').length);
+				if (len > 10){
+					//only display 10 at a time
+					len = 10;
 				}
-				if (length > 0){ 
-				//create the select box
+				if (len > 0){ 
+					//create the select box
 					var select = document.createElement('select');
 					select.setAttribute('id', 'suggestBox');
-					select.setAttribute('size', length);
+					select.setAttribute('size', len);
 					select.className = 'suggest';
 					select.style.position = 'absolute';
 					select.style.width = element.offsetWidth + 'px';
 					select.onclick = function () {selectClick(this, tid); };
 					select.onkeyup = function (e) {selectReturn(this, tid, e); };
-					select.innerHTML = terms;			
+					for(var i=0; i < termList.length; i++) {
+					   select.options[i] = new Option(termList[i], termList[i]);
+					}
 					element.parentNode.appendChild(select);
 					select.options[0].selected = true;
 					optionSel = 0;
@@ -298,6 +303,9 @@ function keyCheck(e){
    	var keyId = (window.event) ? event.keyCode : e.keyCode;
 	return keyId;	   
 }
+
+
+
 
 
 // end of auto suggest functions
