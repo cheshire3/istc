@@ -43,7 +43,7 @@ function confirmOp(){
 }
 
 //================================================================================================
-// search display functions
+// display record functions
 
 function expandRefs(){
 	var short = document.getElementById('abbrRefs');
