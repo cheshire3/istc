@@ -117,7 +117,7 @@ td.comphit {
 
 #keyboard {
   	border: solid black 1px;
-	position: relative;	
+	position: absolute;	
 	top: 140px;
 	left: 10px;
 	width: 9cm;
