@@ -198,9 +198,9 @@ class IstcEditingHandler:
         output = []
         for t in terms:
             term = self._cleverTitleCase(t[0])
-            output.append('<option value="%s">%s (%i)</option>' % (term, term, t[1][1]))
+            output.append('%s (%i)' % (term, t[1][1]))
             #TODO: check that t[1][1] is actually no of occs not no of recs (may need to be t[1][2])
-        return '<select>%s</select>' % ''.join(output)
+        return '<select>%s</select>' % ' | '.join(output)
             
             
 #
