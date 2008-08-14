@@ -11,22 +11,22 @@
 
   <subConfigs>
   
-  <subConfig type="documentFactory" id="baseDocumentFactory">
-            <objectType>documentFactory.SimpleDocumentFactory</objectType>
-            <options>
-                <default type="data">/home/cheshire/cheshire3/cheshire3/dbs/istc/data</default>
-                <default type="format">dir</default>
-                <default type="cache">0</default>
-            </options>
-        </subConfig>
+  	<subConfig type="documentFactory" id="baseDocumentFactory">
+	   <objectType>documentFactory.SimpleDocumentFactory</objectType>
+	   <options>
+	      <default type="data">/home/cheshire/cheshire3/cheshire3/dbs/istc/data</default>
+	      <default type="format">dir</default>
+	      <default type="cache">0</default>
+	   </options>
+    </subConfig>
   
   
     <subConfig type="recordStore" id="recordStore">
       <objectType>recordStore.BdbRecordStore</objectType>
       <paths>
        <path type="defaultPath">stores</path>
-       <object type="idNormalizer" ref = "StringIntNormalizer"/>
-       <object type="inTransformer" ref="XmlTransformer"/>
+       	<object type="idNormalizer" ref = "StringIntNormalizer"/>
+       	<object type="inTransformer" ref="XmlTransformer"/>
         <object type="outParser" ref="LxmlParser"/>
       </paths>
     </subConfig>
@@ -53,6 +53,19 @@
 			<path type="databasePath">istcAuthStore.bdb</path>
 		</paths>
 	</subConfig>
+	
+	<subConfig type="resultSetStore" id="resultSetStore">
+		<objectType>postgres.PostgresResultSetStore</objectType>
+        <paths>
+            <path type="databaseName">db_istc</path>
+            <path type="tableName">istcResultSetStore</path>
+            <path type="recordStoreHash">recordStore</path>
+            <object type="idNormalizer" ref="StringIntNormalizer"/>
+        </paths>
+        <options>
+            <default type="expires">3600</default>
+        </options>
+	</subConfig>
 
 	<subConfig type="recordStore" id="editingStore">
 		<objectType>recordStore.BdbRecordStore</objectType>
@@ -68,12 +81,12 @@
 	<!-- transformers -->
  
  	<!-- injest transformers -->
- <subConfig type="transformer" id="dataTransformer">
- 	<objectType>transformer.LxmlXsltTransformer</objectType>
-      <paths>
-         <path type="xsltPath">xsl/toMarcXml.xsl</path>
-      </paths>
- </subConfig>
+	 <subConfig type="transformer" id="dataTransformer">
+	 	<objectType>transformer.LxmlXsltTransformer</objectType>
+	      <paths>
+	         <path type="xsltPath">xsl/toMarcXml.xsl</path>
+	      </paths>
+	 </subConfig>
  
  	<subConfig type="transformer" id="indentingTxr">
 	    <objectType>transformer.LxmlXsltTransformer</objectType>
@@ -82,14 +95,66 @@
 	    </paths>
 	</subConfig>
 	
+	<subConfig type="transformer" id="filterTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/filterMarcFields.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="toTextTxr">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/toMARCTxt.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="toMarcTxr">
+	    <objectType>transformer.MarcTransformer</objectType>
+	</subConfig>
+	
 	<!-- display transformers -->
  
-	<subConfig type="transformer" id="recordTxr">
+	<subConfig type="transformer" id="recordTxr-screen">
 	    <objectType>transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
+	    <options>
+	    	<setting type="parameter">format:screen</setting>
+	    </options>
 	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-print">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:print</setting>
+	    </options>
+	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-save">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:save</setting>
+	    </options>
+	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-email">
+	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:email</setting>
+	    </options>
+	</subConfig>
+	
 	
 	<subConfig type="transformer" id="menuTxr">
 	    <objectType>transformer.LxmlXsltTransformer</objectType>
@@ -105,48 +170,60 @@
 	    </paths>
 	</subConfig>
 	
-	
+ 	<!-- pre-parsers -->
+    <subConfig type="preParser" id="emptyEmphTagStripPreParser">
+        <objectType>preParser.RegexpSmashPreParser</objectType>
+        <options>
+                <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
+        </options>
+    </subConfig>
 
- <!-- pre-parsers -->
-            <subConfig type="preParser" id="emptyEmphTagStripPreParser">
-                <objectType>preParser.RegexpSmashPreParser</objectType>
-                <options>
-                        <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
-                </options>
-            </subConfig>
-
-
-            <subConfig type="preParser" id="AmpPreParser">
-              <objectType>preParser.AmpPreParser</objectType>
-            </subConfig>
-         
-<!-- indexes -->
-
+    <subConfig type="preParser" id="AmpPreParser">
+      <objectType>preParser.AmpPreParser</objectType>
+    </subConfig>
+  
+        
+	<!-- indexes -->
     <subConfig type="index" id = "idx-title">
       <objectType>index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
       </paths> 
-      <source><!--
-        <xpath>fld245/a</xpath>
-		<xpath>fld130/a</xpath>
-		--><xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+      <source>
+      	<xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
 		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>
-	<setting type="sortStore">1</setting>
+		<setting type="sortStore">1</setting>
       </options>
-
+    </subConfig>
+    
+    <subConfig type="index" id = "idx-kwd-title">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+      	<xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
+        <process>
+          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="PossessiveNormalizer"/>
+	      <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
     </subConfig>
 
- <subConfig type="index" id = "idx-author">
+ 	<subConfig type="index" id = "idx-author">
       <objectType>index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
@@ -158,95 +235,82 @@
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
- <options>
-	<setting type="sortStore">1</setting>
+ 	  <options>
+		<setting type="sortStore">1</setting>
       </options>
     </subConfig>
-
-    <subConfig type="index" id = "idx-title-keyword">
-      <objectType>index.SimpleIndex</objectType>
-      <paths>
-        <object type="indexStore" ref="indexStore"/>
-        <object type="recordStore" ref="recordStore"/>
-      </paths> 
-      <source><!--
-        <xpath>fld245/a</xpath>
-		<xpath>fld130/a</xpath>
-		--><xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
-		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
-        <process>
-            <object type="workflow" ref="KeywordExtractorWorkflow"/>
-          <object type="normalizer" ref="CaseNormalizer"/>
-          <object type="normalizer" ref="PossessiveNormalizer"/>
-          <object type="normalizer" ref="EnglishStemNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
-        </process>
-      </source>
-    </subConfig>
-
- <subConfig type="index" id = "idx-all-fields">
-      <objectType>index.SimpleIndex</objectType>
-      <paths>
-        <object type="indexStore" ref="indexStore"/>
-        <object type="recordStore" ref="recordStore"/>
-      </paths> 
-      <source>
-	<!-- <xpath>varflds</xpath> -->
-	<xpath>controlfield</xpath>
-	<xpath>datafield</xpath>
-        <process>
-	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
-          <object type="normalizer" ref="CaseNormalizer"/>
-          <object type="normalizer" ref="PossessiveNormalizer"/>
-          <object type="normalizer" ref="EnglishStemNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
-        </process>
-      </source>
-       <options>
-	<setting type="sortStore">1</setting>
-      </options>
-    </subConfig>
-
-    <subConfig type="index" id = "idx-ISTC-number">
-      <objectType>index.SimpleIndex</objectType>
-      <paths>
-        <object type="indexStore" ref="indexStore"/>
-        <object type="recordStore" ref="recordStore"/>
-      </paths> 
-      <source>
-	<!--<xpath>fld001</xpath>-->
-	<xpath>controlfield[@tag='001']</xpath>
-        <process>
-          <object type="extractor" ref="SimpleExtractor"/>
-	  <object type="normalizer" ref="SpaceNormalizer"/> 
-        </process>
-      </source>
-       <options>
-	<setting type="sortStore">1</setting>
-      </options>
-    </subConfig>
-
-
-    <subConfig type="index" id = "idx-date">
+    
+ 	<subConfig type="index" id = "idx-kwd-author">
       <objectType>index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-	<!--<xpath>fld260/c</xpath>-->
-	<xpath>datafield[@tag='260']/subfield[@code='c']</xpath>
+		<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
         <process>
-          <object type="extractor" ref="SimpleExtractor"/>
-	  <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+          <object type="normalizer" ref="PossessiveNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-       <options>
-	<setting type="sortStore">1</setting>
+    </subConfig>
+
+    <subConfig type="index" id = "idx-ISTCnumber">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	  <xpath>controlfield[@tag='001']</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+	  	  <object type="normalizer" ref="SpaceNormalizer"/> 
+        </process>
+      </source>
+      <options>
+		<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    
+     <subConfig type="index" id = "idx-kwd-all">
+      <objectType>index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+		<xpath>controlfield[@tag='001']</xpath>
+		<xpath>datafield</xpath>
+      	<process>
+		  <object type="workflow" ref="KeywordExtractorWorkflow"/>
+	      <object type="normalizer" ref="CaseNormalizer"/>
+	      <object type="normalizer" ref="PossessiveNormalizer"/>
+		  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+    </subConfig>
+
+    <subConfig type="index" id = "idx-pubdate">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	  <xpath>datafield[@tag='260']/subfield[@code='c']</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+	  	  <object type="normalizer" ref="SpaceNormalizer"/>
+        </process>
+      </source>
+      <options>
+		<setting type="sortStore">1</setting>
       </options>
     </subConfig>
     
@@ -257,20 +321,17 @@
         <object type="recordStore" ref="recordStore"/>
       </paths> 
       <source>
-	<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+	  <xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
         <process>
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
-	  <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="SpaceNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-       <options>
-	<setting type="sortStore">1</setting>
-      </options>
     </subConfig>
     
-     <subConfig type="index" id = "idx-printer-keyword">
+     <subConfig type="index" id = "idx-kwd-printer">
       <objectType>index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
@@ -281,16 +342,14 @@
         <process>
           <object type="workflow" ref="KeywordExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
-	  <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="PossessiveNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-       <options>
-	<setting type="sortStore">1</setting>
-      </options>
     </subConfig>
 
-<subConfig type="index" id = "idx-location">
+
+    <subConfig type="index" id = "idx-publoc">
       <objectType>index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
@@ -302,16 +361,219 @@
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
- <options>
-	<setting type="sortStore">1</setting>
+      <options>
+		<setting type="sortStore">1</setting>
       </options>
     </subConfig>
+    
+    <subConfig type="index" id = "idx-kwd-publoc">
+      <objectType>index.ArrayIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+        <process>
+          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+	  	  <object type="normalizer" ref="PossessiveNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+        </process>
+      </source>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-year">
+	  <objectType>index.SimpleIndex</objectType>
+	  <paths>
+	    <object type="indexStore" ref="indexStore"/>
+	    <object type="recordStore" ref="recordStore"/>
+	  </paths>
+	  <source>
+	    <xpath ref="year008"/>
+	   	<process>
+	      <object type="extractor" ref="SimpleExtractor"/>
+	   	</process>
+	  </source>
+      <options>
+		<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    
+    <subConfig type="transformer" id="year008Txr">
+      <objectType>transformer.LxmlXsltTransformer</objectType>
+      <paths>
+        <path type="xsltPath">xsl/year008.xsl</path>
+      </paths>
+    </subConfig>
+    
+    <subConfig type="xpathProcessor" id="year008">
+      <objectType>xpathProcessor.TransformerXPathProcessor</objectType>
+      <paths>
+        <object type="transformer" ref="year008Txr"/>
+      </paths>
+    </subConfig>
+    
+    
+    <subConfig type="index" id="idx-language">
+	  <objectType>index.SimpleIndex</objectType>
+	  <paths>
+	    <object type="indexStore" ref="indexStore"/>
+	    <object type="recordStore" ref="recordStore"/>
+	  </paths>
+	  <source>
+	    <xpath ref="language"/>
+	   	<process>
+	      <object type="extractor" ref="SimpleExtractor"/>
+	   	</process>
+	  </source>
+      <options>
+		<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    
+    <subConfig type="transformer" id="languageTxr">
+      <objectType>transformer.LxmlXsltTransformer</objectType>
+      <paths>
+        <path type="xsltPath">xsl/langcode.xsl</path>
+      </paths>
+    </subConfig>
+
+    
+    <subConfig type="xpathProcessor" id="language">
+      <objectType>xpathProcessor.TransformerXPathProcessor</objectType>
+      <paths>
+        <object type="transformer" ref="languageTxr"/>
+      </paths>
+    </subConfig>
+    
+    
+    <subConfig type="index" id="idx-BLshelfmark">
+	  <objectType>index.SimpleIndex</objectType>
+	  <paths>
+	    <object type="indexStore" ref="indexStore"/>
+	    <object type="recordStore" ref="recordStore"/>
+	  </paths>
+	  <source>
+	    <xpath>datafield[@tag='852']</xpath>
+	   	<process>
+	      <object type="extractor" ref="SimpleExtractor"/>
+	      <object type="normalizer" ref="SpaceNormalizer"/>
+	      <object type="normalizer" ref="CaseNormalizer"/>
+	   	</process>
+	  </source>
+      <options>
+		<setting type="sortStore">1</setting>
+      </options>
+    </subConfig>
+    
+    
+    <subConfig type="index" id="idx-location">
+    	<objectType>index.SimpleIndex</objectType>
+    	<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>    		
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='951']</xpath>
+    		<xpath>datafield[@tag='995']</xpath>
+    		<xpath>datafield[@tag='957']</xpath>
+    		<xpath>datafield[@tag='997']</xpath>
+    		<xpath>datafield[@tag='954']</xpath>
+    		<xpath>datafield[@tag='955']</xpath>
+    		<xpath>datafield[@tag='996']</xpath>
+    		<xpath>datafield[@tag='958']</xpath>
+    		<xpath>datafield[@tag='953']</xpath>
+    		<xpath>datafield[@tag='994']</xpath>
+	    	<process>
+	          <object type="extractor" ref="SimpleExtractor"/>
+	          <object type="normalizer" ref="CaseNormalizer"/>
+		  	  <object type="normalizer" ref="SpaceNormalizer"/>
+		  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	        </process>
+    	</source>
+    </subConfig>
+        
+    <subConfig type="index" id="idx-kwd-location">
+    	<objectType>index.SimpleIndex</objectType>
+    	<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>    		
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='951']</xpath>
+    		<xpath>datafield[@tag='995']</xpath>
+    		<xpath>datafield[@tag='957']</xpath>
+    		<xpath>datafield[@tag='997']</xpath>
+    		<xpath>datafield[@tag='954']</xpath>
+    		<xpath>datafield[@tag='955']</xpath>
+    		<xpath>datafield[@tag='996']</xpath>
+    		<xpath>datafield[@tag='958']</xpath>
+    		<xpath>datafield[@tag='953']</xpath>
+    		<xpath>datafield[@tag='994']</xpath>
+	    	<process>
+	          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+	          <object type="normalizer" ref="CaseNormalizer"/>
+		  	  <object type="normalizer" ref="PossessiveNormalizer"/>
+		  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	        </process>
+    	</source>
+    </subConfig>
+    
+    
+ <!--    <subConfig type="index" id="idx-pass-usa_location">
+        <objectType>index.PassThroughIndex</objectType>
+        <paths>
+          <path type="database">db_usa</path>
+          <path type="remoteIndex">idx-subjects-person</path>
+          <path type="remoteKeyIndex">idx-key-subjects-identifier</path>
+          <object type="localIndex" ref="idx-key-author" />
+        </paths>
+        <xpath xmlns:l="http://www.d-nb.de/namespaces/pgwz/no_valid_uri">/l:authority/@id</xpath>
+        <options>
+          <setting type="sortStore">1</setting>
+        </options>
+    </subConfig>
+    
+    
+    <subConfig type="index" id="idx-kwd_pass-usa_location">
+        <objectType>index.PassThroughIndex</objectType>
+        <paths>
+          <path type="database">db_usa</path>
+          <path type="remoteIndex">idx-kwd-subjects-person</path>
+          <object type="localIndex" ref="idx-key-author" />
+        </paths>
+        <xpath xmlns:l="http://www.d-nb.de/namespaces/pgwz/no_valid_uri">/l:authority/@id</xpath>
+    </subConfig>-->
+    
+    
+    
+    <subConfig type="index" id="idx-951">
+      <objectType>index.ProximityIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>datafield[@tag='951']</xpath>
+        <process>
+		  <object type="extractor" ref="SimpleExtractor"/>
+		  <object type="tokenizer" ref="RegexpFindOffsetTokenizer"/>
+		  <object type="tokenMerger" ref="OffsetProxTokenMerger"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+        </process>
+      </source>
+      <options>
+		<setting type="nProxInts">3</setting>
+	  </options>
+    </subConfig>
+       
     <!-- workflows - override default workflows -->
     <path type="includeConfigs">workflow.xml</path>
+        
   </subConfigs>
-
 </config>
 

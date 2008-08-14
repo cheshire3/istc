@@ -2,7 +2,7 @@
 
 import time, sys, os
 osp = sys.path
-sys.path = ["/home/cheshire/cheshire3/code"]
+sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
 sys.path.extend(osp)
 
 from baseObjects import Session
@@ -13,17 +13,11 @@ import c3errors
 import lex, yacc
 import random
 
-import psyco
-psyco.cannotcompile(lex.lex)
-psyco.cannotcompile(yacc.yacc)
-psyco.unbind(lex.lex)
-psyco.unbind(yacc.yacc)
-psyco.full()
 
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, "../../configs/serverConfig.xml")
+serv = SimpleServer(session, "/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml")
 
 session.database = 'db_usa'
 db = serv.get_object(session, 'db_usa')

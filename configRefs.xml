@@ -64,7 +64,7 @@
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+          <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>
@@ -85,7 +85,7 @@
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>
@@ -106,7 +106,7 @@
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="PossessiveNormalizer"/>
           <object type="normalizer" ref="EnglishStemNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+          <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>

@@ -1,4 +1,5 @@
 #!/home/cheshire/install/bin/python -i
+# -*- coding: iso-8859-1 -*-
 
 import time, sys, os
 osp = sys.path
@@ -113,23 +114,23 @@ elif '-load' in sys.argv:
         #print x
         try:
             db.index_record(session, rec)
-            #print '[OK]'
+            print '[OK]'
         except UnicodeDecodeError:
             print '[Some indexes not built - non unicode characters!]'
 
 
 
         
-        #try:
-        #    rec = parser.process_document(session, doc)
-        #except:
-        #    print doc.get_raw(session)
-        #    raise
-        #recStore.create_record(session, rec)
-        #db.add_record(session, rec)
-        #db.index_record(session, rec)
-        #if not x % 1000:
-        #    print "%s in %s, %s/sec" % (x, time.time() - start, time.time() - start / x)
+#        try:
+#            rec = parser.process_document(session, doc)
+#        except:
+#            print doc.get_raw(session)
+#            raise
+#        recStore.create_record(session, rec)
+#        db.add_record(session, rec)
+#        db.index_record(session, rec)
+#        if not x % 1000:
+#            print "%s in %s, %s/sec" % (x, time.time() - start, time.time() - start / x)
 
 
     db.commit_indexing(session)
@@ -140,18 +141,66 @@ elif '-load' in sys.argv:
     print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)
 
 
+elif '-extractTest' in sys.argv:
+    
+    def _process_tagName(tagname):
+        for i, c in enumerate(tagname):
+            if c != '0':
+                return int(tagname[i:])
+    
+    def process_record(session, rec):
+        fields = {}
+        tree = rec.get_dom(session)
+        try:
+            walker = tree.getiterator("controlfield")
+        except AttributeError:
+            # lxml 1.3 or later
+            walker = tree.iter("controlfield")  
+        for element in walker:
+            tag = _process_tagName(element.get('tag'))
+            contents = element.text
+            if fields.has_key(tag):
+                fields[tag].append(contents)
+            else:
+                fields[tag] = [contents]
+                
+        try:
+            walker = tree.getiterator("datafield")
+        except AttributeError:
+            # lxml 1.3 or later
+            walker = tree.iter("datafield")  
+        for element in walker:
+            tag = _process_tagName(element.get('tag'))
+            try:
+                children = element.getiterator('subfield')
+            except AttributeError:
+                # lxml 1.3 or later
+                walker = element.iter('subfield') 
+            subelements = [(c.get('code'), c.text) for c in children]
+            contents = (element.get('ind1'), element.get('ind2'), subelements)         
+            if fields.has_key(tag):
+                fields[tag].append(contents)
+            else:
+                fields[tag] = [contents] 
+        leader = tree.xpath('//leader')[0]
+        l = leader.text
+        fields[0] = [''.join([l[5:9], l[17:20]])]
+        print fields
+        return fields
+    
 
 elif '-marc' in sys.argv:
     start = time.time()
     marcTxr = db.get_object(session, 'dataTransformer')
     formatTxr = db.get_object(session, 'indentingTxr')
-    dir = '/home/cheshire/cheshire3/cheshire3/dbs/istc/data/'
+    dir = '/home/cheshire/cheshire3/cheshire3/dbs/istc/dataprep/testFormat/'
     
     db.begin_indexing(session)
     recordStore.begin_storing(session)
-    df.load(session, defpath + "/oldformdata/", codec='iso-8859-1')
+    #df.load(session, defpath + "/dataprep/test/", codec='utf-8')
+    df.load(session, defpath + "/dataprep/test/", codec='iso-8859-1')
     #t.encode('ascii', 'xmlcharrefreplace')
-    print 'Loading'
+    #print 'Loading'
     x = 0
     a = 0
     for doc in df:    
@@ -163,15 +212,15 @@ elif '-marc' in sys.argv:
         except:
             print doc.get_raw(session)
             a = a+1
-            continue
-        
+            break
+            
         d2 = marcTxr.process_record(session, rec)
         rec = parser.process_document(session, d2)
         filename = rec.process_xpath(session, '//controlfield[@tag="001"]/text()')[0]
         print filename
+    
         d3 = formatTxr.process_record(session, rec)
-        
-        
+               
         filepath = os.path.join(dir, '%s.xml' % filename)
         if os.path.exists(filepath):
             print 'file exists at %s' % filepath
@@ -181,3 +230,36 @@ elif '-marc' in sys.argv:
             file.write(d3.get_raw(session))
             file.close 
 
+    print a
+    
+elif '-testKeys' in sys.argv:
+    session.database = 'db_usa'
+    db_usa = serv.get_object(session, 'db_usa')
+    idx = db_usa.get_object(session, 'idx-usa-code')
+    refs = []
+    for i in idx:
+        refs.append(i.queryTerm)
+   # print refs
+    usaRefs = []
+    for rec in recordStore:
+        temp = rec.process_xpath(session, "//datafield[@tag='952']/subfield[@code='a']/text()")
+        if len(temp):
+            for t in temp:
+                if t.find(' ') == -1:
+                    usaRefs.append(t.lower())
+                else:    
+                    usaRefs.append(t[:t.find(' ')].lower())
+    usaSet = set(usaRefs)
+    errors = 0
+    for item in usaSet:
+        if item in refs:
+            pass
+        else :
+            errors += 1
+            print item 
+    print errors
+    print 'end'   
+            
+        
+
+        

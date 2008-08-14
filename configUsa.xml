@@ -10,6 +10,7 @@
   </paths>
 
   <subConfigs>
+    
     <subConfig type="recordStore" id="usaRecordStore">
       <objectType>recordStore.BdbRecordStore</objectType>
       <paths>
@@ -32,7 +33,7 @@
     <subConfig type="protocolMap" id="CQLProtocolMap">
       <objectType>protocolMap.CQLProtocolMap</objectType>
       <paths>
-        <path type="zeerexPath">zeerex_srw.xml</path>
+         <path type="zeerexPath">zeerex_srw.xml</path>
       </paths>
     </subConfig>
 
@@ -67,13 +68,9 @@
 	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-      <options>
-	<setting type="sortStore">1</setting>
-      </options>
-
     </subConfig>
 
- <subConfig type="index" id = "idx-usa-full">
+  <subConfig type="index" id = "idx-usa-full">
       <objectType>index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="usaIndexStore"/>
@@ -91,7 +88,7 @@
       <options>
 	<setting type="sortStore">1</setting>
       </options>
-    </subConfig>
+    </subConfig> 
 
      <subConfig type="index" id = "idx-usa-full-kwd">
       <objectType>index.SimpleIndex</objectType>
@@ -102,11 +99,10 @@
       <source>
         <xpath>full</xpath>
         <process>
-	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
+	  	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="PossessiveNormalizer"/>
-          <object type="normalizer" ref="EnglishStemNormalizer"/>
-	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>
