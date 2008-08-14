@@ -8,14 +8,15 @@
 	 
 	 
 	<xsl:template match="/">
-		<xsl:call-template name="author"/>
-		<xsl:call-template name="title"/>
-		<xsl:call-template name="printer"/>
-		<xsl:call-template name="printerloc"/>
+		<div class="menugrp">
+			<strong>Browse:</strong>
+			<xsl:call-template name="author"/>
+			<xsl:call-template name="title"/>
+			<xsl:call-template name="printer"/>
+			<xsl:call-template name="printerloc"/>
+		</div>
 	</xsl:template>	
-	
-	
-	
+		
 	<xsl:template name="author">
 		<xsl:if test="//datafield[@tag='100']">		
 			<xsl:variable name="author">
@@ -27,23 +28,24 @@
 						<xsl:value-of select="//datafield[@tag='100']"/>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:variable>		
-			<tr>
-				<td align="right" valign="middle" class="text">
-					<strong>Browse Author</strong>
-					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>
-				</td>
-			</tr>
-			<tr class="menusubheading">
-				<td align="right">
-					<a>
-						<xsl:attribute name="href">
-							<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-author&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
-						</xsl:attribute>
-			 			<xsl:value-of select="$author"/>
-			 		</a>
-			 	</td>
-			</tr>
+			</xsl:variable>				
+			<div class="menuitem">
+				<strong>Author</strong>
+				<a>			
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-author&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
+					</xsl:attribute>
+					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/><br/>
+		 		</a>
+			</div><br/>
+			<div class="menuitemextra">
+				<a>			
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-author&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
+					</xsl:attribute>
+		 			<span class="extralink"><xsl:value-of select="$author"/></span>	
+		 		</a>
+			</div><br/>
 		</xsl:if>
 	</xsl:template>
 	
@@ -60,30 +62,30 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>		
-			<tr>
-				<td align="right" valign="middle" class="text">
-					<strong>Browse Title</strong>
-					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>
-				</td>
-			</tr>
-			<tr class="menusubheading">
-				<td align="right">
-					<a>
-						<xsl:attribute name="href">
-							<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
-						</xsl:attribute>
-						<xsl:choose>
-							<xsl:when test="string-length($title)&gt;35">
-								<xsl:value-of select="substring($title, 1, 35)"/><xsl:text>...</xsl:text>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="$title"/>
-							</xsl:otherwise>
-						</xsl:choose>
-			 			
-			 		</a>
-			 	</td>
-			</tr>
+			<div class="menuitem">
+				<strong>Title</strong>				
+				<a>
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
+					</xsl:attribute>
+					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/><br/>	
+		 		</a>
+			</div><br/>
+			<div class="menuitemextra">
+				<a>
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
+					</xsl:attribute>
+					<xsl:choose>
+						<xsl:when test="string-length($title)&gt;25">
+							<xsl:value-of select="substring($title, 1, 25)"/><xsl:text>...</xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$title"/>
+						</xsl:otherwise>
+					</xsl:choose>				
+		 		</a>
+			</div>
 		</xsl:if>
 	</xsl:template>
 	
@@ -93,22 +95,30 @@
 			<xsl:variable name="printer">				
 				<xsl:value-of select="//datafield[@tag='260']/subfield[@code='b']"/>
 			</xsl:variable>		
-			<tr>
-				<td align="right" valign="middle" class="text">
-					<strong>Browse Printer</strong>
-					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>
-				</td>
-			</tr>
-			<tr class="menusubheading">
-				<td align="right">
-					<a>
-						<xsl:attribute name="href">
-							<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-printer&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
-						</xsl:attribute>
-			 			<xsl:value-of select="$printer"/>
-			 		</a>
-			 	</td>
-			</tr>
+			<div class="menuitem">
+				<strong>Printer</strong>				
+				<a>	
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-printer&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
+					</xsl:attribute>
+					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>	 			
+		 		</a>
+		 	</div><br/>
+		 	<div class="menuitemextra">
+		 		<a>	
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-printer&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
+					</xsl:attribute>
+					<xsl:choose>
+						<xsl:when test="string-length($printer)&gt;25">
+							<xsl:value-of select="substring($printer, 1, 25)"/><xsl:text>...</xsl:text>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$printer"/>
+						</xsl:otherwise>
+					</xsl:choose>			 			
+		 		</a>
+		 	</div>
 		</xsl:if>
 	</xsl:template>
 	
@@ -117,26 +127,26 @@
 			<xsl:variable name="printerloc">				
 				<xsl:value-of select="//datafield[@tag='260']/subfield[@code='a']"/>
 			</xsl:variable>		
-			<tr>
-				<td align="right" valign="middle" class="text">
-					<strong>Browse Printer Location</strong>
+			<div class="menuitem">
+				<strong>Printer Location</strong>
+				<a>
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-publoc&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
+					</xsl:attribute>
 					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>
-				</td>
-			</tr>
-			<tr class="menusubheading">
-				<td align="right">
-					<a>
-						<xsl:attribute name="href">
-							<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-location&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
-						</xsl:attribute>
-			 			<xsl:value-of select="$printerloc"/>
-			 		</a>
-			 	</td>
-			</tr>
+		 		</a>
+			 </div><br/>
+			 <div class="menuitemextra">
+			 	<a>
+					<xsl:attribute name="href">
+						<xsl:text>/istc/search/?operation=scan&amp;fieldidx1=c3.idx-publoc&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
+					</xsl:attribute>
+		 			<xsl:value-of select="$printerloc"/>
+		 		</a>
+			 </div>
 		</xsl:if>
 	</xsl:template>
- 
-	 
+ 	 
 </xsl:stylesheet>
 
 	

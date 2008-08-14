@@ -55,7 +55,7 @@
 						<tr><td class="label">Printer:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_b" id="imprints_b" size="36"></input><br/></td></tr>
 						<tr><td class="label">Date:</td><td> <input type="text" onfocus="setCurrent(this);" name="imprints_c" id="imprints_c" size="36"></input><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('imprints');" value="Add"></input></td><td></td></tr>
-				    	</tbody></table>
+				    </tbody></table>
 				</div>
 			</p>
 			<br/>
