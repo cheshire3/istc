@@ -268,7 +268,7 @@ function suggest(id, e){
 					select.onclick = function () {selectClick(this, tid); };
 					select.onkeyup = function (e) {selectReturn(this, tid, e); };
 					for(var i=0; i < termList.length; i++) {
-					   select.options[i] = new Option(termList[i], termList[i]);
+					   select.options[i] = new Option(termList[i], termList[i].substring(0, termList[i].lastIndexOf(' (')));
 					}
 					element.parentNode.appendChild(select);
 					select.options[0].selected = true;

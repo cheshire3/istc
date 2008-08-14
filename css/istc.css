@@ -5,6 +5,8 @@ body {
 	font-size: 10px; 
 }
 
+br {clear:both}
+
 h1 {font-family:  Arial, Helvetica, sans-serif; font-size: 120%; font-weight: bold;}
 h2 {font-family:  Arial, Helvetica, sans-serif; font-size: 150%; font-weight: bold;}
 h3 {font-family:  Arial, Helvetica, sans-serif; font-size: 90%; font-weight: bold;}
@@ -16,26 +18,30 @@ color: #CCCC99;
 .text {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 75%; color: #000000;}
 .title {font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 100%; color: #000000; font-weight: Bold;}
 
-#footer {
-padding: 10px 10px 10px 41px;
-margin: 0px 0px 0px 152px;
-font-family: Verdana, Arial, Helvetica, sans-serif; 
-font-size: 90%; 
-color: #000000;}
-#footer a:link, #footer a:visited, #footer a:active {text-decoration: underline;}
-#footer a:hover {text-decoration: underline;}
 
-p	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
-ul	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
-table	{font-family:Verdana,Arial,Helvetica,Sans serif; color:#000000}
+/* Header Styles */
 
-br {clear:both}
+#header {
+	width:100%;
+	border-bottom: solid 30px #CCCC99;
+
+	}
+	
+#header, .headercomp {
+	float: left;
+	}
+	
+.logo {
+	float: right;
+	margin: 10px;
+	}
 
 
 #nav {
 	margin-bottom: 3px;
+	margin-left: 43px;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 70%;
+	font-size: 8.5pt;
 	font-weight: bold;
 	color: #C00;
 }
@@ -48,72 +54,147 @@ br {clear:both}
 	color: #C00;
 	text-decoration: none;
 } 
+
+
+/* Footer Styles */
+
+#footer {
+	border-top: 2px solid #CCCC99;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	font-size: 90%; 
+	color: #000000;
+	width: 100%;
+}
+
+#footer .headercomp {
+	margin-left: 170px;	
+	}
+	
+#footer p {
+	font-size: 10pt;
+	
+	}
+
+#footer a:link, #footer a:visited, #footer a:active {text-decoration: underline;}
+#footer a:hover {text-decoration: underline;}
+
+
+
+
+
+p	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
+ul	{font-family:Verdana,Arial,Helvetica,Sans serif; font-size:75%; color:#000000}
+table	{font-family:Verdana,Arial,Helvetica,Sans serif; color:#000000}
+
+
 .backgroundcolour {
-background-color: #CCCC99;
+	background-color: #CCCC99;
 }
 .backgroundwhite {
-background-color: #FFF;
+	background-color: #FFF;
 }
+
 #content {
 	/*width: 600px;*/
-	padding: 20px 10px 10px 20px;
-	margin: 0px;
-  
+	margin-left:150px;
+	width : 80%; 
+	font-family:  Arial, Helvetica, sans-serif; 
+	font-size: 10pt;
+	padding-left:20px;
+	min-height: 550px;
 }
-#content table {font-family:  Arial, Helvetica, sans-serif; font-size: 75%; }
-#content h1 {font-family:  Arial, Helvetica, sans-serif; font-size: 100%; color: #990;}
+
+#content h1 {
+	font-family:  Arial, Helvetica, sans-serif; 
+	font-size: 13pt; 
+	color: #990;
+}
 
 
+/* Left Navigation Column */
 
 #leftnav {
-margin: 59px 0px 10px 0px;
-padding: 0px;
+	position:absolute;
+	left: 0;
+	top: 100px;
+	padding: 0px;
+	width: 150px;
+	font-size: 8.5pt;
 }
-#leftnav td {
-padding: 5px 0px 0px 0px;
+
+.menugrp{
+	border-bottom: solid black 1px;
+	padding-bottom: 15px;
+	padding-top: 10px;
+	float:right;
+	width: 100%;
 }
-#leftnav a:link, #leftnav a:visited, #leftnav a:active {
-	font-size: 70%;
+
+.menugrp strong{
+	padding-left: 5px;	
+}
+
+.menuitem strong{
+	padding-left: 0px;
+	}
+
+.menuitem {
+	padding: 5px 5px 0px 0px;
+	float:right;
+}
+
+.menuitemextra {
+	padding: 1px 5px 0px 0px;
+	float: right;
+	text-align: right;
+}
+
+.menuitem a:link, .menuitem a:visited, .menuitem a:active, .menuitemextra a:link, .menuitemextra a:visited, .menuitemextra a:active {
 	text-decoration: none;
 	color: #000;
 }
-#leftnav a:hover {
-	font-size: 70%;
+
+.menuitem a:hover, .menuitemextra a:hover {
 	text-decoration: none;
 	color: #C00;
 }
+
 #leftnavrecord {
-margin: 0px 0px 10px 0px;
-padding: 0px;
+	margin: 0px 0px 10px 0px;
+	padding: 0px;
 }
+
 #leftnavrecord td {
-padding: 5px 0px 0px 0px;
+	padding: 5px 0px 0px 0px;
 }
+
 #leftnavrecord a:link, #leftnavrecord a:visited, #leftnavrecord a:active {
-	font-size: 70%;
 	text-decoration: none;
 	color: #000;
 }
+
 #leftnavrecord a:hover {
-	font-size: 70%;
 	text-decoration: none;
 	color: #C00;
 }
+
 tr.odd { 
-  color: black;
-  background-color: white;
-  
+  	color: black;
+  	background-color: white;
 }
 
 tr.even {
-  color: black;
-  background-color: #eeeeee;
+  	color: black;
+  	background-color: #eeeeee;
 }
 
 td.hit,
 td.comphit {
 	border: 1px solid black;
 }
+
+
+/* relating to char entity keyboard */
 
 #keyboard {
   	border: solid black 1px;
@@ -123,7 +204,6 @@ td.comphit {
 	width: 9cm;
    	background: #C00;
 }
-
 
 
 td button {
@@ -145,9 +225,11 @@ td button {
 	float: left;	
 }
 
-.header {
+.label {
 	font-weight: bold;
 	}
+
+
 
 /* Relating to multiple entry fields */
 

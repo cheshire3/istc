@@ -1,30 +1,45 @@
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
-import sys, os, cgitb, time, re
-
+import sys, os, cgitb, time, re, smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 from server import SimpleServer
 from PyZ3950 import CQLParser
 from baseObjects import Session
 from utils import flattenTexts
 from www_utils import *
-#from wwwSearch import *
 from istcLocalConfig import *
 
 import urllib
 
 class istcHandler:
-    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/template.ssi"
+    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/template.html"
 
     def __init__(self, lgr):
         self.logger = lgr
 
 
 
-    def send_html(self, text, req, code=200):
+    def send_html(self, data, req, code=200):
         req.content_type = 'text/html; charset=utf-8'
-        req.content_length = len(text)
+        req.content_length = len(data)
         req.send_http_header()
-        req.write(text)
+        if (type(data) == unicode):
+            data = data.encode('utf-8')
+        req.write(data)
+        req.flush()
+        
+    def send_txt(self, data, req, code=200):
+        req.content_type = 'application/msword; charset=utf-8'
+        req.content_length = len(data)
+        req.send_http_header()
+        if (type(data) == unicode):
+            data = data.encode('utf-8')
+        req.write(data)
+        req.flush()
+
 
     def send_xml(self, data, req, code=200):
         req.content_type = 'text/xml'
@@ -44,20 +59,18 @@ class istcHandler:
         bools = []
         i = 1
         while (form.has_key('fieldcont%d' % i)):
-            bools.append(form.getfirst('fieldbool%d' % (i-1), 'and/relevant/proxinfo'))
+            bools.append(form.getfirst('fieldbool%d' % (i-1), 'and'))
             i += 1
         i = 1
 
         while (form.has_key('fieldcont%d' % i)):
             cont = urllib.unquote(form.getfirst('fieldcont%d' % i)).decode('utf-8')
             idx = urllib.unquote(form.getfirst('fieldidx%d' % i, 'cql.anywhere')).decode('utf-8')
-            rel = urllib.unquote(form.getfirst('fieldrel%d'  % i, 'all/relevant/proxinfo')).decode('utf-8')
-            #if 'not' in bools:
-            #    rel = rel.replace('/relevant', '')
+            rel = urllib.unquote(form.getfirst('fieldrel%d'  % i, 'all')).decode('utf-8')
 
             subClauses = []
-            if (rel[:3] == 'all'): subBool = ' and/relevant/proxinfo '
-            else: subBool = ' or/relevant/proxinfo '
+            if (rel[:3] == 'all'): subBool = ' and '
+            else: subBool = ' or '
 
             # in case they're trying to do phrase searching
             if (rel.find('exact') != -1 or rel.find('=') != -1 or rel.find('/string') != -1):
@@ -66,7 +79,7 @@ class istcHandler:
             else:
                 phrases = phraseRe.findall(cont)
                 for ph in phrases:
-                    subClauses.append('(%s =/relevant/proxinfo %s)' % (idx, ph))
+                    subClauses.append('(%s = %s)' % (idx, ph))
 
                 cont = phraseRe.sub('', cont)
 
@@ -99,33 +112,102 @@ class istcHandler:
         return ' '.join(words)
     
 
-
-    def handle_istc(self, session, cql):
-        self.logger.log('entering handle_istc')
-        html = "<strong>Your search was for: " + cql.replace("(c3.idx-", "").replace("/relevant/proxinfo", "").replace(")","").replace("-"," ") + "</strong><br/><br/>"
-                            
+    def sort_resultSet(self, session, rs, form):
         session.database = db.id
-
+           
         try:
-            tree = CQLParser.parse(cql.encode('utf-8'))
+            sort = form.get('sort', None).value               
         except:
-            return ("Search Error", '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
-        self.logger.log('about to search')    
-        try:
-            rs = db.search(session, tree)     
-        except:
+            sort = 'idx-title'
+            
+        indexes = sort.split(',')
+        for idxstr in indexes:
+            bits = idxstr.split('|')
+            idx = db.get_object(session, bits[0])
+            if len(bits) > 1:
+                up = int(bits[1] == 'up')                        
+            else:
+                up = 1
+            rs.order(session, idx, ascending=up, missing=[-1,1][up])
+        rss.delete_resultSet(session, rs.id)
+        rss.store_resultSet(session, rs)
+        return rs
 
-            return ("Search Error", '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
-        self.logger.log('done searching')
+
+    def handle_istc(self, session, form):
+        self.logger.log('entering handle_istc')
+        pagesize = 20
+        start = 0
+        session.database = db.id
+        
+        html = []
+        
+        if not (form.has_key('rsid')):
+            
+            cql = self.generate_query(form)
+            
+            try:
+                q = CQLParser.parse(cql.encode('utf-8'))
+            except:
+                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
+            
+            try:
+                rs = db.search(session, q)     
+            except:
+                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
+            
+            html.append("<strong>Your search was for: " + cql.replace("(c3.idx-", "").replace("/relevant/proxinfo", "").replace(")","").replace("-"," ") + "</strong><br/><br/>")
+            try:
+                rsid = rss.create_resultSet(session, rs)
+                rs.id = rsid
+            except:
+                raise
+        else:
+            try:
+                rsid = form.get('rsid', None).value
+            except:
+                # should never happen?
+                return ('An Error has Occurred', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a> %s' % cql)
+                
+            start = int(form.get('start', 0))
+            try :
+                rs = rss.fetch_resultSet(session, rsid)
+            except:
+                raise           
+            
         hits = len(rs)
         if hits:
-            html = html + "<h1>%d Results</h1><p>Sort by <a href="">Author </a>, <a href="">Title </a> or <a href="">Place of Publication</a><br/><br/>" % (hits)
-            idx = "idx-title"
+            
+            if (form.has_key('sort')):
+                rs = self.sort_resultSet(session, rs, form)
 
-            for x,r in enumerate(rs):
+            if start > 0 and start+pagesize < len(rs):
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Next</a>' % (rsid, start-pagesize, rsid, start+pagesize)
+            elif start > 0 and start+pagesize >= len(rs):
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Previous</a>&nbsp;|&nbsp;Next' % (rsid, start-pagesize)
+            elif start == 0 and start+pagesize < len(rs):
+                navString = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Next</a>' % (rsid, start+pagesize)
+            else :
+                navString = ''
 
-                rec = recStore.fetch_record(session, r.id)
-                html = "%s %d. " %  (html, x+1)
+            html.append(navString)
+                
+            html.append('<h1>%d Results</h1><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc">Place of Publication</a><br/><br/>' % (hits, rsid, rsid, rsid))
+
+            for i in range(start, min(start+pagesize, len(rs))):
+
+                rec = recStore.fetch_record(session, rs[i].id)
+                
+                html.append('%d. ' %  (i+1))
+                
+                try:
+                    elms = rec.process_xpath(session, '//controlfield[@tag="001"]')
+                    identifier = flattenTexts(elms[0])
+                except:
+                    identifier =""
+                
+                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % identifier.strip())
+                
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="245"]/subfield[@code="a"]')
                     title = flattenTexts(elms[0])
@@ -137,13 +219,8 @@ class istcHandler:
                     except:
                         title = ""
 
+
                 try:
-                    elms = rec.process_xpath(session, '//controlfield[@tag="001"]')
-                    identifier = flattenTexts(elms[0])
-                except:
-                    identifier =""
-                try:
-                    ####need to get author from the other database####
                     elms = rec.process_xpath(session, '//datafield[@tag="100"]/subfield[@code="a"]')
                     author = flattenTexts(elms[0])
                 except:
@@ -152,8 +229,6 @@ class istcHandler:
                         author = flattenTexts(elms[0])
                     except:
                         author = ""
-                # get from other database
-
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="260"]/subfield[@code="b"]')
                     imprint = "- %s" % flattenTexts(elms[0])
@@ -166,16 +241,26 @@ class istcHandler:
                 except:
                     date= ""
           
-                html= html + '<a href="/istc/search?operation=record&q=%s&r=0">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % ( identifier.strip(), title, author, imprint, date)            
+                html.append('<a href="/istc/search?operation=record&q=%s&r=0">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % ( identifier.strip(), title, author, imprint, date))       
+            
+            if hits <= 200:
+                menubits = ['<div class="menugrp">',
+                            '<div class="menuitem"><a href="/istc/search?operation=print&rsid=%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />' % rsid,
+                            '<div class="menuitem"><a href="/istc/search?operation=email&rsid=%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />' % rsid,
+                            '<div class="menuitem"><a href="/istc/search?operation=save&rsid=%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div>' % rsid,
+                            '</div>']
+            
             
         else:
-            html = html + "No matches  %s." % cql.decode('utf-8')
+            html.append("No matches  %s." % cql.decode('utf-8'))
+            menubits = []
                 
-        return ('Search Results', html)
+        return ('Search Results', ''.join(html), ''.join(menubits))
+
 
     def display_rec(self, session, form):
        
-        txr = db.get_object(session, 'recordTxr')
+        txr = db.get_object(session, 'recordTxr-screen')
         menuTxr = db.get_object(session, 'menuTxr')
         identifier = form['q'].value
                 
@@ -185,7 +270,7 @@ class istcHandler:
             refValue = 0
             
         session.database = 'db_istc'
-        q = CQLParser.parse('c3.idx-ISTC-number exact "%s"' % (identifier))
+        q = CQLParser.parse('c3.idx-ISTCnumber exact "%s"' % (identifier))
         rs = db.search(session, q)
 
         if len(rs):
@@ -203,31 +288,92 @@ class istcHandler:
     def get_fullRefs(self, session, form):
         ref = form.get('q', None)
         session.database = db3.id
-        #TODO this will not work for all references as the ones without numbers only after the split are indexes with the spaces
-        q3 = CQLParser.parse('c3.idx-refs-code exact "%s"' % (ref.split(' ')[0].strip()))
-        rs = db3.search(session, q3)
+        q = CQLParser.parse('c3.idx-refs-code exact "%s"' % (ref))
+        rs = db3.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
         else :
-            recRefs = '<record></record>'
+            while ref.rfind(' ') != -1 and not len(rs):
+                ref = ref[:ref.rfind(' ')].strip()
+                q.term.value = ref
+                rs = db3.search(session, q)
+            if len(rs):
+                recRefs = rs[0].fetch_record(session).get_xml(session)
+            else:
+                recRefs = '<record></record>'
         return recRefs
         
         
     def get_usaRefs(self, session, form):
         ref = form.get('q', None)
         session.database = db2.id
-        #TODO this will not work for all references as the ones without numbers only after the split are indexes with the spaces
-        q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (ref.split(' ')[0].strip()))
-        rs = db2.search(session, q2)
+        q = CQLParser.parse('c3.idx-usa-code exact "%s"' % (ref.split(' ')[0].strip()))
+        rs = db2.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
         else :
-            recRefs = '<record></record>'
-        return recRefs        
+            while ref.rfind(' ') != -1 and not len(rs):
+                ref = ref[:ref.rfind(' ')].strip()
+                q.term.value = ref
+                rs = db2.search(session, q)
+            if len(rs):
+                recRefs = rs[0].fetch_record(session).get_xml(session)
+            else:
+                recRefs = '<record></record>'
+        return recRefs     
+        
+    
+    def printRecs(self, form):
+        rsid = form.get('rsid', None)
+        txr = db.get_object(session, 'recordTxr-print')
+        if rsid:
+            rs = rss.fetch_resultSet(session, rsid.value)
+            output = []
+            for r in rs:
+                rec = r.fetch_record(session)
+                output.append(txr.process_record(session, rec).get_raw(session))
+            return '<br/>------------<br/>'.join(output)
         
         
+    def saveRecs(self, form):
+        rsid = form.get('rsid', None)
+        txr = db.get_object(session, 'recordTxr-save')
+        if rsid:
+            rs = rss.fetch_resultSet(session, rsid.value)
+            output = []
+            for r in rs:
+                rec = r.fetch_record(session)
+                output.append(txr.process_record(session, rec).get_raw(session))
+            return '<br/>------------<br/>'.join(output)
 
-       
+    
+    def emailRecs(self, form):
+        rsid = form.get('rsid', None)
+        address = form.get('address', 'cjsmith@liv.ac.uk')
+        txr = db.get_object(session, 'recordTxr-email')
+        rs = rss.fetch_resultSet(session, rsid.value)
+        output = []
+        for r in rs:
+            rec = r.fetch_record(session)
+            output.append(txr.process_record(session, rec).get_raw(session))
+        message = MIMEMultipart()
+        message['From'] = 'istc@localhost'
+        message['To'] = address
+        message['Subject'] = 'ISTC Records'
+        message.attach(MIMEText('The records you requested are attached.'))
+        
+        part = MIMEBase('application', "octet-stream")
+        part.set_payload( ''.join(output) )
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', 'attachment; filename="ISTCrecords.txt"')
+        message.attach(part)
+        
+        smtp = smtplib.SMTP()
+        smtp.connect(host='mail1.liv.ac.uk', port=25)
+        smtp.sendmail('istc@localhost', address, message.as_string())
+        smtp.close()
+        return '<h1>File emailed successfully</h1>'
+
 
     def browse(self, form):
         idx = form.get('fieldidx1', None)
@@ -241,14 +387,11 @@ class istcHandler:
 
         db = serv.get_object(session, 'db_istc')
         try:
-            scanClause = CQLParser.parse(qString)
-           
+            scanClause = CQLParser.parse(qString)          
         except:
-           
             qString = self.generate_query(form)
             try:
-                scanClause = CQLParser.parse(qString)
-                
+                scanClause = CQLParser.parse(qString)      
             except:
                 t.append('Unparsable query: %s' % qString)
                 return (" ".join(t), '<p>An invalid query was submitted.</p>')
@@ -393,6 +536,7 @@ class istcHandler:
         session.server = serv
                 
         form = FieldStorage(req)
+
         #get the template 
         f = file(self.templatePath)
         tmpl = f.read()
@@ -404,13 +548,24 @@ class istcHandler:
         e = ""
         if (operation == 'record'):
             (t, d, e) = self.display_rec(session, form)
-#            (t, d) = self.handle_record(session, form)
         elif (operation == 'search'):
-            cql = self.generate_query(form)
-            (t, d) = self.handle_istc(session, cql)
+            (t, d, e) = self.handle_istc(session, form)
         elif (operation == 'scan'):
             (t, d) = self.browse(form)
+        elif (operation == 'print'):
+            data = self.printRecs(form)
+            self.send_html(data, req)
+            return
+        elif (operation == 'email'):
+            data = self.emailRecs(form)
+            self.send_html(data, req)
+            return
+        elif (operation == 'save'):
+            data = self.printRecs(form)
+            self.send_txt(data, req)
+            return
         elif (operation == 'references'):
+            self.logger.log('getting refs')
             content = self.get_fullRefs(session, form)
             self.send_xml(content, req)
             return
@@ -483,6 +638,7 @@ session.database = db.id
 dfp = db.get_path(session, "defaultPath")
 recStore = db.get_object(session, 'recordStore')
 indexStore = db.get_object(session, 'indexStore')
+rss = db.get_object(session, 'resultSetStore')
 usaRecStore = db2.get_object(session, 'usaRecordStore')
 usaIndexStore = db2.get_object(session, 'usaIndexStore')
 refsRecStore = db3.get_object(session, 'refsRecordStore')
@@ -490,6 +646,8 @@ refsIndexStore = db3.get_object(session, 'refsIndexStore')
 
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
 from www_utils import FileLogger
+
+
 
 def handler(req):
     # do stuff
@@ -506,330 +664,3 @@ def handler(req):
         cgitb.Hook(file = req).handle()
     return apache.OK
 
-
-
-##old bits
-
-#    def handle_record(self, session, form):
-#        a = re.compile('<(.*?)>(.*?)</.*?>')
-#        b = re.compile('<(.*?)/>')
-#        links = re.compile('(http:.*?\s)')
-#        ilc = ""
-#        identifier = form['q'].value
-#        try:
-#            refValue = int(form['r'].value)
-#        except:
-#            refValue = 0
-#            
-#        langcodes = { 'eng':'English', 'heb': 'Hebrew', 'bre':'Breton', 'cat':'Catalan','chu':'"Church Slavonic"', 'cze': 'Czech', 'dan':'Danish', 'dut':'Dutch', 'fri':'Frisian', 'frm':'French','ger':'German','grc':'Greek','ita':'Italian', 'lat': 'Latin', 'por':'Portuguese', 'sar': 'Sardinian', 'spa': 'Spanish', 'swe':'Swedish' }
-#
-#        locationCodeList = ["//fld951", "//fld995", "//fld957", "//fld997" , "//fld954" , "//fld955" , "//fld996" , "//fld952" , "//fld958" , "//fld953" , "//fld994"]
-#        locationCodeDic = {"//fld951": "British Isles", "//fld952": "U.S.A", "//fld953" : "Other", "//fld954": "Italy", "//fld957": "France", "//fld955": "Spain/Portugal","//fld958": "Other Europe", "//fld994":"Doubtful", "//fld995": "Belgium", "//fld996": "Netherlands", "//fld997": "Germany"}
-#        
-#        session.database = 'db_istc'
-#        q = CQLParser.parse('c3.idx-ISTC-number exact "%s"' % (identifier))
-#        rs = db.search(session, q)
-#        html = ""
-#        if len(rs):
-#
-#            rec = rs[0].fetch_record(session)
-#            # Print out of record - get appropriate elements #
-#            try:
-#                elms = rec.process_xpath(session, '//fld008')
-#                field8 = flattenTexts(elms[0])
-#            except:
-#                field8 = "" 
-#            try:
-#                elms = rec.process_xpath(session, '//fld001')
-#                istcTitle =("<strong>ISTC Number:</strong>")
-#                identification ="<tr><td>%s</td><td> %s </td></tr>" %  (istcTitle, flattenTexts(elms[0]))
-#            except:
-#                identification =""
-#
-#            try:
-#                    elms = rec.process_xpath(session, '//fld100/a')
-#                    authorBrowse = flattenTexts(elms[0])
-#                    author = "<tr><td><strong>Author: </strong></td><td> %s </td></tr>" % authorBrowse
-#                    
-#            except:
-#                try:
-#                    elms = rec.process_xpath(session, '//fld100')
-#                    authorBrowse = flattenTexts(elms[0])
-#                    author = "<tr><td><strong>Author:</strong></td><td> %s</td></tr>" % authorBrowse
-#                except:
-#                    authorBrowse = ""
-#                    author = ""
-#
-#            otherAuthorList = []
-#            try:
-#                elms = rec.process_xpath(session, '//fld700')
-#                otherAuthor = "<tr><td><strong>Other Author:</strong></td><td> %s</td></tr>" % flattenTexts(elms[0])
-#                for elm in elms[1:len(elms)]:
-#                    try:
-#                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
-#                        otherAuthorList.append(ref)
-#                    except:
-#                        pass
-#                    
-#                otherAuthor = "(%s, %s)" % (otherAuthor, "".join(otherAuthorList))
-#            except:
-#                otherAuthor = ""
-#                
-#            author = "%s %s" % (author, otherAuthor)
-#                                            
-#                 
-#            try:
-#                elms = rec.process_xpath(session, '//fld245/a')
-#                titleBrowse = flattenTexts(elms[0])
-#                title = "<tr><td><strong>Title:</strong></td><td> %s <td></tr>" %  titleBrowse
-#                    
-#            except:
-#                try:
-#                    elms = rec.process_xpath(session, '//fld130/a')
-#                    titleBrowse =  flattenTexts(elms[0])
-#                    title = "<tr><td><strong>Title:</strong></td><td> %s </td></tr>" % titleBrowse
-#                except:
-#                    title = ""
-#            imprintList = []
-#            try:
-#                elms = rec.process_xpath(session, '//fld260')
-#                imprintList.append("<tr><td><strong>Imprint:</strong></td><td> %s <td></tr>" %  flattenTexts(elms[0]))
-#                for elm in elms[1:len(elms)]:
-#                    try:
-#                        ref = "<tr><td></td><td> %s </td></tr>" % flattenTexts(elm)
-#                        imprintList.append(ref)
-#                    except:
-#                        pass
-#                imprint = "".join(imprintList)
-#                    
-#            except:
-#                imprint = ""
-#           
-#            try:
-#                processedFormat = ""
-#                elms = rec.process_xpath(session, '//fld300')
-#                rawFormat =  flattenTexts(elms[0]).strip()
-#           
-#                processedFormat = rawFormat.replace("bdsde","Broadside").replace("Bdsde","Broadside").replace("4~~","4<sup>to</sup>").replace("8~~","8<sup>vo</sup>").replace("f~~", "f<sup>o</sup>").replace("~~", "<sup>mo</sup>")
-#                           
-#                format = "<tr><td><strong>Format:</strong></td><td> %s <td></tr>" %  processedFormat
-#                
-#            except:
-#                format = ""
-#                
-#            try:
-#                language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  langcodes[field8[35:38]]
-#            except:
-#                try:
-#                    language = "<tr><td><strong>Language:</strong></td><td> %s <td></tr>" %  field8[35:38]
-#                except:
-#                    language = ""
-#                    
-#            referenceList =[]
-#            ref = ""
-#            refAction = "expand"
-#            refNum = 1
-#            try:
-#                elms = rec.process_xpath(session, '//fld510')
-#            
-#                for elm in elms:
-#                    try:
-#                        ref = flattenTexts(elm)
-#                    except:
-#                        ref = ""
-#
-#                    try:
-#                        if ref.find("ILC") != -1:
-#                            ilcList = (ref.strip()).split(" ")
-#                            while len(ilcList[1]) < 4:
-#                                ilcList[1] = "%s%s" % ("0", ilcList[1])
-#                            ilc = " ".join(ilcList)
-#                    except:
-#                        pass        
-#            
-#                    if refValue != 0:
-#                        try:
-#                            session.database = db3.id
-#                            refSearch = ref.strip().split(" ")
-#
-#                            q3 = CQLParser.parse('c3.idx-refs-code exact "%s"' % (refSearch[0].strip()))
-#                            rs3 = db3.search(session, q3)
-#                            if len(rs3):
-#                                recRefs = rs3[0].fetch_record(session)
-#                                ref = "%s" % recRefs.process_xpath(session, '//full/text()')[0]
-#                                ref = "<br/>%s - %s" % (" ".join(refSearch), ref)
-#                                refAction = "condense"
-#                                refNum = 0
-#                        except:
-#                            pass
-#                                            
-#                    referenceList.append(ref.strip())
-#
-#                references = "<tr><td><strong>References:</strong></td><td>%s <br/><a href=\"/istc/record.html?q=%s&r=%d\">Click here to %s the references</a></td></tr>" % ("; ".join(referenceList), identifier, refNum, refAction) 
-#            except:
-#                references = ""
-#                
-#            reproductionsList = []
-#            try:    
-#                elms = rec.process_xpath(session, '//fld530')
-#                                
-#                for elm in elms:
-#                    try:
-#                        ref = flattenTexts(elm)
-#                        matchLinks = links.findall(ref)
-#                        for item in matchLinks:
-#                           ref = ref.replace(item, "<br/><a target=\"_new\" href=\"%s\">Click here to link visit the website</a>" % item )
-#                        reproductionsList.append(ref.strip())
-#                    except:
-#                        pass
-#                if reproductionsList != []:
-#                    reproductions = "<tr><td><strong>Reproductions:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(reproductionsList)), "</td></tr>")
-#                else:
-#                    reproductions = ""
-#            except:
-#                reproductions = ""
-#            
-#                
-#            noteList =[]
-#            try:
-#                elms = rec.process_xpath(session, '//fld500')
-#                for elm in elms:
-#                    try:
-#                        ref = flattenTexts(elm)
-#                        if ref.find("Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands") != -1 and ilc !="":
-#                            ref = " %s <br/><a target=\"_new\" href=\"http://watermark.kb.nl/findWM.asp?biblio=%s&max=50&boolean=AND&search2=Search&exact=TRUE\"> Click here to visit the website.</a>" % (ref, ilc)
-# 
-#                        noteList.append(ref.strip())
-#                    except:
-#                        pass
-#                elms = rec.process_xpath(session, '//fld505')
-#                for elm in elms:
-#                    try:
-#                        ref = flattenTexts(elm)
-#                        noteList.append(ref.strip())
-#                    except:
-#                        pass
-#                if noteList != []:
-#                    notes = "<tr><td><strong>Notes:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(noteList)), "</td></tr>")
-#                else:
-#                    notes = ""
-#            except:
-#                notes = ""
-#                
-#                
-#                
-#                
-#                
-#            shelfmarkList = []
-#            try:    
-#                elms = rec.process_xpath(session, '//fld852')
-#                                
-#                for elm in elms:
-#                    try:
-#                        ref = flattenTexts(elm)
-#
-#                        shelfmarkList.append(ref.strip())
-#                    except:
-#                        pass
-#                if shelfmarkList != []:
-#                    shelfmark = "<tr><td><strong>British Library Shelfmark:</strong></td><td>%s %s" % (("</td></tr><tr><td></td><td> ".join(shelfmarkList)), "</td></tr>")
-#                else:
-#                    shelfmark = ""
-#            except:
-#                shelfmark = ""
-#                
-#                
-#                
-#            locationList = []
-#
-#            ### locations ####
-#            addLocationList = []
-#            for item in locationCodeList:
-#               
-#                try:    
-#                    elms = rec.process_xpath(session, item)
-#                   
-#                    if item.strip() != "//fld952":
-#                        ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
-#                        
-#                    else:
-#                        americanRef = flattenTexts(elms[0])
-#                        session.database = db2.id
-#                        q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
-#                        rs2 = db2.search(session, q2)
-#                        if len(rs2):
-#                            recUsa = rs2[0].fetch_record(session)    
-#                            try:
-#                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], recUsa.process_xpath(session, '//full/text()')[0])
-#                            except:
-#                                ref = "<tr><td align=\"right\">%s:</td><td> %s" % (locationCodeDic[item], flattenTexts(elms[0]).strip())
-#                                
-#                    addLocationList.append(ref)
-#                    
-#                    for elm in elms[1:len(elms)]:
-#                        try:
-#                            if item.strip() == "//fld952":    
-#                                americanRef = flattenTexts(elm)
-#                                session.database = db2.id
-#                                q2 = CQLParser.parse('c3.idx-usa-code exact "%s"' % (americanRef.strip()))
-#                                rs2 = db2.search(session, q2)
-#                                recUsa = rs2[0].fetch_record(session)
-#                                ref = "; %s" % recUsa.process_xpath(session, '//full/text()')[0]
-#                               
-#                            else:
-#                                ref = "; %s" % (flattenTexts(elm)).strip()
-#                            addLocationList.append(ref)
-#                        except:
-#                            pass
-#                   
-#                except:
-#                    pass
-#            locationList.append("".join(addLocationList))
-#
-#            #### Locations join #####
-#            
-#            if locationList != [] and locationList != [''] :
-#                
-#                locations = "<tr><td><strong>Locations:</strong></td><td>%s" % ("</td></tr>".join(locationList))
-#            else:
-#                locations = ""
-#
-#            # stuff for the twin display
-#            
-#            html = "%s <table cellpadding = \"5\"> %s %s %s %s %s %s %s %s %s %s %s </table><br/><hr/>" % (html, author, title, imprint, format, language, identification, references, reproductions, notes, shelfmark, locations)
-#            
-#            
-#            
-#            if authorBrowse != "":
-#                try:
-#                    authorExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Author</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-author&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (authorBrowse.strip(), authorBrowse.strip())
-#                except:
-#                    authorExtra = ""
-#            else:
-#                authorExtra = ""
-#
-#            if titleBrowse != "":
-#                try:
-#                    titleExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Title</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-title&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (titleBrowse.strip(), titleBrowse.strip())
-#                except:
-#                    titleExtra = ""
-#            else:
-#                titleExtra = ""
-#            try:
-#                elm = flattenTexts(rec.process_xpath(session, '//fld260/b')[0]).strip()
-#                printerExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-printer&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
-#            except:
-#                printerExtra=""
-#            try:
-#                elm = flattenTexts(rec.process_xpath(session, '//fld260/a')[0]).strip()
-#                printerLocationExtra = "<tr><td align=\"right\" valign=\"middle\" class=\"text\"><strong>Browse Printer Location</strong><img src=\"images/int_link.gif\" alt=\"\" width=\"27\" height=\"21\" border=\"0\" align=\"middle\"/></td></tr><tr class=\"menusubheading\"><td align=\"right\"><a href=\"scan.html?fieldidx1=c3.idx-location&fieldrel1=exact&fieldcont1=%s\">%s</a></td></tr>" % (elm, elm)
-#            except:
-#                printerLocationExtra=""
-#
-#            other = "<tr><td valign=\"middle\" class=\"text\"><strong>&nbsp;&nbsp;For this record</strong></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"search.html\">Email<img src=\"images/arrow_next.gif\" alt=\"\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"></a><br></td></tr><tr><td align=\"right\" valign=\"middle\"><a href=\"print.html\">Print<img src=\"images/link_print.gif\" alt=\"Print\" width=\"27\" height=\"19\" border=\"0\" align=\"middle\"><br></a></td></tr><td align=\"right\" valign=\"middle\"><hr/><tr></tr><tr class=\"menuheading\"><td align=\"right\" valign=\"middle\" ><a href=\"editRecord.html\">Edit This Record<br/>(administrators only)</a></td></tr>"
-#
-#            extra = "%s %s %s %s <tr><td align=\"right\" valign=\"middle\"><hr align=\"right\" size=\"1\" noshade></td></tr> %s" % (authorExtra, titleExtra, printerExtra, printerLocationExtra, other)
-#
-#
-#        return ('Record details', html, extra)
-#        #return (references.encode('utf8'), html)

@@ -2,24 +2,24 @@
  <script type="text/javascript" src="/istc/javascript/searchForm.js"></script>
 
 
-<form action="search.html" method="get">
+<form action="search.html" method="post">
 <input type="hidden" name="operation" value="search"/>
 <select name="fieldidx1"id="fieldidx1">
-<option value="c3.idx-all-fields">All Fields</option>
-<option value="c3.idx-title-keyword">Title</option>
+<option value="c3.idx-kwd-all">All Fields</option>
+<option value="c3.idx-kwd-title">Title</option>
 <option value="c3.idx-author">Author</option>
-<option value="c3.idx-location">Location of Print</option>
+<option value="c3.idx-publoc">Location of Print</option>
 <option value="c3.idx-date">Year</option>
-<option value="c3.idx-ISTC-number">ISTC Number</option>
+<option value="c3.idx-ISTCnumber">ISTC Number</option>
 
 
 </select>
  for: <input type="text" name="fieldcont1" size="30" />
 <select name="fieldrel1" id="fieldrel1">
-	<option value="all/relevant/proxinfo" selected="selected">All</option>
-	<option value="any/relevant/proxinfo">Any</option>
+	<option value="all" selected="selected">All</option>
+	<option value="any">Any</option>
 </select>
-<br/><br/>
+
 
 <p id="addClauseP">
     <script type="text/javascript">
