@@ -2,13 +2,14 @@
 # -*- coding: iso-8859-1 -*-
 
 import time, sys, os
-osp = sys.path
-sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-sys.path.extend(osp)
-from www_utils import *
-from baseObjects import Session
-from server import SimpleServer
-from document import StringDocument
+#osp = sys.path
+#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
+#sys.path.extend(osp)
+from cheshire3.web import www_utils
+from cheshire3.web.www_utils import *
+from cheshire3.baseObjects import Session
+from cheshire3.server import SimpleServer
+from cheshire3.document import StringDocument
 
 import getpass
 from crypt import crypt

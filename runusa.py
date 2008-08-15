@@ -1,15 +1,15 @@
 #!/home/cheshire/install/bin/python -i
 
 import time, sys, os
-osp = sys.path
-sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-sys.path.extend(osp)
+#osp = sys.path
+#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
+#sys.path.extend(osp)
 
-from baseObjects import Session
-from server import SimpleServer
-from document import StringDocument
+from cheshire3.baseObjects import Session
+from cheshire3.server import SimpleServer
+from cheshire3.document import StringDocument
 from PyZ3950 import CQLParser
-import c3errors
+import cheshire3.exceptions
 import lex, yacc
 import random
 

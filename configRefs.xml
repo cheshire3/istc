@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config type="database" id="db_refs">
-  <objectType>database.SimpleDatabase</objectType>
+  <objectType>cheshire3.database.SimpleDatabase</objectType>
   <paths>
     <path type="defaultPath">dbs/istc</path>
     <path type="metadataPath">stores/metadata.bdb</path>
@@ -11,7 +11,7 @@
 
   <subConfigs>
     <subConfig type="recordStore" id="refsRecordStore">
-      <objectType>recordStore.BdbRecordStore</objectType>
+      <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
       <paths>
        <path type="defaultPath">stores</path>
        <object type="idNormalizer" ref = "StringIntNormalizer"/>
@@ -21,7 +21,7 @@
     </subConfig>
 
     <subConfig type="indexStore" id="refsIndexStore">
-      <objectType>indexStore.BdbIndexStore</objectType>
+      <objectType>cheshire3.indexStore.BdbIndexStore</objectType>
       <paths>
          <path type="defaultPath">indexes</path>
          <path type="tempPath">temp</path>
@@ -30,7 +30,7 @@
     </subConfig>
 
     <subConfig type="protocolMap" id="CQLProtocolMap">
-      <objectType>protocolMap.CQLProtocolMap</objectType>
+      <objectType>cheshire3.protocolMap.CQLProtocolMap</objectType>
       <paths>
         <path type="zeerexPath">zeerex_srw.xml</path>
       </paths>
@@ -39,7 +39,7 @@
 
  <!-- pre-parsers -->
             <subConfig type="preParser" id="emptyEmphTagStripPreParser">
-                <objectType>preParser.RegexpSmashPreParser</objectType>
+                <objectType>cheshire3.preParser.RegexpSmashPreParser</objectType>
                 <options>
                         <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
                 </options>
@@ -47,13 +47,13 @@
 
 
             <subConfig type="preParser" id="AmpPreParser">
-              <objectType>preParser.AmpPreParser</objectType>
+              <objectType>cheshire3.preParser.AmpPreParser</objectType>
             </subConfig>
          
 
 
     <subConfig type="index" id = "idx-refs-code">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
         <object type="recordStore" ref="refsRecordStore"/>
@@ -74,7 +74,7 @@
     </subConfig>
 
  <subConfig type="index" id = "idx-refs-full">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
         <object type="recordStore" ref="refsRecordStore"/>
@@ -94,7 +94,7 @@
     </subConfig>
 
     <subConfig type="index" id = "idx-refs-full-kwd">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
         <object type="recordStore" ref="refsRecordStore"/>

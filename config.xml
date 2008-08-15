@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <config type="database" id="db_istc">
-  <objectType>database.SimpleDatabase</objectType>
+  <objectType>cheshire3.database.SimpleDatabase</objectType>
   <paths>
     <path type="defaultPath">dbs/istc</path>
     <path type="metadataPath">stores/metadata.bdb</path>
@@ -12,7 +12,7 @@
   <subConfigs>
   
   	<subConfig type="documentFactory" id="baseDocumentFactory">
-	   <objectType>documentFactory.SimpleDocumentFactory</objectType>
+	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
 	      <default type="data">/home/cheshire/cheshire3/cheshire3/dbs/istc/data</default>
 	      <default type="format">dir</default>
@@ -22,7 +22,7 @@
   
   
     <subConfig type="recordStore" id="recordStore">
-      <objectType>recordStore.BdbRecordStore</objectType>
+      <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
       <paths>
        <path type="defaultPath">stores</path>
        	<object type="idNormalizer" ref = "StringIntNormalizer"/>
@@ -32,7 +32,7 @@
     </subConfig>
 
     <subConfig type="indexStore" id="indexStore">
-      <objectType>indexStore.BdbIndexStore</objectType>
+      <objectType>cheshire3.indexStore.BdbIndexStore</objectType>
       <paths>
          <path type="defaultPath">indexes</path>
          <path type="tempPath">temp</path>
@@ -41,21 +41,21 @@
     </subConfig>
 
     <subConfig type="protocolMap" id="CQLProtocolMap">
-      <objectType>protocolMap.CQLProtocolMap</objectType>
+      <objectType>cheshire3.protocolMap.CQLProtocolMap</objectType>
       <paths>
         <path type="zeerexPath">zeerex_srw.xml</path>
       </paths>
     </subConfig>
 
 	<subConfig type="authStore" id="istcAuthStore">
-		<objectType>objectStore.BdbObjectStore</objectType>
+		<objectType>cheshire3.objectStore.BdbObjectStore</objectType>
 		<paths>
 			<path type="databasePath">istcAuthStore.bdb</path>
 		</paths>
 	</subConfig>
 	
 	<subConfig type="resultSetStore" id="resultSetStore">
-		<objectType>postgres.PostgresResultSetStore</objectType>
+		<objectType>cheshire3.postgres.PostgresResultSetStore</objectType>
         <paths>
             <path type="databaseName">db_istc</path>
             <path type="tableName">istcResultSetStore</path>
@@ -68,7 +68,7 @@
 	</subConfig>
 
 	<subConfig type="recordStore" id="editingStore">
-		<objectType>recordStore.BdbRecordStore</objectType>
+		<objectType>cheshire3.recordStore.BdbRecordStore</objectType>
 		<paths>
 			<path type="defaultPath">stores</path>
 			<path type="databasePath">editingStore.bdb</path>
@@ -82,41 +82,41 @@
  
  	<!-- injest transformers -->
 	 <subConfig type="transformer" id="dataTransformer">
-	 	<objectType>transformer.LxmlXsltTransformer</objectType>
+	 	<objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	      <paths>
 	         <path type="xsltPath">xsl/toMarcXml.xsl</path>
 	      </paths>
 	 </subConfig>
  
  	<subConfig type="transformer" id="indentingTxr">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/reindent.xsl</path>
 	    </paths>
 	</subConfig>
 	
 	<subConfig type="transformer" id="filterTxr">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/filterMarcFields.xsl</path>
 	    </paths>
 	</subConfig>
 	
 	<subConfig type="transformer" id="toTextTxr">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/toMARCTxt.xsl</path>
 	    </paths>
 	</subConfig>
 	
 	<subConfig type="transformer" id="toMarcTxr">
-	    <objectType>transformer.MarcTransformer</objectType>
+	    <objectType>cheshire3.transformer.MarcTransformer</objectType>
 	</subConfig>
 	
 	<!-- display transformers -->
  
 	<subConfig type="transformer" id="recordTxr-screen">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -126,7 +126,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-print">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -136,7 +136,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-save">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -146,7 +146,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-email">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -157,14 +157,14 @@
 	
 	
 	<subConfig type="transformer" id="menuTxr">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/menuDisplay.xsl</path>
 	    </paths>
 	</subConfig>
 	
 	<subConfig type="transformer" id="formCreationTxr">
-	    <objectType>transformer.LxmlXsltTransformer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/istcForm.xsl</path>
 	    </paths>
@@ -172,20 +172,20 @@
 	
  	<!-- pre-parsers -->
     <subConfig type="preParser" id="emptyEmphTagStripPreParser">
-        <objectType>preParser.RegexpSmashPreParser</objectType>
+        <objectType>cheshire3.preParser.RegexpSmashPreParser</objectType>
         <options>
                 <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
         </options>
     </subConfig>
 
     <subConfig type="preParser" id="AmpPreParser">
-      <objectType>preParser.AmpPreParser</objectType>
+      <objectType>cheshire3.preParser.AmpPreParser</objectType>
     </subConfig>
   
         
 	<!-- indexes -->
     <subConfig type="index" id = "idx-title">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -206,7 +206,7 @@
     </subConfig>
     
     <subConfig type="index" id = "idx-kwd-title">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -224,7 +224,7 @@
     </subConfig>
 
  	<subConfig type="index" id = "idx-author">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -244,7 +244,7 @@
     </subConfig>
     
  	<subConfig type="index" id = "idx-kwd-author">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -261,7 +261,7 @@
     </subConfig>
 
     <subConfig type="index" id = "idx-ISTCnumber">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -279,7 +279,7 @@
     </subConfig>
     
      <subConfig type="index" id = "idx-kwd-all">
-      <objectType>index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -297,7 +297,7 @@
     </subConfig>
 
     <subConfig type="index" id = "idx-pubdate">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -315,7 +315,7 @@
     </subConfig>
     
     <subConfig type="index" id = "idx-printer">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -332,7 +332,7 @@
     </subConfig>
     
      <subConfig type="index" id = "idx-kwd-printer">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -350,7 +350,7 @@
 
 
     <subConfig type="index" id = "idx-publoc">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -370,7 +370,7 @@
     </subConfig>
     
     <subConfig type="index" id = "idx-kwd-publoc">
-      <objectType>index.ArrayIndex</objectType>
+      <objectType>cheshire3.index.ArrayIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>
@@ -387,7 +387,7 @@
     </subConfig>
     
     <subConfig type="index" id="idx-year">
-	  <objectType>index.SimpleIndex</objectType>
+	  <objectType>cheshire3.index.SimpleIndex</objectType>
 	  <paths>
 	    <object type="indexStore" ref="indexStore"/>
 	    <object type="recordStore" ref="recordStore"/>
@@ -404,14 +404,14 @@
     </subConfig>
     
     <subConfig type="transformer" id="year008Txr">
-      <objectType>transformer.LxmlXsltTransformer</objectType>
+      <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
       <paths>
         <path type="xsltPath">xsl/year008.xsl</path>
       </paths>
     </subConfig>
     
     <subConfig type="xpathProcessor" id="year008">
-      <objectType>xpathProcessor.TransformerXPathProcessor</objectType>
+      <objectType>cheshire3.xpathProcessor.TransformerXPathProcessor</objectType>
       <paths>
         <object type="transformer" ref="year008Txr"/>
       </paths>
@@ -419,7 +419,7 @@
     
     
     <subConfig type="index" id="idx-language">
-	  <objectType>index.SimpleIndex</objectType>
+	  <objectType>cheshire3.index.SimpleIndex</objectType>
 	  <paths>
 	    <object type="indexStore" ref="indexStore"/>
 	    <object type="recordStore" ref="recordStore"/>
@@ -436,7 +436,7 @@
     </subConfig>
     
     <subConfig type="transformer" id="languageTxr">
-      <objectType>transformer.LxmlXsltTransformer</objectType>
+      <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
       <paths>
         <path type="xsltPath">xsl/langcode.xsl</path>
       </paths>
@@ -444,7 +444,7 @@
 
     
     <subConfig type="xpathProcessor" id="language">
-      <objectType>xpathProcessor.TransformerXPathProcessor</objectType>
+      <objectType>cheshire3.xpathProcessor.TransformerXPathProcessor</objectType>
       <paths>
         <object type="transformer" ref="languageTxr"/>
       </paths>
@@ -452,7 +452,7 @@
     
     
     <subConfig type="index" id="idx-BLshelfmark">
-	  <objectType>index.SimpleIndex</objectType>
+	  <objectType>cheshire3.index.SimpleIndex</objectType>
 	  <paths>
 	    <object type="indexStore" ref="indexStore"/>
 	    <object type="recordStore" ref="recordStore"/>
@@ -472,7 +472,7 @@
     
     
     <subConfig type="index" id="idx-location">
-    	<objectType>index.SimpleIndex</objectType>
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
     	<paths>
 	        <object type="indexStore" ref="indexStore"/>
 	        <object type="recordStore" ref="recordStore"/>    		
@@ -498,7 +498,7 @@
     </subConfig>
         
     <subConfig type="index" id="idx-kwd-location">
-    	<objectType>index.SimpleIndex</objectType>
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
     	<paths>
 	        <object type="indexStore" ref="indexStore"/>
 	        <object type="recordStore" ref="recordStore"/>    		
@@ -525,7 +525,7 @@
     
     
  <!--    <subConfig type="index" id="idx-pass-usa_location">
-        <objectType>index.PassThroughIndex</objectType>
+        <objectType>cheshire3.index.PassThroughIndex</objectType>
         <paths>
           <path type="database">db_usa</path>
           <path type="remoteIndex">idx-subjects-person</path>
@@ -540,7 +540,7 @@
     
     
     <subConfig type="index" id="idx-kwd_pass-usa_location">
-        <objectType>index.PassThroughIndex</objectType>
+        <objectType>cheshire3.index.PassThroughIndex</objectType>
         <paths>
           <path type="database">db_usa</path>
           <path type="remoteIndex">idx-kwd-subjects-person</path>
@@ -552,7 +552,7 @@
     
     
     <subConfig type="index" id="idx-951">
-      <objectType>index.ProximityIndex</objectType>
+      <objectType>cheshire3.index.ProximityIndex</objectType>
       <paths>
         <object type="indexStore" ref="indexStore"/>
         <object type="recordStore" ref="recordStore"/>

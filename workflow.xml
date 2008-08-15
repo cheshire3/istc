@@ -9,7 +9,7 @@
   <subConfigs>
 
   <subConfig type="workflow" id="preParserWorkflow">
-      <objectType>workflow.CachingWorkflow</objectType>
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
         <!-- input type:  document -->
        
@@ -21,7 +21,7 @@
     
     
     <subConfig type="workflow" id="buildIndexWorkflow">
-      <objectType>workflow.CachingWorkflow</objectType>
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
         <!-- input type:  documentFactory -->
         
@@ -43,7 +43,7 @@
 
 
     <subConfig type="workflow" id="buildIndexSingleWorkflow">
-      <objectType>workflow.CachingWorkflow</objectType>
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
 		<!-- input type:  document -->
 		<object type="workflow" ref="preParserWorkflow"/>
@@ -60,7 +60,7 @@
 
     
     <subConfig type="workflow" id="indexRecordWorkflow">
-	  <objectType>workflow.CachingWorkflow</objectType>
+	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
 	  <workflow>
 	    <!-- input type:  record -->
 	    <!-- assign identifier -->

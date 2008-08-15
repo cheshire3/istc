@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import time, sys, os
-osp = sys.path
-sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-sys.path.extend(osp)
-from www_utils import *
+#osp = sys.path
+#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
+#sys.path.extend(osp)
+from cheshire3.web import www_utils
+from cheshire3.web.www_utils import *
 import os, re
 
 #a = re.compile('<.*?>(.*?)</.*?>') # istc No
