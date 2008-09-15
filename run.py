@@ -2,9 +2,10 @@
 # -*- coding: iso-8859-1 -*-
 
 import time, sys, os
-#osp = sys.path
-#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-#sys.path.extend(osp)
+sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+
+import cheshire3
+
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
 from cheshire3.baseObjects import Session
@@ -32,7 +33,7 @@ defpath = db.get_path(session, "defaultPath")
 recordStore = db.get_object(session, 'recordStore')
 sax = db.get_object(session, 'SaxParser')
 authStore = db.get_object(session, 'istcAuthStore')
-
+qf = db.get_object(session, 'baseQueryFactory')
 df = db.get_object(session, 'defaultDocumentFactory')
 parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
@@ -194,12 +195,12 @@ elif '-marc' in sys.argv:
     start = time.time()
     marcTxr = db.get_object(session, 'dataTransformer')
     formatTxr = db.get_object(session, 'indentingTxr')
-    dir = '/home/cheshire/cheshire3/cheshire3/dbs/istc/dataprep/testFormat/'
+    dir = '/home/cheshire/cheshire3/cheshire3/dbs/istc/data/'
     
     db.begin_indexing(session)
     recordStore.begin_storing(session)
     #df.load(session, defpath + "/dataprep/test/", codec='utf-8')
-    df.load(session, defpath + "/dataprep/test/", codec='iso-8859-1')
+    df.load(session, defpath + "/datatest/", codec='iso-8859-1')
     #t.encode('ascii', 'xmlcharrefreplace')
     #print 'Loading'
     x = 0
@@ -217,6 +218,7 @@ elif '-marc' in sys.argv:
             
         d2 = marcTxr.process_record(session, rec)
         rec = parser.process_document(session, d2)
+        
         filename = rec.process_xpath(session, '//controlfield[@tag="001"]/text()')[0]
         print filename
     
