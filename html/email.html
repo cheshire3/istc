@@ -1,0 +1,16 @@
+
+<div id="email">
+    %ERROR%
+    <p>
+        This form allows you to send a text version of the selected record/records to yourself via email. 
+    </p>
+    <p>
+        Please be sure to type in your email address correctly.
+    </p>
+    <form action="/istc/search" name="email" class="email" method="get">
+        <input type="hidden" name="operation" value="email"/>
+        %Details%
+        Email Address: <input type="text" size="40" name="address"/>
+        <input type="submit" name="submit" value="submit"/>
+    </form>
+</div>

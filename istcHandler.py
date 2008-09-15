@@ -1,16 +1,24 @@
+
+import sys, os, cgitb, time, re, smtplib
+
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
-import sys, os, cgitb, time, re, smtplib
+
+sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from server import SimpleServer
-from PyZ3950 import CQLParser
-from baseObjects import Session
-from utils import flattenTexts
-from www_utils import *
+
+from cheshire3.server import SimpleServer
+from cheshire3.baseObjects import Session
+from cheshire3.utils import flattenTexts
+from cheshire3.document import StringDocument
+from cheshire3.web import www_utils
+from cheshire3.web.www_utils import *
 from istcLocalConfig import *
+from lxml import etree
 
 import urllib
 
@@ -30,6 +38,7 @@ class istcHandler:
             data = data.encode('utf-8')
         req.write(data)
         req.flush()
+        
         
     def send_txt(self, data, req, code=200):
         req.content_type = 'application/msword; charset=utf-8'
@@ -138,23 +147,31 @@ class istcHandler:
         self.logger.log('entering handle_istc')
         pagesize = 20
         start = 0
+        
         session.database = db.id
+        
+        locations = form.get('locations', 'all')
+        if not locations == 'all':
+            locString = '&locations=%s' % locations
+        else:
+            locString = ''
+
         
         html = []
         
         if not (form.has_key('rsid')):
             
             cql = self.generate_query(form)
-            
             try:
-                q = CQLParser.parse(cql.encode('utf-8'))
+                q = qf.get_query(session, cql.encode('utf-8'))
+                self.logger.log(q)
             except:
-                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
+                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')
             
             try:
                 rs = db.search(session, q)     
             except:
-                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql)
+                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')
             
             html.append("<strong>Your search was for: " + cql.replace("(c3.idx-", "").replace("/relevant/proxinfo", "").replace(")","").replace("-"," ") + "</strong><br/><br/>")
             try:
@@ -167,7 +184,7 @@ class istcHandler:
                 rsid = form.get('rsid', None).value
             except:
                 # should never happen?
-                return ('An Error has Occurred', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a> %s' % cql)
+                return ('An Error has Occurred', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a> %s' % cql, '')
                 
             start = int(form.get('start', 0))
             try :
@@ -177,36 +194,31 @@ class istcHandler:
             
         hits = len(rs)
         if hits:
+            menubits = []
             
             if (form.has_key('sort')):
                 rs = self.sort_resultSet(session, rs, form)
+                
 
             if start > 0 and start+pagesize < len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Next</a>' % (rsid, start-pagesize, rsid, start+pagesize)
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
             elif start > 0 and start+pagesize >= len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Previous</a>&nbsp;|&nbsp;Next' % (rsid, start-pagesize)
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;Next' % (rsid, start-pagesize, locString)
             elif start == 0 and start+pagesize < len(rs):
-                navString = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d">Next</a>' % (rsid, start+pagesize)
+                navString = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start+pagesize, locString)
             else :
                 navString = ''
 
             html.append(navString)
                 
-            html.append('<h1>%d Results</h1><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc">Place of Publication</a><br/><br/>' % (hits, rsid, rsid, rsid))
+            html.append('<h1>%d Results</h1><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author%s">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, rsid, locString, rsid, locString, rsid, locString))
 
             for i in range(start, min(start+pagesize, len(rs))):
 
                 rec = recStore.fetch_record(session, rs[i].id)
                 
-                html.append('%d. ' %  (i+1))
-                
-                try:
-                    elms = rec.process_xpath(session, '//controlfield[@tag="001"]')
-                    identifier = flattenTexts(elms[0])
-                except:
-                    identifier =""
-                
-                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % identifier.strip())
+                html.append('%d. ' %  (i+1))                
+                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % i)
                 
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="245"]/subfield[@code="a"]')
@@ -218,8 +230,7 @@ class istcHandler:
                         title = flattenTexts(elms[0])
                     except:
                         title = ""
-
-
+                        
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="100"]/subfield[@code="a"]')
                     author = flattenTexts(elms[0])
@@ -241,80 +252,100 @@ class istcHandler:
                 except:
                     date= ""
           
-                html.append('<a href="/istc/search?operation=record&q=%s&r=0">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % ( identifier.strip(), title, author, imprint, date))       
+                html.append('<a href="/istc/search?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % (rsid, i, locString, title, author, imprint, date))       
+            
+            menubits.extend(['<div class="menugrp">',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div>',
+                            '</div>'])
+            
             
             if hits <= 200:
-                menubits = ['<div class="menugrp">',
-                            '<div class="menuitem"><a href="/istc/search?operation=print&rsid=%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />' % rsid,
-                            '<div class="menuitem"><a href="/istc/search?operation=email&rsid=%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />' % rsid,
-                            '<div class="menuitem"><a href="/istc/search?operation=save&rsid=%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div>' % rsid,
-                            '</div>']
+                menubits.extend(['<div class="menugrp">',
+                            '<div class="menuitem"><a href="/istc/search?operation=print&rsid=%s%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search?operation=email&rsid=%s%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search?operation=save&rsid=%s%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>' % (rsid, locString),
+                            '</div>'])
             
             
         else:
-            html.append("No matches  %s." % cql.decode('utf-8'))
+            html.append("There are no records that match your query.  (%s)" % cql.decode('utf-8'))
             menubits = []
-                
-        return ('Search Results', ''.join(html), ''.join(menubits))
-
+        
+        if not locations == 'all':
+            return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form>' % (rsid, locations, ''.join(html)), ''.join(menubits))
+        else :
+            return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form>' % (rsid, ''.join(html)), ''.join(menubits))
+      
 
     def display_rec(self, session, form):
-       
+        session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-screen')
         menuTxr = db.get_object(session, 'menuTxr')
-        identifier = form['q'].value
-                
-        try:
-            refValue = int(form['r'].value)
-        except:
-            refValue = 0
+        rsid = int(form['rsid'].value)
+        id = int(form['q'].value)
+        locations = form.get('locations', 'all')
+        
+        if not locations == 'all':
+            locString = '&locations=%s' % locations
+        else :
+            locString = ''
+
             
-        session.database = 'db_istc'
-        q = CQLParser.parse('c3.idx-ISTCnumber exact "%s"' % (identifier))
-        rs = db.search(session, q)
+        rs = rss.fetch_resultSet(session, rsid)
+        
+        if id > 0 and id < len(rs)-1:
+            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Next</a>' % (rsid, id-1, locString, rsid, id+1, locString)
+        elif id > 0 and id < len(rs):
+            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Previous</a>&nbsp;|&nbsp;Next' % (rsid, id-1, locString)
+        elif id == 0 and id < len(rs)-1:
+            navstring = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Next</a>' % (rsid, id+1, locString)
+        else:
+            navstring = ''
 
         if len(rs):
-            rec = rs[0].fetch_record(session)
-            
+            rec = rs[id].fetch_record(session)           
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
-            #transform main record
-            doc = txr.process_record(session, rec)
-            return ('Record Details', doc.get_raw(session), menu.get_raw(session))
+            doc = self._transform_record(rec, txr, 'false', locations)
+            return ('Record Details', doc.replace('%nav%', navstring), menu.get_raw(session))
         else:
-            raise ValueError(identifier)
+            raise ValueError(id)
             
             
     def get_fullRefs(self, session, form):
         ref = form.get('q', None)
+        ref = ref.replace('*', '\*')
         session.database = db3.id
-        q = CQLParser.parse('c3.idx-refs-code exact "%s"' % (ref))
+        q = qf.get_query(session, 'c3.idx-refs-code exact "%s"' % (ref))
         rs = db3.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
         else :
             while ref.rfind(' ') != -1 and not len(rs):
                 ref = ref[:ref.rfind(' ')].strip()
-                q.term.value = ref
+                q.term.value = ref.decode('utf-8')
                 rs = db3.search(session, q)
             if len(rs):
                 recRefs = rs[0].fetch_record(session).get_xml(session)
             else:
-                recRefs = '<record></record>'
+                recRefs = '<record></record>' 
         return recRefs
         
         
     def get_usaRefs(self, session, form):
         ref = form.get('q', None)
         session.database = db2.id
-        q = CQLParser.parse('c3.idx-usa-code exact "%s"' % (ref.split(' ')[0].strip()))
+        q = qf.get_query(session, 'c3.idx-usa-code exact "%s"' % (ref.split(' ')[0].strip()))
         rs = db2.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
         else :
             while ref.rfind(' ') != -1 and not len(rs):
                 ref = ref[:ref.rfind(' ')].strip()
-                q.term.value = ref
+                q.term.value = ref.decode('utf-8')
                 rs = db2.search(session, q)
             if len(rs):
                 recRefs = rs[0].fetch_record(session).get_xml(session)
@@ -324,38 +355,93 @@ class istcHandler:
         
     
     def printRecs(self, form):
-        rsid = form.get('rsid', None)
+        istc = form.get('istc', None)
         txr = db.get_object(session, 'recordTxr-print')
-        if rsid:
-            rs = rss.fetch_resultSet(session, rsid.value)
-            output = []
-            for r in rs:
-                rec = r.fetch_record(session)
-                output.append(txr.process_record(session, rec).get_raw(session))
-            return '<br/>------------<br/>'.join(output)
-        
-        
+        expand = form.get('expand', 'false') 
+        locations = form.get('locations', 'all')
+        if istc:
+            session.database = 'db_istc'
+            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            rs = db.search(session, q)
+            if len(rs):
+                rec = rs[0].fetch_record(session)                
+                return self._transform_record(rec, txr, expand, locations)
+        else:    
+            type = form.get('type', 'all') 
+            rsid = form.get('rsid', None)
+            recs = form.getlist('recSelect')             
+            if rsid:    
+                rs = rss.fetch_resultSet(session, rsid.value)
+                output = []
+                if type == 'all':                   
+                    for r in rs:
+                        rec = r.fetch_record(session)
+                        output.append(self._transform_record(rec, txr, expand, locations))
+                else:
+                    if len(recs):
+                        for r in recs:
+                            rec = rs[int(r)].fetch_record(session)
+                            output.append(self._transform_record(rec, txr, expand, locations))
+                    
+                return '<br/>------------<br/>'.join(output)
+         
+    
     def saveRecs(self, form):
-        rsid = form.get('rsid', None)
+        istc = form.get('istc', None)
         txr = db.get_object(session, 'recordTxr-save')
-        if rsid:
-            rs = rss.fetch_resultSet(session, rsid.value)
-            output = []
-            for r in rs:
-                rec = r.fetch_record(session)
-                output.append(txr.process_record(session, rec).get_raw(session))
-            return '<br/>------------<br/>'.join(output)
+        expand = form.get('expand', 'false')
+        locations = form.get('locations', 'all')
+        if istc:
+            session.database = 'db_istc'
+            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            rs = db.search(session, q)
+            if len(rs):
+                rec = rs[0].fetch_record(session)
+                return self._transform_record(rec, txr, expand, locations)
+        else:           
+            type = form.get('type', 'all') 
+            rsid = form.get('rsid', None)
+            recs = form.getlist('recSelect')            
+            if rsid:
+                rs = rss.fetch_resultSet(session, rsid.value)
+                output = []
+                if type == 'all':
+                    for r in rs:
+                        rec = r.fetch_record(session)
+                        output.append(self._transform_record(rec, txr, expand, locations))
+                else:
+                    if len(recs):
+                        for r in recs:
+                            rec = rs[int(r)].fetch_record(session)
+                            output.append(self._transform_record(rec, txr, expand, locations))
+                            
+                return '------------'.join(output)
 
     
-    def emailRecs(self, form):
-        rsid = form.get('rsid', None)
-        address = form.get('address', 'cjsmith@liv.ac.uk')
+    def send_email(self, address=None, rsid=None, istc=None, type=None, recs=[], expand='false', locations='all'):
         txr = db.get_object(session, 'recordTxr-email')
-        rs = rss.fetch_resultSet(session, rsid.value)
-        output = []
-        for r in rs:
-            rec = r.fetch_record(session)
-            output.append(txr.process_record(session, rec).get_raw(session))
+
+        if istc:
+            session.database = 'db_istc'
+            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            rs = db.search(session, q)
+            if len(rs):
+                rec = rs[0].fetch_record(session)
+                output = [self._transform_record(rec, txr, expand, locations)]
+        else:                      
+            if rsid:
+                rs = rss.fetch_resultSet(session, rsid.value)
+                output = []
+                if type == 'all':
+                    for r in rs:
+                        rec = r.fetch_record(session)
+                        output.append(self._transform_record(rec, txr, expand, locations))
+                else:
+                    if len(recs):
+                        for r in recs:
+                            rec = rs[int(r)].fetch_record(session)
+                            output.append(self._transform_record(rec, txr, expand, locations))
+                                   
         message = MIMEMultipart()
         message['From'] = 'istc@localhost'
         message['To'] = address
@@ -372,7 +458,51 @@ class istcHandler:
         smtp.connect(host='mail1.liv.ac.uk', port=25)
         smtp.sendmail('istc@localhost', address, message.as_string())
         smtp.close()
-        return '<h1>File emailed successfully</h1>'
+        return ('result', 'File emailed successfully', '')
+        
+    
+    def emailRecs(self, form):
+        istc = form.get('istc', None)
+        address = form.get('address', None)        
+        type = form.get('type', 'all')
+        rsid = form.get('rsid', None)
+        recs = form.getlist('recSelect')
+        expand = form.get('expand', 'false')
+        locations = form.get('locations', 'all')
+        if not address:
+            repl = []
+            if istc:
+                repl.extend(['<input type="hidden" name="istc" value="%s"/>' % istc,
+                             '<input type="hidden" name="expand" value="%s"/>' % expand,
+                             '<input type="hidden" name="locations" value="%s"/>' % locations])
+            else:
+                repl.extend(['<input type="hidden" name="rsid" value="%s"/>' % rsid,
+                             '<input type="hidden" name="type" value="%s"/>' % type,
+                             '<input type="hidden" name="expand" value="%s"/>' % expand,
+                             '<input type="hidden" name="locations" value="%s"/>' % locations])
+                for rec in recs:
+                    repl.append('<input type="hidden" name="recSelect" value="%s"/>' % rec)
+            f = read_file('email.html')
+            f = f.replace('%Details%', ''.join(repl))
+            return ('Email Request', f, '')
+        else:
+            if istc:
+                return self.send_email(istc=istc, address=address, expand=expand, locations=locations)
+            elif rsid and type == 'all':
+                return self.send_email(rsid=rsid, type=type, address=address, locations=locations)
+            else :
+                return self.send_email(rsid=rsid, type=type, address=address, recs=recs, expand=expand, locations=locations)
+
+                         
+    def _transform_record(self, rec, txr, expand, locations):
+        dom = rec.get_dom(session)
+        txr.txr = etree.XSLT(txr.parsedXslt)
+        if not txr.params:
+            txr.params = {}
+        txr.params['expand'] = '"%s"' % expand
+        txr.params['locations'] = '"%s"' % locations                            
+        result = txr.txr(dom, **txr.params)
+        return StringDocument(str(result)).get_raw(session)
 
 
     def browse(self, form):
@@ -387,11 +517,11 @@ class istcHandler:
 
         db = serv.get_object(session, 'db_istc')
         try:
-            scanClause = CQLParser.parse(qString)          
+            scanClause = qf.get_query(session, qString)          
         except:
             qString = self.generate_query(form)
             try:
-                scanClause = CQLParser.parse(qString)      
+                scanClause = qf.get_query(session, qString)      
             except:
                 t.append('Unparsable query: %s' % qString)
                 return (" ".join(t), '<p>An invalid query was submitted.</p>')
@@ -557,11 +687,9 @@ class istcHandler:
             self.send_html(data, req)
             return
         elif (operation == 'email'):
-            data = self.emailRecs(form)
-            self.send_html(data, req)
-            return
+            (t, d, e) = self.emailRecs(form)
         elif (operation == 'save'):
-            data = self.printRecs(form)
+            data = self.saveRecs(form)
             self.send_txt(data, req)
             return
         elif (operation == 'references'):
@@ -626,9 +754,11 @@ class istcHandler:
     
 os.chdir("/home/cheshire/cheshire3/cheshire3/code")
 
-from baseObjects import Session
+from cheshire3.baseObjects import Session
 session = Session()
 serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
+
+
 
 db = serv.get_object(session, 'db_istc')
 db2 = serv.get_object(session, 'db_usa')
@@ -644,8 +774,10 @@ usaIndexStore = db2.get_object(session, 'usaIndexStore')
 refsRecStore = db3.get_object(session, 'refsRecordStore')
 refsIndexStore = db3.get_object(session, 'refsIndexStore')
 
+qf = db.get_object(session, 'baseQueryFactory')
+
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
-from www_utils import FileLogger
+from cheshire3.web.www_utils import FileLogger
 
 
 

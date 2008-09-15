@@ -2,15 +2,24 @@
  <script type="text/javascript" src="/istc/javascript/searchForm.js"></script>
 
 
-<form action="search.html" method="post">
+<form action="search.html" method="get">
 <input type="hidden" name="operation" value="search"/>
 <select name="fieldidx1"id="fieldidx1">
-<option value="c3.idx-kwd-all">All Fields</option>
-<option value="c3.idx-kwd-title">Title</option>
-<option value="c3.idx-author">Author</option>
-<option value="c3.idx-publoc">Location of Print</option>
-<option value="c3.idx-date">Year</option>
+<option value="c3.idx-kwd-all">General Keywords</option>
+<option value="c3.idx-kwd-author">Author Keywords</option>
+<option value="c3.idx-author">Author (exact)</option>
+<option value="c3.idx-kwd-title">Title Keywords</option>
+<option value="c3.idx-title">Title (exact)</option>
+<option value="c3.idx-kwd-publoc">Location of Print</option>
+<option value="c3.idx-kwd-printer">Printer Keywords</option>
+<option value="c3.idx-printer">Printer (exact)</option>
 <option value="c3.idx-ISTCnumber">ISTC Number</option>
+<option value="c3.idx-kwd-location">Location Keywords</option>
+<option value="c3.idx-location">Location (exact)</option>
+<option value="c3.idx-year">Start or exact Year (008)</option>
+<option value="c3.idx-pubdate">Publication Date</option>
+<option value="c3.idx-language">Language Code</option>
+<option value="c3.idx-BLshelfmark">BL Shelfmark</option>
 
 
 </select>
@@ -27,11 +36,13 @@
 	document.write('<a href="javascript:addSearchClause(1)" id="addClauseLink" title="Add another search clause, like the one above -- [requires JavaScript]">...Add another search term</a>');
 	
 			-->
-			</script>
+	</script>		
+</p>
 
-			
-		  </p>
+Only show German locations <input type="checkbox" name="locations" value="germany"/>
+<br />
+<br />
 
-<input type="submit" />
+<input type="submit" value="Start Search" />
 </form>
 
