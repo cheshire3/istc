@@ -47,6 +47,29 @@
   	</controlfield>
   </xsl:template>
   
+  <xsl:template match="//vardflds//fld952">
+  	<datafield tag="{substring-after(name(), 'fld')}" ind1="{./@*[position()=1]}" ind2="{./@*[position()=2]}">
+		<xsl:variable name="usastring">
+			<xsl:value-of select="a/text()"/>
+		</xsl:variable>  	
+		<xsl:choose>	
+		<xsl:when test="contains($usastring, ' ')">
+			<subfield code="a">
+				<xsl:value-of select="substring-before($usastring, ' ')"/>
+			</subfield>
+			<subfield code="b">
+				<xsl:value-of select="substring-after($usastring, ' ')"/>
+			</subfield>
+		</xsl:when>
+		<xsl:otherwise>
+			<subfield code="a">
+				<xsl:value-of select="$usastring"/>
+			</subfield>
+		</xsl:otherwise>
+		</xsl:choose>
+	</datafield>
+  </xsl:template>
+  
   
   <xsl:template match="//vardflds//*[starts-with(name(), 'fld')]">
   	<xsl:choose>
