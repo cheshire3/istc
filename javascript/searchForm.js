@@ -24,15 +24,12 @@
 
 
 
-//var indexList = new Array('dc.description|||General Keyword', 'cql.anywhere|||Full Text', 'dc.title|||Title', 'dc.date|||Date', 'dc.creator|||Creator', 'dc.identifier|||Ref. Number', 'dc.subject|||Subject', 'bath.name|||Name', 'bath.personalName|||&nbsp;&nbsp;Personal Name', 'bath.corporateName|||&nbsp;&nbsp;Corporate Name', 'bath.geographicName|||&nbsp;&nbsp;Geographical Name', 'bath.genreForm|||Genre Form');
-var kwRelationList = new Array('all/relevant/proxinfo|||All', 'any/relevant/proxinfo|||Any');
-var exactRelationList = new Array('exact/relevant/proxinfo|||Exactly');
-var proxRelationList = new Array('=/relevant/proxinfo|||Phrase');
-var dateRelationList = new Array('%3C|||Before', '%3E|||After', 'within/relevant/proxinfo|||Between', 'encloses/relevant/proxinfo|||Spans...');
-var indexList = new Array('c3.idx-all-kwd|||All Fields', 'c3.idx-title-kwd|||Title', 'c3.idx-classification-author|||Author', 'c3.corporal-editor-kwd|||Corporal Editor', 'c3.idx-location-print-kwd|||Location of Print', 'c3.idx-date|||Year', 'c3.idx-shelf-mark|||Shelf Mark', 'c3.idx-bib-ref|||Bibliographic Reference', 'c3.idx-isbn|||ISBN','c3.idx-classification-subject|||Subjects', 'c3.idx-classification-subject-object||| Subject Heading Object', 'c3.idx-classification-subject-motive||| Subject Heading Motive', 'c3.idx-classification-subject-location||| Subject Heading Location', 'c3.idx-classification-subject-person||| Subject Heading Person', 'c3.idx-classification-subject-corporation||| Subject Heading Corporation');
-//var relSelectPhraseElement = document.createElement('option');
-//relSelectPhraseElement.value = '=/relevant/proxinfo';
-//relSelectPhraseElement.appendChild(document.createTextNode('Phrase'));
+var kwRelationList = new Array('all|||All', 'any|||Any');
+var exactRelationList = new Array('exact|||Exactly');
+var proxRelationList = new Array('=|||Phrase', 'exact|||Exactly');
+var dateRelationList = new Array('%3C|||Before', '%3E|||After', 'exact|||Exactly');
+var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Location of Print', 'dc.publisher|||Printer', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
+
 
 
 function updateSelects(current){
@@ -43,20 +40,16 @@ function updateSelects(current){
 	}
 	relSelect.options[relSelect.selectedIndex].selected = false;
 	var iSelIdx = idxSelect.selectedIndex;
-	if(idxSelect.options[iSelIdx].value == 'dc.identifier'){
-		var rSelIdx = 2;
-	} else {
-		var rSelIdx = 0;
-	}
+
+	var rSelIdx = 0;
+	
 	// complex conditional to decide available relations
 	var relationList = new Array()
-	if (iSelIdx != 3) { var relationList = kwRelationList; }
-	if (iSelIdx > 1) { var relationList = relationList.concat(exactRelationList); }
-	if (iSelIdx < 3) { var relationList = relationList.concat(proxRelationList); }
-	if (iSelIdx == 3) {
-		var rSelIdx = 4;
-		var relationList = relationList.concat(dateRelationList); 
-	}
+	if (iSelIdx != 5 && iSelIdx != 6 && iSelIdx != 10 && iSelIdx != 11) { var relationList = kwRelationList; }
+	if (iSelIdx == 5 || iSelIdx == 6 || iSelIdx == 10 || iSelIdx == 11) { var relationList = exactRelationList; }
+	if (iSelIdx == 8) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }	
+	
 	// now replace existing relation select element
 	relSelect.parentNode.insertBefore(createSelect('fieldrel' + current, relationList, rSelIdx), relSelect);
 	relSelect.parentNode.removeChild(relSelect);
@@ -117,13 +110,10 @@ function createClause(current, clauseState){
 	var rSelIdx = parts.shift();
 	// complex conditional to decide available relations
 	var relationList = new Array()
-//removed by clare
-	if (iSelIdx != 3) { var relationList = kwRelationList; }
-	if (iSelIdx > 1) { var relationList = relationList.concat(exactRelationList); }
-	if (iSelIdx < 3) { var relationList = relationList.concat(proxRelationList); }
-	if (iSelIdx == 3) {
-		var relationList = relationList.concat(dateRelationList); 
-	}
+	if (iSelIdx != 5 && iSelIdx != 6 && iSelIdx != 10 && iSelIdx != 11) { var relationList = kwRelationList; }
+	if (iSelIdx == 5 || iSelIdx == 6 || iSelIdx == 10 || iSelIdx == 11) { var relationList = exactRelationList; }
+	if (iSelIdx == 8) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }
 	
 	// text input
 	var inputElem = document.createElement('input');

@@ -19,11 +19,14 @@ from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
 from istcLocalConfig import *
 from lxml import etree
+from cheshire3.cqlParser import Triple
 
 import urllib
 
 class istcHandler:
     templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/template.html"
+    rtfPath = "/home/cheshire/cheshire3/cheshire3/www/istc/outputTemplate.txt"
+    printPath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/printTemplate.html"
 
     def __init__(self, lgr):
         self.logger = lgr
@@ -41,11 +44,14 @@ class istcHandler:
         
         
     def send_txt(self, data, req, code=200):
-        req.content_type = 'application/msword; charset=utf-8'
+        #req.content_type = 'application/msword; charset=utf-8'
+        req.content_type = 'application/msword'
         req.content_length = len(data)
         req.send_http_header()
-        if (type(data) == unicode):
-            data = data.encode('utf-8')
+        #raise ValueError(data)
+       # if (type(data) == unicode):
+       #     raise ValueError(type)
+       #     data = data.encode('utf-8')
         req.write(data)
         req.flush()
 
@@ -66,6 +72,7 @@ class istcHandler:
         phraseRe = re.compile('".+?"')
         qClauses = []
         bools = []
+        frombrowse = form.get('frombrowse', None)
         i = 1
         while (form.has_key('fieldcont%d' % i)):
             bools.append(form.getfirst('fieldbool%d' % (i-1), 'and'))
@@ -91,9 +98,11 @@ class istcHandler:
                     subClauses.append('(%s = %s)' % (idx, ph))
 
                 cont = phraseRe.sub('', cont)
-
             if (idx and rel and cont):
-                subClauses.append(u'%s %s "%s"' % (idx, rel, cont.strip()))
+                if idx == 'norzig.posessingInstitution' and not frombrowse:
+                    subClauses.append(u'(%s %s "%s" or %s %s/usa "%s")' % (idx, rel, cont.strip(), idx, rel, cont.strip()))
+                else:
+                    subClauses.append(u'%s %s "%s"' % (idx, rel, cont.strip()))
 
             if (len(subClauses)):
                 qClauses.append('(%s)' % (subBool.join(subClauses)))
@@ -173,12 +182,17 @@ class istcHandler:
             except:
                 return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')
             
-            html.append("<strong>Your search was for: " + cql.replace("(c3.idx-", "").replace("/relevant/proxinfo", "").replace(")","").replace("-"," ") + "</strong><br/><br/>")
+            
+
             try:
                 rsid = rss.create_resultSet(session, rs)
                 rs.id = rsid
             except:
                 raise
+            
+            cqlStr = self._interpret_query(q, [], [])          
+            html.append("<strong>Your search was for %s </strong><br/><br/>" % cqlStr)
+        
         else:
             try:
                 rsid = form.get('rsid', None).value
@@ -225,6 +239,7 @@ class istcHandler:
                     title = flattenTexts(elms[0])
 
                 except:
+                    raise
                     try:
                         elms = rec.process_xpath(session, '//datafield[@tag="130"]/subfield[@code="a"]')
                         title = flattenTexts(elms[0])
@@ -278,6 +293,77 @@ class istcHandler:
             return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form>' % (rsid, locations, ''.join(html)), ''.join(menubits))
         else :
             return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form>' % (rsid, ''.join(html)), ''.join(menubits))
+
+
+    def _interpret_query(self, cql, stack = [], string = []):    
+
+        if self._has_operand(cql, 'left'):           
+            new = cql.leftOperand
+            cql.leftOperand = None
+            stack.append(cql)
+            return self._interpret_query(new, stack, string)
+        elif self._has_boolean(cql):
+            string.append('%s' % cql.boolean.value)
+            cql.boolean.value = None
+            return self._interpret_query(cql, stack, string)
+        elif self._has_operand(cql, 'right'):            
+            new = cql.rightOperand
+            cql.rightOperand = None
+            stack.append(cql)
+            return self._interpret_query(new, stack, string)
+        else :
+            if not isinstance(cql, Triple):    
+                substring = [] 
+                index = idxNames['%s' % cql.index.value]
+                substring.append(index)
+                substring.append('%s' % cql.relation.value)  
+    
+                substring.append("\"%s\"" % cql.term.value)
+            
+                if len(substring):
+                    string.extend(['(', ' '.join(substring), ')'])
+            if len(stack):
+                return self._interpret_query(stack.pop(), stack, string)
+            else :
+                return ' '.join(string)
+
+
+    def _has_boolean(self, clause):
+        try:
+            clause.boolean.value
+        except:
+            return False
+        else:
+            if clause.boolean.value == None:
+                return False
+            else:
+                return True
+        
+            
+
+    def _has_operand(self, clause, side):
+        if side == 'left':
+            try:
+                clause.leftOperand
+            except:
+                return False
+            else :
+                if clause.leftOperand == None:
+                    return False
+                else :
+                    return True
+        elif side == 'right':
+            try:
+                clause.rightOperand
+            except:
+                return False
+            else :
+                if clause.rightOperand == None:
+                    return False
+                else :
+                    return True
+
+
       
 
     def display_rec(self, session, form):
@@ -353,19 +439,25 @@ class istcHandler:
                 recRefs = '<record></record>'
         return recRefs     
         
+    def get_format(self, session, form):
+        string = form.get('q', None)
+        return '<output>%s</output>' % string.replace('4~~', '<main>4</main><sup>to</sup>').replace('8~~', '<main>8</main><sup>vo</sup>').replace('f~~', '<main>f</main><sup>o</sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '<sup>mo</sup>')
     
     def printRecs(self, form):
         istc = form.get('istc', None)
         txr = db.get_object(session, 'recordTxr-print')
+        f = file(self.printPath)
+        tmpl = f.read()
+        f.close()
         expand = form.get('expand', 'false') 
         locations = form.get('locations', 'all')
         if istc:
             session.database = 'db_istc'
-            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            q = qf.get_query(session, 'dc.identifier exact "%s"' % (istc.value))
             rs = db.search(session, q)
             if len(rs):
                 rec = rs[0].fetch_record(session)                
-                return self._transform_record(rec, txr, expand, locations)
+                return tmpl.replace('%%%CONTENT%%%',  self._transform_record(rec, txr, expand, locations))
         else:    
             type = form.get('type', 'all') 
             rsid = form.get('rsid', None)
@@ -383,21 +475,24 @@ class istcHandler:
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                     
-                return '<br/>------------<br/>'.join(output)
+                return tmpl.replace('%%%CONTENT%%%',  '<br/>------------<br/>'.join(output))
          
     
     def saveRecs(self, form):
         istc = form.get('istc', None)
         txr = db.get_object(session, 'recordTxr-save')
+        f = file(self.rtfPath)
+        tmpl = f.read()
+        f.close()
         expand = form.get('expand', 'false')
         locations = form.get('locations', 'all')
         if istc:
             session.database = 'db_istc'
-            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            q = qf.get_query(session, 'dc.identifier exact "%s"' % (istc.value))
             rs = db.search(session, q)
             if len(rs):
                 rec = rs[0].fetch_record(session)
-                return self._transform_record(rec, txr, expand, locations)
+                output = [self._transform_record(rec, txr, expand, locations)]
         else:           
             type = form.get('type', 'all') 
             rsid = form.get('rsid', None)
@@ -415,15 +510,24 @@ class istcHandler:
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                             
-                return '------------'.join(output)
+        return  tmpl.replace('%%%DATA%%%', self._RTFify(''.join(output)))
+
+
+    def _RTFify(self, string):
+         ucre = re.compile('&#([0-9]+);')
+         newString = re.sub (ucre, '\u\\1?', string)
+         newString = newString.replace('&amp;', '&')
+         return newString
 
     
     def send_email(self, address=None, rsid=None, istc=None, type=None, recs=[], expand='false', locations='all'):
         txr = db.get_object(session, 'recordTxr-email')
-
+        f = file(self.rtfPath)
+        tmpl = f.read()
+        f.close()
         if istc:
             session.database = 'db_istc'
-            q = qf.get_query(session, 'c3.idx-ISTCnumber exact "%s"' % (istc.value))
+            q = qf.get_query(session, 'dc.identifier exact "%s"' % (istc.value))
             rs = db.search(session, q)
             if len(rs):
                 rec = rs[0].fetch_record(session)
@@ -449,9 +553,9 @@ class istcHandler:
         message.attach(MIMEText('The records you requested are attached.'))
         
         part = MIMEBase('application', "octet-stream")
-        part.set_payload( ''.join(output) )
+        part.set_payload( tmpl.replace('%%%DATA%%%', self._RTFify(''.join(output))))
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment; filename="ISTCrecords.txt"')
+        part.add_header('Content-Disposition', 'attachment; filename="ISTCrecords.rtf"')
         message.attach(part)
         
         smtp = smtplib.SMTP()
@@ -508,10 +612,12 @@ class istcHandler:
     def browse(self, form):
         idx = form.get('fieldidx1', None)
         rel = form.get('fieldrel1', 'exact')
+        if idx == 'bib.originPlace':
+            rel = 'all'
         scanTerm = form.get('fieldcont1', '')
         firstrec = int(form.get('firstrec', 1))
         numreq = int(form.get('numreq', 25))
-        rp = int(form.get('responsePosition', numreq/2))
+        rp = int(form.get('responsePosition', 4))
         qString = '%s %s "%s"' % (idx, rel, scanTerm)
         t = []
 
@@ -536,7 +642,7 @@ class istcHandler:
             rp = 0
         if (rp == 0):
             scanData = db.scan(session, scanClause, numreq, direction=">")
-            #if (len(scanData) < numreq): hitend = True
+            if (len(scanData) < numreq): hitend = True
         elif (rp == 1):
             scanData = db.scan(session, scanClause, numreq, direction=">=")
             if (len(scanData) < numreq): hitend = True
@@ -548,34 +654,41 @@ class istcHandler:
             scanData = db.scan(session, scanClause, numreq, direction="<")
             scanData.reverse()
             if (len(scanData) < numreq): hitstart = True
+            elif len(scanData[0]) == 3: hitstart = True
         else:
+            
+            nFwd = numreq - rp
+            nBack = rp
             # Need to go down...
-           try:
-                scanData = db.scan(session, scanClause, numreq, direction="<=")
-           except:
+            try:
+                scanData = db.scan(session, scanClause, nBack, direction="<=")
+            except:
                 
                 scanData = []
                 # ... then up
-           try:
-                scanData1 = db.scan(session, scanClause, numreq-rp+1, direction=">=")
-           except:
+            try:
+                scanData1 = db.scan(session, scanClause, nFwd, direction=">=")
+            except:
                 scanData1 = []
             
             
-           if (len(scanData1) < numreq-rp+1):
+            if (len(scanData1) < nFwd):
                 hitend = True
-           if (len(scanData) < rp):
+            if (len(scanData) < nBack):
                 hitstart = True
-           # try to stick them together
-           try:
-               if scanData1[0][0] == scanData[0][0]:
-                   scanData = scanData[1:]
-           except:
-               pass
+            # try to stick them together
+            try:
+                if scanData1[0][0] == scanData[0][0]:
+                    scanData = scanData[1:]
+                else:
+                    scanData.insert(0, None)
+                    scanData1[:-1]
+            except:
+                 pass
 
-           scanData.reverse()
-           scanData.extend(scanData1)
-           del scanData1
+            scanData.reverse()
+            scanData.extend(scanData1)
+            del scanData1
  
         totalTerms = len(scanData)
 
@@ -586,11 +699,32 @@ class istcHandler:
 
             rowCount = 0
             
+            if (hitstart):
+                rows.append('<tr class="odd"><td colspan="2">-- start of index --</td></tr>')
+                rowCount += 1
+                prevlink = ''
+            else:
+                prevlink=""
+                prevlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous %d terms</a>' % (script, idx, rel, cgi_encode(scanData[0][0]), numreq, numreq, numreq)
+                 
+ 
             
             dodgyTerms = []
             for i in range(len(scanData)):
                 item = scanData[i]
-                term = item[0]
+                try :
+                    term = item[0]
+                except :
+                    row="""
+         <tr class="notfound">
+          <td align="center" colspan="2">
+            [ Your Term Would be Here ]
+          </td>
+        </tr>"""
+                    rows.append(row)
+                    continue
+                try: term.encode('utf-8', 'latin-1')
+                except: continue
                 if not term:
                     continue
 
@@ -609,9 +743,15 @@ class istcHandler:
                 if (rowCount % 2 == 1): rowclass = 'odd';
                 else: rowclass = 'even';
                
-
+                row = """
+         <tr class="%ROWCLASS%">
+          <td align="left">
+            <a href="SCRIPT?operation=search&amp;fieldidx1=%IDX%&amp;fieldrel1=%REL%&amp;fieldcont1=%CGITERM%&frombrowse=true" title="Find matching records" class="termLink">%TERM%</a>
+          </td>
+          <td class="hitCount" align="right">%COUNT%</td>
+        </tr>"""     
            
-                row = browse_result_row
+              #  row = browse_result_row
                 paramDict =  {
                     '%ROWCLASS%': rowclass,
                     '%IDX%': idx, 
@@ -627,22 +767,15 @@ class istcHandler:
                 rows.append(row)
 
             #- end for each item in scanData
-            if (hitstart):
-                rows.append('<tr class="odd"><td colspan="2">-- start of index --</td></tr>')
-                rowCount += 1
-                prevlink = ''
-            else:
-                prevlink=""
-                prevlink = '<a href="/istc%s?fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous %d terms</a>' % (script, idx, rel, cgi_encode(scanData[0][0]), numreq, numreq, numreq)
-                
+           
             if (hitend):
                 rowCount += 1
                 if (rowCount % 2 == 1): rowclass = 'odd';
                 else: rowclass = 'even';
                 rows.append('<tr class="%s"><td colspan="2">-- end of index --</td></tr>' % (rowclass))
-                nextlink = ''
+                nextlink = 'next %d terms' % numreq
             else:
-                nextlink = '<a href="/istc%s?operation=browse&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Next %d terms</a>' % (script, idx, rel, cgi_encode(scanData[-1][0]), 0, numreq, numreq)
+                nextlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Next %d terms</a>' % (script, idx, rel, cgi_encode(scanData[-1][0]), 0, numreq, numreq)
 
             del scanData
             rows.append('</table>')           
@@ -673,39 +806,51 @@ class istcHandler:
         f.close()
         tmpl = tmpl.replace('\n', '')
         
+        path = req.uri[1:] 
+        path = path[path.rfind('/')+1:]
         
         operation = form.get('operation', None)
         e = ""
-        if (operation == 'record'):
-            (t, d, e) = self.display_rec(session, form)
-        elif (operation == 'search'):
-            (t, d, e) = self.handle_istc(session, form)
-        elif (operation == 'scan'):
-            (t, d) = self.browse(form)
-        elif (operation == 'print'):
-            data = self.printRecs(form)
-            self.send_html(data, req)
-            return
-        elif (operation == 'email'):
-            (t, d, e) = self.emailRecs(form)
-        elif (operation == 'save'):
-            data = self.saveRecs(form)
-            self.send_txt(data, req)
-            return
-        elif (operation == 'references'):
-            self.logger.log('getting refs')
-            content = self.get_fullRefs(session, form)
-            self.send_xml(content, req)
-            return
-        elif (operation == 'usareferences'):
-            content = self.get_usaRefs(session, form)
-            self.send_xml(content, req)
-            return
-        else:                    
-            f= file("index.html")
+        if operation :
+            if (operation == 'record'):
+                (t, d, e) = self.display_rec(session, form)
+            elif (operation == 'search'):
+                (t, d, e) = self.handle_istc(session, form)
+            elif (operation == 'scan'):
+                (t, d) = self.browse(form)
+            elif (operation == 'print'):
+                data = self.printRecs(form)
+                self.send_html(data, req)
+                return
+            elif (operation == 'email'):
+                (t, d, e) = self.emailRecs(form)
+            elif (operation == 'save'):
+                data = self.saveRecs(form)
+                self.send_txt(data, req)
+                return
+            elif (operation == 'references'):
+                self.logger.log('getting refs')
+                content = self.get_fullRefs(session, form)
+                self.send_xml(content, req)
+                return
+            elif (operation == 'usareferences'):
+                content = self.get_usaRefs(session, form)
+                self.send_xml(content, req)
+                return
+            elif (operation == 'format'):
+                content = self.get_format(session, form)
+                self.send_xml(content, req)
+                return
+        else:       
+            if (path == 'browse.html'):              
+                f = file('browse.html')
+                t = "Browse"
+            else:       
+                f= file("index.html")
+                t = "Search"
             d = f.read()
             f.close()
-            t = "Search"
+            
             
 #        path = req.uri[1:] 
 #        path = path[path.rfind('/')+1:]
@@ -776,8 +921,22 @@ refsIndexStore = db3.get_object(session, 'refsIndexStore')
 
 qf = db.get_object(session, 'baseQueryFactory')
 
+idxNames = {"anywhere": 'General Keywords',
+            "creator":'Author',
+            "title":'Title',
+            "originplace":'Location of Print',
+            "publisher":'Printer',
+            "identifier":'ISTC Number',
+            "format":'Format',
+            "posessinginstitution":'Location',
+            "year":'Start or exact Year (008)',
+            "date":'Publication Date',
+            "language":'Language',
+            "blshelfmark":'BL Shelfmark'
+                }
+
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
-from cheshire3.web.www_utils import FileLogger
+#from cheshire3.web.www_utils import FileLogger
 
 
 
