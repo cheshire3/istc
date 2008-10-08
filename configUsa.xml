@@ -33,7 +33,7 @@
     <subConfig type="protocolMap" id="CQLProtocolMap">
       <objectType>cheshire3.protocolMap.CQLProtocolMap</objectType>
       <paths>
-         <path type="zeerexPath">zeerex_srw.xml</path>
+         <path type="zeerexPath">zeerex_usa_srw.xml</path>
       </paths>
     </subConfig>
 
@@ -53,7 +53,7 @@
          
 
 
-    <subConfig type="index" id = "idx-usa-code">
+    <subConfig type="index" id = "idx-key-usa">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="usaIndexStore"/>
@@ -70,7 +70,7 @@
       </source>
     </subConfig>
 
-  <subConfig type="index" id = "idx-usa-full">
+  <subConfig type="index" id = "idx-location_usa">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="usaIndexStore"/>
@@ -90,7 +90,7 @@
       </options>
     </subConfig> 
 
-     <subConfig type="index" id = "idx-usa-full-kwd">
+     <subConfig type="index" id = "idx-kwd-location_usa">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="usaIndexStore"/>

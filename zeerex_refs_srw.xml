@@ -1,0 +1,51 @@
+
+<explain id="org.o-r-g.srw-card" authoritative="true" 
+  xmlns="http://explain.z3950.org/dtd/2.0/"
+  xmlns:c3="http://www.cheshire3.org/schemas/explain/">
+    
+  
+  <serverInfo protocol="srw/u" version="1.1" transport="http">
+     <host>localhost</host>
+     <port>80</port>
+     <database>services/istc</database>
+  </serverInfo>
+
+  <databaseInfo>
+     <title lang="en" primary="true">ISTC Bibliographic Reference Codes</title>
+     <description lang="en" primary="true">
+		A data base containing the codes for citations of ISTC material (part of the ISTC catalogue for the British Library).        
+     </description>
+  </databaseInfo>
+
+  <metaInfo>
+     <dateModified>2008-09-16 13:13:00</dateModified>
+  </metaInfo>
+
+  <indexInfo>
+     <set identifier="info:srw/cql-context-set/1/dc-v1.1" name="dc"/>
+     <set identifier="info:srw/cql-context-set/1/cql-v1.2" name="cql"/>
+     <set identifier="info:srw/cql-context-set/15/norzig-1.0" name="norzig"/>
+     <set identifier="info:srw/cql-context-set/2/relevance-1.0" name="rel"/>
+     <set identifier="info:srw/cql-context-set/2/rec-1.1" name="rec"/>
+     <set identifier="info:sru/context-sets/1/bib-1.0" name="bib"/>
+     <set identifier="" name="istc"/>   
+  </indexInfo>
+
+
+  <configInfo>
+     <default type="numberOfRecords">1</default>
+     <default type="contextSet">cql</default>
+     <default type="index">cql.anywhere</default>
+     <default type="relation">all</default>
+     <default type="sortSchema">marcxml</default>
+     <default type="retrieveSchema">marcxml</default>
+     <default type="sortCaseSensitive">false</default>
+     <default type="sortAscending">true</default>
+     <default type="sortMissingValue">HighValue</default>
+     <setting type="maximumRecords">50</setting>
+
+     <supports type="proximity"/>
+     <supports type="resultSets"/>
+     <supports type="sort"/>
+  </configInfo>
+</explain>

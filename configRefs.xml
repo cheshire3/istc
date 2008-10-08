@@ -32,7 +32,7 @@
     <subConfig type="protocolMap" id="CQLProtocolMap">
       <objectType>cheshire3.protocolMap.CQLProtocolMap</objectType>
       <paths>
-        <path type="zeerexPath">zeerex_srw.xml</path>
+        <path type="zeerexPath">zeerex_refs_srw.xml</path>
       </paths>
     </subConfig>
 

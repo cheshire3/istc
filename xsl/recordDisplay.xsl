@@ -28,6 +28,17 @@
 		</xsl:choose>
 	</xsl:param>
 	
+	<xsl:param name="encoding">
+		<xsl:choose>
+			<xsl:when test="$format='screen' or $format='print'">
+				<xsl:text>UTF-8</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>ascii</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:param>
+	
 	<xsl:variable name="newline">
 		<xsl:text>
 </xsl:text>
@@ -37,7 +48,7 @@
 		<xsl:text>	</xsl:text>
 	</xsl:variable>
 	
-	 <xsl:output method="$output" omit-xml-declaration="yes" encoding="UTF-8"/>
+	 <xsl:output method="$output" omit-xml-declaration="yes" encoding="ascii"/>
 	 <xsl:preserve-space elements="xsl:text"/>
 	 
 	 <xsl:variable name="ilc">
@@ -88,10 +99,10 @@
 				<table cellpadding = "5">			
 					<xsl:call-template name="contents"/>
 				</table>
-				<xsl:if test="not($format='screen')">
+	<!--  			<xsl:if test="not($format='screen')">
 					<br/>
 					<xsl:text>&#169; The British Library Board</xsl:text>
-				</xsl:if>				
+				</xsl:if>		-->		
 				<xsl:if test="$format='screen'">
 					<div class="recordnav">%nav%</div>
 					<form id="mainform" action="/istc/search" method="get">
@@ -110,12 +121,12 @@
 					</form>				
 				</xsl:if>	
 			</xsl:when>
-			<xsl:otherwise>			
-				<xsl:call-template name="contents"/>
-				<xsl:value-of select="$newline"/>
-				<xsl:text>&#169; The British Library Board</xsl:text><xsl:value-of select="$newline"/>
-				<xsl:value-of select="$newline"/>
-				<xsl:text>------------------------------</xsl:text><xsl:value-of select="$newline"/>
+			<xsl:otherwise>		
+				<xsl:text>\par \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
+\par \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
+\par \trowd\trql\trleft0\trpaddft3\trpaddt29\trpaddfl3\trpaddl29\trpaddfb3\trpaddb29\trpaddfr3\trpaddr29\cellx2250\cellx9975</xsl:text>
+  				<xsl:call-template name="contents"/>
+				<xsl:text>\par</xsl:text>
 				<xsl:value-of select="$newline"/>
 			</xsl:otherwise>
 		</xsl:choose>	
@@ -126,10 +137,12 @@
 		<xsl:call-template name="title"/>
 		<xsl:call-template name="imprint"/>
 		<xsl:call-template name="format"/>
-		<xsl:call-template name="language"/>
+		
+	<!--	<xsl:call-template name="language"/> 		-->
+
 		<xsl:call-template name="istcNumber"/>
 		<xsl:call-template name="references"/>
-		<xsl:call-template name="reproductions"/>
+		<xsl:call-template name="reproductions"/> 
 		<xsl:call-template name="notes"/>
 	<!-- 	<xsl:call-template name="shelfmark"/>		 -->
 		<xsl:call-template name="locations"/>
@@ -251,10 +264,14 @@
 			<xsl:variable name="label">
 				<xsl:text>Format:</xsl:text>
 			</xsl:variable>
+			 <xsl:variable name="ref">
+				<xsl:value-of select="//datafield[@tag='300']/subfield"/>
+			</xsl:variable> 
+			
 			<!-- <xsl:variable name="value">
 				<xsl:value-of select="str:replace(//datafield[@tag='300']/subfield/text(), '4~~', '4&lt;sup>to&lt;/sup>')"/>			
 			</xsl:variable> -->
-			<xsl:variable name="value">
+			<!-- <xsl:variable name="value">
 				<xsl:variable name="string1">
 					<xsl:call-template name="replace">
 						<xsl:with-param name="original">
@@ -314,20 +331,29 @@
 					<xsl:value-of select="substring-after(substring-before($string6, '&lt;/sup>'), '&lt;sup>')"/>
 				</sup>
 				<xsl:value-of select="substring-after($string6, '&lt;/sup>')"/>
-			</xsl:variable>
+			</xsl:variable> -->
+<!--			<xsl:variable name="value">-->
+<!--				  <xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output"/>-->
+<!--			</xsl:variable>-->
 			<xsl:choose>
 				<xsl:when test="$output='xml'">
 					<tr>
 						<td class="label"><xsl:value-of select="$label"/></td>
 						<td>
-						 	<xsl:value-of select="$value"/>
+								<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output/main"/>
+								<sup>
+									<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output/sup"/>
+									
+								</sup>
+<!--						 	
+<xsl:value-of select="normalize-space($value)"/>-->
 						</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
+						<xsl:with-param name="value" select="normalize-space($value)"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -418,7 +444,17 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-							<xsl:value-of select="."/><xsl:text>; </xsl:text>
+							<xsl:choose>
+								<xsl:when test="$format='screen'">
+									<a target="_new">
+										<xsl:value-of select="."/><xsl:text>; </xsl:text>
+									</a>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="."/><xsl:text>; </xsl:text>
+								</xsl:otherwise>
+							</xsl:choose>
+							
 						</xsl:for-each>
 					</xsl:otherwise>					
 				</xsl:choose>				
@@ -431,7 +467,7 @@
 							<xsl:when test="$expand='false'">
 								<td>
 									<div style="display: block" id="abbrRefs">
-										<xsl:value-of select="$value"/>
+										<xsl:value-of select="substring($value, 0, string-length($value)-1)"/>
 										<xsl:if test="$format='screen'">	
 											<br /><a href="javascript:expandRefs()">expand references</a>
 										</xsl:if>
@@ -469,7 +505,7 @@
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
+						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-1)"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -493,9 +529,10 @@
 								<xsl:for-each select="subfield[not(@code='u')]">
 									<xsl:value-of select="." />
 								</xsl:for-each>
-								<br/>							
+															
 								<xsl:choose>
 									<xsl:when test="$format='screen' and subfield[@code='u']">
+										<xsl:text> </xsl:text>
 										<a target="_new">
 											<xsl:attribute name="href">
 												<xsl:value-of select="subfield[@code='u']" />
@@ -504,25 +541,26 @@
 										</a>
 									</xsl:when>
 									<xsl:when test="subfield[@code='u']">
-										<xsl:text>[</xsl:text><xsl:value-of select="subfield[@code='u']" /><xsl:text>]</xsl:text>
+										<xsl:text> [</xsl:text><xsl:value-of select="subfield[@code='u']" /><xsl:text>]</xsl:text>
 									</xsl:when>
 								</xsl:choose>
+								<br/>
 							</xsl:for-each>
 						</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:for-each select="//datafield[@tag='530']">
-						<xsl:variable name="value">
+					<xsl:variable name="value">
+						<xsl:for-each select="//datafield[@tag='530']">						
 							<xsl:for-each select="subfield[not(@code='u')]">
 								<xsl:value-of select="." />
 							</xsl:for-each>
-							<br/>	
-							<xsl:if test="not($format='screen') and subfield[@code='u']">
+							 <br/>	 
+							 <xsl:if test="not($format='screen') and subfield[@code='u']">
 								<xsl:text>  [</xsl:text><xsl:value-of select="subfield[@code='u']" /><xsl:text>]</xsl:text>
-							</xsl:if>											
-						</xsl:variable>
-					</xsl:for-each>
+							</xsl:if> 													
+						</xsl:for-each>
+					</xsl:variable>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
 						<xsl:with-param name="value" select="$value"/>
@@ -580,10 +618,10 @@
 				<xsl:otherwise>
 					<xsl:variable name="value">
 						<xsl:for-each select="//datafield[@tag='500']/subfield">								
-							<xsl:value-of select="."/><xsl:value-of select="$newline"/><xsl:value-of select="$tab"/>
+							<xsl:value-of select="."/><xsl:text>. </xsl:text>
 						</xsl:for-each>
 						<xsl:for-each select="//datafield[@tag='505']/subfield">
-							<xsl:value-of select="."/><xsl:value-of select="$newline"/><xsl:value-of select="$tab"/>
+							<xsl:value-of select="."/><xsl:text>. </xsl:text>
 						</xsl:for-each>
 					</xsl:variable>
 					<xsl:call-template name="textView">
@@ -651,14 +689,13 @@
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
 					<xsl:text>London, British Library (</xsl:text>
-					<!-- <xsl:for-each select="//datafield[@tag='852']/subfield[not(@code='a')]">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
-					</xsl:for-each> -->
 					<xsl:for-each select="//datafield[@tag='852']">
-						<xsl:for-each select="subfield[not(@code='a')]">
+						<xsl:for-each select="subfield[@code='j']">
+							<xsl:value-of select="."/><xsl:text>.</xsl:text>
+						</xsl:for-each>
+						<xsl:for-each select="subfield[not(@code='a') and not(@code='j')]">
 							<xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
-						<xsl:text>;</xsl:text>
 					</xsl:for-each>
 					<xsl:text>); </xsl:text>
 					</xsl:if>
@@ -671,14 +708,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l1"/></td>					
 						<td>
-							<xsl:value-of select="$v1"/>
+							<xsl:value-of select="substring($v1, 0, string-length($v1)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l1"/>
-							<xsl:with-param name="value" select="$v1"/>
+							<xsl:with-param name="value" select="substring($v1, 0, string-length($v1)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -698,14 +735,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l2"/></td>					
 						<td>
-							<xsl:value-of select="$v2"/>
+							<xsl:value-of select="substring($v2, 0, string-length($v2)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l2"/>
-							<xsl:with-param name="value" select="$v2"/>
+							<xsl:with-param name="value" select="substring($v2, 0, string-length($v2)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -725,14 +762,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l3"/></td>					
 						<td>
-							<xsl:value-of select="$v3"/>
+							<xsl:value-of select="substring($v3, 0, string-length($v3)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l3"/>
-							<xsl:with-param name="value" select="$v3"/>
+							<xsl:with-param name="value" select="substring($v3, 0, string-length($v3)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>												
@@ -752,14 +789,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l4"/></td>					
 						<td>
-							<xsl:value-of select="$v4"/>
+							<xsl:value-of select="substring($v4, 0, string-length($v4)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l4"/>
-							<xsl:with-param name="value" select="$v4"/>
+							<xsl:with-param name="value" select="substring($v4, 0, string-length($v4)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -779,14 +816,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l5"/></td>					
 						<td>
-							<xsl:value-of select="$v5"/>
+							<xsl:value-of select="substring($v5, 0, string-length($v5)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l5"/>
-							<xsl:with-param name="value" select="$v5"/>
+							<xsl:with-param name="value" select="substring($v5, 0, string-length($v5)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -806,14 +843,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l6"/></td>					
 						<td>
-							<xsl:value-of select="$v6"/>
+							<xsl:value-of select="substring($v6, 0, string-length($v6)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l6"/>
-							<xsl:with-param name="value" select="$v6"/>
+							<xsl:with-param name="value" select="substring($v6, 0, string-length($v6)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -833,14 +870,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l7"/></td>					
 						<td>
-							<xsl:value-of select="$v7"/>
+							<xsl:value-of select="substring($v7, 0, string-length($v7)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l7"/>
-							<xsl:with-param name="value" select="$v7"/>
+							<xsl:with-param name="value" select="substring($v7, 0, string-length($v7)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -856,7 +893,12 @@
 						<xsl:variable name="usaref">
 							<xsl:value-of select="subfield[@code='a']/text()"/>
 						</xsl:variable>
-						<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $usaref))/record//full"/><xsl:text> </xsl:text><xsl:value-of select="subfield[@code='b']"/><xsl:text>; </xsl:text>
+						<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $usaref))/record//full"/>
+						<xsl:if test="subfield[@code='b']">
+						<xsl:text> </xsl:text>
+						<xsl:value-of select="subfield[@code='b']"/>
+						</xsl:if>
+						<xsl:text>; </xsl:text>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -864,14 +906,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l8"/></td>					
 						<td>
-							<xsl:value-of select="$v8"/>			
+							<xsl:value-of select="substring($v8, 0, string-length($v8)-1)"/>			
 						</td>
 						</tr>				
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l8"/>
-							<xsl:with-param name="value" select="$v8"/>
+							<xsl:with-param name="value" select="substring($v8, 0, string-length($v8)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -891,14 +933,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l9"/></td>					
 						<td>
-							<xsl:value-of select="$v9"/>
+							<xsl:value-of select="substring($v9, 0, string-length($v9)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l9"/>
-							<xsl:with-param name="value" select="$v9"/>
+							<xsl:with-param name="value" select="substring($v9, 0, string-length($v9)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -918,14 +960,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l10"/></td>					
 						<td>
-							<xsl:value-of select="$v10"/>
+							<xsl:value-of select="substring($v10, 0, string-length($v10)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l10"/>
-							<xsl:with-param name="value" select="$v10"/>
+							<xsl:with-param name="value" select="substring($v10, 0, string-length($v10)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -945,14 +987,14 @@
 						<tr>
 							<td align="right" class="subheader"><xsl:value-of select="$l11"/></td>					
 						<td>
-							<xsl:value-of select="$v11"/>
+							<xsl:value-of select="substring($v11, 0, string-length($v11)-1)"/>
 						</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:call-template name="textView">
 							<xsl:with-param name="label" select="$l11"/>
-							<xsl:with-param name="value" select="$v11"/>
+							<xsl:with-param name="value" select="substring($v11, 0, string-length($v11)-1)"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>				
@@ -963,11 +1005,17 @@
 
 
 	<xsl:template name="textView">
-		<xsl:param name="label"/>
-		<xsl:param name="value"/>
-		<xsl:value-of select="$label"/><xsl:value-of select="$tab"/><xsl:value-of select="$value"/><xsl:value-of select="$newline"/>
+	<xsl:param name="label"/>
+	<xsl:param name="value"/>
+		<xsl:text>\pard\intbl\pard\plain \intbl\ltrpar\s10\ql\rtlch\afs24\lang255\ab\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\b\loch\fs24\lang1033\b {\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b </xsl:text>
+		<xsl:value-of select="$label"/>
+		<xsl:text>}</xsl:text><xsl:value-of select="$newline"/>
+		<xsl:text>\cell\pard\plain \intbl\ltrpar\s10\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 {\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b0 </xsl:text>
+		<xsl:value-of select="$value"/>
+		<xsl:text>}</xsl:text><xsl:value-of select="$newline"/>		
+		<xsl:text>\cell\row\pard \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 </xsl:text><xsl:value-of select="$newline"/>
 	</xsl:template>	
-
+	
 
 	<xsl:template name="replace">
 		<xsl:param name="original"/>

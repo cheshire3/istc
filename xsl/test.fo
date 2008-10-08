@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-				xmlns:lang="http://www.cheshire3.org"
-				xmlns:str="http://exslt.org/strings"
-                extension-element-prefixes="str"
-                xmlns:fo="http://www.w3c.org1999/XSL/Format">
-                
-<xsl:output method="xml"/>
 
-<xsl:template match="/">
 	
 
 		<fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
@@ -26,6 +18,3 @@
 		</fo:page-sequence>
 		
 		</fo:root>
-</xsl:template>
-              
-</xsl:stylesheet>
