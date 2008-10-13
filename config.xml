@@ -127,7 +127,7 @@
 	<!-- display transformers -->
  
 	<subConfig type="transformer" id="recordTxr-screen">
-	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -137,7 +137,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-print">
-	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -147,7 +147,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-save">
-	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -157,7 +157,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-email">
-	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -212,11 +212,15 @@
     </subConfig>
     
     <subConfig type="normalizer" id="FormatNormalizer">
-    	<objectType>istcNormalizer.FormatNormalizer</objectType>
+    	<objectType>ISTCextensions.FormatNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="LanguageNormalizer">
-    	<objectType>istcNormalizer.LanguageNormalizer</objectType>
+    	<objectType>ISTCextensions.LanguageNormalizer</objectType>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="BibRefNormalizer">
+    	<objectType>ISTCextensions.BibRefNormalizer</objectType>
     </subConfig>
       
 	<!-- indexes -->
@@ -399,7 +403,24 @@
     </subConfig>
 
 
-<!-- Bibiographical refs indexes to be added here -->
+	<subConfig type="index" id="idx-BibRef">
+		<objectType>cheshire3.index.SimpleIndex</objectType>
+		<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>		
+		</paths>		
+		<source>
+		<xpath>datafield[@tag='510']</xpath>
+			<process>
+          		<object type="extractor" ref="SimpleExtractor"/>
+          		<object type="normalizer" ref="CaseNormalizer"/>
+          		<object type="normalizer" ref="SpaceNormalizer"/> 
+          		<object type="normalizer" ref="DiacriticNormalizer"/>
+          		<object type="normalizer" ref="BibRefNormalizer"/>
+	  	  		
+        	</process>
+		</source>
+	</subConfig>
 
 
     <subConfig type="index" id = "idx-ISTCnumber">
@@ -647,11 +668,10 @@
     		<xpath>datafield[@tag='952']/subfield[@code='a']</xpath>
     		<process>
 	          <object type="extractor" ref="SimpleExtractor"/>
-			  <object type="tokenizer" ref="RegexpSubTokenizer"/>
-			  <object type="tokenMerger" ref="SimpleTokenMerger"/>
-	          <object type="normalizer" ref="CaseNormalizer"/>
-		  	  <object type="normalizer" ref="SpaceNormalizer"/>
-		  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+	          <object type="normalizer" ref="SpaceNormalizer"/>
+	         <!--   <object type="normalizer" ref="CaseNormalizer"/>
+		  	  
+		  	  <object type="normalizer" ref="DiacriticNormalizer"/>-->
 	        </process>
     	</source>
     </subConfig>
