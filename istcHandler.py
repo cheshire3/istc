@@ -405,7 +405,7 @@ class istcHandler:
         ref = form.get('q', None)
         ref = ref.replace('*', '\*')
         session.database = db3.id
-        q = qf.get_query(session, 'c3.idx-refs-code exact "%s"' % (ref))
+        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
         rs = db3.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
@@ -424,7 +424,7 @@ class istcHandler:
     def get_usaRefs(self, session, form):
         ref = form.get('q', None)
         session.database = db2.id
-        q = qf.get_query(session, 'c3.idx-usa-code exact "%s"' % (ref.split(' ')[0].strip()))
+        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % (ref.split(' ')[0].strip()))
         rs = db2.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).get_xml(session)
@@ -439,9 +439,11 @@ class istcHandler:
                 recRefs = '<record></record>'
         return recRefs     
         
-    def get_format(self, session, form):
-        string = form.get('q', None)
-        return '<output>%s</output>' % string.replace('4~~', '<main>4</main><sup>to</sup>').replace('8~~', '<main>8</main><sup>vo</sup>').replace('f~~', '<main>f</main><sup>o</sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '<sup>mo</sup>')
+        
+#    def get_format(self, session, form):
+#        string = form.get('q', None)
+#        return '<output>%s</output>' % string.replace('4~~', '4&lt;sup>to&lt;/sup>').replace('8~~', '8&lt;sup>vo&lt;/sup>').replace('f~~', 'f&lt;sup>o&lt;/sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '&lt;sup>mo&lt;/sup>')
+#    
     
     def printRecs(self, form):
         istc = form.get('istc', None)
@@ -636,13 +638,14 @@ class istcHandler:
 
         hitstart = False
         hitend = False
-        #scanData = db.scan(session, scanClause, 5, direction="<=")
+
         if (scanTerm == ''):
             hitstart = True
             rp = 0
         if (rp == 0):
             scanData = db.scan(session, scanClause, numreq, direction=">")
             if (len(scanData) < numreq): hitend = True
+            elif len(scanData[-1]) == 3: hitend = True
         elif (rp == 1):
             scanData = db.scan(session, scanClause, numreq, direction=">=")
             if (len(scanData) < numreq): hitend = True
@@ -653,20 +656,21 @@ class istcHandler:
         elif (rp == numreq+1):
             scanData = db.scan(session, scanClause, numreq, direction="<")
             scanData.reverse()
-            if (len(scanData) < numreq): hitstart = True
+            if (len(scanData) < numreq): hitstart = True 
             elif len(scanData[0]) == 3: hitstart = True
         else:
             
-            nFwd = numreq - rp
-            nBack = rp
+            nFwd = numreq - rp #typically 25 - 4 = 21
+            nBack = rp         # typically 4
             # Need to go down...
             try:
+                scanClause = qf.get_query(session, qString)
                 scanData = db.scan(session, scanClause, nBack, direction="<=")
             except:
-                
                 scanData = []
                 # ... then up
             try:
+                scanClause = qf.get_query(session, qString)
                 scanData1 = db.scan(session, scanClause, nFwd, direction=">=")
             except:
                 scanData1 = []
@@ -704,11 +708,9 @@ class istcHandler:
                 rowCount += 1
                 prevlink = ''
             else:
-                prevlink=""
-                prevlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous %d terms</a>' % (script, idx, rel, cgi_encode(scanData[0][0]), numreq, numreq, numreq)
-                 
- 
-            
+                prevlink="Previous %d terms" % numreq
+                prevlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous %d terms</a>' % (script, idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq, numreq)
+                            
             dodgyTerms = []
             for i in range(len(scanData)):
                 item = scanData[i]
@@ -932,7 +934,9 @@ idxNames = {"anywhere": 'General Keywords',
             "year":'Start or exact Year (008)',
             "date":'Publication Date',
             "language":'Language',
-            "blshelfmark":'BL Shelfmark'
+            "blshelfmark":'BL Shelfmark',
+            "idx-pass-location_usa": 'USA Location',
+            "idx-bibref": 'Bibliographical References'
                 }
 
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'

@@ -31,6 +31,10 @@ color: #CCCC99;
 	font-weight: bold;
 	vertical-align: top;
 	}
+	
+.subheader {
+	vertical-align: top;
+	}
 
 /* Header Styles */
 
