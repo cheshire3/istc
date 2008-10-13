@@ -3,7 +3,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
 				xmlns:lang="http://www.cheshire3.org"
 				xmlns:str="http://exslt.org/strings"
-                extension-element-prefixes="str">
+                extension-element-prefixes="str"
+                xmlns:c3fn="http://www.cheshire3.org/ns/xsl/">
 
 	<xsl:param name="format">
 		<xsl:text>screen</xsl:text>
@@ -99,10 +100,6 @@
 				<table cellpadding = "5">			
 					<xsl:call-template name="contents"/>
 				</table>
-	<!--  			<xsl:if test="not($format='screen')">
-					<br/>
-					<xsl:text>&#169; The British Library Board</xsl:text>
-				</xsl:if>		-->		
 				<xsl:if test="$format='screen'">
 					<div class="recordnav">%nav%</div>
 					<form id="mainform" action="/istc/search" method="get">
@@ -132,14 +129,12 @@
 		</xsl:choose>	
 	</xsl:template>
 
-	<xsl:template name="contents">		
+	<xsl:template name="contents">	
 		<xsl:call-template name="author"/>	
 		<xsl:call-template name="title"/>
 		<xsl:call-template name="imprint"/>
-		<xsl:call-template name="format"/>
-		
+		<xsl:call-template name="format"/>		
 	<!--	<xsl:call-template name="language"/> 		-->
-
 		<xsl:call-template name="istcNumber"/>
 		<xsl:call-template name="references"/>
 		<xsl:call-template name="reproductions"/> 
@@ -267,99 +262,78 @@
 			 <xsl:variable name="ref">
 				<xsl:value-of select="//datafield[@tag='300']/subfield"/>
 			</xsl:variable> 
-			
-			<!-- <xsl:variable name="value">
-				<xsl:value-of select="str:replace(//datafield[@tag='300']/subfield/text(), '4~~', '4&lt;sup>to&lt;/sup>')"/>			
-			</xsl:variable> -->
-			<!-- <xsl:variable name="value">
-				<xsl:variable name="string1">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="//datafield[@tag='300']"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'4~~'"/>
-						<xsl:with-param name="replacement" select="'4&lt;sup>to&lt;/sup>'"/>
-					</xsl:call-template>		
-				</xsl:variable>
-				<xsl:variable name="string2">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="$string1"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'8~~'"/>
-						<xsl:with-param name="replacement" select="'8&lt;sup>vo&lt;/sup>'"/>
-					</xsl:call-template>		
-				</xsl:variable> 					
-				<xsl:variable name="string3">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="$string2"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'f~~'"/>
-						<xsl:with-param name="replacement" select="'f&lt;sup>o&lt;/sup>'"/>
-					</xsl:call-template>		
-				</xsl:variable>
-				<xsl:variable name="string4">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="$string3"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'bdsde'"/>
-						<xsl:with-param name="replacement" select="'Broadside'"/>
-					</xsl:call-template>		
-				</xsl:variable>
-				<xsl:variable name="string5">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="$string4"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'Bdsde'"/>
-						<xsl:with-param name="replacement" select="'Broadside'"/>
-					</xsl:call-template>		
-				</xsl:variable>
-				<xsl:variable name="string6">
-					<xsl:call-template name="replace">
-						<xsl:with-param name="original">
-							<xsl:value-of select="$string5"/>
-						</xsl:with-param>
-						<xsl:with-param name="substring" select="'~~'"/>
-						<xsl:with-param name="replacement" select="'&lt;sup>mo&lt;/sup>'"/>
-					</xsl:call-template>		
-				</xsl:variable>
-				<xsl:value-of select="substring-before($string6, '&lt;sup>')"/>
-				<sup>
-					<xsl:value-of select="substring-after(substring-before($string6, '&lt;/sup>'), '&lt;sup>')"/>
-				</sup>
-				<xsl:value-of select="substring-after($string6, '&lt;/sup>')"/>
-			</xsl:variable> -->
-<!--			<xsl:variable name="value">-->
-<!--				  <xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output"/>-->
-<!--			</xsl:variable>-->
+			<xsl:variable name="value">
+				<xsl:value-of select="c3fn:format(//datafield[@tag='300']/subfield/text())"/>
+			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="$output='xml'">
 					<tr>
 						<td class="label"><xsl:value-of select="$label"/></td>
 						<td>
-								<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output/main"/>
-								<sup>
-									<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=format&amp;q=', $ref), false()))/output/sup"/>
-									
-								</sup>
-<!--						 	
-<xsl:value-of select="normalize-space($value)"/>-->
+							<xsl:call-template name="formatReplace">
+								<xsl:with-param name="string">
+									<xsl:value-of select="normalize-space($value)"/>
+								</xsl:with-param>
+							</xsl:call-template>
 						</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
+					<xsl:variable name="stringFormat">
+							<xsl:call-template name="formatReplace">
+								<xsl:with-param name="string">
+									<xsl:value-of select="normalize-space($value)"/>
+								</xsl:with-param>
+							</xsl:call-template>
+					</xsl:variable>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="normalize-space($value)"/>
+						<xsl:with-param name="value" select="$stringFormat"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
 	</xsl:template>
 	
+	<xsl:template name="formatReplace">
+		<xsl:param name="string"/>
+		<xsl:choose>
+			<xsl:when test="$output='xml'">
+				<xsl:choose>
+					<xsl:when test="substring-before($string, '&lt;sup&gt;')">
+						<text><xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/></text>
+						<sup>
+							<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
+						</sup>
+						<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
+						 	<xsl:call-template name="formatReplace">
+								<xsl:with-param name="string">
+									<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
+								</xsl:with-param>
+							</xsl:call-template>
+						</xsl:if>
+					</xsl:when>
+					<xsl:otherwise>
+						<text><xsl:value-of select="$string"/></text>
+					</xsl:otherwise>
+			
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<text>
+					<xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/>
+					<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
+				</text>
+				<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
+				 	<xsl:call-template name="formatReplace">
+						<xsl:with-param name="string">
+							<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
+						</xsl:with-param>
+					</xsl:call-template>
+				</xsl:if>
+			</xsl:otherwise>
+		</xsl:choose>	
+	</xsl:template>
 
 	<xsl:template name="language">
 		<xsl:variable name="label">
@@ -605,7 +579,19 @@
 										<br/><br/>
 									</xsl:when>
 									<xsl:otherwise>
-										<xsl:value-of select="."/><br/>
+										<xsl:choose>
+											<xsl:when test="contains(., '~~')">
+												<xsl:call-template name="formatReplace">
+													<xsl:with-param name="string">
+														<xsl:value-of select="c3fn:format(.//text())"/>
+														</xsl:with-param>
+												</xsl:call-template>
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:value-of select="."/>
+											</xsl:otherwise>
+										</xsl:choose>										
+										<br/>
 									</xsl:otherwise>
 								</xsl:choose>
 							</xsl:for-each>
@@ -888,8 +874,7 @@
 					<xsl:text>U.S.A:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v8">
-					<xsl:for-each select="//datafield[@tag='952']">
-						
+					<xsl:for-each select="//datafield[@tag='952']">						
 						<xsl:variable name="usaref">
 							<xsl:value-of select="subfield[@code='a']/text()"/>
 						</xsl:variable>
