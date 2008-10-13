@@ -52,7 +52,7 @@
          
 
 
-    <subConfig type="index" id = "idx-refs-code">
+    <subConfig type="index" id = "idx-key-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -73,7 +73,7 @@
 
     </subConfig>
 
- <subConfig type="index" id = "idx-refs-full">
+ <subConfig type="index" id = "idx-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -93,7 +93,7 @@
       </options>
     </subConfig>
 
-    <subConfig type="index" id = "idx-refs-full-kwd">
+    <subConfig type="index" id = "idx-kwd-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
