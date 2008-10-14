@@ -48,7 +48,7 @@
 					<xsl:when test="$op = 'save'"><xsl:text>Save Record</xsl:text><img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></xsl:when>			
 				</xsl:choose>
 			</a>
-		</div><br/>
+		</div>
 	</xsl:template>
 		
 	<xsl:template name="author">
