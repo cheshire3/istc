@@ -2,21 +2,23 @@ from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
 import sys, os, cgitb, time, re
 
-from baseObjects import Session
-from server import SimpleServer
-from PyZ3950 import CQLParser
-from baseObjects import Session
-from utils import flattenTexts
-from document import StringDocument
-from record import LxmlRecord
-from www_utils import *
+sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+
+from cheshire3.baseObjects import Session
+from cheshire3.server import SimpleServer
+from cheshire3.baseObjects import Session
+from cheshire3.utils import flattenTexts
+from cheshire3.document import StringDocument
+from cheshire3.record import LxmlRecord
+from cheshire3.web import www_utils
+from cheshire3.web.www_utils import *
 from lxml import etree
 #from wwwSearch import *
 from crypt import crypt
 from istcLocalConfig import *
 
 class IstcEditingHandler:
-    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/template.ssi"
+    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/editTemplate.html"
     
     
     def __init__(self, lgr):
@@ -192,7 +194,7 @@ class IstcEditingHandler:
     def _get_suggestions(self, form):
         letters = form.get('s', None)
         index = form.get('i', None)
-        q = CQLParser.parse('c3.%s = %s' % (index, letters))
+        q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
         idx = db.get_object(session, '%s' % index)
         terms = db.scan(session, q, -1, direction="=")
         output = []
@@ -235,6 +237,7 @@ rebuild = True
 serv = None
 session = None
 db = None
+qf = None
 baseDocFac = None
 sourceDir = None
 editStore = None
@@ -244,8 +247,9 @@ xmlp = None
 formTxr = None
 indentingTxr = None
 
+
 def build_architecture(data=None):
-    global session, serv, db, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
+    global session, serv, db, qf, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
     
     session = Session()
     session.database = 'db_istc'
@@ -253,6 +257,7 @@ def build_architecture(data=None):
     session.user = None
     serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
     db = serv.get_object(session, 'db_istc')
+    qf = db.get_object(session, 'baseQueryFactory')
     baseDocFac = db.get_object(session, 'baseDocumentFactory')
     sourceDir = baseDocFac.get_default(session, 'data')
     editStore = db.get_object(session, 'editingStore')
