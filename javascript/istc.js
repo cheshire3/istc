@@ -227,7 +227,7 @@ function editEntry(s, number){
 
 //maps html element ids to indexes
 var indexMap = new Array();
-		indexMap['imprints_a'] = 'idx-location';
+		indexMap['imprints_a'] = 'idx-kwd-publoc';
 		indexMap['imprints_b'] = 'idx-printer';
 		indexMap['author'] = 'idx-author';
 
