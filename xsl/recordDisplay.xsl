@@ -95,7 +95,7 @@
 		<xsl:choose>	
 			<xsl:when test="$output='xml'">	
 				<xsl:if test="$format='screen'">
-					<div class="recordnav">%nav%</div>
+					<div class="recordnav">%nav%</div><br/>
 				</xsl:if>
 				<table cellpadding = "5">			
 					<xsl:call-template name="contents"/>
@@ -412,7 +412,7 @@
 								<xsl:value-of select="."/>
 							</xsl:variable>
 							<xsl:value-of select="."/><xsl:text>: </xsl:text>
-							<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=references&amp;q=', $ref), false()))/record//full"/>
+							<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
 							<xsl:value-of select="$newline"/>
 						</xsl:for-each>
 					</xsl:when>
@@ -453,8 +453,9 @@
 													<xsl:value-of select="."/>
 												</xsl:variable>
 												<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text>
-												<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=references&amp;q=', $ref), false()))/record//full"/>
-												<br />
+												<!-- <xsl:value-of select="c3fn:refs(.)"/> -->
+												<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
+											 	<br />
 											</xsl:for-each>
 											<a href="javascript:collapseRefs()">collapse references</a>
 										</div>
@@ -468,7 +469,8 @@
 											<xsl:value-of select="."/>
 										</xsl:variable>
 										<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text>
-										<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/?operation=references&amp;q=', $ref), false()))/record//full"/>
+										<!-- <xsl:value-of select="c3fn:refs(.)"/> -->
+										<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
 										<br />
 									</xsl:for-each>
 								</td>
@@ -878,7 +880,7 @@
 						<xsl:variable name="usaref">
 							<xsl:value-of select="subfield[@code='a']/text()"/>
 						</xsl:variable>
-						<xsl:value-of select="document(concat('http://localhost/istc/search/?operation=usareferences&amp;q=', $usaref))/record//full"/>
+						<xsl:value-of select="document(concat('http://localhost/istc/search/search.html?operation=usareferences&amp;q=', $usaref))/record//full"/>
 						<xsl:if test="subfield[@code='b']">
 						<xsl:text> </xsl:text>
 						<xsl:value-of select="subfield[@code='b']"/>
