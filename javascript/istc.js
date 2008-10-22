@@ -89,6 +89,7 @@ function submitForm(op){
 var nameCount = 0;
 
 function addEntry(s){
+
    	var fm = document.getElementById('istcForm');
 	var tableDiv = ($(s + 'table'));
     /* retreive all values from section of form and reset form values*/
@@ -195,7 +196,7 @@ function deleteEntry(d){
 followed by '_formgen' which is used to maintain distinct ids between access points read in from existing xml and those created in the current form,
 number is the number which forms part of the unique id */
 function editEntry(s, number){
-  
+
 	var type = s.substring(0, s.indexOf('_formgen'));
   	if (type == '') {
   		type = s;

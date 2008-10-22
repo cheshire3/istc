@@ -223,9 +223,8 @@ class istcHandler:
             else :
                 navString = ''
 
-            html.append(navString)
                 
-            html.append('<h1>%d Results</h1><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author%s">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, rsid, locString, rsid, locString, rsid, locString))
+            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author%s">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, navString, rsid, locString, rsid, locString, rsid, locString))
 
             for i in range(start, min(start+pagesize, len(rs))):
 
@@ -267,8 +266,9 @@ class istcHandler:
                 except:
                     date= ""
           
-                html.append('<a href="/istc/search?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % (rsid, i, locString, title, author, imprint, date))       
-            
+                html.append('<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % (rsid, i, locString, title, author, imprint, date))       
+            html.append('<div class="recordnav">%s</div><br/>' % navString)
+                
             menubits.extend(['<div class="menugrp">',
                             '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
                             '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
@@ -279,9 +279,9 @@ class istcHandler:
             
             if hits <= 200:
                 menubits.extend(['<div class="menugrp">',
-                            '<div class="menuitem"><a href="/istc/search?operation=print&rsid=%s%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search?operation=email&rsid=%s%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search?operation=save&rsid=%s%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>' % (rsid, locString),
                             '</div>'])
             
             
@@ -290,9 +290,9 @@ class istcHandler:
             menubits = []
         
         if not locations == 'all':
-            return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form>' % (rsid, locations, ''.join(html)), ''.join(menubits))
+            return ('Search Results', '<form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form>' % (rsid, locations, ''.join(html)), ''.join(menubits))
         else :
-            return ('Search Results', '<form id="mainform" action="/istc/search" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form>' % (rsid, ''.join(html)), ''.join(menubits))
+            return ('Search Results', '<form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form>' % (rsid, ''.join(html)), ''.join(menubits))
 
 
     def _interpret_query(self, cql, stack = [], string = []):    
@@ -706,10 +706,10 @@ class istcHandler:
             if (hitstart):
                 rows.append('<tr class="odd"><td colspan="2">-- start of index --</td></tr>')
                 rowCount += 1
-                prevlink = ''
+                prevlink = 'Previous'
             else:
-                prevlink="Previous %d terms" % numreq
-                prevlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous %d terms</a>' % (script, idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq, numreq)
+                prevlink="Previous"
+                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous</a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
                             
             dodgyTerms = []
             for i in range(len(scanData)):
@@ -775,16 +775,14 @@ class istcHandler:
                 if (rowCount % 2 == 1): rowclass = 'odd';
                 else: rowclass = 'even';
                 rows.append('<tr class="%s"><td colspan="2">-- end of index --</td></tr>' % (rowclass))
-                nextlink = 'next %d terms' % numreq
+                nextlink = 'Next'
             else:
-                nextlink = '<a href="/istc/search/%s?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Next %d terms</a>' % (script, idx, rel, cgi_encode(scanData[-1][0]), 0, numreq, numreq)
+                nextlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Next</a>' % (idx, rel, cgi_encode(scanData[-1][0]), 0, numreq)
 
             del scanData
             rows.append('</table>')           
-            rows.extend(['<div class="scannav"><p>%s</p></div>' % (' | '.join([prevlink, nextlink])),
-                         '</div><!-- end of single div -->',
-                         '</div> <!-- end of wrapper div -->'
-                         ])
+            rows.append('<div class="recordnav">%s</div>' % (' | '.join([prevlink, nextlink])))
+                         
             #- end hit navigation
             
             return (" ".join(t),'\n'.join(rows))
@@ -807,85 +805,75 @@ class istcHandler:
         tmpl = f.read()
         f.close()
         tmpl = tmpl.replace('\n', '')
-        
+               
         path = req.uri[1:] 
         path = path[path.rfind('/')+1:]
         
         operation = form.get('operation', None)
         e = ""
-        if operation :
-            if (operation == 'record'):
-                (t, d, e) = self.display_rec(session, form)
-            elif (operation == 'search'):
-                (t, d, e) = self.handle_istc(session, form)
-            elif (operation == 'scan'):
-                (t, d) = self.browse(form)
-            elif (operation == 'print'):
-                data = self.printRecs(form)
-                self.send_html(data, req)
-                return
-            elif (operation == 'email'):
-                (t, d, e) = self.emailRecs(form)
-            elif (operation == 'save'):
-                data = self.saveRecs(form)
-                self.send_txt(data, req)
-                return
-            elif (operation == 'references'):
-                self.logger.log('getting refs')
-                content = self.get_fullRefs(session, form)
-                self.send_xml(content, req)
-                return
-            elif (operation == 'usareferences'):
-                content = self.get_usaRefs(session, form)
-                self.send_xml(content, req)
-                return
-            elif (operation == 'format'):
-                content = self.get_format(session, form)
-                self.send_xml(content, req)
-                return
-        else:       
-            if (path == 'browse.html'):              
-                f = file('browse.html')
-                t = "Browse"
-            else:       
+
+        if path == 'search.html':
+            if operation:
+                if (operation == 'record'):
+                    (t, d, e) = self.display_rec(session, form)
+                elif (operation == 'search'):
+                    (t, d, e) = self.handle_istc(session, form)
+                elif (operation == 'print'):
+                    data = self.printRecs(form)
+                    self.send_html(data, req)
+                    return
+                elif (operation == 'email'):
+                    (t, d, e) = self.emailRecs(form)
+                elif (operation == 'save'):
+                    data = self.saveRecs(form)
+                    self.send_txt(data, req)
+                    return
+                elif (operation == 'references'):
+                    self.logger.log('getting refs')
+                    content = self.get_fullRefs(session, form)
+                    self.send_xml(content, req)
+                    return
+                elif (operation == 'usareferences'):
+                    content = self.get_usaRefs(session, form)
+                    self.send_xml(content, req)
+                    return
+                elif (operation == 'format'):
+                    content = self.get_format(session, form)
+                    self.send_xml(content, req)
+                    return
+                else:
+                    content = 'An invalid operation was attempted.'
+                    self.send_html(content, req)
+                    return
+            else:
                 f= file("index.html")
                 t = "Search"
+                d = f.read()
+                f.close()
+        elif path == 'browse.html':
+            if operation:
+                if operation == 'scan':
+                    (t, d) = self.browse(form)
+                else:
+                    content = 'An invalid operation was attempted.'
+                    self.send_html(content, req)
+                    return
+            else:
+                f = file('browse.html')
+                t = "Browse"
+                d = f.read()
+                f.close()
+        elif path == 'about.html':
+            f = file('about.html')
+            t = "About the Catalogue"
             d = f.read()
             f.close()
             
-            
-#        path = req.uri[1:] 
-#        path = path[path.rfind('/')+1:]
-#
-#        e = ""
-#        if (path =="list.html"):
-#	        (t, d) = self.handle_list(session, form)           
-#        elif (path == "search.html"):
-#            cql = self.generate_query(form)
-#            (t, d) = self.handle_istc(session, cql)
-#        elif (path == "record.html"):
-#            (t, d) = self.display_rec(session, form)
-#        elif (path  == 'scan.html'):
-#            (t, d) = self.browse(form)   
-#        else:            
-#            if (os.path.exists(path)):
-#                f = file(path)
-#                d = f.read()
-#                f.close()
-#                stuff = d.split("\n", 1)
-#                if (len(stuff) == 1):
-#                    t = "Cheshire/ISTC"
-#                else:
-#                    t = stuff[0]
-#                    d = stuff[1]
-#            else:
-#                                
-#                f= file("index.html")
-#                d = f.read()
-#                f.close()
-#                t = "Search"
-#  
-            
+        else:
+            f= file("index.html")
+            t = "Search"
+            d = f.read()
+            f.close()    
         extra = '' #TODO check if this is needed - not sure %EXTRA% ever exists
  #       raise ValueError(d)
  #       d = d.encode('utf8')
@@ -897,31 +885,50 @@ class istcHandler:
         tmpl = tmpl.replace("%EXTRATABLESTUFF%", e)
 	self.send_html(tmpl, req)
 
+#- Some stuff to do on initialisation
+session = None
+serv = None
+db = None
+db2 = None
+db3 = None
+dfp = None
 
+recStore = None
+indexStore = None
+rss = None
+usaRecStore = None
+usaIndexStore = None
+refsRecStore = None
+refsIndexStore = None
+
+qf = None
+
+rebuild = True
+
+def build_architecture(data=None):
+    global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, qf
+
+    session = Session()
+    serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
+        
+    db = serv.get_object(session, 'db_istc')
+    db2 = serv.get_object(session, 'db_usa')
+    db3 = serv.get_object(session, 'db_refs')
     
-os.chdir("/home/cheshire/cheshire3/cheshire3/code")
+    session.database = db.id
+    dfp = db.get_path(session, "defaultPath")
+    
+    recStore = db.get_object(session, 'recordStore')
+    indexStore = db.get_object(session, 'indexStore')
+    rss = db.get_object(session, 'resultSetStore')
+    usaRecStore = db2.get_object(session, 'usaRecordStore')
+    usaIndexStore = db2.get_object(session, 'usaIndexStore')
+    refsRecStore = db3.get_object(session, 'refsRecordStore')
+    refsIndexStore = db3.get_object(session, 'refsIndexStore')
 
-from cheshire3.baseObjects import Session
-session = Session()
-serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
-
-
-
-db = serv.get_object(session, 'db_istc')
-db2 = serv.get_object(session, 'db_usa')
-db3 = serv.get_object(session, 'db_refs')
-
-session.database = db.id
-dfp = db.get_path(session, "defaultPath")
-recStore = db.get_object(session, 'recordStore')
-indexStore = db.get_object(session, 'indexStore')
-rss = db.get_object(session, 'resultSetStore')
-usaRecStore = db2.get_object(session, 'usaRecordStore')
-usaIndexStore = db2.get_object(session, 'usaIndexStore')
-refsRecStore = db3.get_object(session, 'refsRecordStore')
-refsIndexStore = db3.get_object(session, 'refsIndexStore')
-
-qf = db.get_object(session, 'baseQueryFactory')
+    qf = db.get_object(session, 'baseQueryFactory')
+    
+    rebuild = False
 
 idxNames = {"anywhere": 'General Keywords',
             "creator":'Author',
@@ -940,22 +947,35 @@ idxNames = {"anywhere": 'General Keywords',
                 }
 
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
-#from cheshire3.web.www_utils import FileLogger
-
 
 
 def handler(req):
-    # do stuff
-    os.chdir("/home/cheshire/cheshire3/cheshire3/www/istc/html/")
-    remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
-    lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
-    istchandler = istcHandler(lgr)        
+    global rebuild
+    req.register_cleanup(build_architecture)
     try:
-        istchandler.handle(req)
-        try: lgr.flush()                                                        # flush all logged strings to disk
-        except: pass
+        if rebuild:
+            build_architecture()
+        else:
+            try:
+                fp = recStore.get_path(session, 'databasePath')    # attempt to find filepath for recordStore
+                assert (os.path.exists(fp) and time.time() - os.stat(fp).st_mtime > 60*60)
+            except:
+                # architecture not built
+                build_architecture()
+        os.chdir("/home/cheshire/cheshire3/cheshire3/www/istc/html/")
+        remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
+        lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
+        istchandler = istcHandler(lgr)        
+        try:
+            istchandler.handle(req)
+        finally:
+            try: lgr.flush()                                                        # flush all logged strings to disk
+            except: pass
+            del lgr, istchandler  
+
     except:
         req.content_type = "text/html; charset=utf-8"
         cgitb.Hook(file = req).handle()
-    return apache.OK
+    else:
+        return apache.OK
 
