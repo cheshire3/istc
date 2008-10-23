@@ -9,7 +9,7 @@
 		<div id="formDiv" name="form" class="formDiv" onscroll="hideAllMenus()">
 			<form id="istcForm" name="istcForm" action="#">
 			
-			
+			<div class="field">
 			<p><strong>ISTC Number:</strong><br/>
 				<xsl:choose>
 					<xsl:when test="//controlfield[@tag='001']">
@@ -20,8 +20,9 @@
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
+			</div>
 			
-			
+			<div class="field">
 			<p><strong>Author(s):</strong><br/>
 				<xsl:choose>
 					<xsl:when test="//datafield[@tag='100']|datafield[@tag='130']">
@@ -33,19 +34,23 @@
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
+			</div>
 			
 			
+			<div class="field">
 			<p><strong>Title:</strong><br/>
 				<xsl:choose>
 					<xsl:when test="//datafield[@tag='245']/subfield[@code='a']">
 						<xsl:apply-templates select="//datafield[@tag='245']/subfield[@code='a']"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<input class="menuField" type="text" onfocus="setCurrent(this);" name="datafield[@tag='245']/subfield[@code='a']" id="title" size="39"></input>
+						<input class="menuField" type="text" onfocus="setCurrent(this);" name="datafield[@tag='245']/subfield[@code='a']" id="title" size="100"></input>
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
+			</div>
 			
+			<div class="field">
 			<p><strong>Imprints:</strong><br/>
 				<xsl:choose>
 					<xsl:when test="//datafield[@tag='260']">
@@ -60,14 +65,16 @@
 				</xsl:choose>		
 				<div id="imprintstable" class="tablecontainer">
 					<table id="table_imprints"><tbody>
-						<tr><td class="label">Place:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_a" id="imprints_a" size="36"></input><br/></td></tr>
-						<tr><td class="label">Printer:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_b" id="imprints_b" size="36"></input><br/></td></tr>
-						<tr><td class="label">Date:</td><td> <input type="text" onfocus="setCurrent(this);" name="imprints_c" id="imprints_c" size="36"></input><br/></td></tr>
+						<tr><td class="melabel">Place:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_a" id="imprints_a" size="36"></input><br/></td></tr>
+						<tr><td class="melabel">Printer:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="imprints_b" id="imprints_b" size="36"></input><br/></td></tr>
+						<tr><td class="melabel">Date:</td><td> <input type="text" onfocus="setCurrent(this);" name="imprints_c" id="imprints_c" size="36"></input><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('imprints');" value="Add"></input></td><td></td></tr>
 				    </tbody></table>
 				</div>
 			</p>
+			</div>
 			<br/>
+			
 			
 			
 			
@@ -87,7 +94,7 @@
 	
 	
 	<xsl:template match="datafield[@tag='245']/subfield[@code='a']">
-		<input class="menuField" type="text" onfocus="setCurrent(this);" name="datafield[@tag='245']/subfield[@code='a']" id="title" size="39">
+		<input class="menuField" type="text" onfocus="setCurrent(this);" name="datafield[@tag='245']/subfield[@code='a']" id="title" size="100">
 			<xsl:attribute name="value">
 				<xsl:value-of select="."/>
 			</xsl:attribute>
@@ -97,7 +104,7 @@
 	
 	<xsl:template match="datafield[@tag='100']/subfield[@code='a']">
 		<select name="authorsel"><option value="null">   </option><option value="130">Uniform Title</option><option value="100" selected="selected">Personal</option></select><br/>
-		<input class="menuField" type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author" id="author" size="39">
+		<input class="menuField" type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author" id="author" size="100">
 			<xsl:attribute name="value">
 				<xsl:value-of select="."/>
 			</xsl:attribute>
