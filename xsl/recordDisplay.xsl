@@ -102,7 +102,7 @@
 				</table>
 				<xsl:if test="$format='screen'">
 					<div class="recordnav">%nav%</div>
-					<form id="mainform" action="/istc/search" method="get">
+					<form id="mainform" action="/istc/search/search.html" method="get">
 						<input type="hidden" id="opvalue" name="operation" value="print"/>
 						<input type="hidden" id="expand" name="expand" value="false"/>
 						<input type="hidden" id="locations" name="locations">
@@ -606,15 +606,22 @@
 				<xsl:otherwise>
 					<xsl:variable name="value">
 						<xsl:for-each select="//datafield[@tag='500']/subfield">								
-							<xsl:value-of select="."/><xsl:text>. </xsl:text>
+							<xsl:value-of select="c3fn:format(.//text())"/><xsl:text>. </xsl:text>
 						</xsl:for-each>
 						<xsl:for-each select="//datafield[@tag='505']/subfield">
-							<xsl:value-of select="."/><xsl:text>. </xsl:text>
+							<xsl:value-of select="c3fn:format(.//text())"/><xsl:text>. </xsl:text>
 						</xsl:for-each>
+					</xsl:variable>
+					<xsl:variable name="stringFormat">
+							<xsl:call-template name="formatReplace">
+								<xsl:with-param name="string">
+									<xsl:value-of select="normalize-space($value)"/>
+								</xsl:with-param>
+							</xsl:call-template>
 					</xsl:variable>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
+						<xsl:with-param name="value" select="$stringFormat"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -653,7 +660,7 @@
 	
 	
 	<xsl:template name="locations">
-		<xsl:if test="((//datafield[@tag='852']|//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']) and $locations = 'all') or ($locations = 'german' and //datafield[@tag='997'])">
+		<xsl:if test="((//datafield[@tag='852']|//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']) and $locations = 'all') or ($locations = 'germany' and //datafield[@tag='997'])">
 			<xsl:variable name="label">
 				<xsl:text>Locations:</xsl:text>
 			</xsl:variable>
@@ -763,7 +770,7 @@
 				</xsl:choose>												
 			</xsl:if>
 			
-			<xsl:if test="//datafield[@tag='997'] and ($locations = 'all' or $locations = 'german')">
+			<xsl:if test="//datafield[@tag='997'] and ($locations = 'all' or $locations = 'germany')">
 				<xsl:variable name="l4">
 					<xsl:text>Germany:</xsl:text>
 				</xsl:variable>
