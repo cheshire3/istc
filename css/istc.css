@@ -257,6 +257,12 @@ td button {
 
 /* Relating to multiple entry fields */
 
+
+.melabel {
+	font-size: 10pt;
+
+	}
+
 .added {
 	width: 400px;
 	background: #F2F2F2;
