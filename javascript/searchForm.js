@@ -28,10 +28,73 @@ var kwRelationList = new Array('all|||all of these words', 'any|||any of these w
 var exactRelationList = new Array('exact|||exactly');
 var proxRelationList = new Array('=|||as a phrase', 'exact|||exactly');
 var dateRelationList = new Array('%3C|||before this year', '%3E|||after this year', 'exact|||exactly');
-var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Place of Printing', 'dc.publisher|||Printer', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location of Copy', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
+var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Place of Printing', 'istc.countryOfPrint|||Country of Printing',  'dc.publisher|||Printer', 'istc.referencedBy|||Bibliographical References', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location of Copy', 'istc.countryOfCopy|||Country of Copy', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
 
-
-
+function changeInputs(iSelIdx, current){
+		//put drop downs in if necessary
+	
+	if (iSelIdx == 8){	
+		var formatDropDown = document.createElement('select')
+		formatDropDown.setAttribute('id', 'fieldcont' + current);
+		formatDropDown.setAttribute('name', 'fieldcont' + current);
+		formatDropDown.setAttribute('style', 'width: 300');
+		formatDropDown.innerHTML = '<option value="4to" selected="selected">4to</option><option value="8vo">8vo</option><option value="16mo">16mo</option><option value="fo">fo</option><option value="broadside">Broadside</option>';
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		var sibling = document.getElementById('fieldrel' + current);
+		parent.removeChild(termfield);
+		parent.insertBefore(formatDropDown, sibling);
+	}
+	else if (iSelIdx == 13){
+		var formatDropDown = document.createElement('select')
+		formatDropDown.setAttribute('id', 'fieldcont' + current);
+		formatDropDown.setAttribute('name', 'fieldcont' + current);
+		formatDropDown.setAttribute('style', 'width: 300');
+		formatDropDown.innerHTML = '<option value="Breton">Breton</option><option value="Catalan">Catalan</option><option value="Church Slavonic">Church Slavonic</option><option value="Croatian">Croatian</option><option value="Czech">Czech</option><option value="Danish">Danish</option><option value="Dutch">Dutch</option><option value="English">English</option><option value="Frisian">Frisian</option><option value="French">French</option><option value="German">German</option><option value="Greek">Greek</option><option value="Hebrew">Hebrew</option><option value="Italian">Italian</option><option value="Latin">Latin</option><option value="Portuguese">Portuguese</option><option value="Provencal / Occitan">Provençal / Occitan</option><option value="Sardinian">Sardinian</option><option value="Spanish">Spanish</option><option value="Swedish">Swedish</option>';
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		var sibling = document.getElementById('fieldrel' + current);
+		parent.removeChild(termfield);
+		parent.insertBefore(formatDropDown, sibling);
+	}
+	else if (iSelIdx == 4){
+		var formatDropDown = document.createElement('select')
+		formatDropDown.setAttribute('id', 'fieldcont' + current);
+		formatDropDown.setAttribute('name', 'fieldcont' + current);
+		formatDropDown.setAttribute('style', 'width: 300');
+		formatDropDown.innerHTML = '<option value="Balkans">Balkans</option><option value="Bohemia and Moravia">Bohemia and Moravia</option><option value="England">England</option><option value="France">France (includes French-speaking Switzerland)</option><option value="Germany">Germany (includes German-speaking Switzerland, Austria & Alsace)</option><option value="Hungary">Hungary</option><option value="Italy">Italy</option><option value="Low Countries">Low Countries (includes towns under Burgundian rule)</option><option value="Poland">Poland</option><option value="Portugal">Portugal</option><option value="Scandinavia">Scandinavia</option><option value="Spain">Spain</option>';
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		var sibling = document.getElementById('fieldrel' + current);
+		parent.removeChild(termfield);
+		parent.insertBefore(formatDropDown, sibling);
+	}
+	else if (iSelIdx == 10){
+		var formatDropDown = document.createElement('select')
+		formatDropDown.setAttribute('id', 'fieldcont' + current);
+		formatDropDown.setAttribute('name', 'fieldcont' + current);
+		formatDropDown.setAttribute('style', 'width: 300');
+		formatDropDown.innerHTML = '<option value="British Isles">British Isles</option><option value="Belgium">Belgium</option><option value="France">France</option><option value="Germany">Germany</option><option value="Italy">Italy</option><option value="Spain/Portugal">Spain/Portugal</option><option value="Netherlands">Netherlands</option><option value="U.S.A.">U.S.A.</option><option value="Other European">Other European</option><option value="Other">Other</option><option value="Doubtful">Doubtful</option>';
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		var sibling = document.getElementById('fieldrel' + current);
+		parent.removeChild(termfield);
+		parent.insertBefore(formatDropDown, sibling);
+	}
+	else {
+		var textEntry = document.createElement('input');
+		textEntry.setAttribute('type', 'text');
+		textEntry.setAttribute('id', 'fieldcont' + current);
+		textEntry.setAttribute('name', 'fieldcont' + current);
+		textEntry.setAttribute('style', 'width: 300');
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		var sibling = document.getElementById('fieldrel' + current);
+		parent.removeChild(termfield);
+		parent.insertBefore(textEntry, sibling);
+	}
+	
+}
 
 function updateSelects(current){
 	var idxSelect = document.getElementById('fieldidx' + current);
@@ -46,23 +109,17 @@ function updateSelects(current){
 	
 	// complex conditional to decide available relations
 	var relationList = new Array()
-	if (iSelIdx != 6 && iSelIdx != 7 && iSelIdx != 11 && iSelIdx != 12) { var relationList = kwRelationList; }
-	if (iSelIdx == 6 || iSelIdx == 7 || iSelIdx == 11 || iSelIdx == 12) { var relationList = exactRelationList; }
-	if (iSelIdx == 9) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx != 4 && iSelIdx != 7 && iSelIdx != 8 && iSelIdx != 10 && iSelIdx != 13 && iSelIdx != 14) { var relationList = kwRelationList; }
+	if (iSelIdx == 4 || iSelIdx == 7 || iSelIdx == 8 || iSelIdx == 10 || iSelIdx == 13 || iSelIdx == 14) { var relationList = exactRelationList; }
+	if (iSelIdx == 11) {var relationList = dateRelationList; var rSelIdx = 2;}
 	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }	
 	
 	// now replace existing relation select element
 	relSelect.parentNode.insertBefore(createSelect('fieldrel' + current, relationList, rSelIdx), relSelect);
 	relSelect.parentNode.removeChild(relSelect);
 	
-	//put drop downs in if necessary
-	
-	if (iSelIdx == 7){	
-		var termfield = document.getElementById('fieldcont' + current);
-		var parent = termfield.parentNode;
-		parent.replaceChild(termfield, formatDropDown);
-		
-	}
+	//put in input option
+	changeInputs(iSelIdx, current);
 
 }
 
@@ -120,11 +177,14 @@ function createClause(current, clauseState){
 	var rSelIdx = parts.shift();
 	// complex conditional to decide available relations
 	var relationList = new Array()
-	if (iSelIdx != 6 && iSelIdx != 7 && iSelIdx != 11 && iSelIdx != 12) { var relationList = kwRelationList; }
-	if (iSelIdx == 6 || iSelIdx == 7 || iSelIdx == 11 || iSelIdx == 12) { var relationList = exactRelationList; }
-	if (iSelIdx == 9) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx != 7 && iSelIdx != 8 && iSelIdx != 13 && iSelIdx != 14) { var relationList = kwRelationList; }
+	if (iSelIdx == 7 || iSelIdx == 8 || iSelIdx == 13 || iSelIdx == 14) { var relationList = exactRelationList; }
+	if (iSelIdx == 11) {var relationList = dateRelationList; var rSelIdx = 2;}
 	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }
 	
+	
+	//put in input option
+//	changeInputs(iSelIdx, current);
 	// text input
 	var inputElem = document.createElement('input');
 	inputElem.type = 'text';
@@ -147,6 +207,8 @@ function createClause(current, clauseState){
 	pElem.appendChild(inputElem);
 	pElem.appendChild(createSelect('fieldrel' + current, relationList, rSelIdx));		
 	return pElem;
+	
+	
 }
 
 function createSelect(name, optionList, selIdx){
