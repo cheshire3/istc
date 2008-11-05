@@ -23,7 +23,11 @@ class IstcEditingHandler:
     
     def __init__(self, lgr):
         self.logger = lgr
-    
+
+    def test(self, session, req):
+        req.write('starting')
+        db.begin_indexing(session)
+        req.write('done')    
     
     def send_html(self, text, req, code=200):
         req.content_type = 'text/html; charset=utf-8'
@@ -228,6 +232,8 @@ class IstcEditingHandler:
             elif (operation == 'suggest'):
                 content = self._get_suggestions(form)
                 self.send_xml(content, req)
+            elif operation == 'test':
+                self.test(session, req)
         else:
             content = self.show_editMenu()
             # send the display

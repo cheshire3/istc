@@ -24,11 +24,12 @@
 
 
 
-var kwRelationList = new Array('all|||All', 'any|||Any');
-var exactRelationList = new Array('exact|||Exactly');
-var proxRelationList = new Array('=|||Phrase', 'exact|||Exactly');
-var dateRelationList = new Array('%3C|||Before', '%3E|||After', 'exact|||Exactly');
-var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Location of Print', 'dc.publisher|||Printer', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
+var kwRelationList = new Array('all|||all of these words', 'any|||any of these words');
+var exactRelationList = new Array('exact|||exactly');
+var proxRelationList = new Array('=|||as a phrase', 'exact|||exactly');
+var dateRelationList = new Array('%3C|||before this year', '%3E|||after this year', 'exact|||exactly');
+var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Place of Printing', 'dc.publisher|||Printer', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location of Copy', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
+
 
 
 
@@ -45,14 +46,23 @@ function updateSelects(current){
 	
 	// complex conditional to decide available relations
 	var relationList = new Array()
-	if (iSelIdx != 5 && iSelIdx != 6 && iSelIdx != 10 && iSelIdx != 11) { var relationList = kwRelationList; }
-	if (iSelIdx == 5 || iSelIdx == 6 || iSelIdx == 10 || iSelIdx == 11) { var relationList = exactRelationList; }
-	if (iSelIdx == 8) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx != 6 && iSelIdx != 7 && iSelIdx != 11 && iSelIdx != 12) { var relationList = kwRelationList; }
+	if (iSelIdx == 6 || iSelIdx == 7 || iSelIdx == 11 || iSelIdx == 12) { var relationList = exactRelationList; }
+	if (iSelIdx == 9) {var relationList = dateRelationList; var rSelIdx = 2;}
 	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }	
 	
 	// now replace existing relation select element
 	relSelect.parentNode.insertBefore(createSelect('fieldrel' + current, relationList, rSelIdx), relSelect);
 	relSelect.parentNode.removeChild(relSelect);
+	
+	//put drop downs in if necessary
+	
+	if (iSelIdx == 7){	
+		var termfield = document.getElementById('fieldcont' + current);
+		var parent = termfield.parentNode;
+		parent.replaceChild(termfield, formatDropDown);
+		
+	}
 
 }
 
@@ -110,9 +120,9 @@ function createClause(current, clauseState){
 	var rSelIdx = parts.shift();
 	// complex conditional to decide available relations
 	var relationList = new Array()
-	if (iSelIdx != 5 && iSelIdx != 6 && iSelIdx != 10 && iSelIdx != 11) { var relationList = kwRelationList; }
-	if (iSelIdx == 5 || iSelIdx == 6 || iSelIdx == 10 || iSelIdx == 11) { var relationList = exactRelationList; }
-	if (iSelIdx == 8) {var relationList = dateRelationList; var rSelIdx = 2;}
+	if (iSelIdx != 6 && iSelIdx != 7 && iSelIdx != 11 && iSelIdx != 12) { var relationList = kwRelationList; }
+	if (iSelIdx == 6 || iSelIdx == 7 || iSelIdx == 11 || iSelIdx == 12) { var relationList = exactRelationList; }
+	if (iSelIdx == 9) {var relationList = dateRelationList; var rSelIdx = 2;}
 	if (iSelIdx > 0 && relationList == kwRelationList) { var relationList = relationList.concat(proxRelationList); }
 	
 	// text input

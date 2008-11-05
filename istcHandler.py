@@ -101,6 +101,8 @@ class istcHandler:
             if (idx and rel and cont):
                 if idx == 'norzig.posessingInstitution' and not frombrowse:
                     subClauses.append(u'(%s %s "%s" or %s %s/usa "%s")' % (idx, rel, cont.strip(), idx, rel, cont.strip()))
+                elif idx == 'istc.referencedBy' and not frombrowse:
+                    subClauses.append(u'(%s %s "%s" or %s %s/full "%s")' % (idx, rel, cont.strip(), idx, rel, cont.strip()))
                 else:
                     subClauses.append(u'%s %s "%s"' % (idx, rel, cont.strip()))
 
@@ -224,7 +226,7 @@ class istcHandler:
                 navString = ''
 
                 
-            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-author%s">Author </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, navString, rsid, locString, rsid, locString, rsid, locString))
+            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, navString, rsid, locString, rsid, locString, rsid, locString, rsid, locString))
 
             for i in range(start, min(start+pagesize, len(rs))):
 
@@ -236,37 +238,51 @@ class istcHandler:
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="245"]/subfield[@code="a"]')
                     title = flattenTexts(elms[0])
-
                 except:
-                    raise
                     try:
-                        elms = rec.process_xpath(session, '//datafield[@tag="130"]/subfield[@code="a"]')
+                        elms = rec.process_xpath(session, '//datafield[@tag="245"]')
                         title = flattenTexts(elms[0])
                     except:
                         title = ""
                         
+                        
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="100"]/subfield[@code="a"]')
-                    author = flattenTexts(elms[0])
+                    author = "%s. " % flattenTexts(elms[0]).strip()
                 except:
                     try:
                         elms = rec.process_xpath(session, '//datafield[@tag="100"]')
-                        author = flattenTexts(elms[0])
+                        author = "%s. " % flattenTexts(elms[0]).strip()
                     except:
-                        author = ""
+                        try:
+                            elms = rec.process_xpath(session, '//datafield[@tag="130"]/subfield[@code="a"]')
+                            author = "%s. " % flattenTexts(elms[0]).strip()
+                        except:
+                            try:
+                                elms = rec.process_xpath(session, '//datafield[@tag="130"]')
+                                author = "%s. " % flattenTexts(elms[0]).strip()
+                            except:
+                                author = ""
+                                
+                try:
+                    elms = rec.process_xpath(session, '//datafield[@tag="260"]/subfield[@code="a"]')
+                    place = flattenTexts(elms[0])
+                except:
+                    place = ""
+                               
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="260"]/subfield[@code="b"]')
-                    imprint = "- %s" % flattenTexts(elms[0])
-
+                    printer = flattenTexts(elms[0])
                 except:
-                    imprint = ""
+                    printer = ""
+                    
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="260"]/subfield[@code="c"]')
                     date = flattenTexts(elms[0])
                 except:
                     date= ""
           
-                html.append('<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s %s %s <br/><br/>' % (rsid, i, locString, title, author, imprint, date))       
+                html.append('%s<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s: %s, %s <br/><br/>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
             html.append('<div class="recordnav">%s</div><br/>' % navString)
                 
             menubits.extend(['<div class="menugrp">',
@@ -283,6 +299,10 @@ class istcHandler:
                             '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
                             '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>' % (rsid, locString),
                             '</div>'])
+                
+            menubits.extend(['<div class="menugrp">',
+                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div>',
+                             '</div>'])
             
             
         else:
@@ -314,7 +334,10 @@ class istcHandler:
         else :
             if not isinstance(cql, Triple):    
                 substring = [] 
-                index = idxNames['%s' % cql.index.value]
+                try:
+                    index = idxNames['%s' % cql.index.value]
+                except:
+                    index = 'unknown'
                 substring.append(index)
                 substring.append('%s' % cql.relation.value)  
     
@@ -943,7 +966,7 @@ idxNames = {"anywhere": 'General Keywords',
             "language":'Language',
             "blshelfmark":'BL Shelfmark',
             "idx-pass-location_usa": 'USA Location',
-            "idx-bibref": 'Bibliographical References'
+            "idx-bibref": 'Bibliographical References',
                 }
 
 logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
