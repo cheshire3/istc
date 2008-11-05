@@ -75,7 +75,7 @@
 	 </index>
   
 	 <index c3:index="idx-publoc">
-	   <title>Location of Publication</title>
+	   <title>Place of Printing</title>
 	   <map>
 	     <name set="bib">originPlace</name>
 	   </map>
@@ -86,6 +86,16 @@
 	     <supports type="relation" c3:index="idx-kwd-publoc">=</supports>
 	     <supports type="relationModifier">string</supports>
 	     <supports type="relationModifier" c3:index="idx-kwd-publoc">word</supports>
+	   </configInfo>
+	 </index> 	
+	 
+	 <index c3:index="idx-countryOfPrint">
+	   <title>Country of Printing</title>
+	   <map>
+	     <name set="istc">countryOfPrint</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
 	   </configInfo>
 	 </index> 	
 	 
@@ -148,7 +158,7 @@
 	 </index>
   
 	 <index c3:index="idx-location">
-	   <title>Printer</title>
+	   <title>Location of Copy</title>
 	   <map>
 	     <name set="norzig">posessingInstitution</name>
 	   </map>
@@ -162,6 +172,16 @@
 	     <supports type="relationModifier" c3:index="idx-pass-kwd-location_usa">usa</supports>
 	   </configInfo>
 	 </index>
+	 
+	 <index c3:index="idx-locCountries">
+	   <title>Country of Copy</title>
+	   <map>
+	     <name set="istc">countryOfCopy</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	   </configInfo>
+	 </index> 
 	 
 	 <index c3:index="idx-pubdate">
 	   <title>Publication Date</title>

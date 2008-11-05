@@ -170,10 +170,9 @@
     			<object type="normalizer" ref="CountryofPrintNormalizer" />
     		</process>
     	</source>
-    	<source mode="any|all|=">
+    	<source mode="any|all|=|exact">
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
-    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
     		</process>
     	</source>
     </subConfig>
@@ -622,6 +621,8 @@
     		<xpath ref="locCountries" />
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="SimpleTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
     			<object type="normalizer" ref="LocCountriesNormalizer" />
     			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
     		</process>
