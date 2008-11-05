@@ -9,6 +9,10 @@
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
 
+     <subConfigs>
+        <path type="includeConfigs">configs.d</path>
+    </subConfigs>
+
   <subConfigs>
     <subConfig type="recordStore" id="refsRecordStore">
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
@@ -67,10 +71,6 @@
            <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-      <options>
-	<setting type="sortStore">1</setting>
-      </options>
-
     </subConfig>
 
  <subConfig type="index" id = "idx-refs">
@@ -88,13 +88,10 @@
 	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-      <options>
-	<setting type="sortStore">1</setting>
-      </options>
     </subConfig>
 
     <subConfig type="index" id = "idx-kwd-refs">
-      <objectType>cheshire3.index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.ProximityIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
         <object type="recordStore" ref="refsRecordStore"/>
@@ -102,20 +99,14 @@
       <source>
         <xpath>full</xpath>
         <process>
-	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="workflow" ref="ProxExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="PossessiveNormalizer"/>
-          <object type="normalizer" ref="EnglishStemNormalizer"/>
           <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
-      <options>
-	<setting type="sortStore">1</setting>
-      </options>
       </subConfig>
 
-    <!-- workflows - override default workflows -->
-    <path type="includeConfigs">workflow.xml</path>
   </subConfigs>
 
 </config>

@@ -1,0 +1,159 @@
+<config>
+
+<!-- 
+	This file was produced, and released as part of Cheshire for Archives v3.x.
+	Copyright &copy; 2005-2007 the University of Liverpool
+	Altered for the ISTC 2008 - Clare llewellyn
+ -->
+ 
+  <subConfigs>
+
+  <subConfig type="workflow" id="preParserWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  document -->
+       
+        <object type="preParser" ref="CharacterEntityPreParser"/>
+        
+        <object type="preParser" ref="AmpPreParser"/>
+      </workflow>
+    </subConfig>
+    
+    
+    <subConfig type="workflow" id="buildIndexWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  documentFactory -->
+        
+        <object type="recordStore" ref="recordStore" function="begin_storing"/>
+        <object type="database" function="begin_indexing"/>
+        <assign to="VAR_ctr" from="1"/>
+        <for-each>
+          <!-- input type: document -->
+          
+          <assign to="VAR_ctr" from="VAR_ctr + 1"/>
+          <object type="workflow" ref="buildIndexSingleWorkflow"/>
+        </for-each>
+        <object type="recordStore" ref="recordStore" function="commit_storing"/>
+        <object type="database" function="commit_metadata"/>
+        <object type="database" function="commit_indexing"/>
+        
+      </workflow>
+    </subConfig>
+
+
+    <subConfig type="workflow" id="buildIndexSingleWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+		<!-- input type:  document -->
+		<object type="workflow" ref="preParserWorkflow"/>
+		<try>
+		  <object type="parser" ref="LxmlParser"/>
+		</try>
+		<except>
+		  	<return/>
+		</except>
+		<!-- type: record -->
+       	<object type="workflow" ref="indexRecordWorkflow"/>
+      </workflow>
+    </subConfig>
+
+    
+    <subConfig type="workflow" id="indexRecordWorkflow">
+	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+	  <workflow>
+	    <!-- input type:  record -->
+	    <!-- assign identifier -->
+		<object type="recordStore" function="store_record"/>
+		<object type="database" function="add_record"/>
+		<try>
+		  <object type="database" function="index_record"/>
+		  
+		</try>
+		<except>
+		  <return/>
+		</except>
+		
+	  </workflow>
+	</subConfig>
+	
+<!-- mini-workflows for processing chains -->
+	<subConfig type="workflow" id="KeywordExtractorWorkflow">
+	  <objectType>cheshire3.workflow.SimpleWorkflow</objectType>
+	  <workflow>
+	    <object type="extractor" ref="SimpleExtractor"/>
+	    <object type="tokenizer" ref="RegexpSubTokenizer"/>
+	    <object type="tokenMerger" ref="SimpleTokenMerger"/>
+	  </workflow>
+	</subConfig>
+	
+	<subConfig type="workflow" id="ProxExtractorWorkflow">
+	  <objectType>cheshire3.workflow.SimpleWorkflow</objectType>
+	  <workflow>
+	    <object type="extractor" ref="ProxExtractor"/>
+	    <object type="tokenizer" ref="RegexpSubTokenizer"/>
+	    <object type="tokenMerger" ref="ProxTokenMerger"/>
+	  </workflow>
+	</subConfig>
+
+    <subConfig type="workflow" id="PreserveMaskingKeywordExtractorWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="extractor" ref="SimpleExtractor" />
+            <object type="tokenizer" ref="PreserveMaskingTokenizer" />
+            <object type="tokenMerger" ref="SimpleTokenMerger"/>
+        </workflow>
+    </subConfig>
+    
+    <subConfig type="workflow" id="PreserveMaskingProxExtractorWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="extractor" ref="ProxExtractor" />
+            <object type="tokenizer" ref="PreserveMaskingTokenizer" />
+            <object type="tokenMerger" ref="ProxTokenMerger"/>
+        </workflow>
+    </subConfig>
+    
+    <subConfig type="workflow" id="Diacritic-Case-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="normalizer" ref="DiacriticNormalizer" />
+            <object type="normalizer" ref="CaseNormalizer" />
+        </workflow>
+    </subConfig>
+    
+    <subConfig type="workflow" id="Space-Case-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="normalizer" ref="SpaceNormalizer" />
+            <object type="normalizer" ref="CaseNormalizer" />
+        </workflow>
+    </subConfig>
+	
+	<subConfig type="workflow" id="Space-Diacritic-Case-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="normalizer" ref="SpaceNormalizer" />
+            <object type="workflow" ref="Diacritic-Case-NormalizerWorkflow"/>
+        </workflow>
+	</subConfig>
+	
+		<subConfig type="workflow" id="Diacritic-Case-Possessive-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="workflow" ref="Diacritic-Case-NormalizerWorkflow"/>
+            <object type="normalizer" ref="PossessiveNormalizer" />
+        </workflow>
+	</subConfig>
+	
+	<subConfig type="workflow" id="Space-Diacritic-Case-Possessive-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="normalizer" ref="SpaceNormalizer" />
+            <object type="workflow" ref="Diacritic-Case-Possessive-NormalizerWorkflow"/>
+        </workflow>
+	</subConfig>
+
+  </subConfigs>
+
+</config>

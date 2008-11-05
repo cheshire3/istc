@@ -1,0 +1,165 @@
+<config>
+
+<subConfigs>
+	<!-- transformers -->
+ 
+ 	<!-- injest transformers -->
+	 <subConfig type="transformer" id="dataTransformer">
+	 	<objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	      <paths>
+	         <path type="xsltPath">xsl/toMarcXml.xsl</path>
+	      </paths>
+	 </subConfig>
+ 
+ 	<subConfig type="transformer" id="indentingTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/reindent.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="filterTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/filterMarcFields.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="toTextTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/toMARCTxt.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="toMarcTxr">
+	    <objectType>cheshire3.transformer.MarcTransformer</objectType>
+	</subConfig>
+	
+	<!-- display transformers -->
+ 
+	<subConfig type="transformer" id="recordTxr-screen">
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:screen</setting>
+	    </options>
+	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-print">
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:print</setting>
+	    </options>
+	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-save">
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:save</setting>
+	    </options>
+	</subConfig>
+	
+	<subConfig type="transformer" id="recordTxr-email">
+	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
+	    </paths>
+	    <options>
+	    	<setting type="parameter">format:email</setting>
+	    </options>
+	</subConfig>
+	
+	
+	<subConfig type="transformer" id="menuTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/menuDisplay.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	<subConfig type="transformer" id="formCreationTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/istcForm.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	
+ 	<!-- pre-parsers -->
+    <subConfig type="preParser" id="emptyEmphTagStripPreParser">
+        <objectType>cheshire3.preParser.RegexpSmashPreParser</objectType>
+        <options>
+                <setting type="regexp">&lt;emph altrender="[a-z]"/&gt;</setting>
+        </options>
+    </subConfig>
+
+    <subConfig type="preParser" id="AmpPreParser">
+      <objectType>cheshire3.preParser.AmpPreParser</objectType>
+    </subConfig>
+  
+    
+    <!-- tokenizers -->
+    <subConfig type="tokenizer" id="PublocTokenizer">
+    	<objectType>cheshire3.tokenizer.RegexpSplitTokenizer</objectType>
+    	<options>
+    		<setting type="regexp"> or | Or |(?&lt;=[\w]),| and | And | \(|i\.e\.</setting>
+    	</options>
+    </subConfig>
+    
+   <subConfig type="tokenizer" id="FormatTokenizer">
+    	<objectType>ISTCextensions.FormatTokenizer</objectType>
+    </subConfig>
+    
+    <subConfig type="extractor" id="SplitTokenizer">
+		<objectType>cheshire3.tokenizer.SimpleTokenizer</objectType>
+		<options>
+			<setting type="char">|</setting>
+		</options>
+	</subConfig>
+    
+    <!-- normalizers -->   
+    <subConfig type="normalizer" id="PunctNormalizer">
+      <objectType>cheshire3.normalizer.RegexpNormalizer</objectType>
+      <options>
+        <setting type="regexp">\[|\]|\?|'|"|:|\)|\(</setting>
+      </options>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="FormatNormalizer">
+    	<objectType>ISTCextensions.FormatNormalizer</objectType>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="LanguageNormalizer">
+    	<objectType>ISTCextensions.LanguageNormalizer</objectType>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="LocCountriesNormalizer">
+    	<objectType>ISTCextensions.LocCountriesNormalizer</objectType>
+    </subConfig>
+
+    <subConfig type="normalizer" id="CountryofPrintNormalizer">
+    	<objectType>ISTCextensions.CountryofPrintNormalizer</objectType>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="BibRefNormalizer">
+    	<objectType>ISTCextensions.BibRefNormalizer</objectType>
+    </subConfig>
+    
+    <subConfig type="normalizer" id="BLNormalizer">
+        <objectType>normalizer.RegexpNormalizer</objectType>
+        <options>
+          <setting type="regexp">(^British Library[ ]+)</setting>
+        </options>
+    </subConfig>
+    
+    </subConfigs>
+</config>

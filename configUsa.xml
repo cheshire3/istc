@@ -9,6 +9,11 @@
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
 
+     <subConfigs>
+        <path type="includeConfigs">configs.d</path>
+    </subConfigs>
+
+
   <subConfigs>
     
     <subConfig type="recordStore" id="usaRecordStore">
@@ -62,11 +67,8 @@
       <source>
         <xpath>code</xpath>
         <process>
-          <object type="extractor" ref="SimpleExtractor"/>
+          <object type="workflow" ref="KeywordExtractorWorkflow"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-          <!--<object type="normalizer" ref="CaseNormalizer"/>
-          
-	  <object type="normalizer" ref="DiacriticNormalizer"/>-->
         </process>
       </source>
     </subConfig>
@@ -111,8 +113,7 @@
       </options>
     </subConfig>
 
-    <!-- workflows - override default workflows -->
-    <path type="includeConfigs">workflow.xml</path>
+
   </subConfigs>
 
 </config>

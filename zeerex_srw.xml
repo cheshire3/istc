@@ -103,7 +103,23 @@
 	     <supports type="relationModifier" c3:index="idx-kwd-printer">word</supports>
 	   </configInfo>
 	 </index>
-
+	 
+	 <index c3:index="idx-bibref">
+	   <title>Bibliographical References</title>
+	   <map>
+	     <name set="istc">referencedBy</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-bibref">word</supports>
+	     <supports type="relationModifier" c3:index="idx-pass-kwd-bibref">full</supports>
+	   </configInfo>
+	 </index>	 
+	 
 	 <index c3:index="idx-ISTCnumber">
 	   <title>ISTC Number</title>
 	   <map>
@@ -143,7 +159,7 @@
 	     <supports type="relation" c3:index="idx-kwd-location">=</supports>
 	     <supports type="relationModifier">string</supports>
 	     <supports type="relationModifier" c3:index="idx-kwd-location">word</supports>
-	     <supports type="relationModifier" c3:index="idx-pass-location_usa">usa</supports>
+	     <supports type="relationModifier" c3:index="idx-pass-kwd-location_usa">usa</supports>
 	   </configInfo>
 	 </index>
 	 

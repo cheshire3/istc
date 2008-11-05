@@ -33,6 +33,9 @@
 			</xsl:call-template>      
 			<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div>              
 		</div>
+		<div class="menugrp">
+              <div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Editors this Record (administrators only)<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>
+        </div>
 	</xsl:template>	
 	
 	<xsl:template name="options">

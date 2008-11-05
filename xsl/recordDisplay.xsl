@@ -69,8 +69,6 @@
 		<xsl:text>Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands</xsl:text>
 	</xsl:variable>
 
-
-	 
 	 
 	 <lang:name abbr="eng">English</lang:name>
 	 <lang:name abbr="heb">Hebrew</lang:name>
@@ -82,12 +80,16 @@
 	 <lang:name abbr="dut">Dutch</lang:name>
 	 <lang:name abbr="fri">Frisian</lang:name>
 	 <lang:name abbr="fre">French</lang:name>
+	 <lang:name abbr="frm">French</lang:name>
 	 <lang:name abbr="ger">German</lang:name>
+	 <lang:name abbr="grc">Greek</lang:name>
 	 <lang:name abbr="ita">Italian</lang:name>
 	 <lang:name abbr="lat">Latin</lang:name>
 	 <lang:name abbr="por">Portuguese</lang:name>
+	 <lang:name abbr="pro">Provençal / Occitan</lang:name>
 	 <lang:name abbr="sar">Sardinian</lang:name>
 	 <lang:name abbr="spa">Spanish</lang:name>
+	 <lang:name abbr="scr">Croatian</lang:name>
 	 <lang:name abbr="swe">Swedish</lang:name>
 
 	 
@@ -131,6 +133,7 @@
 
 	<xsl:template name="contents">	
 		<xsl:call-template name="author"/>	
+		<xsl:call-template name="heading"/>
 		<xsl:call-template name="title"/>
 		<xsl:call-template name="imprint"/>
 		<xsl:call-template name="format"/>		
@@ -139,7 +142,6 @@
 		<xsl:call-template name="references"/>
 		<xsl:call-template name="reproductions"/> 
 		<xsl:call-template name="notes"/>
-	<!-- 	<xsl:call-template name="shelfmark"/>		 -->
 		<xsl:call-template name="locations"/>
 		
 	</xsl:template>
@@ -155,7 +157,7 @@
 						<xsl:when test="//datafield[@tag='100']/subfield[@code='a']">
 							<xsl:value-of select="//datafield[@tag='100']/subfield[@code='a']"/>
 						</xsl:when>
-						<xsl:otherwise>
+						<xsl:otherwise test="//datafield[@tag='100']">
 							<xsl:value-of select="//datafield[@tag='100']"/>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -185,9 +187,46 @@
 		</xsl:choose>
 	</xsl:template>
 
-	
-	<xsl:template name="title">
-		<xsl:if test="//datafield[@tag='245']/subfield[@code='a']|//datafield[@tag='130']/subfield[@code='a']">
+
+ 	<xsl:template name="heading">
+ 		<xsl:if test="//datafield[@tag='130']">
+ 			<xsl:variable name="label">
+ 				<xsl:text>Heading:</xsl:text>
+ 			</xsl:variable>
+ 			<xsl:variable name="value">
+ 				<xsl:choose>
+ 					<xsl:when test="//datafield[@tag='130']/subfield[@code='a']">
+ 						<xsl:value-of select="//datafield[@tag='130']/subfield[@code='a']" />
+ 					</xsl:when>
+ 					<xsl:otherwise test="//datafield[@tag='130']">
+ 						<xsl:value-of select="//datafield[@tag='130']" />
+ 					</xsl:otherwise>
+ 				</xsl:choose>
+ 			</xsl:variable>
+ 			<xsl:choose>
+ 				<xsl:when test="$output='xml'">
+ 					<tr>
+ 						<td class="label">
+ 							<xsl:value-of select="$label" />
+ 						</td>
+ 						<td>
+ 							<xsl:value-of select="$value" />
+ 						</td>
+ 					</tr>
+ 				</xsl:when>
+ 				<xsl:otherwise>
+ 					<xsl:call-template name="textView">
+ 						<xsl:with-param name="label" select="$label" />
+ 						<xsl:with-param name="value" select="$value" />
+ 					</xsl:call-template>
+ 				</xsl:otherwise>
+ 			</xsl:choose>
+ 		</xsl:if>
+ 	</xsl:template>
+
+
+ 	<xsl:template name="title">
+		<xsl:if test="//datafield[@tag='245']/subfield[@code='a']">
 			<xsl:variable name="label">
 				<xsl:text>Title:</xsl:text>
 			</xsl:variable>
@@ -196,9 +235,6 @@
 					<xsl:when test="//datafield[@tag='245']/subfield[@code='a']">
 						<xsl:value-of select="//datafield[@tag='245']/subfield[@code='a']"/>
 					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="//datafield[@tag='130']/subfield[@code='a']"/>
-					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
 			<xsl:choose>
@@ -228,10 +264,17 @@
 			</xsl:variable>
 			<xsl:variable name="value">
 				<xsl:for-each select="//datafield[@tag='260']">
-					<xsl:for-each select="subfield">
-						<xsl:value-of select="."/><xsl:text> </xsl:text>
-					</xsl:for-each>
-					<br />
+					<xsl:if test="subfield[@code='a']">
+						<xsl:value-of select="subfield[@code='a']"/><xsl:text>: </xsl:text>
+					</xsl:if>
+					<xsl:if test="subfield[@code='b']">
+						<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
+					</xsl:if>
+					<xsl:if test="subfield[@code='c']">
+						<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+					</xsl:if>
+					<xsl:value-of select="$newline"/>
+					<br/>
 				</xsl:for-each>
 			</xsl:variable>
 			<xsl:choose>
@@ -598,30 +641,57 @@
 								</xsl:choose>
 							</xsl:for-each>
 							<xsl:for-each select="//datafield[@tag='505']">
-								<xsl:value-of select="."/><br/>
+								<xsl:choose>
+									<xsl:when test="contains(., '~~')">
+										<xsl:call-template name="formatReplace">
+											<xsl:with-param name="string">
+												<xsl:value-of select="c3fn:format(.//text())"/>
+												</xsl:with-param>
+										</xsl:call-template>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="."/>
+									</xsl:otherwise>
+								</xsl:choose>										
+								<br/>
 							</xsl:for-each>							
 						</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:variable name="value">
-						<xsl:for-each select="//datafield[@tag='500']/subfield">								
-							<xsl:value-of select="c3fn:format(.//text())"/><xsl:text>. </xsl:text>
+					<xsl:variable name="value">				
+						<xsl:for-each select="//datafield[@tag='500']/subfield">	
+							<xsl:choose>
+								<xsl:when test="contains(., '~~')">			
+									<xsl:call-template name="formatReplace">
+										<xsl:with-param name="string">
+											<xsl:value-of select="c3fn:format(.//text())"/>
+											</xsl:with-param>
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="."/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:for-each>
 						<xsl:for-each select="//datafield[@tag='505']/subfield">
-							<xsl:value-of select="c3fn:format(.//text())"/><xsl:text>. </xsl:text>
+							<xsl:choose>
+								<xsl:when test="contains(., '~~')">	
+									<xsl:call-template name="formatReplace">
+										<xsl:with-param name="string">
+											<xsl:value-of select="c3fn:format(.//text())"/>
+											</xsl:with-param>
+									</xsl:call-template>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="."/>
+								</xsl:otherwise>
+							</xsl:choose>
 						</xsl:for-each>
-					</xsl:variable>
-					<xsl:variable name="stringFormat">
-							<xsl:call-template name="formatReplace">
-								<xsl:with-param name="string">
-									<xsl:value-of select="normalize-space($value)"/>
-								</xsl:with-param>
-							</xsl:call-template>
 					</xsl:variable>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$stringFormat"/>
+						<xsl:with-param name="value" select="$value"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
