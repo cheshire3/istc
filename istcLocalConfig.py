@@ -44,7 +44,7 @@ graphical_relevance = False
 display_splash_screen_popup = False
 
 # Path to Cheshire Root - i.e. where Cheshire3 was installed
-cheshirePath = "/home/cheshire/cheshire3"
+cheshirePath = "/home/cheshire"
 
 # Institutionally specific configurables
 repository_name = "DNB Bibliographic Database"
@@ -67,8 +67,8 @@ adminlogfilepath = logpath + '/adminHandler.log'
 
 # Path where HTML fragments (browse.html, email.html, resolve.html, search.html)
 # and template.ssi are located
-htmlPath = cheshirePath + '/cheshire3/www/dnb/html'
-templatePath = htmlPath + '/template.ssi'
+htmlPath = cheshirePath + '/cheshire3/www/istc/html'
+templatePath = htmlPath + '/template.html'
 
 # The approximate maximum desired page size when displaying full records (in kB)
 maximum_page_size = 50

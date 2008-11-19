@@ -218,6 +218,10 @@ td.comphit {
 
 /* Record Navigation */
 
+.sortedBy {
+	font-weight: bold;
+	}
+
 .recordnav {
 	float: right;	
 	color: #990;

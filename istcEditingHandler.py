@@ -2,7 +2,7 @@ from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
 import sys, os, cgitb, time, re
 
-sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
@@ -18,7 +18,7 @@ from crypt import crypt
 from istcLocalConfig import *
 
 class IstcEditingHandler:
-    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/editTemplate.html"
+    templatePath = cheshirePath + "/cheshire3/www/istc/html/editTemplate.html"
     
     
     def __init__(self, lgr):
@@ -261,7 +261,7 @@ def build_architecture(data=None):
     session.database = 'db_istc'
     session.environment = 'apache'
     session.user = None
-    serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
+    serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
     db = serv.get_object(session, 'db_istc')
     qf = db.get_object(session, 'baseQueryFactory')
     baseDocFac = db.get_object(session, 'baseDocumentFactory')
@@ -274,7 +274,7 @@ def build_architecture(data=None):
     indentingTxr = db.get_object(session, 'indentingTxr')
     rebuild = False
     
-    logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/edithandler.log'
+    logfilepath = cheshirePath + '/cheshire3/www/istc/logs/edithandler.log'
 
 
 
@@ -288,7 +288,7 @@ def handler(req):
 
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)
         os.chdir(os.path.join(cheshirePath, 'cheshire3', 'www', 'istc', 'html'))     # cd to where html fragments are
-        lgr = FileLogger('/home/cheshire/cheshire3/cheshire3/www/istc/logs/edithandler.log', remote_host)                                  # initialise logger object
+        lgr = FileLogger(cheshirePath + '/cheshire3/www/istc/logs/edithandler.log', remote_host)                                  # initialise logger object
         istcEditingHandler = IstcEditingHandler(lgr)                                      # initialise handler - with logger for this request
         try:
             istcEditingHandler.handle(req)   

@@ -4,7 +4,7 @@ import sys, os, cgitb, time, re, smtplib
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
 
-sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -24,9 +24,9 @@ from cheshire3.cqlParser import Triple
 import urllib
 
 class istcHandler:
-    templatePath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/template.html"
-    rtfPath = "/home/cheshire/cheshire3/cheshire3/www/istc/outputTemplate.txt"
-    printPath = "/home/cheshire/cheshire3/cheshire3/www/istc/html/printTemplate.html"
+    templatePath = cheshirePath + "/cheshire3/www/istc/html/template.html"
+    rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
+    printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
 
     def __init__(self, lgr):
         self.logger = lgr
@@ -132,14 +132,9 @@ class istcHandler:
         return ' '.join(words)
     
 
-    def sort_resultSet(self, session, rs, form):
+    def sort_resultSet(self, session, rs, sort):
         session.database = db.id
-           
-        try:
-            sort = form.get('sort', None).value               
-        except:
-            sort = 'idx-title'
-            
+                    
         indexes = sort.split(',')
         for idxstr in indexes:
             bits = idxstr.split('|')
@@ -212,9 +207,10 @@ class istcHandler:
         if hits:
             menubits = []
             
-            if (form.has_key('sort')):
-                rs = self.sort_resultSet(session, rs, form)
-                
+            sortIndex = form.get('sort', 'idx-ISTCnumber')               
+        
+            rs = self.sort_resultSet(session, rs, sortIndex)
+   
 
             if start > 0 and start+pagesize < len(rs):
                 navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
@@ -225,8 +221,27 @@ class istcHandler:
             else :
                 navString = ''
 
+            if sortIndex == 'idx-ISTCnumber':
+                string1 = '<span class="sortedBy">ISTC Number</span> '
+            else:
+                string1 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number </a>' % (rsid, locString)
+            
+            if sortIndex == 'idx-title':
+                string2 = '<span class="sortedBy">Title</span> '
+            else:
+                string2 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a>' % (rsid, locString)
+            
+            if sortIndex == 'idx-year':
+                string3 = '<span class="sortedBy">Year</span> '
+            else:
+                string3 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year </a>' % (rsid, locString)
+            
+            if sortIndex == 'idx-publoc':
+                string4 = '<span class="sortedBy">Place of Publication</span>'
+            else:
+                string4 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a>' % (rsid, locString)
                 
-            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a>, <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year </a> or <a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a><br/><br/>' % (hits, navString, rsid, locString, rsid, locString, rsid, locString, rsid, locString))
+            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by %s, %s, %s or %s<br/><br/>' % (hits, navString, string1, string2, string3, string4))
 
             for i in range(start, min(start+pagesize, len(rs))):
 
@@ -414,12 +429,14 @@ class istcHandler:
         else:
             navstring = ''
 
+        rlNav = '<div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<img src="/istc/images/link_back2.gif" alt=" Back " name="back" width="27" height="19" border=0 align="middle"></a></div>' % rsid
+
         if len(rs):
             rec = rs[id].fetch_record(session)           
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('Record Details', doc.replace('%nav%', navstring), menu.get_raw(session))
+            return ('Record Details', doc.replace('%nav%', navstring), menu.get_raw(session), rlNav)
         else:
             raise ValueError(id)
             
@@ -834,11 +851,11 @@ class istcHandler:
         
         operation = form.get('operation', None)
         e = ""
-
+        rl = ""
         if path == 'search.html':
             if operation:
                 if (operation == 'record'):
-                    (t, d, e) = self.display_rec(session, form)
+                    (t, d, e, rl) = self.display_rec(session, form)
                 elif (operation == 'search'):
                     (t, d, e) = self.handle_istc(session, form)
                 elif (operation == 'print'):
@@ -906,6 +923,8 @@ class istcHandler:
         tmpl = tmpl.replace("%CONTENTTITLE%", t)
         tmpl = tmpl.replace("%EXTRA%", extra)
         tmpl = tmpl.replace("%EXTRATABLESTUFF%", e)
+        tmpl = tmpl.replace('%BACKTORESULTLIST%', rl)
+
 	self.send_html(tmpl, req)
 
 #- Some stuff to do on initialisation
@@ -932,7 +951,7 @@ def build_architecture(data=None):
     global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, qf
 
     session = Session()
-    serv = SimpleServer(session, '/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml')
+    serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
         
     db = serv.get_object(session, 'db_istc')
     db2 = serv.get_object(session, 'db_usa')
@@ -969,7 +988,7 @@ idxNames = {"anywhere": 'General Keywords',
             "idx-bibref": 'Bibliographical References',
                 }
 
-logfilepath = '/home/cheshire/cheshire3/cheshire3/www/istc/logs/searchhandler.log'
+logfilepath = cheshirePath + '/cheshire3/www/istc/logs/searchhandler.log'
 
 
 def handler(req):
@@ -985,7 +1004,7 @@ def handler(req):
             except:
                 # architecture not built
                 build_architecture()
-        os.chdir("/home/cheshire/cheshire3/cheshire3/www/istc/html/")
+        os.chdir(cheshirePath + "/cheshire3/www/istc/html/")
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
         lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
         istchandler = istcHandler(lgr)        
