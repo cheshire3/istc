@@ -142,7 +142,7 @@
 	   </configInfo>
 	 </index>
 	 
-	 <index c3:index="idx-format">
+	 <index c3:index="idx-kwd-format">
 	   <title>Format</title>
 	   <map>
 	     <name set="dc">format</name>
@@ -151,7 +151,6 @@
 	     <supports type="relation">exact</supports>
 	     <supports type="relation">all</supports>
 	     <supports type="relation">any</supports>
-	     <supports type="relation">=</supports>
 	     <supports type="relationModifier">string</supports>
 	     <supports type="relationModifier">word</supports>
 	   </configInfo>

@@ -2,7 +2,7 @@
 # -*- coding: iso-8859-1 -*-
 
 import time, sys, os
-sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 import cheshire3
 
@@ -21,11 +21,11 @@ from crypt import crypt
 #psyco.unbind(lex.lex)
 #psyco.unbind(yacc.yacc)
 #psyco.full()
-
+cheshirePath = "/home/cheshire"
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, "/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml")
+serv = SimpleServer(session, cheshirePath + "/cheshire3/configs/serverConfig.xml")
 
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
@@ -195,7 +195,7 @@ elif '-marc' in sys.argv:
     start = time.time()
     marcTxr = db.get_object(session, 'dataTransformer')
     formatTxr = db.get_object(session, 'indentingTxr')
-    dir = '/home/cheshire/cheshire3/cheshire3/dbs/istc/data/'
+    dir = cheshirePath + '/cheshire3/dbs/istc/data/'
     
     db.begin_indexing(session)
     recordStore.begin_storing(session)

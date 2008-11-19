@@ -2,7 +2,7 @@
 
 import time, sys, os
 
-sys.path.insert(1,'/home/cheshire/cheshire3/cheshire3/code')
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
@@ -11,11 +11,11 @@ import cheshire3.exceptions
 import lex, yacc
 import random
 
-
+cheshirePath = "/home/cheshire"
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, "/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml")
+serv = SimpleServer(session, cheshirePath + "/cheshire3/configs/serverConfig.xml")
 
 session.database = 'db_usa'
 db = serv.get_object(session, 'db_usa')

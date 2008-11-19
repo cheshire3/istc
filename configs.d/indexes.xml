@@ -2,7 +2,7 @@
 	<!-- indexes -->
 <subConfigs>
 	<subConfig type="index" id="idx-kwd-all">
-		<objectType>cheshire3.index.SimpleIndex</objectType>
+		<objectType>cheshire3.index.ProximityIndex</objectType>
 		<paths>
 			<object type="indexStore" ref="indexStore" />
 			<object type="recordStore" ref="recordStore" />
@@ -11,13 +11,13 @@
 			<xpath>controlfield[@tag='001']</xpath>
 			<xpath>datafield</xpath>
 			<process>
-				<object type="workflow" ref="KeywordExtractorWorkflow" />
+				<object type="workflow" ref="ProxExtractorWorkflow" />
 				<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
 			</process>
 		</source>
      	<source mode="any|all|=">
      		<process>
-     			<object type="workflow" ref="PreserveMaskingKeywordExtractorWorkflow" />
+     			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
      			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
      		</process>
      	</source>

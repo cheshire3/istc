@@ -136,6 +136,7 @@
 		<xsl:call-template name="heading"/>
 		<xsl:call-template name="title"/>
 		<xsl:call-template name="imprint"/>
+		<xsl:call-template name="imprint_extra"/>
 		<xsl:call-template name="format"/>		
 	<!--	<xsl:call-template name="language"/> 		-->
 		<xsl:call-template name="istcNumber"/>
@@ -261,9 +262,103 @@
 		<xsl:if test="//datafield[@tag='260']">
 			<xsl:variable name="label">
 				<xsl:text>Imprint:</xsl:text>
+			</xsl:variable>		
+			<xsl:variable name="value">	
+				<xsl:for-each select="//datafield[@tag='260']">	
+					<xsl:choose>
+						<xsl:when test="position() = 1">								
+							<xsl:if test="subfield[@code='a']">
+								<xsl:value-of select="subfield[@code='a']"/><xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='b']">
+								<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='c']">
+								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+							</xsl:if>					
+						</xsl:when>
+					</xsl:choose>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="$output='xml'">
+					<tr>
+					<td class="label"><xsl:value-of select="$label"/></td>
+					<td>
+						<xsl:value-of select="$value"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
+					</td>
+					</tr>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="textView">
+						<xsl:with-param name="label" select="$label"/>
+						<xsl:with-param name="value" select="$value"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template name="imprint_extra">
+		<xsl:if test="count(//datafield[@tag='260']) &gt; 1">
+			<xsl:variable name="label">
+				<xsl:text> </xsl:text>
+			</xsl:variable>		
+			<xsl:variable name="value">	
+				<xsl:for-each select="//datafield[@tag='260']">	
+					<xsl:choose>
+						 <xsl:when test="position() = 2">		
+							<xsl:text>Also recorded as </xsl:text>
+							<xsl:if test="subfield[@code='a']">
+								<xsl:value-of select="subfield[@code='a']"/><xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='b']">
+								<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='c']">
+								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+							</xsl:if>
+						</xsl:when>
+						<xsl:when test="position() &gt; 2">					
+							<xsl:if test="subfield[@code='a']">
+								<xsl:value-of select="subfield[@code='a']"/><xsl:text>: </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='b']">
+								<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
+							</xsl:if>
+							<xsl:if test="subfield[@code='c']">
+								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+							</xsl:if>							
+						</xsl:when>
+					</xsl:choose>
+				</xsl:for-each>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="$output='xml'">
+					<tr>
+					<td class="label"><xsl:value-of select="$label"/></td>
+					<td>
+						<xsl:value-of select="$value"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
+					</td>
+					</tr>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="textView">
+						<xsl:with-param name="label" select="$label"/>
+						<xsl:with-param name="value" select="$value"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
+	</xsl:template>
+	
+<!-- 	<xsl:template name="imprint">
+		<xsl:if test="//datafield[@tag='260'][position() $gt; 1]">
+			<xsl:variable name="label">
+				<xsl:text>Imprint:</xsl:text>
 			</xsl:variable>
 			<xsl:variable name="value">
-				<xsl:for-each select="//datafield[@tag='260']">
+				<xsl:for-each select="//datafield[@tag='260'][position() $gt; 1]">
 					<xsl:if test="subfield[@code='a']">
 						<xsl:value-of select="subfield[@code='a']"/><xsl:text>: </xsl:text>
 					</xsl:if>
@@ -294,7 +389,7 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:if>
-	</xsl:template>
+	</xsl:template> -->
     
 	
 	<xsl:template name="format">
