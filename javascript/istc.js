@@ -61,23 +61,16 @@ function collapseRefs(){
 }
 
 function submitForm(op){
-	if (op == 'print'){
-		if (document.getElementById('expandedbib')){
-			if (document.getElementById('expandedbib').checked == true){
-				document.getElementById('expand').value = "true";
-			}
+	if (document.getElementById('expandedbib')){
+		if (document.getElementById('expandedbib').checked == true){
+			document.getElementById('expand').value = "true";
 		}
-		document.getElementById('mainform').submit();
-	}
-	else {
-		if (document.getElementById('expandedbib')){
-			if (document.getElementById('expandedbib').checked == true){
-				document.getElementById('expand').value = "true";
-			}
+		else{
+			document.getElementById('expand').value = "false";
 		}
-		document.getElementById('opvalue').value = op;
-		document.getElementById('mainform').submit();
 	}
+	document.getElementById('opvalue').value = op;
+	document.getElementById('mainform').submit();
 }
 
 

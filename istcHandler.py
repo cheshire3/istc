@@ -161,12 +161,10 @@ class istcHandler:
             locString = '&locations=%s' % locations
         else:
             locString = ''
-
-        
+      
         html = []
         
-        if not (form.has_key('rsid')):
-            
+        if not (form.has_key('rsid')):          
             cql = self.generate_query(form)
             try:
                 q = qf.get_query(session, cql.encode('utf-8'))
@@ -177,9 +175,7 @@ class istcHandler:
             try:
                 rs = db.search(session, q)     
             except:
-                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')
-            
-            
+                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
 
             try:
                 rsid = rss.create_resultSet(session, rs)
@@ -402,8 +398,6 @@ class istcHandler:
                     return True
 
 
-      
-
     def display_rec(self, session, form):
         session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-screen')
@@ -416,8 +410,7 @@ class istcHandler:
             locString = '&locations=%s' % locations
         else :
             locString = ''
-
-            
+           
         rs = rss.fetch_resultSet(session, rsid)
         
         if id > 0 and id < len(rs)-1:
@@ -432,58 +425,117 @@ class istcHandler:
         rlNav = '<div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<img src="/istc/images/link_back2.gif" alt=" Back " name="back" width="27" height="19" border=0 align="middle"></a></div>' % rsid
 
         if len(rs):
-            rec = rs[id].fetch_record(session)           
+            rec = rs[id].fetch_record(session)                               
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
             return ('Record Details', doc.replace('%nav%', navstring), menu.get_raw(session), rlNav)
         else:
             raise ValueError(id)
-            
-            
-    def get_fullRefs(self, session, form):
-        ref = form.get('q', None)
-        ref = ref.replace('*', '\*')
-        session.database = db3.id
-        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
-        rs = db3.search(session, q)
-        if len(rs):
-            recRefs = rs[0].fetch_record(session).get_xml(session)
-        else :
-            while ref.rfind(' ') != -1 and not len(rs):
-                ref = ref[:ref.rfind(' ')].strip()
-                q.term.value = ref.decode('utf-8')
-                rs = db3.search(session, q)
-            if len(rs):
-                recRefs = rs[0].fetch_record(session).get_xml(session)
-            else:
-                recRefs = '<record></record>' 
-        return recRefs
+ 
+ 
         
-        
-    def get_usaRefs(self, session, form):
-        ref = form.get('q', None)
+    def get_usaRefs(self, session, rec):
         session.database = db2.id
-        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % (ref.split(' ')[0].strip()))
-        rs = db2.search(session, q)
-        if len(rs):
-            recRefs = rs[0].fetch_record(session).get_xml(session)
-        else :
-            while ref.rfind(' ') != -1 and not len(rs):
-                ref = ref[:ref.rfind(' ')].strip()
-                q.term.value = ref.decode('utf-8')
-                rs = db2.search(session, q)
-            if len(rs):
-                recRefs = rs[0].fetch_record(session).get_xml(session)
+        q = qf.get_query(session, 'c3.idx-key-usa exact "foo"')
+        usaRefs = []
+        for node in rec.process_xpath(session, '//datafield[@tag="952"]'):
+            ref = node.xpath('subfield[@code="a"]/text()')[0]
+            other = node.xpath('subfield[@code="b"]/text()')
+            if len(other):
+                other = ' %s' % ' '.join(other)
             else:
-                recRefs = '<record></record>'
-        return recRefs     
+                other = ''
+            q.term.value = ref
+            rs = db2.search(session, q)
+            if len(rs):
+                usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other)) 
+            else :
+                while ref.rfind(' ') != -1 and not len(rs):
+                    ref = ref[:ref.rfind(' ')].strip()
+                    q.term.value = ref
+                    rs = db2.search(session, q)
+                if len(rs):
+                    usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other))
+                else:
+                    usaRefs.append('%s%s' % (ref, other))
+        
+        return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs)))).get_raw(session)
+    
+
+
+    def get_fullRefs(self, session, rec):
+        session.database = db3.id
+        q = qf.get_query(session, 'c3.idx-key-refs exact "foo"')
+        recRefs = []
+        for ref in rec.process_xpath(session, '//datafield[@tag="510"]/subfield[@code="a"]/text()'):
+            origRef = ref
+            ref = ref.replace('*', '\*')
+            ref = ref.replace('?', '\?')
+            q.term.value = ref
+            rs = db3.search(session, q)
+            if len(rs):               
+                recRefs.append('<strong>%s:</strong> %s' % (origRef, rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]))
+            else :
+                while ref.rfind(' ') != -1 and not len(rs):
+                    ref = ref[:ref.rfind(' ')].strip()
+                    ref = ref.replace('*', '\*')
+                    ref = ref.replace('?', '\?')
+                    q.term.value = ref
+                    rs = db3.search(session, q)
+                if len(rs):
+                    recRefs.append('<strong>%s:</strong> %s' % (origRef, rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]))
+                else:
+                    recRefs.append('<strong>%s</strong>' % origRef)
+        output = []
+        for line in recRefs:
+            output.append(externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % line.encode('utf-8').replace('&', '&amp;')))).get_raw(session))
+        return '<br />'.join(output)
+        #raise ValueError(externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '<br />'.join(recRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session))
+        #return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '<br></br>'.join(recRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
+    
+            
+            
+            
+#    def get_fullRefs(self, session, form):
+#        ref = form.get('q', None)
+#        ref = ref.replace('*', '\*')
+#        ref = ref.replace('?', '\?')
+#        session.database = db3.id
+#        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
+#        rs = db3.search(session, q)
+#        if len(rs):
+#            recRefs = rs[0].fetch_record(session).get_xml(session)
+#        else :
+#            while ref.rfind(' ') != -1 and not len(rs):
+#                ref = ref[:ref.rfind(' ')].strip()
+#                q.term.value = ref.decode('utf-8')
+#                rs = db3.search(session, q)
+#            if len(rs):
+#                recRefs = rs[0].fetch_record(session).get_xml(session)
+#            else:
+#                recRefs = '<record></record>' 
+#        return recRefs
         
         
-#    def get_format(self, session, form):
-#        string = form.get('q', None)
-#        return '<output>%s</output>' % string.replace('4~~', '4&lt;sup>to&lt;/sup>').replace('8~~', '8&lt;sup>vo&lt;/sup>').replace('f~~', 'f&lt;sup>o&lt;/sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '&lt;sup>mo&lt;/sup>')
-#    
+#    def get_usaRefs(self, session, form):
+#        ref = form.get('q', None)
+#        session.database = db2.id
+#        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % (ref.split(' ')[0].strip()))
+#        rs = db2.search(session, q)
+#        if len(rs):
+#            recRefs = rs[0].fetch_record(session).get_xml(session)
+#        else :
+#            while ref.rfind(' ') != -1 and not len(rs):
+#                ref = ref[:ref.rfind(' ')].strip()
+#                q.term.value = ref.decode('utf-8')
+#                rs = db2.search(session, q)
+#            if len(rs):
+#                recRefs = rs[0].fetch_record(session).get_xml(session)
+#            else:
+#                recRefs = '<record></record>'
+#        return recRefs     
+
     
     def printRecs(self, form):
         istc = form.get('istc', None)
@@ -509,27 +561,29 @@ class istcHandler:
                 output = []
                 if type == 'all':                   
                     for r in rs:
+                        session.database = 'db_istc'
                         rec = r.fetch_record(session)
                         output.append(self._transform_record(rec, txr, expand, locations))
                 else:
                     if len(recs):
                         for r in recs:
+                            session.database = 'db_istc'
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                     
-                return tmpl.replace('%%%CONTENT%%%',  '<br/>------------<br/>'.join(output))
+                return tmpl.replace('%%%CONTENT%%%',  '<br/> '.join(output))
          
     
     def saveRecs(self, form):
         istc = form.get('istc', None)
+        session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-save')
         f = file(self.rtfPath)
         tmpl = f.read()
         f.close()
         expand = form.get('expand', 'false')
         locations = form.get('locations', 'all')
-        if istc:
-            session.database = 'db_istc'
+        if istc:           
             q = qf.get_query(session, 'dc.identifier exact "%s"' % (istc.value))
             rs = db.search(session, q)
             if len(rs):
@@ -544,11 +598,13 @@ class istcHandler:
                 output = []
                 if type == 'all':
                     for r in rs:
+                        session.database = 'db_istc'
                         rec = r.fetch_record(session)
                         output.append(self._transform_record(rec, txr, expand, locations))
                 else:
                     if len(recs):
                         for r in recs:
+                            session.database = 'db_istc'
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                             
@@ -557,16 +613,22 @@ class istcHandler:
 
     def _RTFify(self, string):
          ucre = re.compile('&#([0-9]+);')
-         newString = re.sub (ucre, '\u\\1?', string)
+         strong = re.compile('</?strong>')
+         br = re.compile('<br ?/>')
+         newString = re.sub(ucre, '\u\\1?', string)
          newString = newString.replace('&amp;', '&')
+         newString = re.sub(strong, '', newString)
+         newString = re.sub(br, ' ', newString)
          return newString
 
     
     def send_email(self, address=None, rsid=None, istc=None, type=None, recs=[], expand='false', locations='all'):
+        session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-email')
         f = file(self.rtfPath)
         tmpl = f.read()
         f.close()
+        
         if istc:
             session.database = 'db_istc'
             q = qf.get_query(session, 'dc.identifier exact "%s"' % (istc.value))
@@ -580,11 +642,13 @@ class istcHandler:
                 output = []
                 if type == 'all':
                     for r in rs:
+                        session.database = 'db_istc'
                         rec = r.fetch_record(session)
                         output.append(self._transform_record(rec, txr, expand, locations))
                 else:
                     if len(recs):
                         for r in recs:
+                            session.database = 'db_istc'
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                                    
@@ -592,7 +656,7 @@ class istcHandler:
         message['From'] = 'istc@localhost'
         message['To'] = address
         message['Subject'] = 'ISTC Records'
-        message.attach(MIMEText('The records you requested are attached.'))
+        message.attach(MIMEText('The ISTC records you requested are attached.'))
         
         part = MIMEBase('application', "octet-stream")
         part.set_payload( tmpl.replace('%%%DATA%%%', self._RTFify(''.join(output))))
@@ -648,7 +712,7 @@ class istcHandler:
         txr.params['expand'] = '"%s"' % expand
         txr.params['locations'] = '"%s"' % locations                            
         result = txr.txr(dom, **txr.params)
-        return StringDocument(str(result)).get_raw(session)
+        return StringDocument(str(result)).get_raw(session).replace('%usalocs%', self.get_usaRefs(session, rec)).replace('%fullrefs%', self.get_fullRefs(session, rec))
 
 
     def browse(self, form):
@@ -868,15 +932,15 @@ class istcHandler:
                     data = self.saveRecs(form)
                     self.send_txt(data, req)
                     return
-                elif (operation == 'references'):
-                    self.logger.log('getting refs')
-                    content = self.get_fullRefs(session, form)
-                    self.send_xml(content, req)
-                    return
-                elif (operation == 'usareferences'):
-                    content = self.get_usaRefs(session, form)
-                    self.send_xml(content, req)
-                    return
+#                elif (operation == 'references'):
+#                    self.logger.log('getting refs')
+#                    content = self.get_fullRefs(session, form)
+#                    self.send_xml(content, req)
+#                    return
+#                elif (operation == 'usareferences'):
+#                    content = self.get_usaRefs(session, form)
+#                    self.send_xml(content, req)
+#                    return
                 elif (operation == 'format'):
                     content = self.get_format(session, form)
                     self.send_xml(content, req)
@@ -943,12 +1007,16 @@ usaIndexStore = None
 refsRecStore = None
 refsIndexStore = None
 
+docParser = None
+
+externalDataTxr = None
+
 qf = None
 
 rebuild = True
 
 def build_architecture(data=None):
-    global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, qf
+    global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, docParser, externalDataTxr, qf
 
     session = Session()
     serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
@@ -967,6 +1035,10 @@ def build_architecture(data=None):
     usaIndexStore = db2.get_object(session, 'usaIndexStore')
     refsRecStore = db3.get_object(session, 'refsRecordStore')
     refsIndexStore = db3.get_object(session, 'refsIndexStore')
+    
+    docParser = db.get_object(session, 'LxmlParser')
+    #transformers
+    externalDataTxr = db.get_object(session, 'externalDataTxr')
 
     qf = db.get_object(session, 'baseQueryFactory')
     
