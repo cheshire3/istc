@@ -93,6 +93,13 @@
 	    </paths>
 	</subConfig>
 	
+	<subConfig type="transformer" id="externalDataTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/externalData.xsl</path>
+	    </paths>
+	</subConfig>	
+	
 	
  	<!-- pre-parsers -->
     <subConfig type="preParser" id="emptyEmphTagStripPreParser">

@@ -453,22 +453,28 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<text><xsl:value-of select="$string"/></text>
-					</xsl:otherwise>
-			
+					</xsl:otherwise>			
 				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
-				<text>
-					<xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/>
-					<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
-				</text>
-				<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
-				 	<xsl:call-template name="formatReplace">
-						<xsl:with-param name="string">
-							<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
-						</xsl:with-param>
-					</xsl:call-template>
-				</xsl:if>
+				<xsl:choose>
+					<xsl:when test="substring-before($string, '&lt;sup&gt;')">
+						<text>
+							<xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/>
+							<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
+						</text>
+						<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
+						 	<xsl:call-template name="formatReplace">
+								<xsl:with-param name="string">
+									<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
+								</xsl:with-param>
+							</xsl:call-template>
+						</xsl:if>
+					</xsl:when>
+					<xsl:otherwise>
+						<text><xsl:value-of select="$string"/></text>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>	
 	</xsl:template>
@@ -545,14 +551,15 @@
 			<xsl:variable name="value">
 				<xsl:choose>
 					<xsl:when test="$expand='true'">
-						<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
+						<!-- <xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
 							<xsl:variable name="ref">
 								<xsl:value-of select="."/>
 							</xsl:variable>
 							<xsl:value-of select="."/><xsl:text>: </xsl:text>
 							<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
 							<xsl:value-of select="$newline"/>
-						</xsl:for-each>
+						</xsl:for-each> -->
+						<xsl:text>%fullrefs%</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
@@ -579,22 +586,23 @@
 							<xsl:when test="$expand='false'">
 								<td>
 									<div style="display: block" id="abbrRefs">
-										<xsl:value-of select="substring($value, 0, string-length($value)-1)"/>
+										<xsl:value-of select="$value"/>
 										<xsl:if test="$format='screen'">	
 											<br /><a href="javascript:expandRefs()">expand references</a>
 										</xsl:if>
 									</div>
 									<xsl:if test="$format='screen'">	
 										<div style="display: none" id="fullRefs">
-											<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
+											<!-- <xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
 												<xsl:variable name="ref">
 													<xsl:value-of select="."/>
 												</xsl:variable>
-												<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text>
-												<!-- <xsl:value-of select="c3fn:refs(.)"/> -->
+												<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text> 
 												<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
 											 	<br />
-											</xsl:for-each>
+											</xsl:for-each> -->
+											<xsl:text>%fullrefs%</xsl:text>
+											<br />
 											<a href="javascript:collapseRefs()">collapse references</a>
 										</div>
 									</xsl:if>
@@ -602,15 +610,15 @@
 							</xsl:when>
 							<xsl:otherwise>
 								<td>
-									<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-										<xsl:variable name="ref">
+									<!--<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
+										 <xsl:variable name="ref">
 											<xsl:value-of select="."/>
 										</xsl:variable>
 										<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text>
-										<!-- <xsl:value-of select="c3fn:refs(.)"/> -->
 										<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
 										<br />
-									</xsl:for-each>
+									</xsl:for-each> -->
+									<xsl:text>%fullrefs%</xsl:text>
 								</td>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -619,7 +627,7 @@
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-1)"/>
+						<xsl:with-param name="value" select="$value"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -1048,6 +1056,31 @@
 					<xsl:text>U.S.A:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v8">
+					<xsl:text>%usalocs%</xsl:text>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="$output='xml'">				
+						<tr>
+							<td align="right" class="subheader"><xsl:value-of select="$l8"/></td>					
+						<td>
+							<xsl:value-of select="$v8"/>			
+						</td>
+						</tr>				
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="textView">
+							<xsl:with-param name="label" select="$l8"/>
+							<xsl:with-param name="value" select="$v8"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+			
+<!--			<xsl:if test="//datafield[@tag='952'] and $locations = 'all'">
+				<xsl:variable name="l8">
+					<xsl:text>U.S.A:</xsl:text>
+				</xsl:variable>
+				<xsl:variable name="v8">
 					<xsl:for-each select="//datafield[@tag='952']">						
 						<xsl:variable name="usaref">
 							<xsl:value-of select="subfield[@code='a']/text()"/>
@@ -1076,7 +1109,7 @@
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:if>
+			</xsl:if>-->
 			
 			<xsl:if test="//datafield[@tag='958'] and $locations = 'all'">
 				<xsl:variable name="l9">

@@ -84,7 +84,7 @@ elif '-load' in sys.argv:
     db.begin_indexing(session)
     recordStore.begin_storing(session)
    # df.load(session, defpath + "/data/", codec='iso-8859-1')
-    df.load(session, defpath + "/data_small/", codec='utf-8')
+    df.load(session, defpath + "/data_all/", codec='utf-8')
     print 'Loading'
     x = 0
     a = 0

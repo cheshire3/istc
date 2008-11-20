@@ -67,7 +67,9 @@
       <source>
         <xpath>code</xpath>
         <process>
-          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+          <object type="extractor" ref="SimpleExtractor"/>
+		  <object type="tokenizer" ref="SimpleTokenizer"/>
+		  <object type="tokenMerger" ref="SimpleTokenMerger"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
         </process>
       </source>
@@ -94,7 +96,7 @@
     </subConfig> 
 
      <subConfig type="index" id = "idx-kwd-location_usa">
-      <objectType>cheshire3.index.SimpleIndex</objectType>
+      <objectType>cheshire3.index.ProximityIndex</objectType>
       <paths>
         <object type="indexStore" ref="usaIndexStore"/>
         <object type="recordStore" ref="usaRecordStore"/>
@@ -102,7 +104,7 @@
       <source>
         <xpath>full</xpath>
         <process>
-	  	  <object type="workflow" ref="KeywordExtractorWorkflow"/>
+	  	  <object type="workflow" ref="ProxExtractorWorkflow"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="PossessiveNormalizer"/>
 	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
