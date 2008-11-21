@@ -582,7 +582,9 @@
     	<source>
     		<xpath>datafield[@tag='952']/subfield[@code='a']</xpath>
     		<process>
-	          <object type="workflow" ref="KeywordExtractorWorkflow"/>
+	          <object type="extractor" ref="SimpleExtractor"/>
+			  <object type="tokenizer" ref="SimpleTokenizer"/>
+			  <object type="tokenMerger" ref="SimpleTokenMerger"/>
 	          <object type="normalizer" ref="SpaceNormalizer"/>
 	        </process>
     	</source>
