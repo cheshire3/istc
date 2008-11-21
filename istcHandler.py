@@ -1,5 +1,5 @@
 
-import sys, os, cgitb, time, re, smtplib
+import sys, os, cgitb, time, re, smtplib, copy
 
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
@@ -118,7 +118,7 @@ class istcHandler:
             sys.stderr.flush()
 
         qString = ' '.join(qClauses)
-	
+        self.logger.log(qString)
         return qString
 
 
@@ -146,6 +146,7 @@ class istcHandler:
             rs.order(session, idx, ascending=up, missing=[-1,1][up])
         rss.delete_resultSet(session, rs.id)
         rss.store_resultSet(session, rs)
+       # raise ValueError(rss.fetch_resultSet(session, rs.id))
         return rs
 
 
@@ -168,22 +169,15 @@ class istcHandler:
             cql = self.generate_query(form)
             try:
                 q = qf.get_query(session, cql.encode('utf-8'))
-                self.logger.log(q)
             except:
-                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')
-            
+                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
             try:
                 rs = db.search(session, q)     
             except:
                 return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
-
-            try:
-                rsid = rss.create_resultSet(session, rs)
-                rs.id = rsid
-            except:
-                raise
-            
-            cqlStr = self._interpret_query(q, [], [])          
+            rsid = rss.create_resultSet(session, rs)
+            rs.id = rsid
+            cqlStr = ''# self._interpret_query(q, [], [])        
             html.append("<strong>Your search was for %s </strong><br/><br/>" % cqlStr)
         
         else:
@@ -203,10 +197,8 @@ class istcHandler:
         if hits:
             menubits = []
             
-            sortIndex = form.get('sort', 'idx-ISTCnumber')               
-        
+            sortIndex = form.get('sort', 'idx-ISTCnumber')                                      
             rs = self.sort_resultSet(session, rs, sortIndex)
-   
 
             if start > 0 and start+pagesize < len(rs):
                 navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
@@ -255,8 +247,7 @@ class istcHandler:
                         title = flattenTexts(elms[0])
                     except:
                         title = ""
-                        
-                        
+                                               
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="100"]/subfield[@code="a"]')
                     author = "%s. " % flattenTexts(elms[0]).strip()
@@ -292,7 +283,6 @@ class istcHandler:
                     date = flattenTexts(elms[0])
                 except:
                     date= ""
-          
                 html.append('%s<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s: %s, %s <br/><br/>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
             html.append('<div class="recordnav">%s</div><br/>' % navString)
                 
@@ -460,7 +450,7 @@ class istcHandler:
                 else:
                     usaRefs.append('%s%s' % (ref, other))
         
-        return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs)))).get_raw(session)
+        return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
     
 
 
