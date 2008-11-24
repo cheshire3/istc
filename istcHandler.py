@@ -177,7 +177,7 @@ class istcHandler:
                 return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
             rsid = rss.create_resultSet(session, rs)
             rs.id = rsid
-            cqlStr = ''# self._interpret_query(q, [], [])        
+            cqlStr = self._interpret_query(copy.copy(q), [], [])        
             html.append("<strong>Your search was for %s </strong><br/><br/>" % cqlStr)
         
         else:
