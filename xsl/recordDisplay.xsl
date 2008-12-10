@@ -97,6 +97,7 @@
 		<xsl:choose>	
 			<xsl:when test="$output='xml'">	
 				<xsl:if test="$format='screen'">
+					<div class="counter">%counter%</div>
 					<div class="recordnav">%nav%</div><br/>
 				</xsl:if>
 				<table cellpadding = "5">			
@@ -318,6 +319,7 @@
 							<xsl:if test="subfield[@code='c']">
 								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
 							</xsl:if>
+							<xsl:text>and </xsl:text>
 						</xsl:when>
 						<xsl:when test="position() &gt; 2">					
 							<xsl:if test="subfield[@code='a']">
@@ -328,7 +330,8 @@
 							</xsl:if>
 							<xsl:if test="subfield[@code='c']">
 								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
-							</xsl:if>							
+							</xsl:if>	
+							<xsl:text>and </xsl:text>						
 						</xsl:when>
 					</xsl:choose>
 				</xsl:for-each>
@@ -338,14 +341,14 @@
 					<tr>
 					<td class="label"><xsl:value-of select="$label"/></td>
 					<td>
-						<xsl:value-of select="$value"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
+						<xsl:value-of select="substring($value, 0, string-length($value)-3)"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
 					</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
+						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-3)"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -551,14 +554,6 @@
 			<xsl:variable name="value">
 				<xsl:choose>
 					<xsl:when test="$expand='true'">
-						<!-- <xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-							<xsl:variable name="ref">
-								<xsl:value-of select="."/>
-							</xsl:variable>
-							<xsl:value-of select="."/><xsl:text>: </xsl:text>
-							<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
-							<xsl:value-of select="$newline"/>
-						</xsl:for-each> -->
 						<xsl:text>%fullrefs%</xsl:text>
 					</xsl:when>
 					<xsl:otherwise>
@@ -586,21 +581,13 @@
 							<xsl:when test="$expand='false'">
 								<td>
 									<div style="display: block" id="abbrRefs">
-										<xsl:value-of select="$value"/>
+										<xsl:value-of select="substring($value, 0, string-length($value)-1)"/>
 										<xsl:if test="$format='screen'">	
 											<br /><a href="javascript:expandRefs()">expand references</a>
 										</xsl:if>
 									</div>
 									<xsl:if test="$format='screen'">	
 										<div style="display: none" id="fullRefs">
-											<!-- <xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-												<xsl:variable name="ref">
-													<xsl:value-of select="."/>
-												</xsl:variable>
-												<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text> 
-												<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
-											 	<br />
-											</xsl:for-each> -->
 											<xsl:text>%fullrefs%</xsl:text>
 											<br />
 											<a href="javascript:collapseRefs()">collapse references</a>
@@ -610,14 +597,6 @@
 							</xsl:when>
 							<xsl:otherwise>
 								<td>
-									<!--<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-										 <xsl:variable name="ref">
-											<xsl:value-of select="."/>
-										</xsl:variable>
-										<strong><xsl:value-of select="."/></strong><xsl:text>: </xsl:text>
-										<xsl:value-of select="document(str:encode-uri(concat('http://localhost/istc/search/search.html?operation=references&amp;q=', $ref), false()))/record//full"/>
-										<br />
-									</xsl:for-each> -->
 									<xsl:text>%fullrefs%</xsl:text>
 								</td>
 							</xsl:otherwise>
@@ -627,7 +606,7 @@
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
+						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-1)"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
@@ -859,7 +838,7 @@
 					<xsl:text>London, British Library (</xsl:text>
 					<xsl:for-each select="//datafield[@tag='852']">
 						<xsl:for-each select="subfield[@code='j']">
-							<xsl:value-of select="."/><xsl:text>.</xsl:text>
+							<xsl:value-of select="."/><xsl:text>, </xsl:text>
 						</xsl:for-each>
 						<xsl:for-each select="subfield[not(@code='a') and not(@code='j')]">
 							<xsl:text> </xsl:text><xsl:value-of select="."/>

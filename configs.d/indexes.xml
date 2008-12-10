@@ -260,7 +260,7 @@
 		</source>
 	</subConfig>
 	
-	<subConfig type="index" id="idx-key-bibref">
+ 	<subConfig type="index" id="idx-key-bibref">
     	<objectType>cheshire3.index.SimpleIndex</objectType>
     	<paths>
 	        <object type="indexStore" ref="indexStore"/>

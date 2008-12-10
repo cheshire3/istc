@@ -33,7 +33,18 @@
 			<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div>              
 		</div>
 		<div class="menugrp">
-              <div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Editors this Record (administrators only)<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>
+            <div class="menuitem">
+				<xsl:variable name="istc">
+					<xsl:value-of select="//controlfield[@tag='001']"/>
+				</xsl:variable>
+            	<a>
+            		<xsl:attribute name="href">
+						<xsl:text>/istc/edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
+					</xsl:attribute>
+					<xsl:text>Editors this Record (administrators only)</xsl:text>
+					<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/>
+            	</a>
+            </div>
         </div>
 	</xsl:template>	
 	

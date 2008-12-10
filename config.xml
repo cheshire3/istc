@@ -24,7 +24,7 @@
   	<subConfig type="documentFactory" id="baseDocumentFactory">
 	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
-	      <default type="data">/home/cheshire/cheshire3/dbs/istc/data_all</default>
+	      <default type="data">/home/cheshire/cheshire3/dbs/istc/data</default>
 	      <default type="format">dir</default>
 	      <default type="cache">0</default>
 	   </options>
@@ -35,7 +35,8 @@
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
       <paths>
        <path type="defaultPath">stores</path>
-       	<object type="idNormalizer" ref = "StringIntNormalizer"/>
+       <path type="metadataPath">recordStoreMetadata.bdb</path>
+       	<!-- <object type="idNormalizer" ref = "StringIntNormalizer"/>-->
        	<object type="inTransformer" ref="XmlTransformer"/>
         <object type="outParser" ref="LxmlParser"/>
       </paths>

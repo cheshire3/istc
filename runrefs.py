@@ -25,7 +25,7 @@ session.database = 'db_refs'
 db = serv.get_object(session, 'db_refs')
 defpath = db.get_path(session, "defaultPath")
 recordStore = db.get_object(session, 'refsRecordStore')
-sax = db.get_object(session, 'SaxParser')
+lgr = db.get_path(session, 'defaultLogger')
 
 
 df = db.get_object(session, 'defaultDocumentFactory')
@@ -33,14 +33,22 @@ parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
     
        
+if '-workflowload' in sys.argv:
+    
+    start = time.time()
+    # build necessary objects
+    flow = db.get_object(session, 'refsBuildIndexWorkflow')
+    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
+    lgr.log_info(session, 'Loading references...' )
 
+    flow.process(session, df)
+    (mins, secs) = divmod(time.time() - start, 60)
+    (hours, mins) = divmod(mins, 60)
+    lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
 
-if '-load' in sys.argv:
+elif '-load' in sys.argv:
     start = time.time()
     #flow = db.get_object(session, 'buildIndexWorkflow')
-
-
-    
     db.begin_indexing(session)
     recordStore.begin_storing(session)
     #df.load(session, defpath + "/refsData/", codec='iso-8859-1', tagName='record')

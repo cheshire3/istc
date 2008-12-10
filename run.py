@@ -31,6 +31,7 @@ session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
 defpath = db.get_path(session, "defaultPath")
 recordStore = db.get_object(session, 'recordStore')
+lgr = db.get_path(session, 'defaultLogger')
 sax = db.get_object(session, 'SaxParser')
 authStore = db.get_object(session, 'istcAuthStore')
 qf = db.get_object(session, 'baseQueryFactory')
@@ -76,71 +77,76 @@ if '-test' in sys.argv:
     sys.exit()
 
 elif '-load' in sys.argv:
+    
     start = time.time()
+    # build necessary objects
     flow = db.get_object(session, 'buildIndexWorkflow')
+    baseDocFac = db.get_object(session, 'baseDocumentFactory')
+    baseDocFac.load(session, defpath + "/data/", codec='utf-8')
+    lgr.log_info(session, 'Loading files from %s...' % (baseDocFac.dataPath))
+    #flow.load_cache(session, db)
+    flow.process(session, baseDocFac)
+    (mins, secs) = divmod(time.time() - start, 60)
+    (hours, mins) = divmod(mins, 60)
+    lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
 
 
-    
-    db.begin_indexing(session)
-    recordStore.begin_storing(session)
-   # df.load(session, defpath + "/data/", codec='iso-8859-1')
-    df.load(session, defpath + "/data_all/", codec='utf-8')
-    print 'Loading'
-    x = 0
-    a = 0
-    for doc in df:    
-        x += 1
-        
-        doc = app.process_document(session, doc)
-        try:
-            rec = parser.process_document(session, doc)
-        except:
-            print doc.get_raw(session)
-            a = a+1
-            continue
-        
-        recordStore.create_record(session, rec)
-        
-        db.add_record(session, rec)
-
-    
-    #try:
-    #flow.process(session, df)
-    #except:
-    #    print "error"
-    print a
-    x = 0
-    print "Indexing records..."
-    for rec in recordStore:    
-        x += 1
-        #print x
-        try:
-            db.index_record(session, rec)
-            print '[OK]'
-        except UnicodeDecodeError:
-            print '[Some indexes not built - non unicode characters!]'
-
-
-
-        
+#elif '-load' in sys.argv:
+#    start = time.time()
+#    flow = db.get_object(session, 'buildIndexWorkflow') 
+#    db.begin_indexing(session)
+#    recordStore.begin_storing(session)
+#   # df.load(session, defpath + "/data/", codec='iso-8859-1')
+#    df.load(session, defpath + "/data/", codec='utf-8')
+#    print 'Loading'
+#    x = 0
+#    a = 0
+#    for doc in df:    
+#        x += 1        
+#        doc = app.process_document(session, doc)
 #        try:
 #            rec = parser.process_document(session, doc)
 #        except:
 #            print doc.get_raw(session)
-#            raise
-#        recStore.create_record(session, rec)
+#            a = a+1
+#            continue
+#        
+#        recordStore.create_record(session, rec)        
 #        db.add_record(session, rec)
-#        db.index_record(session, rec)
-#        if not x % 1000:
-#            print "%s in %s, %s/sec" % (x, time.time() - start, time.time() - start / x)
-
-
-    db.commit_indexing(session)
-    recordStore.commit_storing(session)
-    db.commit_metadata(session)
-    (mins, secs) = divmod(time.time() - start, 60)
-    (hours, mins) = divmod(mins, 60)
-    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)
+#    
+#    #try:
+#    #flow.process(session, df)
+#    #except:
+#    #    print "error"
+#    print a
+#    x = 0
+#    print "Indexing records..."
+#    for rec in recordStore:    
+#        x += 1
+#        #print x
+#        try:
+#            db.index_record(session, rec)
+#            print '[OK]'
+#        except UnicodeDecodeError:
+#            print '[Some indexes not built - non unicode characters!]'
+#   
+##        try:
+##            rec = parser.process_document(session, doc)
+##        except:
+##            print doc.get_raw(session)
+##            raise
+##        recStore.create_record(session, rec)
+##        db.add_record(session, rec)
+##        db.index_record(session, rec)
+##        if not x % 1000:
+##            print "%s in %s, %s/sec" % (x, time.time() - start, time.time() - start / x)
+#
+#    db.commit_indexing(session)
+#    recordStore.commit_storing(session)
+#    db.commit_metadata(session)
+#    (mins, secs) = divmod(time.time() - start, 60)
+#    (hours, mins) = divmod(mins, 60)
+#    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)
 
 
 elif '-extractTest' in sys.argv:
