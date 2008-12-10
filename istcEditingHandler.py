@@ -358,7 +358,7 @@ class IstcEditingHandler:
     def _get_suggestions(self, form):
         letters = form.get('s', None)
         index = form.get('i', None)
-        if index == 'idx-key-refs':
+        if index == 'idx-key-refs-exact':
             session.db = db3.id
             q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
             idx = db3.get_object(session, '%s' % index)
