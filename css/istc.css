@@ -2,8 +2,14 @@ body {
 	margin: 0px;
 	padding: 0px;
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	font-size: 12px; 
+	font-size: 10pt; 
 }
+
+p {
+	font-size: 12pt;
+	margin-bottom: 3px;
+	padding-bottom: 3px; 
+	}
 
 br {clear:both}
 
@@ -17,7 +23,6 @@ color: #CCCC99;
 }
 .text {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 75%; color: #000000;}
 .title {font-family: Arial, Helvetica, Verdana, sans-serif; font-size: 100%; color: #000000; font-weight: Bold;}
-
 
 #mainform {
 	font-size: 12pt;
@@ -228,6 +233,11 @@ td.comphit {
 	font-size: 12pt; 
 }
 
+.counter {
+	float: left;
+	font-size: 10pt
+	}
+
 /* relating to char entity keyboard */
 
 #keyboard {
@@ -256,15 +266,72 @@ td button {
 	}
 
 
+/* general form stuff */
 
+.field {
+	border: 1px solid #CCCC99;
+	background: #EDEDDC;
+	padding-left: 12px;
+	padding-right: 12px;
+	float: left;
+	font-size: 12pt;
+	margin-bottom: 10px;
+	min-width: 1100px;
+	}
 
+textarea, input {
+		font-family: arial, helvetica, gill, sans-serif;
+		font-size: 11pt; 
+	}
+
+#formDiv {
+	overflow: visible;
+	
+	}
+
+.horizontal {
+	float: left;
+	padding-right: 20px;
+	}
 
 /* Relating to multiple entry fields */
 
 
-.melabel {
-	font-size: 10pt;
+.editfullref{
+	float: left;
+	margin-top: 70px;
+	}
 
+
+#refdisplay{
+	margin-top: 5px;
+	}
+
+#refdisplay p{
+	font-size: 10pt;
+	max-width: 430px;
+	float: left;
+	}
+
+.reflabel {
+	float: left;
+	margin-top: 50px;
+	}
+
+.melabel, .reflabel {
+	font-size: 10pt;
+	}
+	
+.mebuttons {
+	float: left;
+	padding-left: 50px;
+	padding-right: 50px;
+	}
+	
+.meadded {
+	padding-left: 45px;
+	padding-bottom: 10px;
+	float: left;
 	}
 
 .added {
@@ -274,6 +341,9 @@ td button {
 	padding-top: 3px;
 	padding-bottom: 3px;
 	margin-left: 0px;	
+	height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .added ul {
@@ -292,9 +362,11 @@ td button {
 
 }
 
+
 .tablecontainer {
 	float: left;
 	margin-top: 8px;
+	max-width: 450px;
 }
 
 .tablecontainer .label {
@@ -305,6 +377,7 @@ td button {
 	margin-top: 5px;
 	margin-left: 10px;
 	width: 50px;
+	float: left;
 }
 
 td .mebutton {
@@ -317,4 +390,36 @@ td .mebutton {
 
 .suggest {
 	z-index: 3;	
+}
+
+/*======================================================================================================= */
+/* SubForm */
+
+.subForm {
+	background: #EDEDDC;
+}
+
+
+
+.subFormTitle {
+	font-size: 11pt;
+	text-weight: bold;
+	margin-left: 20px;
+	float: left;
+	}
+	
+#subrefclose {
+	float:right;
+	margin-top: 15px;
+	margin-right: 30px;
+	}
+
+.subreflabel {
+	vertical-align: top;
+	font-size: 10pt;
+	width: 150px;
+	}
+
+#subreftable {
+	padding: 20px;
 }

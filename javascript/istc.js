@@ -16,7 +16,7 @@
 */ 
 
 
-
+var timeout;
 var op = null;
 
 function confirmOp(){
@@ -65,10 +65,11 @@ function submitForm(op){
 		if (document.getElementById('expandedbib').checked == true){
 			document.getElementById('expand').value = "true";
 		}
-		else{
+		else if (document.getElementById('expandedbib')){
 			document.getElementById('expand').value = "false";
 		}
 	}
+	alert(document.getElementById('opvalue'));
 	document.getElementById('opvalue').value = op;
 	document.getElementById('mainform').submit();
 }
@@ -81,19 +82,28 @@ function submitForm(op){
 
 var nameCount = 0;
 
+var indicators = new Array();
+		indicators['100'] = '1-0';
+		indicators['245'] = '1-0';
+		indicators['510'] = '4-0';
+		indicators['959'] = '1-0';
+
 function addEntry(s){
 
    	var fm = document.getElementById('istcForm');
 	var tableDiv = ($(s + 'table'));
+	
     /* retreive all values from section of form and reset form values*/
     var valueString = '';
     var textString = '';  
 	var table = tableDiv.getElementsByTagName('tbody')[0];
 	var rows = table.getElementsByTagName('tr');
 	var length = rows.length-1;
-	
     for (var i = 0; i<length; i++){    
-    	textbox = rows[i].getElementsByTagName('input')[0]
+    	var textbox = rows[i].getElementsByTagName('input')[0];  
+    	if (textbox == null){
+    		textbox = rows[i].getElementsByTagName('textarea')[0];
+    	}	
     	if (textbox.value != ""){
     		valueString += textbox.id + ' | ' + textbox.value + ' ||| ';
     		textString += textbox.value + ' ';  		
@@ -103,7 +113,13 @@ function addEntry(s){
     	}
     	textbox.value = '';
     }
-           
+    var tag = textbox.id.split('_')[0];
+    var indicatorValue = '0-0';
+    if (indicators[tag]) {
+    	indicatorValue = indicators[tag];
+    }
+    	
+    valueString += tag + '_ind | ' + indicatorValue + ' ||| ';
     /* add to DOM */
     var div = document.getElementById('added' + s.toLowerCase());
     var list = document.getElementById('added' + s.toLowerCase() + 'list');
@@ -113,9 +129,14 @@ function addEntry(s){
 	var number = nameCount;
     nameDiv = document.createElement('div');
     nameDiv.setAttribute('class', 'multipleEntry');
-    nameDiv.onclick = function () {editEntry(s, number); },   
-    nameDiv.setAttribute('title', 'Click to edit');
-    nameDiv.appendChild(txtnode);
+    p = document.createElement('p');
+    p.className = 'float'; 
+    p.onclick = function () {editEntry(s, number); };
+    p.onmouseover = function () {showValue(tag, this); };
+    p.onmouseout = function () {clearRef(); };
+    p.setAttribute('title', 'Click to edit');
+    p.appendChild(txtnode);
+    nameDiv.appendChild(p);
     
     var icondiv = createIcons(s);
 
@@ -148,9 +169,8 @@ function addEntry(s){
 		Sortable.destroy('added' + s.toLowerCase() + 'list');
 	}
     nameCount++;   	 
+    clearRef();
 }
-
-
 
 
 function createIcons(s){
@@ -166,9 +186,8 @@ function createIcons(s){
    innerHTMLString += '<span class="handle">move</span>'; 
    
    icondiv.innerHTML = innerHTMLString;
-   return icondiv
+   return icondiv;
 }
-
 
 
 /*deletes element with given id */
@@ -197,22 +216,104 @@ function editEntry(s, number){
   
   	var string = document.getElementById(s + number + 'xml').value;
   	var values = string.split(' ||| ');
-  
  	var tableDiv = ($(type + 'table'));
 
   	var table = tableDiv.getElementsByTagName('tbody')[0];
   	var rows = table.getElementsByTagName('tr');
   	var inputs = table.getElementsByTagName('input');
-  	
-  	// replace values in order
-  	for (var i = 0; i< values.length-1; i++){  
-  		value = values[i].split(' | ');
-  		inputs[i].value = value[1];
+  	if (inputs.length == 1){
+
+  		inputs = table.getElementsByTagName('textarea');
+		for (var i = 0; i< values.length-2; i++){  
+	  		value = values[i].split(' | ');
+	  		//inputs[i].value = value[1];
+	  		document.getElementById(value[0]).value = value[1];
+	  	}  		
   	}
+  	else {
+	  	// replace values in order
+	  	for (var i = 0; i< values.length-2; i++){  
+	  		value = values[i].split(' | ');
+	  		//inputs[i].value = value[1];
+	  		document.getElementById(value[0]).value = value[1];
+	  	}
+	}
   	//delete the access point you are now editing
   	deleteEntry(s + number);	
 }
 
+
+function registerLists(){
+	added = document.getElementsByClassName('added');
+	for (var i = 0; i< added.length; i++){
+		if (added[i].style.display == 'block'){
+			list = document.getElementById(added[i].id + 'list');
+			if (list.getElementsByTagName('li').length > 1){
+				Sortable.create(added[i].id + 'list', {handle:'handle', constraint: 'vertical' });
+			}
+		}
+	}
+}
+
+
+function showValue(type, element){
+
+	if (type == '510'){
+		var value = element.childNodes[0].nodeValue;
+		var url = '/istc/edit/';
+		var data = 'operation=references&q=' + value;
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var text = document.createTextNode(transport.responseText);
+			var cell = document.getElementById('refdisplay');
+			cell.removeChild(cell.childNodes[0]);
+			var p = cell.appendChild(document.createElement('p'));
+			p.appendChild(text);
+			cell.appendChild(p);
+		}});	
+	}
+}
+
+
+function clearRef(){
+	var cell = document.getElementById('refdisplay');
+		cell.removeChild(cell.childNodes[0]);	
+		var p = cell.appendChild(document.createElement('p'));
+		value = document.getElementById('510_a').value;
+		if (value != "" && value != " "){
+			var url = '/istc/edit/';
+			var data = 'operation=references&q=' + value + '&r=False';
+			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+				var text = document.createTextNode(transport.responseText);
+				p.appendChild(text);
+			}});
+		}
+		cell.appendChild(p);	
+}
+
+
+function getFullRef(element){
+	var value = element.value;
+	var url = '/istc/edit/';
+	var data = 'operation=references&q=' + value;
+	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var text = document.createTextNode(transport.responseText);
+		var cell = document.getElementById('refdisplay');
+		cell.removeChild(cell.childNodes[0]);	
+		var p = cell.appendChild(document.createElement('p'));
+		p.appendChild(text);
+		cell.appendChild(p);	
+	}});		
+}
+
+
+function editRef(){
+	var abbrev = document.getElementById('510_a').value;
+	abbrev = abbrev.replace(/&/g, '%26');
+	var full = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
+	full = full.replace(/&/g, '%26');
+	var popup = window.open('http://localhost/istc/edit?operation=refsubform&abbrev=' + abbrev + '&full=' + full,'Bibliographical References Editing','width=700,height=300,resizable=no,screenX=300,screenY=300,left=300,right=300');
+
+}
 //end of functions for multiple entry fields
 
 //================================================================================================
@@ -221,13 +322,23 @@ function editEntry(s, number){
 
 //maps html element ids to indexes
 var indexMap = new Array();
-		indexMap['imprints_a'] = 'idx-kwd-publoc';
-		indexMap['imprints_b'] = 'idx-printer';
+		indexMap['260_a'] = 'idx-kwd-publoc';
+		indexMap['260_b'] = 'idx-printer';
 		indexMap['author'] = 'idx-author';
+		indexMap['510_a'] = 'idx-key-refs-exact';
+
 
 //the option currently selected - used to select but keep focus on textbox
 var optionSel = 0;
 
+var ajaxSuggest = null;
+
+
+
+function suggestDelay(id, e){
+	clearTimeout(timeout);
+	timeout = setTimeout(function() {suggest(id, e)}, 1000);
+}
 
 
 function suggest(id, e){
@@ -255,6 +366,7 @@ function suggest(id, e){
 	else {	
 		var element =($(id));
 		var index = indexMap[id];
+	
 		//delete any existing boxes		
 		if (suggestBox){
 			suggestBox.parentNode.removeChild(suggestBox);
@@ -263,11 +375,11 @@ function suggest(id, e){
 		//AJAX call to get values from index
 			var url = '/istc/edit/';
 			var data = 'operation=suggest&i=' + index + '&s=' + element.value.toLowerCase();
-			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
-				terms = response.substring(8,response.indexOf('</select>'));
-				termList = terms.split(' | ');
-				len = parseInt(terms.split(' | ').length);
+				var terms = response.substring(8,response.indexOf('</select>'));
+				var termList = terms.split(' | ');
+				var len = parseInt(terms.split(' | ').length);
 				if (len > 10){
 					//only display 10 at a time
 					len = 10;
@@ -301,6 +413,9 @@ function selectClick(elem, target){
 	var targetElem = ($(target)); 
 	targetElem.value = element.value;
 	targetElem.parentNode.removeChild(element);
+	if (targetElem.id == '510_a'){
+		getFullRef(targetElem);
+	}
 }
 
 
@@ -310,6 +425,9 @@ function selectReturn(elem, target, e){
 		var targetElem = ($(target)); 
 		targetElem.value = element.value;
 		targetElem.parentNode.removeChild(element);
+		if (targetElem.id == '510_a'){
+			getFullRef(targetElem);
+		}
 	}
 }
 

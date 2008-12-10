@@ -23,12 +23,15 @@ from cheshire3.cqlParser import Triple
 
 import urllib
 
-class istcHandler:
+class IstcHandler:
     templatePath = cheshirePath + "/cheshire3/www/istc/html/template.html"
     rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
     printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
 
     def __init__(self, lgr):
+        global rebuild
+        if (rebuild):
+            build_architecture()
         self.logger = lgr
 
 
@@ -177,7 +180,7 @@ class istcHandler:
                 return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
             rsid = rss.create_resultSet(session, rs)
             rs.id = rsid
-            cqlStr = self._interpret_query(copy.copy(q), [], [])        
+            cqlStr = self._interpret_query(q, [], [])        
             html.append("<strong>Your search was for %s </strong><br/><br/>" % cqlStr)
         
         else:
@@ -235,8 +238,7 @@ class istcHandler:
 
                 rec = recStore.fetch_record(session, rs[i].id)
                 
-                html.append('%d. ' %  (i+1))                
-                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % i)
+
                 
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="245"]/subfield[@code="a"]')
@@ -283,7 +285,10 @@ class istcHandler:
                     date = flattenTexts(elms[0])
                 except:
                     date= ""
-                html.append('%s<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s</a><br/>&nbsp;&nbsp;&nbsp;%s: %s, %s <br/><br/>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
+                    
+                html.append('<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%d</a>. ' %  (rsid, i, locString, i+1))                
+                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % i)
+                html.append('%s<i>%s</i><br/>&nbsp;&nbsp;&nbsp;%s: %s, %s <br/><br/>' % (author, title.strip(), place.strip(), printer.strip(), date))       
             html.append('<div class="recordnav">%s</div><br/>' % navString)
                 
             menubits.extend(['<div class="menugrp">',
@@ -403,6 +408,8 @@ class istcHandler:
            
         rs = rss.fetch_resultSet(session, rsid)
         
+        countString = 'Record %s of %s' % (id+1, len(rs))
+        
         if id > 0 and id < len(rs)-1:
             navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Next</a>' % (rsid, id-1, locString, rsid, id+1, locString)
         elif id > 0 and id < len(rs):
@@ -419,7 +426,7 @@ class istcHandler:
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('Record Details', doc.replace('%nav%', navstring), menu.get_raw(session), rlNav)
+            return ('Record Details', doc.replace('%nav%', navstring).replace('%counter%', countString), menu.get_raw(session), rlNav)
         else:
             raise ValueError(id)
  
@@ -1069,7 +1076,7 @@ def handler(req):
         os.chdir(cheshirePath + "/cheshire3/www/istc/html/")
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
         lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
-        istchandler = istcHandler(lgr)        
+        istchandler = IstcHandler(lgr)        
         try:
             istchandler.handle(req)
         finally:

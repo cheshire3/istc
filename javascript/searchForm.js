@@ -37,7 +37,7 @@ var countryList = new Array('Balkans|||Balkans', 'Bohemia and Moravia|||Bohemia 
 var locList = new Array('British Isles|||British Isles', 'Belgium|||Belgium', 'France|||France', 'Germany|||Germany', 'Italy|||Italy', 'Spain/Portugal|||Spain/Portugal', 'Netherlands|||Netherlands', 'U.S.A.|||U.S.A.', 'Other European|||Other European', 'Other|||Other', 'Doubtful|||Doubtful');
 
 function changeInputs(iSelIdx, current){
-		//put drop downs in if necessary
+	//put drop downs in if necessary
 	
 	if (iSelIdx == 8){	
 		var formatDropDown = document.createElement('select')
@@ -106,10 +106,12 @@ function changeInputs(iSelIdx, current){
 		textEntry.setAttribute('name', 'fieldcont' + current);
 		textEntry.setAttribute('style', 'width: 300');
 		var termfield = document.getElementById('fieldcont' + current);
+		var value = termfield.value;
 		var parent = termfield.parentNode;
-		var sibling = document.getElementById('fieldrel' + current);
+		var sibling = document.getElementById('fieldrel' + current);		
 		parent.removeChild(termfield);
 		parent.insertBefore(textEntry, sibling);
+		document.getElementById('fieldcont' + current).value = value;
 	}
 	
 }
@@ -233,19 +235,19 @@ function createClause(current, clauseState){
 function createSelect(name, optionList, selIdx){
 	// set 1st option as selected by default
 	if (!selIdx) {var selIdx = 0;}
-	var selectElem = document.createElement('select')
+	var selectElem = document.createElement('select');
 	selectElem.id = name;
   	selectElem.name = name;
 	for (var i=0; i < optionList.length; i++){
-		var optionData = optionList[i].split('|||')
-		var optionElem = document.createElement('option')
+		var optionData = optionList[i].split('|||');
+		var optionElem = document.createElement('option');
 		optionElem.value = optionData[0];
 		optionElem.innerHTML = optionData[1];
 		
 		if (i == selIdx) {optionElem.selected = 'selected'}
-		selectElem.appendChild(optionElem)
+		selectElem.appendChild(optionElem);
 	}
-	return selectElem
+	return selectElem;
 }
 
 function removeClause(current) {

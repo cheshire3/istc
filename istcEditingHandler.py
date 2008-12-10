@@ -12,7 +12,9 @@ from cheshire3.document import StringDocument
 from cheshire3.record import LxmlRecord
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
+from cheshire3.marc_utils import MARC
 from lxml import etree
+from copy import deepcopy
 #from wwwSearch import *
 from crypt import crypt
 from istcLocalConfig import *
@@ -42,6 +44,10 @@ class IstcEditingHandler:
         req.send_http_header()
         if (type(data) == unicode):
             data = data.encode('utf-8')
+        try:
+            data = data.encode('utf-8')
+        except:
+            pass
         req.write(data)
         req.flush()       
     #- end send_xml()
@@ -62,17 +68,171 @@ class IstcEditingHandler:
         raise ValueErorr(doc.get_raw(session))
 
 
+    def build_marc(self, form):
+        multipleEntryFields = ['imprints', 'generalnotes', 'references', 'blshelfmarks']
+        list = form.list
+        dict = {}
+        marc = {}
+        
+        for l in list:
+
+            if l.value.strip() != '' and l.value.strip() != ' ' and l.name not in ['operation']:
+                if l.name == '1':
+                    marc[1] = [l.value.strip()]
+                elif l.name == 'leader':
+                    try:
+                        marc[0] = [''.join([l.value[5:9], l.value[17:20]])]
+                    except:
+                        marc[0] = [' am    ']
+                elif l.name in multipleEntryFields:
+                    if l.value.find('|||') != -1:
+                        meList = l.value.split('|||')
+                        ind = '0-0'
+                        codelist = []
+                        for me in meList:  
+                            if me.strip() != '': 
+                                temp = me.split('|')
+                                code = temp[0].split('_')[1].strip()
+                                if code == 'ind':
+                                    n = int(temp[0].split('_')[0])
+                                    ind = temp[1]
+                                else :
+                                    codelist.append((code, temp[1].strip()))
+                        tuple = ((ind.split('-')[0].strip(), ind.split('-')[1].strip(), codelist))
+                        try:
+                            marc[n].append(tuple)
+                        except:
+                            marc[n] = [tuple]
+                            
+                else:
+                    name = l.name.split('_')
+                    try:
+                        n = int(name[0])
+                    except:
+                        n = name[0]
+                    try:
+                        dict[n][name[1]] = l.value.strip()
+                    except:
+                        dict[n] = {name[1] : l.value.strip()}   
+        try:
+            marc[0]
+        except:
+            marc[0] = [' am    ']                 
+        authorTag = dict['author']['sel']
+        if not authorTag == 'null':
+            authorTag = int(authorTag)
+            dict[authorTag] = dict['author']
+            del dict[authorTag]['sel']
+        del dict['author']
+
+        for k in dict.keys():
+            if k == 8:
+                try:
+                    orig = dict[8]['original']
+                except:
+                    orig = '      '
+                try:
+                    dateType = dict[8]['datetype']
+                except:
+                    dateType = ' '
+                try:
+                    date1 = dict[8]['date1']
+                except:
+                    date1 = '    '
+                try:
+                    date2 = dict[8]['date2']
+                except:
+                    date2 = '    '          
+                try:
+                    lang = dict[8]['lang']      
+                except:
+                    lang = '   '
+                string = '%s%s%s%s                    %s  ' % (orig, dateType, date1, date2, lang)
+                marc[8] = [string]
+
+            elif len(dict[k]) > 1:
+                inds = ['0', '0']
+                list = []
+                marc[k] = []
+                for y in dict[k].keys():              
+                    if y == 'ind':
+                        inds = dict[k]['ind'].split('-')
+                    else :
+                        list.append((y, dict[k][y]))                    
+                marc[k].append((inds[0], inds[1], list))
+           
+        marcObject = MARC()
+        marcObject.fields = marc
+        return StringDocument(marcObject.toMARCXML())
+
+
+
+
+       
+#        for l in list:
+#            if l.value.strip() != '' and l.value.strip() != ' ' and l.name[l.name.find('_'):] != 'ind':
+#                if l.name.find('_'):
+#                    temp.append(l.name[:l.name.rfind('_')])
+#                else:
+#                    temp.append(l.name)
+#        tags = set(temp)
+#        data = []
+#        for t in tags:    
+#            if t not in ['operation', '001', '008']:
+#                for code in enumerate(alph):
+#                    field = form2.get('%s_%s' % (t, code), None)
+#                    if field != None:
+#                        data.append(('%s', '%s') % (code, field.value.strip()))
+#                indicators = form2.get('%s_ind' % t, '0|0').split('|')
+#                
+#                tuple = (indicators[0], indicators[1], data)
+#                try :
+#                    dict[t].append(tuple)
+#                except:
+#                    dict[t] = [tuple]
+#        raise ValueError(dict)
+                
+
     def save(self, form):
         recid = form.get("controlfield[@tag='001']", None)
         try:
             retrievedRec = editStore.fetch_record(session, recid)
         except:
-            rec = LxmlRecord(self.build_ead(form))
+            rec = xmlp.process_document(session, self.build_marc(form))
+            raise ValueError(rec.get_xml(session))
             rec.id = recid
             editStore.store_record(session, rec)
             editStore.commit_storing(session)
             return rec
-        
+ 
+ 
+    def get_fullRefs(self, session, form, recursive=True):
+        ref = form.get('q', None)
+        ref = ref.replace('*', '\*')
+        ref = ref.replace('?', '\?')        
+        r = form.get('r', '') 
+        if r != '':
+            recursive=False
+        session.database = db3.id
+        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
+        rs = db3.search(session, q)
+        if len(rs):
+            recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+        else :
+            if recursive :
+                while ref.rfind(' ') != -1 and not len(rs):
+                    ref = ref[:ref.rfind(' ')].strip()
+                    q.term.value = ref.decode('utf-8')
+                    rs = db3.search(session, q)
+                if len(rs):
+                    recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+                else:
+                    recRefs = 'none' 
+            else:
+                recRefs = 'none' 
+        return recRefs
+
+       
         
     def _walk_directory(self, d, type='checkbox'):
         # we want to keep all dirs at the top, followed by all files
@@ -149,13 +309,13 @@ class IstcEditingHandler:
                 
     
     def edit_file(self, form):
-        f = form.get('filepath', None)
-        if not f or not len(f.value):
-            #TODO: create appropriate html file - this is for admin
-            return read_file('upload.html')
-        ws = re.compile('[\s]+')
-        xml = ws.sub(' ', read_file(f))
-        doc = StringDocument(xml)      
+        dataPath = cheshirePath + '/cheshire3/dbs/istc/data/'
+        f = '%s%s.xml' % (dataPath, form.get('q', None))
+#       if not f or not len(f.value):
+#            #TODO: create appropriate html file - this is for admin
+#            return read_file('upload.html')
+        xml = read_file(f)
+        doc = StringDocument(xml)  
         rec = xmlp.process_document(session, doc)
         
         # TODO: handle file not successfully parsed
@@ -198,9 +358,15 @@ class IstcEditingHandler:
     def _get_suggestions(self, form):
         letters = form.get('s', None)
         index = form.get('i', None)
-        q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
-        idx = db.get_object(session, '%s' % index)
-        terms = db.scan(session, q, -1, direction="=")
+        if index == 'idx-key-refs':
+            session.db = db3.id
+            q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
+            idx = db3.get_object(session, '%s' % index)
+            terms = db3.scan(session, q, 50, direction="=")            
+        else:
+            q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
+            idx = db.get_object(session, '%s' % index)
+            terms = db.scan(session, q, 50, direction="=")
         output = []
         for t in terms:
             term = self._cleverTitleCase(t[0])
@@ -211,9 +377,177 @@ class IstcEditingHandler:
             
 #
 # End of AJAX calls        
-##########################################################################################      
+##########################################################################################  
+
+
+#SUB-FORM FUNCTIONS
+
+    
+    def get_refForm(self, form):
+        page = read_file('refSubForm.html')
+        page = page.replace('%%ABBREV%%', form.get('abbrev', ''))
+        page = page.replace('%%FULL%%', form.get('full', ''))
+        return page
+    
+#    
+#    def submitRef(self, form):
+#        abbrev = form.get('abbrev', '')
+#        full = form.get('full', '')
+#        if abbrev.strip() == '' or full.strip() == '':
+#            return self.get_refForm(form)
+#        entry = '<record><code>%s</code><full>%s</full></record>' % (abbrev, full)
+#        session.database = db3.id
+#        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
+#        rs = db3.search(session, q)
+#        if len(rs):
+#            
+#        else :
+#            while ref.rfind(' ') != -1 and not len(rs):
+#                ref = ref[:ref.rfind(' ')].strip()
+#                q.term.value = ref.decode('utf-8')
+#                rs = db3.search(session, q)
+#            if len(rs):
+#                recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+#            else:
+#                recRefs = 'none' 
+#        
+#        filename = cheshirePath + 'cheshire3/dbs/istc/refsData/refs.xml'
+#        file = open(filename, mode='a', bufsize=1)
+#        file.write(entry)
         
+
+#
+#    
+#    def submit(self, req, form):
+#        global sourceDir, ppFlow, xmlp
+#        req.content_type = 'text/html'
+#        req.send_http_header()
+#        head = self._get_genericHtml('header.html')
+#        req.write(head)
+#        i = form.get('index', 'true')
+#        if i == 'false' :
+#            index = False
+#        else :
+#            index = True
+#        recid = form.get('recid', None)
+#        fileOwner = form.get('owner', session.user.username)
+#        editRecid = '%s-%s' % (recid.value, fileOwner)
+#        
+#        rec = editStore.fetch_record(session, editRecid)
+#        
+#        filename = form.get('filename', self._get_filename(rec))
+#        if filename == None:
+#            filename = '%s.xml' % recid
+#        
+#        xml = rec.get_xml(session)    
+#        valid = self.validate_record(xml)     
+#        exists = True 
+#        if valid and index:
+#            #delete and unindex the old version from the record store
+#            try : 
+#                oldRec = recordStore.fetch_record(session, recid)
+#            except :
+#                #this is a new record so we don't need to delete anything
+#                exists = False
+#                req.write('<span class="error">[ERROR]</span> - Record not present in recordStore<br/>\n')
+#            else :
+#                req.write('undindexing existing version of record... ')
+#                db.unindex_record(session, oldRec)
+#                req.write('record unindexed')
+#                db.remove_record(session, oldRec)
+#                req.write('<span class="ok">[OK]</span><br/>\nDeleting record from stores ...')
+#                
+#                recordStore.begin_storing(session)
+#                recordStore.delete_record(session, oldRec.id)
+#                recordStore.commit_storing(session)
+#                
+#                dcRecordStore.begin_storing(session)
+#                try: dcRecordStore.delete_record(session, rec.id)
+#                except: pass
+#                else: dcRecordStore.commit_storing(session)
+#                req.write('<span class="ok">[OK]</span><br/>\n')
+#                if len(rec.process_xpath(session, 'dsc')) and exists :
+#                    # now the tricky bit - component records
+#                    compStore.begin_storing(session)
+#                    q = queryFactory.get_query(session, 'ead.parentid exact "%s/%s"' % (oldRec.recordStore, oldRec.id))
+#                    req.write('Removing components...')
+#                    rs = db.search(session, q)
+#                    for r in rs:
+#                        try:
+#                            compRec = r.fetch_record(session)
+#                        except (c3errors.FileDoesNotExistException, c3errors.ObjectDoesNotExistException):
+#                            pass
+#                        else:
+#                            db.unindex_record(session, compRec)
+#                            db.remove_record(session, compRec)
+#                            compStore.delete_record(session, compRec.id)
+#         
+#                    compStore.commit_storing(session)
+#                    req.write('<span class="ok">[OK]</span><br/>\n')
+#            #add and index new record
+#            req.write('indexing new record... ')
+#            doc = ppFlow.process(session, StringDocument(xml))
+#            rec = xmlp.process_document(session, doc)
+#            assignDataIdFlow.process(session, rec)
+#            
+#            db.begin_indexing(session)
+#            recordStore.begin_storing(session)
+#            dcRecordStore.begin_storing(session)
+#            
+#            indexNewRecordFlow.process(session, rec)
+#            
+#            recordStore.commit_storing(session)
+#            dcRecordStore.commit_storing(session)
+#            
+#            
+#            if len(rec.process_xpath(session, 'dsc')):
+#                compStore.begin_storing(session)
+#                # extract and index components
+#                compRecordFlow.process(session, rec)
+#                compStore.commit_storing(session)
+#                db.commit_indexing(session)
+#                db.commit_metadata(session)
+#                req.write('<span class="ok">[OK]</span><br/>\n')
+#            else :
+#                db.commit_indexing(session)
+#                db.commit_metadata(session)   
+#                req.write('<span class="ok">[OK]</span><br/>\n')
+#            # write to file
+#        if valid:
+#            req.write('writing to file system... ')
+#            filepath = os.path.join(sourceDir, filename)
+#            pre = ''
+#            if os.path.exists(filepath):
+#                ws = re.compile('[\s]+')
+#                xml = ws.sub(' ', read_file(filepath))
+#                m = re.match('(.*?)<ead[>\s]', xml)
+#                try :           
+#                    pre = m.group(1)    
+#                except:
+#                    pass
+#                os.remove(filepath)
+#            try :
+#                file = open(filepath, 'w')
+#            except :
+#                file = open(os.path.join(sourceDir,'%s.xml' % recid), 'w')
+#            
+#            tempRec = xmlp.process_document(session, orderTxr.process_record(session, rec))
+#            indentTxr = db.get_object(session, 'indentingTxr')
+#            file.write('%s\n%s' % (pre, indentTxr.process_record(session, tempRec).get_raw(session)))
+#            file.flush()
+#            file.close()    
+#            editStore.delete_record(session, editRecid)
+#            editStore.commit_storing(session)
+#            req.write('<span class="ok">[OK]</span><br/>\n<p><a href="/ead/edit">Back to \'Editing Menu\'.</a></p>')
+#            foot = self._get_genericHtml('footer.html')          
+#            req.write('</div>' + foot)
+#        return None               
+#
+# End of SUB-FORM FUNCTIONS     
+########################################################################################## 
+
                 
+
     def handle(self, req):
         form = FieldStorage(req, True)  
         tmpl = read_file(templatePath)
@@ -234,6 +568,15 @@ class IstcEditingHandler:
                 self.send_xml(content, req)
             elif operation == 'test':
                 self.test(session, req)
+            elif operation == 'save':
+                self.save(form)
+            elif operation == 'refsubform':
+                content = self.get_refForm(form)
+                self.send_html(content, req)
+            elif (operation == 'references'):
+                content = self.get_fullRefs(session, form)
+                self.send_xml(content, req)
+                return
         else:
             content = self.show_editMenu()
             # send the display
@@ -243,6 +586,7 @@ rebuild = True
 serv = None
 session = None
 db = None
+db3 = None
 qf = None
 baseDocFac = None
 sourceDir = None
@@ -255,7 +599,7 @@ indentingTxr = None
 
 
 def build_architecture(data=None):
-    global session, serv, db, qf, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
+    global session, serv, db, db3, qf, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
     
     session = Session()
     session.database = 'db_istc'
@@ -263,6 +607,7 @@ def build_architecture(data=None):
     session.user = None
     serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
     db = serv.get_object(session, 'db_istc')
+    db3 = serv.get_object(session, 'db_refs')
     qf = db.get_object(session, 'baseQueryFactory')
     baseDocFac = db.get_object(session, 'baseDocumentFactory')
     sourceDir = baseDocFac.get_default(session, 'data')
@@ -285,6 +630,8 @@ def handler(req):
     req.register_cleanup(build_architecture)
 
     try :
+        if rebuild:
+            build_architecture()
 
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)
         os.chdir(os.path.join(cheshirePath, 'cheshire3', 'www', 'istc', 'html'))     # cd to where html fragments are
