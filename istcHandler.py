@@ -833,10 +833,10 @@ class IstcHandler:
 
                 # TODO: ideally get original, un-normalised version from index
                 # until then do a clever version of term.title()
-                if (idx not in ['dc.identifier']):
-                    displayTerm = self._cleverTitleCase(term)
-                else:
-                    displayTerm = term
+#                if (idx not in ['dc.identifier']):
+#                    displayTerm = self._cleverTitleCase(term)
+#                else:
+                displayTerm = term
 
                 
                 if (term.lower() == scanTerm.lower()):
