@@ -860,15 +860,15 @@
 							<xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
 					</xsl:for-each>-->
-					<xsl:choose>
-					<xsl:when test="subfield[@code='q']">
-						<xsl:value-of select="$j"/>
-						<xsl:value-of select="substring($q, 0, -1)"/>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:value-of select="substring($j, 0, -2)"/>
-					</xsl:otherwise>
-					</xsl:choose>
+				<!--	<xsl:choose>
+						<xsl:when test="subfield[@code='q']">
+							<xsl:value-of select="$j"/>
+							<xsl:value-of select="substring($q, 0, -1)"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="substring($j, 0, -2)"/>
+						</xsl:otherwise>
+					</xsl:choose>-->
 					<xsl:text>); </xsl:text>
 					</xsl:if>
 					<xsl:for-each select="//datafield[@tag='951']/subfield">
