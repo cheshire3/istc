@@ -545,7 +545,7 @@ function submitReference(){
 	var outcome = 'unsuccessful';
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 		var response = transport.responseText;
-		if (response = 'success'){
+		if (response == 'success'){
 			output = 'success';
 		}
 	}});	
