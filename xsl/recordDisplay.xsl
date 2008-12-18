@@ -863,9 +863,11 @@
 					<xsl:choose>
 						<xsl:when test="subfield[@code='q']">
 							<xsl:value-of select="$j"/>
+							<xsl:value-of select="$q"/>
 					<!--  		<xsl:value-of select="substring($q, 0, string-length($q)-1)"/>-->
 				 		</xsl:when>
 						<xsl:otherwise>
+							<xsl:value-of select="$j"/>
 						<!--	<xsl:value-of select="substring($j, 0, string-length($j)-2)"/>-->
 						</xsl:otherwise>
 					</xsl:choose>
