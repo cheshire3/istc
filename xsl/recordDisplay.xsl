@@ -854,13 +854,18 @@
 					<xsl:if test="//datafield[@tag='852']">
 					<xsl:text>London, British Library  (</xsl:text>
 				 	<xsl:for-each select="//datafield[@tag='852']">
+				 		<variable name="j">
 						<xsl:for-each select="subfield[@code='j']">
 							<xsl:value-of select="."/><xsl:text>, </xsl:text>
 						</xsl:for-each>
+						</variable>
+						<variable name="q">
 						<xsl:for-each select="subfield[@code='q']">
 							<xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
-					</xsl:for-each>
+						</variable>
+					
+					
 					<xsl:choose>
 						<xsl:when test="subfield[@code='q']">
 							<xsl:value-of select="$j"/>
@@ -873,6 +878,7 @@
 						</xsl:otherwise>
 					</xsl:choose>
 					<xsl:text>); </xsl:text>
+					</xsl:for-each>
 					</xsl:if>
 					<xsl:for-each select="//datafield[@tag='951']/subfield">
 						<xsl:value-of select="."/><xsl:text>; </xsl:text>
