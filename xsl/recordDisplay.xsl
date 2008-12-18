@@ -863,7 +863,7 @@
 									<xsl:text> </xsl:text><xsl:value-of select="."/>
 								</xsl:for-each>
 							-->
-						
+							<xsl:value-of select="$j"/>
 					
 							<xsl:choose>
 								<xsl:when test="subfield[@code='q']">
