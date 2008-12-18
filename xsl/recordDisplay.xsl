@@ -854,26 +854,25 @@
 					<xsl:if test="//datafield[@tag='852']">
 						<xsl:text>London, British Library  (</xsl:text>
 					 	<xsl:for-each select="//datafield[@tag='852']">
-					 <!-- 	<variable name="j">
+					 <!-- 	
 								<xsl:for-each select="subfield[@code='j']">
 									<xsl:value-of select="."/><xsl:text>, </xsl:text>
 								</xsl:for-each>
-							</variable>
-							<variable name="q">
+
 								<xsl:for-each select="subfield[@code='q']">
 									<xsl:text> </xsl:text><xsl:value-of select="."/>
 								</xsl:for-each>
-							</variable>-->
+							-->
 						
 					
 							<xsl:choose>
 								<xsl:when test="subfield[@code='q']">
-									<xsl:value-of select="$j"/>
-									<xsl:value-of select="$q"/>
+								<!--	<xsl:value-of select="$j"/>
+									<xsl:value-of select="$q"/> -->
 							<!--  		<xsl:value-of select="substring($q, 0, string-length($q)-1)"/>-->
 						 		</xsl:when>
 								<xsl:otherwise>
-									<xsl:value-of select="$j"/>
+								<!--	<xsl:value-of select="$j"/> -->
 								<!--	<xsl:value-of select="substring($j, 0, string-length($j)-2)"/>-->
 								</xsl:otherwise>
 							</xsl:choose>
