@@ -329,7 +329,7 @@
 								<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
 							</xsl:if>
 							<xsl:if test="subfield[@code='c']">
-								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='c']"/><xsl:text>  </xsl:text>
 							</xsl:if>	
 							<xsl:text>and </xsl:text>						
 						</xsl:when>
@@ -341,14 +341,14 @@
 					<tr>
 					<td class="label"><xsl:value-of select="$label"/></td>
 					<td>
-						<xsl:value-of select="substring($value, 0, string-length($value)-3)"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
+						<xsl:value-of select="substring($value, 0, string-length($value)-5)"/><br /><!-- <xsl:value-of select="$value2"/><xsl:value-of select="$value3"/> -->
 					</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-3)"/>
+						<xsl:with-param name="value" select="substring($value, 0, string-length($value)-5)"/>
 					</xsl:call-template>
 				</xsl:otherwise>
 			</xsl:choose>
