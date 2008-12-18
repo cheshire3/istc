@@ -352,16 +352,15 @@ function editRef(){
 	else {
 		full = ' ';
 	}
-	var popup = document.createElement('div');
+/*	var popup = document.createElement('div');
 	popup.className = 'popup';
-	alert(popup);
-	popup.innerHtml = '<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="window.close()"/></div><br/><table id="subreftable"><tbody><tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68" value="%%ABBREV%%"/></td></tr><tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4">%%FULL%%</textarea></td></tr></tbody></table><input id="subrefsubmit" type="button" value="submit" onclick="submitReference"/>'
-	alert(popup.innerHtml);
-	document.getElementById('formDiv').appendChild(popup);
-	alert('test');
+	popup.innerHtml = '<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="window.close()"/></div><br/><table id="subreftable"><tbody><tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68" value="%%ABBREV%%"/></td></tr><tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4">%%FULL%%</textarea></td></tr></tbody></table><input id="subrefsubmit" type="button" value="submit" onclick="submitReference"/>'*/
+	document.getElementById('subAbbrRef').value = abbref;
+	document.getElementById('subFullRef').value = full;
+	document.getElementById('refPopup').style.display = 'block';
 	
-//	var popup = window.open('http://localhost/istc/edit?operation=refsubform&abbrev=' + abbrev + '&full=' + full,'Bibliographical References Editing','width=700,height=300,resizable=no,screenX=300,screenY=300,left=300,right=300');
-//	if (window.focus) {popup.focus();}
+	
+
 }
 //end of functions for multiple entry fields
 
