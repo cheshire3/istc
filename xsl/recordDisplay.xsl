@@ -863,19 +863,16 @@
 								<xsl:for-each select="subfield[@code='q']">
 									<xsl:text> </xsl:text><xsl:value-of select="."/>
 								</xsl:for-each>
-							</xsl:variable>
-							
-							<xsl:value-of select="$j"/>
+							</xsl:variable>	
 					
 							<xsl:choose>
 								<xsl:when test="subfield[@code='q']">
-								<!--	<xsl:value-of select="$j"/>
-									<xsl:value-of select="$q"/> -->
-							<!--  		<xsl:value-of select="substring($q, 0, string-length($q)-1)"/>-->
+									<xsl:value-of select="$j"/>
+							  		<xsl:value-of select="substring($q, 0, string-length($q)-1)"/>
 						 		</xsl:when>
 								<xsl:otherwise>
 								<!--	<xsl:value-of select="$j"/> -->
-								<!--	<xsl:value-of select="substring($j, 0, string-length($j)-2)"/>-->
+									<xsl:value-of select="substring($j, 0, string-length($j)-2)"/>
 								</xsl:otherwise>
 							</xsl:choose>
 							<xsl:text>); </xsl:text>
