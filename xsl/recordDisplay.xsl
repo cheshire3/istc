@@ -833,6 +833,22 @@
 				<xsl:variable name="l1">
 					<xsl:text>British Isles:</xsl:text>
 				</xsl:variable>
+				<xsl:if test="//datafield[@tag='852']">
+					<xsl:variable name="j">
+						<xsl:for-each select="//datafield[@tag='852']">
+							<xsl:for-each select="subfield[@code='j']">
+								<xsl:value-of select="."/><xsl:text>, </xsl:text>
+							</xsl:for-each>
+						</xsl:for-each>
+					</xsl:variable>
+					<xsl:variable name="q">
+						<xsl:for-each select="//datafield[@tag='852']">
+							<xsl:for-each select="subfield[@code='q']">
+								<xsl:text> </xsl:text><xsl:value-of select="."/>
+							</xsl:for-each>
+						</xsl:for-each>
+					</xsl:variable>
+				</xsl:if>
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
 					<xsl:text>London, British Library (</xsl:text>
@@ -840,7 +856,7 @@
 						<xsl:for-each select="subfield[@code='j']">
 							<xsl:value-of select="."/><xsl:text>, </xsl:text>
 						</xsl:for-each>
-						<xsl:for-each select="subfield[not(@code='a') and not(@code='j')]">
+						<xsl:for-each select="subfield[@code='q']">
 							<xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
 					</xsl:for-each>

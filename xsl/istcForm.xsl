@@ -152,15 +152,16 @@
 			<p><strong>References:</strong><br/>				
 				<div id="referencestable" class="tablecontainer">
 					<table id="table_references"><tbody>
-						<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggestDelay(this.id, event);" autocomplete="off" name="references" id="510_a" size="50"></input><br/></td></tr>
-				   		<tr><td class="melabel">Pages:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_pages" size="50"/></td></tr>
+						<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" size="50"></input><br/></td></tr>
+				   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" size="50"  autocomplete="off" /></td></tr>
+				    	<tr></tr>
 				    </tbody></table>
 				<div class="reflabel">
 				Full Reference 
 				</div>
 				<br/>
 			    <div id="refdisplay" class="float">
-					<p><xsl:text> </xsl:text></p>
+					<p></p>
 				</div>
 				
 				</div>
@@ -172,13 +173,14 @@
 				<div class="meadded">
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='510']">
-							 <xsl:call-template name="accesspoint">
+							<xsl:text>%RFRNC%</xsl:text>
+							<!-- <xsl:call-template name="accesspoint">
 								<xsl:with-param name="typename" select="'reference'"/>
 								<xsl:with-param name="tagnumber" select="'510'"/>
-							</xsl:call-template> 
+							</xsl:call-template> -->
 						</xsl:when>
 						<xsl:otherwise>
-							<div id="addedreferences" style="display:none" class="added"><ul id="addedreferenceslist"></ul></div>
+							<div id="addedreferences" style="display:none" class="added" onmouseover="clearRef();" onmouseout="getFormRef(event)"><ul id="addedreferenceslist"></ul></div>
 						</xsl:otherwise>
 					</xsl:choose>	
 				</div>	
@@ -361,12 +363,6 @@
 								<p class="float">
 									<xsl:attribute name="onclick">
 										<xsl:text>editEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', </xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>);</xsl:text>
-									</xsl:attribute>
-									<xsl:attribute name="onmouseover">
-										<xsl:text>showValue('</xsl:text><xsl:value-of select="$tagnumber"/><xsl:text>', this);</xsl:text>
-									</xsl:attribute>
-									<xsl:attribute name="onmouseout">
-										<xsl:text>clearRef();</xsl:text>
 									</xsl:attribute>
 									<xsl:attribute name="title">
 										<xsl:text>Click to edit</xsl:text>
