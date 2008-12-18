@@ -352,9 +352,6 @@ function editRef(){
 	else {
 		full = ' ';
 	}
-/*	var popup = document.createElement('div');
-	popup.className = 'popup';
-	popup.innerHtml = '<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="window.close()"/></div><br/><table id="subreftable"><tbody><tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68" value="%%ABBREV%%"/></td></tr><tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4">%%FULL%%</textarea></td></tr></tbody></table><input id="subrefsubmit" type="button" value="submit" onclick="submitReference"/>'*/
 	document.getElementById('subAbbrRef').value = abbrev;
 	document.getElementById('subFullRef').value = full;
 	document.getElementById('refPopup').style.display = 'block';
@@ -537,11 +534,31 @@ function hideCharTable(){
 // Submit Functions
 
 function submitReference(){
-	window.alert('working');
-	var abbrev = window.document.getElementById('subAbbrRef').value
-	var full = document.getElementById('subFullRef').value
-	alert(abbrev);
-	alert(full);
+	var abbrev = document.getElementById('subAbbrRef').value;
+	var full = getElementById('subFullRef').value;
+	if (abbrev.strip() == '' || full.strip() == ''){
+		alert('All fields must me completed before submitting');
+		return;
+	}
+	var url = '/edit/';
+	var data = 'operation=submitref&abbrev=' + abbrev + '&full=' + full;
+	var outcome = 'unsuccessful';
+	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var response = transport.responseText;
+		if (response = 'success'){
+			output = 'success';
+		}
+	}});	
+	if (output = 'success'){
+		alert('The reference has been saved successfully');
+		hideRefPopup();
+	}
+	else {
+		alert('The reference was not saved successfully, please try again.');
+	}
+		
+	
+	
 }
 
 //==================================================================================================
