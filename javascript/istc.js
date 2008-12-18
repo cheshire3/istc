@@ -131,10 +131,20 @@ function addEntry(s){
     nameDiv.setAttribute('class', 'multipleEntry');
     p = document.createElement('p');
     p.className = 'float'; 
+
     p.onclick = function () {editEntry(s, number); };
-    p.onmouseover = function () {showValue(tag, this); };
-    p.onmouseout = function () {clearRef(); };
-    p.setAttribute('title', 'Click to edit');
+	if (s == 'references' && document.getElementById('refdisplay').childNodes[0].firstChild){
+		if (document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue.strip() != ''){
+			var title = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
+		}
+		else {
+			var title = 'Click to edit';
+		}
+	}
+	else {
+		var title = 'Click to edit';
+	}
+    p.setAttribute('title', title);
     p.appendChild(txtnode);
     nameDiv.appendChild(p);
     
@@ -145,7 +155,7 @@ function addEntry(s){
     wrapper.appendChild(icondiv);
     wrapper.appendChild(nameDiv);   
     item.appendChild(wrapper);
-    
+
     var br = document.createElement('br');
     br.setAttribute('id', s + nameCount + 'br');
     item.appendChild(br);
@@ -169,7 +179,7 @@ function addEntry(s){
 		Sortable.destroy('added' + s.toLowerCase() + 'list');
 	}
     nameCount++;   	 
-    clearRef();
+	clearRef();
 }
 
 
@@ -208,7 +218,7 @@ function deleteEntry(d){
 followed by '_formgen' which is used to maintain distinct ids between access points read in from existing xml and those created in the current form,
 number is the number which forms part of the unique id */
 function editEntry(s, number){
-
+	
 	var type = s.substring(0, s.indexOf('_formgen'));
   	if (type == '') {
   		type = s;
@@ -226,7 +236,6 @@ function editEntry(s, number){
   		inputs = table.getElementsByTagName('textarea');
 		for (var i = 0; i< values.length-2; i++){  
 	  		value = values[i].split(' | ');
-	  		//inputs[i].value = value[1];
 	  		document.getElementById(value[0]).value = value[1];
 	  	}  		
   	}
@@ -234,12 +243,15 @@ function editEntry(s, number){
 	  	// replace values in order
 	  	for (var i = 0; i< values.length-2; i++){  
 	  		value = values[i].split(' | ');
-	  		//inputs[i].value = value[1];
 	  		document.getElementById(value[0]).value = value[1];
 	  	}
 	}
   	//delete the access point you are now editing
   	deleteEntry(s + number);	
+  	if (type == 'references'){
+  		showValue(values[0].split(' | ')[1]);
+  	}
+  	
 }
 
 
@@ -256,27 +268,52 @@ function registerLists(){
 }
 
 
-function showValue(type, element){
-
-	if (type == '510'){
-		var value = element.childNodes[0].nodeValue;
+function showValue(value){
 		var url = '/istc/edit/';
-		var data = 'operation=references&q=' + value;
-		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
-			var text = document.createTextNode(transport.responseText);
-			var cell = document.getElementById('refdisplay');
+		var data = 'operation=references&q=' + value;		
+		var cell = document.getElementById('refdisplay');
+		if (cell.childNodes[0]){
 			cell.removeChild(cell.childNodes[0]);
-			var p = cell.appendChild(document.createElement('p'));
-			p.appendChild(text);
-			cell.appendChild(p);
+		}
+		var p = cell.appendChild(document.createElement('p'));
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var text = document.createTextNode(transport.responseText);	
+			p.appendChild(text);	
 		}});	
-	}
+		cell.appendChild(p);
 }
 
-
-function clearRef(){
+/*
+function getFullRef(element){
+	clearRef();
 	var cell = document.getElementById('refdisplay');
-		cell.removeChild(cell.childNodes[0]);	
+	var p = cell.appendChild(document.createElement('p'));
+	var value = element.value;
+	var url = '/istc/edit/';
+	var data = 'operation=references&q=' + value;
+	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var text = document.createTextNode(transport.responseText);	
+		p.appendChild(text);
+		cell.appendChild(p);	
+	}});		
+}*/
+
+
+/*
+function getFormRef(e){
+	
+	var element;
+	if (!e) {
+		var e = window.event;
+	}
+	if (e.target){
+		element = e.target;
+	}else{
+		element = window.event.srcElement;
+	}
+	if (element.id == 'addedreferences') {
+		clearRef();
+		var cell = document.getElementById('refdisplay');
 		var p = cell.appendChild(document.createElement('p'));
 		value = document.getElementById('510_a').value;
 		if (value != "" && value != " "){
@@ -287,32 +324,44 @@ function clearRef(){
 				p.appendChild(text);
 			}});
 		}
-		cell.appendChild(p);	
+		cell.appendChild(p);		
+	}
+}*/
+
+
+
+function clearRef(){
+	var cell = document.getElementById('refdisplay');
+	for (var i=0; i < cell.childNodes.length; i++){
+		cell.removeChild(cell.childNodes[i]);	
+	}
+	cell.appendChild(document.createElement('p'));
 }
 
 
-function getFullRef(element){
-	var value = element.value;
-	var url = '/istc/edit/';
-	var data = 'operation=references&q=' + value;
-	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
-		var text = document.createTextNode(transport.responseText);
-		var cell = document.getElementById('refdisplay');
-		cell.removeChild(cell.childNodes[0]);	
-		var p = cell.appendChild(document.createElement('p'));
-		p.appendChild(text);
-		cell.appendChild(p);	
-	}});		
-}
 
 
 function editRef(){
 	var abbrev = document.getElementById('510_a').value;
 	abbrev = abbrev.replace(/&/g, '%26');
-	var full = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
-	full = full.replace(/&/g, '%26');
-	var popup = window.open('http://localhost/istc/edit?operation=refsubform&abbrev=' + abbrev + '&full=' + full,'Bibliographical References Editing','width=700,height=300,resizable=no,screenX=300,screenY=300,left=300,right=300');
-
+	if (abbrev.strip() != ' ' && abbrev.strip() != ''){
+		showValue(abbrev);
+		var full = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
+		full = full.replace(/&/g, '%26');	
+	}
+	else {
+		full = ' ';
+	}
+	var popup = document.createElement('div');
+	popup.className = 'popup';
+	alert(popup);
+	popup.innerHtml = '<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="window.close()"/></div><br/><table id="subreftable"><tbody><tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68" value="%%ABBREV%%"/></td></tr><tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4">%%FULL%%</textarea></td></tr></tbody></table><input id="subrefsubmit" type="button" value="submit" onclick="submitReference"/>'
+	alert(popup.innerHtml);
+	document.getElementById('formDiv').appendChild(popup);
+	alert('test');
+	
+//	var popup = window.open('http://localhost/istc/edit?operation=refsubform&abbrev=' + abbrev + '&full=' + full,'Bibliographical References Editing','width=700,height=300,resizable=no,screenX=300,screenY=300,left=300,right=300');
+//	if (window.focus) {popup.focus();}
 }
 //end of functions for multiple entry fields
 
@@ -329,7 +378,7 @@ var indexMap = new Array();
 
 
 //the option currently selected - used to select but keep focus on textbox
-var optionSel = 0;
+var optionSel = -1;
 
 var ajaxSuggest = null;
 
@@ -346,6 +395,7 @@ function suggest(id, e){
 	var suggestBox = ($('suggestBox'));
 	var tid = id;
 	
+	//up
 	if (keyCheck(e) == 38){
 		optionSel = optionSel - 1;
 		if (optionSel < 0){
@@ -353,6 +403,7 @@ function suggest(id, e){
 		}
 		suggestBox.options[optionSel].selected = true;		
 	}
+	//down
 	else if (keyCheck(e) == 40){
 		optionSel = optionSel + 1;
 		if (optionSel > suggestBox.options.length-1){
@@ -360,8 +411,9 @@ function suggest(id, e){
 		}
 		suggestBox.options[optionSel].selected = true;
 	}
+	//return
 	else if (keyCheck(e) == 13){
-		selectClick(suggestBox, tid);
+		selectClick(suggestBox, tid, 'key');
 	}
 	else {	
 		var element =($(id));
@@ -374,12 +426,17 @@ function suggest(id, e){
 		if (element.value != ''){
 		//AJAX call to get values from index
 			var url = '/istc/edit/';
-			var data = 'operation=suggest&i=' + index + '&s=' + element.value.toLowerCase();
+			var data = 'operation=suggest&i=' + index + '&s=' + element.value;
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
 				var terms = response.substring(8,response.indexOf('</select>'));
-				var termList = terms.split(' | ');
-				var len = parseInt(terms.split(' | ').length);
+				if (terms != ''){
+					var termList = terms.split(' | ');
+				}
+				else {
+					var termList = [];
+				}
+				var len = parseInt(termList.length);
 				if (len > 10){
 					//only display 10 at a time
 					len = 10;
@@ -392,14 +449,21 @@ function suggest(id, e){
 					select.className = 'suggest';
 					select.style.position = 'absolute';
 					select.style.width = element.offsetWidth + 'px';
-					select.onclick = function () {selectClick(this, tid); };
+					select.onclick = function () {selectClick(this, tid, 'mouse'); };
 					select.onkeyup = function (e) {selectReturn(this, tid, e); };
-					for(var i=0; i < termList.length; i++) {
-					   select.options[i] = new Option(termList[i], termList[i].substring(0, termList[i].lastIndexOf(' (')));
+					if (tid = '510_a'){
+						for(var i=0; i < termList.length; i++) {
+							var value = termList[i].substring(0, termList[i].lastIndexOf(' ('));
+					   		select.options[i] = new Option(value, value);
+						}
+					}
+					else {
+						for(var i=0; i < termList.length; i++) {
+					   		select.options[i] = new Option(termList[i], termList[i].substring(0, termList[i].lastIndexOf(' (')));
+						}					
 					}
 					element.parentNode.appendChild(select);
-					select.options[0].selected = true;
-					optionSel = 0;
+					optionSel = -1;
 				}
 						    
 			}});		
@@ -408,28 +472,31 @@ function suggest(id, e){
 }
 
 
-function selectClick(elem, target){
+function selectClick(elem, target, mode){
 	var element = elem;
-	var targetElem = ($(target)); 
-	targetElem.value = element.value;
+	var targetElem = ($(target));
+	if (optionSel != -1 || mode == 'mouse'){
+		targetElem.value = element.value;
+	}
 	targetElem.parentNode.removeChild(element);
 	if (targetElem.id == '510_a'){
-		getFullRef(targetElem);
+		clearRef();
+		showValue(targetElem.value);
 	}
 }
 
-
+/*
 function selectReturn(elem, target, e){
 	if (keyCheck(e) == 13){
 		var element = elem;
 		var targetElem = ($(target)); 
 		targetElem.value = element.value;
 		targetElem.parentNode.removeChild(element);
-		if (targetElem.id == '510_a'){
-			getFullRef(targetElem);
+		if (target == '510_a'){
+			showValue(element.value);
 		}
 	}
-}
+}*/
 
 //checks which key was pressed - list available here http://webonweboff.com/tips/js/event_key_codes.aspx
 function keyCheck(e){
@@ -466,4 +533,26 @@ function hideCharTable(){
 }
 
 
+//==================================================================================================
+//
+// Submit Functions
 
+function submitReference(){
+	window.alert('working');
+	var abbrev = window.document.getElementById('subAbbrRef').value
+	var full = document.getElementById('subFullRef').value
+	alert(abbrev);
+	alert(full);
+}
+
+//==================================================================================================
+//
+//Popup Div Functions
+
+function hideRefPopup(){
+	document.getElementById('refPopup').style.display = 'none';
+}
+
+function showRefPopup(){
+	document.getElementById('refPopup').style.display = 'block';
+}

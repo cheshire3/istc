@@ -227,9 +227,9 @@ class IstcEditingHandler:
                 if len(rs):
                     recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
                 else:
-                    recRefs = 'none' 
+                    recRefs = '' 
             else:
-                recRefs = 'none' 
+                recRefs = '' 
         return recRefs
 
        
@@ -327,9 +327,43 @@ class IstcEditingHandler:
         editStore.commit_storing(session) 
         structure = read_file('editTemplate.html')
         page = formTxr.process_record(session, rec).get_raw(session)
+        page = page.replace('%RFRNC%', self._get_refxml(session, rec))
         page = structure.replace('%CONTENT%', page)
         return page
 
+
+    def _get_refxml(self, session, rec):
+        bibRefNormalizer = db.get_object(session, 'BibRefNormalizer')
+        f510 = rec.process_xpath(session, '//datafield[@tag ="510"]/subfield/text()')
+        if not len(f510):
+            return '<div id="addedreferences" style="display:none" class="added" onmouseout="getFormRef()"><ul id="addedreferenceslist"></ul></div>'
+        else:
+            output = []
+            for index, t in enumerate(f510):
+                abbrev = bibRefNormalizer.process_string(session, t)
+                other = t[len(abbrev) + 1:]
+                session.database = db3.id
+                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))
+                rs = db3.search(session, q)
+                if len(rs):
+                    full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+                else:
+                    full = abbrev
+                hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev, other)
+                
+                output.extend(['<li style="position: relative;" id="lireferences_formgen%d">' % index ,
+                               '<div id="references_formgen%d">' % index,
+                               '<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
+                               '<img src="/istc/images/deletesmall.gif" id="delete%d" />' % index,
+                               '</a> <span class="handle">move</span></div>',
+                               '<div class="multipleEntry">',
+                               '<p class="float" onclick="editEntry(\'references_formgen\', %d);" title="%s">' % (index, full.encode('utf-8')),
+                               '%s %s' % (abbrev, other),
+                               '</p></div></div>',
+                               '<br id="references_formgen%dbr">' % index,
+                               '<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
+                               '</li>'])
+            return '<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ' '.join(output)
            
     def show_editMenu(self):
         global sourceDir
@@ -361,19 +395,22 @@ class IstcEditingHandler:
         if index == 'idx-key-refs-exact':
             session.db = db3.id
             q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
-            idx = db3.get_object(session, '%s' % index)
+           # idx = db3.get_object(session, '%s' % index)
             terms = db3.scan(session, q, 50, direction="=")            
         else:
             q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
-            idx = db.get_object(session, '%s' % index)
+          #  idx = db.get_object(session, '%s' % index)
             terms = db.scan(session, q, 50, direction="=")
         output = []
         for t in terms:
-            term = self._cleverTitleCase(t[0])
+            # term = self._cleverTitleCase(t[0])
+            term = t[0]
             output.append('%s (%i)' % (term, t[1][1]))
             #TODO: check that t[1][1] is actually no of occs not no of recs (may need to be t[1][2])
-        return '<select>%s</select>' % ' | '.join(output)
-            
+        if len(output):
+            return '<select>%s</select>' % ' | '.join(output)
+        else:
+            return '<select></select>'    
             
 #
 # End of AJAX calls        
