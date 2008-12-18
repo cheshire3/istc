@@ -849,10 +849,10 @@
 						</xsl:for-each>
 					</xsl:variable>
 				</xsl:if>
-				<xsl:value-of select="$j"/>
+				
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
-					<xsl:text>London, British Library (</xsl:text>
+					<xsl:text>London, British Library  (</xsl:text><xsl:value-of select="$j"/>
 				<!-- 	<xsl:for-each select="//datafield[@tag='852']">
 						<xsl:for-each select="subfield[@code='j']">
 							<xsl:value-of select="."/><xsl:text>, </xsl:text>
