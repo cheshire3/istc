@@ -852,15 +852,15 @@
 				
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
-					<xsl:text>London, British Library  (</xsl:text><xsl:value-of select="$j"/>
-				<!-- 	<xsl:for-each select="//datafield[@tag='852']">
+					<xsl:text>London, British Library  (</xsl:text>
+				 	<xsl:for-each select="//datafield[@tag='852']">
 						<xsl:for-each select="subfield[@code='j']">
 							<xsl:value-of select="."/><xsl:text>, </xsl:text>
 						</xsl:for-each>
 						<xsl:for-each select="subfield[@code='q']">
 							<xsl:text> </xsl:text><xsl:value-of select="."/>
 						</xsl:for-each>
-					</xsl:for-each>-->
+					</xsl:for-each>
 					<xsl:choose>
 						<xsl:when test="subfield[@code='q']">
 							<xsl:value-of select="$j"/>
