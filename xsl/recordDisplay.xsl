@@ -317,7 +317,7 @@
 								<xsl:value-of select="subfield[@code='b']"/><xsl:text>, </xsl:text>
 							</xsl:if>
 							<xsl:if test="subfield[@code='c']">
-								<xsl:value-of select="subfield[@code='c']"/><xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='c']"/><xsl:text>  </xsl:text>
 							</xsl:if>
 							<xsl:text>and </xsl:text>
 						</xsl:when>
