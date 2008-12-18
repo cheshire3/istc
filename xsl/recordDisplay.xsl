@@ -849,6 +849,7 @@
 						</xsl:for-each>
 					</xsl:variable>
 				</xsl:if>
+				<xsl:value-of select="$j"/>
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
 					<xsl:text>London, British Library (</xsl:text>
