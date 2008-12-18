@@ -535,7 +535,7 @@ function hideCharTable(){
 
 function submitReference(){
 	var abbrev = document.getElementById('subAbbrRef').value;
-	var full = getElementById('subFullRef').value;
+	var full = document.getElementById('subFullRef').value;
 	if (abbrev.strip() == '' || full.strip() == ''){
 		alert('All fields must me completed before submitting');
 		return;
