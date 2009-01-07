@@ -870,7 +870,7 @@
 							  		<xsl:value-of select="$q"/>
 						 		</xsl:when>
 								<xsl:otherwise>
-									<xsl:value-of select="substring($j, 0, string-length($j)-2)"/>
+									<xsl:value-of select="substring($j, 0, string-length($j)-1)"/>
 								</xsl:otherwise>
 							</xsl:choose>
 							<xsl:text>); </xsl:text>
