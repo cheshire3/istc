@@ -180,7 +180,7 @@
 							</xsl:call-template> -->
 						</xsl:when>
 						<xsl:otherwise>
-							<div id="addedreferences" style="display:none" class="added" onmouseover="clearRef();" onmouseout="getFormRef(event)"><ul id="addedreferenceslist"></ul></div>
+							<div id="addedreferences" style="display:none" class="added"><ul id="addedreferenceslist"></ul></div>
 						</xsl:otherwise>
 					</xsl:choose>	
 				</div>	
