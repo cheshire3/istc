@@ -426,31 +426,47 @@ class IstcEditingHandler:
         page = page.replace('%%FULL%%', form.get('full', ''))
         return page
     
-#    
-#    def submitRef(self, form):
-#        abbrev = form.get('abbrev', '')
-#        full = form.get('full', '')
-#        if abbrev.strip() == '' or full.strip() == '':
-#            return self.get_refForm(form)
-#        entry = '<record><code>%s</code><full>%s</full></record>' % (abbrev, full)
-#        session.database = db3.id
-#        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
-#        rs = db3.search(session, q)
-#        if len(rs):
-#            
-#        else :
-#            while ref.rfind(' ') != -1 and not len(rs):
-#                ref = ref[:ref.rfind(' ')].strip()
-#                q.term.value = ref.decode('utf-8')
-#                rs = db3.search(session, q)
-#            if len(rs):
-#                recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
-#            else:
-#                recRefs = 'none' 
-#        
-#        filename = cheshirePath + 'cheshire3/dbs/istc/refsData/refs.xml'
-#        file = open(filename, mode='a', bufsize=1)
-#        file.write(entry)
+    
+    def submit_ref(self, form):
+        session.database = db3.id
+        refsStore = db3.get_object(session, 'refsRecordStore')
+        indexFlow = db3.get_object(session, 'refsBuildIndexWorkflow')
+        abbrev = form.get('abbrev', '')
+        full = form.get('full', '')
+        if abbrev.strip() == '' or full.strip() == '':
+            return self.get_refForm(form)
+        entry = StringDocument('<record><code>%s</code><full>%s</full></record>' % (abbrev, full))  
+        newRec = xmlp.process_document(session, entry)
+        raise ValueError(newRec.get_xml(session))    
+        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
+        rs = db3.search(session, q)
+        try:
+            rec = rs[0].fetch_record(session)
+        except:
+            pass
+        else:
+            db3.unindex_record(session, rec)
+            db3.remove_record(session, rec)
+            refsStore.begin_storing(session)
+            refsStore.delete_record(session, rec.id)
+            refsStore.commit_storing(session)
+            
+        db3.begin_indexing(session)
+        refsStore.begin_storing(session)       
+        indexFlow.process(session, newRec)       
+        refsStore.commit_storing(session)
+        filename = '/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml'
+        os.rename(filename, '/home/cheshire/cheshire3/dbs/istc/refsData/refs.bak')
+        file = open(filename, 'w')
+        
+        for r in refsStore:
+            file.write(r.get_xml(session))
+ 
+        file.flush()
+        file.close()
+
+        
+
         
 
 #
@@ -610,6 +626,9 @@ class IstcEditingHandler:
             elif operation == 'refsubform':
                 content = self.get_refForm(form)
                 self.send_html(content, req)
+            elif operation == 'submitref':
+                content = self.submit_ref(form)
+                self.send_xml(content, req)
             elif (operation == 'references'):
                 content = self.get_fullRefs(session, form)
                 self.send_xml(content, req)

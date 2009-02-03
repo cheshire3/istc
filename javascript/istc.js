@@ -540,7 +540,7 @@ function submitReference(){
 		alert('All fields must me completed before submitting');
 		return;
 	}
-	var url = '/edit/';
+	var url = '/istc/edit/';
 	var data = 'operation=submitref&abbrev=' + abbrev + '&full=' + full;
 	var outcome = 'unsuccessful';
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	

@@ -24,7 +24,9 @@ from cheshire3.cqlParser import Triple
 import urllib
 
 class IstcHandler:
-    templatePath = cheshirePath + "/cheshire3/www/istc/html/template.html"
+    searchTemplatePath = cheshirePath + "/cheshire3/www/istc/html/searchtemplate.html"
+    browseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/browsetemplate.html"
+    aboutTemplatePath = cheshirePath + "/cheshire3/www/istc/html/abouttemplate.html"
     rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
     printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
 
@@ -125,7 +127,6 @@ class IstcHandler:
         return qString
 
 
-
     def _cleverTitleCase(self, txt):
         global stopwords
         words = txt.split()
@@ -149,7 +150,6 @@ class IstcHandler:
             rs.order(session, idx, ascending=up, missing=[-1,1][up])
         rss.delete_resultSet(session, rs.id)
         rss.store_resultSet(session, rs)
-       # raise ValueError(rss.fetch_resultSet(session, rs.id))
         return rs
 
 
@@ -181,7 +181,7 @@ class IstcHandler:
             rsid = rss.create_resultSet(session, rs)
             rs.id = rsid
             cqlStr = self._interpret_query(q, [], [])        
-            html.append("<strong>Your search was for %s </strong><br/><br/>" % cqlStr)
+            html.append("<strong>Your search was for %s </strong><br/>" % cqlStr)
         
         else:
             try:
@@ -213,27 +213,28 @@ class IstcHandler:
                 navString = ''
 
             if sortIndex == 'idx-ISTCnumber':
-                string1 = '<span class="sortedBy">ISTC Number</span> '
+                string1 = '<span class="sortedBy">ISTC Number</span>'
             else:
-                string1 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number </a>' % (rsid, locString)
+                string1 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number</a>' % (rsid, locString)
             
             if sortIndex == 'idx-title':
-                string2 = '<span class="sortedBy">Title</span> '
+                string2 = '<span class="sortedBy">Title</span>'
             else:
-                string2 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title </a>' % (rsid, locString)
+                string2 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title</a>' % (rsid, locString)
             
             if sortIndex == 'idx-year':
-                string3 = '<span class="sortedBy">Year</span> '
+                string3 = '<span class="sortedBy">Year</span>'
             else:
-                string3 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year </a>' % (rsid, locString)
+                string3 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year</a>' % (rsid, locString)
             
             if sortIndex == 'idx-publoc':
                 string4 = '<span class="sortedBy">Place of Publication</span>'
             else:
-                string4 = '<a href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a>' % (rsid, locString)
+                string4 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a>' % (rsid, locString)
                 
-            html.append('<h1>%d Results</h1><div class="recordnav">%s</div><br/><p>Sort by %s, %s, %s or %s<br/><br/>' % (hits, navString, string1, string2, string3, string4))
-
+            html.append('<div class="recordnav">%s</div><br/><p>Sort by %s, %s, %s or %s<br/><br/>' % (navString, string1, string2, string3, string4))
+            html.append('<table>')
+            
             for i in range(start, min(start+pagesize, len(rs))):
 
                 rec = recStore.fetch_record(session, rs[i].id)
@@ -285,30 +286,44 @@ class IstcHandler:
                     date = flattenTexts(elms[0])
                 except:
                     date= ""
-                    
-                html.append('<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%d</a>. ' %  (rsid, i, locString, i+1))                
-                html.append('<input type="checkbox" name="recSelect" value="%s"/>' % i)
-                html.append('%s<i>%s</i><br/>&nbsp;&nbsp;&nbsp;%s: %s, %s <br/><br/>' % (author, title.strip(), place.strip(), printer.strip(), date))       
+                html.append('<tr>') 
+                html.append('<td class="recnumber"><a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%d</a>.</td>' %  (rsid, i, locString, i+1))                
+                html.append('<td class="checkbox"><input type="checkbox" name="recSelect" value="%s"/></td>' % i)
+                html.append('<td class="hiddenlink"><a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s<i>%s</i><br/>%s: %s, %s</a></td>' % (rsid, i, locString, author, title.strip(), place.strip(), printer.strip(), date))       
+                html.append('</tr>')
+            html.append('</table>')
             html.append('<div class="recordnav">%s</div><br/>' % navString)
                 
             menubits.extend(['<div class="menugrp">',
-                            '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
-                            '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
-                            '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />',
-                            '<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div>',
+                             '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
+                             '<div class="menubody">',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div><br />',
+                            '</div>',
+                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
                             '</div>'])
             
             
             if hits <= 200:
                 menubits.extend(['<div class="menugrp">',
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img src="/istc/images/link_print.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>' % (rsid, locString),
+                                 '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
+                             '<div class="menubody">',
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27"  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '</div>',
+                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
                             '</div>'])
                 
             menubits.extend(['<div class="menugrp">',
-                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div>',
-                             '</div>'])
+                             '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
+                             '<div class="menubody">',
+                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"></a></div><br />',
+                             '</div>',
+                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
+                            '</div>'])
             
             
         else:
@@ -316,9 +331,9 @@ class IstcHandler:
             menubits = []
         
         if not locations == 'all':
-            return ('Search Results', '<form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form>' % (rsid, locations, ''.join(html)), ''.join(menubits))
+            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form></div>' % (''.join(menubits), hits, rsid, locations, ''.join(html)), 'REMOVE ME')
         else :
-            return ('Search Results', '<form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form>' % (rsid, ''.join(html)), ''.join(menubits))
+            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)), 'REMOVE ME')
 
 
     def _interpret_query(self, cql, stack = [], string = []):    
@@ -426,7 +441,8 @@ class IstcHandler:
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('Record Details', doc.replace('%nav%', navstring).replace('%counter%', countString), menu.get_raw(session), rlNav)
+#            return ('Record Details', doc.replace('%nav%', navstring).replace('%counter%', countString), menu.get_raw(session), rlNav)
+            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session), doc.replace('%nav%', navstring).replace('%counter%', countString)), 'REMOVE ME', rlNav)
         else:
             raise ValueError(id)
  
@@ -886,11 +902,11 @@ class IstcHandler:
                          
             #- end hit navigation
             
-            return (" ".join(t),'\n'.join(rows))
+            return (" ".join(t), '<div id="maincontent"><h1>Browse Indexes Results</h1>%s</div>' % '\n'.join(rows))
 
         else:
             t.append('Error')
-            return (" ".join(t), '<p class="error">No terms retrieved from index. You may be browsing outside the range of terms within the index.</p>')
+            return (" ".join(t), '<div id="maincontent"><h1>Browse Indexes</h1><p class="error">No terms retrieved from index. You may be browsing outside the range of terms within the index.</p></div>')
 
 ##     #- end browse() ------------------------------------------------------------
     
@@ -902,10 +918,10 @@ class IstcHandler:
         form = FieldStorage(req)
 
         #get the template 
-        f = file(self.templatePath)
-        tmpl = f.read()
-        f.close()
-        tmpl = tmpl.replace('\n', '')
+#        f = file(self.templatePath)
+#        tmpl = f.read()
+#        f.close()
+#        tmpl = tmpl.replace('\n', '')
                
         path = req.uri[1:] 
         path = path[path.rfind('/')+1:]
@@ -914,6 +930,12 @@ class IstcHandler:
         e = ""
         rl = ""
         if path == 'search.html':
+            
+            f = file(self.searchTemplatePath)
+            tmpl = f.read()
+            f.close()
+            tmpl = tmpl.replace('\n', '')
+            
             if operation:
                 if (operation == 'record'):
                     (t, d, e, rl) = self.display_rec(session, form)
@@ -952,6 +974,12 @@ class IstcHandler:
                 d = f.read()
                 f.close()
         elif path == 'browse.html':
+            
+            f = file(self.browseTemplatePath)
+            tmpl = f.read()
+            f.close()
+            tmpl = tmpl.replace('\n', '')
+            
             if operation:
                 if operation == 'scan':
                     (t, d) = self.browse(form)
@@ -964,13 +992,26 @@ class IstcHandler:
                 t = "Browse"
                 d = f.read()
                 f.close()
+                
         elif path == 'about.html':
+            
+            f = file(self.aboutTemplatePath)
+            tmpl = f.read()
+            f.close()
+            tmpl = tmpl.replace('\n', '')
+            
             f = file('about.html')
             t = "About the Catalogue"
             d = f.read()
             f.close()
             
         else:
+            
+            f = file(self.searchTemplatePath)
+            tmpl = f.read()
+            f.close()
+            tmpl = tmpl.replace('\n', '')
+            
             f= file("index.html")
             t = "Search"
             d = f.read()
@@ -1064,15 +1105,15 @@ def handler(req):
     global rebuild
     req.register_cleanup(build_architecture)
     try:
-        if rebuild:
+#        if rebuild:
+#            build_architecture()
+#        else:
+        try:
+            fp = recStore.get_path(session, 'databasePath')    # attempt to find filepath for recordStore
+            assert (os.path.exists(fp) and time.time() - os.stat(fp).st_mtime > 60*60)
+        except:
+            # architecture not built
             build_architecture()
-        else:
-            try:
-                fp = recStore.get_path(session, 'databasePath')    # attempt to find filepath for recordStore
-                assert (os.path.exists(fp) and time.time() - os.stat(fp).st_mtime > 60*60)
-            except:
-                # architecture not built
-                build_architecture()
         os.chdir(cheshirePath + "/cheshire3/www/istc/html/")
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
         lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
