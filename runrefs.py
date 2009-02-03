@@ -28,7 +28,7 @@ recordStore = db.get_object(session, 'refsRecordStore')
 lgr = db.get_path(session, 'defaultLogger')
 
 
-df = db.get_object(session, 'defaultDocumentFactory')
+df = db.get_object(session, 'refsDocumentFactory')
 parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
     
@@ -38,7 +38,7 @@ if '-workflowload' in sys.argv:
     start = time.time()
     # build necessary objects
     flow = db.get_object(session, 'refsBuildIndexWorkflow')
-    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
+    df.load(session)
     lgr.log_info(session, 'Loading references...' )
 
     flow.process(session, df)

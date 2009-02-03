@@ -14,6 +14,18 @@
     </subConfigs>
 
   <subConfigs>
+  	<subConfig type="documentFactory" id="refsDocumentFactory">
+	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
+	   <options>
+	      <default type="data">/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml</default>
+	      <default type="format">xml</default>
+	      <default type="cache">0</default>
+	      <default type="tagName">record</default>
+	      <default type="codec">utf-8</default>
+	   </options>
+    </subConfig>    
+
+  
     <subConfig type="recordStore" id="refsRecordStore">
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
       <paths>

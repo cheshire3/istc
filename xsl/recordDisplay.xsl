@@ -521,7 +521,7 @@
 	<xsl:template name="istcNumber">
 		<xsl:if test="//controlfield[@tag='001']">
 			<xsl:variable name="label">
-				<xsl:text>ISTC Number:</xsl:text>
+				<xsl:text>ISTC No.:</xsl:text>
 			</xsl:variable>
 			<xsl:variable name="value">
 				<xsl:value-of select="//controlfield[@tag='001']"/>

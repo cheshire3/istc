@@ -76,6 +76,7 @@
 		  <object type="database" function="index_record"/>		  
 		</try>
 		<except>
+			<raise/>
 		   <log level="warning">"*** Some indexes incomplete"</log>
 		</except>
 		
