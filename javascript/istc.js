@@ -69,9 +69,31 @@ function submitForm(op){
 			document.getElementById('expand').value = "false";
 		}
 	}
-	alert(document.getElementById('opvalue'));
-	document.getElementById('opvalue').value = op;
-	document.getElementById('mainform').submit();
+	//check here that something is selected 
+	
+	form = document.getElementById('mainform');
+	table = form.getElementsByTagName('table')[0];
+	if (table){
+		checkboxes = table.getElementsByTagName('input');
+		var valid = false;
+		for (var i=0; i<checkboxes.length; i++){
+			if (checkboxes[i].checked){
+				valid = true;
+				break;
+			}
+		}
+		if (valid){	
+			document.getElementById('opvalue').value = op;
+			document.getElementById('mainform').submit();
+		}
+		else {
+			alert('Please select records first');
+		}
+	}
+	else {
+		document.getElementById('opvalue').value = op;
+		document.getElementById('mainform').submit();	
+	}
 }
 
 

@@ -21,10 +21,11 @@
 	<meta name="DC.Date.Modified" scheme="W3CDTF" content="2005-10-27">
 
 
-        <title>British Library - Incunabular Short Title Catalogue</title>
+        <title>British Library - Incunabula Short Title Catalogue</title>
         <meta name="copyright" content="&copy; University of Liverpool" />
 
-        <link rel="stylesheet" href="/istc/css/istc.css" type="text/css" />
+		<link rel="stylesheet" href="/istc/css/structure.css" type="text/css" />
+        <link rel="stylesheet" href="/istc/css/istcedit.css" type="text/css" />
         <script type="text/javascript" src="/istc/javascript/prototype.js"></script>
         <script type="text/javascript" src="/istc/javascript/scriptaculous.js"></script>
         <script type="text/javascript" src="/istc/javascript/dragHandler.js"></script>
@@ -44,38 +45,39 @@
 		</head>
  
  <body rightmargin="0" class="backgroundwhite" onload="loadPage();">
- 	<div id="header">
-	   	<div class="headercomp"><a href="http://www.bl.uk/"><img src="/istc/images/logo.gif" width="35" height="70" border="0" alt="THE BRITISH LIBRARY" align="bottom"></a></div>
-	   	<div class="headercomp"><div><img src="/istc/images/istc_title.gif" width="560" height="45" alt="Incunabula Short Title Catalogue" align="bottom" border="0"></div><div  id="nav"> <a href="about.html">&nbsp; About</a> | <a href="index.html">Simple search</a> | <a href="browse.html">Browse</a> | <a href="http://www.bl.uk/catalogues/istc/index.html">Main</a> </div></div>
-	  	<div class="headercomp"><img src="/istc/images/istc_image_top.jpg" width="70" height="70" border="0" alt="Manuscript image - top"></div>
-	  	<div class="logo"><a href="http://www.liv.ac.uk/" title="University of Liverpool"><img src="/istc/images/livsmall.png" alt=" [ The University of Liverpool ] " align="bottom" border="0" width="" height=""/></a></div>
-	  	<div class="logo"><a href="http://www.bsb-muenchen.de/" title="Bayerischen Staatsbibliothek"><img src="/istc/images/bsbmunchen.gif" alt=" [ Bayerischen Staatsbibliothek ] " align="bottom" border="0" width="" height=""/></a></div>
-	  </div>
-   
-	<br/>
+ 		<div id="container">
+		<div id="topgraphic">
+			<img src="/istc/images/coloured-titlebar.jpg" alt="British Library - Incunabla Short Title Catalogue" name="banner" width="603" height="101" border="0" usemap="#bannerMap" id="banner" />
+			<map name="bannerMap" id="bannerMap">
+			  <area shape="rect" coords="2,2,51,99" href="/index.shtml" alt="The British Library" />
+			  <area shape="rect" coords="53,2,601,99" href="/about/annual/2007to2008/index.html" alt="Incunabla Short Title Catalogue" />
+			</map>
+		</div>
 	
+		<div id="topnav">
+		    <ul>
+			    <li><a href="http://www.bl.uk/catalogues/istc/index.html">Home</a></li> 
+				<li><a href="../search/index.html">Search</a></li>
+			    <li><a href="../search/browse.html">Browse</a></li>	
+			    <li><a href="../search/about.html">About</a></li>
+			    <li><a href="../search/help.html">Help</a></li>
+			</ul>
+	  	</div>
+		
+	<div id="maincontent" class="withmenu">
 
-   <div id="leftnav">
-    <br />
-	<br />
-	<br />
-	<br />
-   		<div class="menugrp">		
-   			<div class="menuitem"><a  href="javascript:history.back()">Back<img src="/istc/images/link_back2.gif" alt=" Back " name="back" width="27" height="19" border=0 align="middle"></a></div>	
-   		</div>	
+   <div id="menu">
+
+   		
+   		
    		<div class="menugrp">
-   			<div class="menuitem"><a href="help.html">Help<img src="/istc/images/help.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />
-   			<div class="menuitem"><a href="links.html">Links<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"></a></div><br />
-   		</div>
-   		<div class="menugrp">
-   			<div class="menuitem"><a href="javascript:submitForm('save')">Save<img src="/istc/images/int_link.gif" alt="" width="27" height="21" border="0" align="middle"/></a></div>
+   			<div class="menuitem"><a href="javascript:submitForm('save')">Save<img src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div>
    		</div>
 %EXTRATABLESTUFF%
 
   </div>
 
-  </td>
-  <td valign="top">     
+
     <div id="content">
     <h1>&nbsp;Editing Interface</h1>
  
@@ -85,13 +87,23 @@
 
  </div> 
 
-  <div id="footer">
-  	<div class="headercomp"><p> The site is under construction and therefore things may alter and the site may be unavaliable for short periods. </p>
-	<p> If you have any further queries please contact John Goldfinch: John.Goldfinch@bl.uk </p></div>
-	<div class="logo"><a href="http://www.cheshire3.org/" title="Cheshire3"><img src="/istc/images/c3_black.gif" alt=" [ Cheshire3 logo ] " border="0" width="" height=""/></a></div>
-  	<br/>
-    <div class="headercomp"><a href="http://www.bl.uk/copyrightstatement.html">Copyright</a> &copy; The British Library Board</a></div>    
-  </div>
+ 		</div> <!-- End of maincontent -->
+		 </div> <!-- End of container -->
+    	<div id="footernav">
+     		<table width="100%" border="0" cellpadding="10">   
+		       <tr>
+		         <td><ul>
+		           <li><a href="http://www.bl.uk/copyrightstatement.html">Copyright &copy; The British Library Board</a></li>
+		
+		         </ul>         </td>
+		       </tr>
+		    </table>
+  		</div>
+  		
+  		
+ 	
+ </body>
+</html>
   
   
  <div class="popup" style="display:none" id="refPopup">

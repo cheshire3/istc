@@ -19,7 +19,7 @@ from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
 from istcLocalConfig import *
 from lxml import etree
-from cheshire3.cqlParser import Triple
+from cheshire3.cqlParser import parse, SearchClause, Triple
 
 import urllib
 
@@ -53,10 +53,6 @@ class IstcHandler:
         req.content_type = 'application/msword'
         req.content_length = len(data)
         req.send_http_header()
-        #raise ValueError(data)
-       # if (type(data) == unicode):
-       #     raise ValueError(type)
-       #     data = data.encode('utf-8')
         req.write(data)
         req.flush()
 
@@ -180,7 +176,8 @@ class IstcHandler:
                 return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
             rsid = rss.create_resultSet(session, rs)
             rs.id = rsid
-            cqlStr = self._interpret_query(q, [], [])        
+  #          cqlStr = self._interpret_query(q, [], [])        
+            cqlStr = self._interpret(q)
             html.append("<strong>Your search was for %s </strong><br/>" % cqlStr)
         
         else:
@@ -204,11 +201,13 @@ class IstcHandler:
             rs = self.sort_resultSet(session, rs, sortIndex)
 
             if start > 0 and start+pagesize < len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
             elif start > 0 and start+pagesize >= len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Previous</a>&nbsp;|&nbsp;Next' % (rsid, start-pagesize, locString)
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s" style="margin-right: 37px;"><img class="menu"   src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString)
+                #&nbsp;<img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/>
             elif start == 0 and start+pagesize < len(rs):
-                navString = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s">Next</a>' % (rsid, start+pagesize, locString)
+                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start+pagesize, locString)
+                #<img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/>&nbsp;
             else :
                 navString = ''
 
@@ -294,36 +293,36 @@ class IstcHandler:
             html.append('</table>')
             html.append('<div class="recordnav">%s</div><br/>' % navString)
                 
-            menubits.extend(['<div class="menugrp">',
-                             '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
-                             '<div class="menubody">',
-                            '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
-                            '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
-                            '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />',
+            menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
+                             '<div class="menugrp">',
+                             '<div class="menubody" id="topmenu">',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img class="menu" src="/istc/images/print.gif" alt=""  border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img class="menu" src="/istc/images/email.gif" alt=""  border="0" align="middle"/></a></div><br />',
+                            '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img class="menu" src="/istc/images/download.gif" alt=""  border="0" align="middle"/></a></div><br />',
                             '<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div><br />',
+                            '</div><br />',
                             '</div>',
-                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
-                            '</div>'])
+                            '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
             
             
             if hits <= 200:
-                menubits.extend(['<div class="menugrp">',
-                                 '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
-                             '<div class="menubody">',
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img class="menu" src="/istc/images/download.gif" alt="" width="27"  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
+                                 '<div class="menugrp">',
+                                '<div class="menubody">',
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img class="menu" src="/istc/images/print.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img class="menu" src="/istc/images/email.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img class="menu" src="/istc/images/download.gif" alt=""   border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '</div><br />',
                             '</div>',
-                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
-                            '</div>'])
+                            '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
                 
-            menubits.extend(['<div class="menugrp">',
-                             '<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>',
+            menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
+                             '<div class="menugrp">',
                              '<div class="menubody">',
-                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"></a></div><br />',
-                             '</div>',
-                            '<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>',
-                            '</div>'])
+                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"></a></div><br />',
+                             '</div><br />',
+                            '</div>',
+                            '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
             
             
         else:
@@ -335,41 +334,72 @@ class IstcHandler:
         else :
             return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)), 'REMOVE ME')
 
+#
+#    def _interpret_query(self, cql, stack = [], string = []):    
+#
+#        if self._has_operand(cql, 'left'):           
+#            new = cql.leftOperand
+#            cql.leftOperand = None
+#            stack.append(cql)
+#            return self._interpret_query(new, stack, string)
+#        elif self._has_boolean(cql):
+#            string.append('%s' % cql.boolean.value)
+#            cql.boolean.value = None
+#            return self._interpret_query(cql, stack, string)
+#        elif self._has_operand(cql, 'right'):            
+#            new = cql.rightOperand
+#            cql.rightOperand = None
+#            stack.append(cql)
+#            return self._interpret_query(new, stack, string)
+#        else :
+#            if not isinstance(cql, Triple):    
+#                substring = [] 
+#                try:
+#                    index = idxNames['%s' % cql.index.value]
+#                except:
+#                    index = 'unknown'
+#                substring.append(index)
+#                substring.append('%s' % cql.relation.value)  
+#    
+#                substring.append("\"%s\"" % cql.term.value)
+#            
+#                if len(substring):
+#                    string.extend(['(', ' '.join(substring), ')'])
+#            if len(stack):
+#                return self._interpret_query(stack.pop(), stack, string)
+#            else :
+#                return ' '.join(string)
 
-    def _interpret_query(self, cql, stack = [], string = []):    
 
-        if self._has_operand(cql, 'left'):           
-            new = cql.leftOperand
-            cql.leftOperand = None
-            stack.append(cql)
-            return self._interpret_query(new, stack, string)
-        elif self._has_boolean(cql):
-            string.append('%s' % cql.boolean.value)
-            cql.boolean.value = None
-            return self._interpret_query(cql, stack, string)
-        elif self._has_operand(cql, 'right'):            
-            new = cql.rightOperand
-            cql.rightOperand = None
-            stack.append(cql)
-            return self._interpret_query(new, stack, string)
-        else :
-            if not isinstance(cql, Triple):    
-                substring = [] 
-                try:
-                    index = idxNames['%s' % cql.index.value]
-                except:
-                    index = 'unknown'
-                substring.append(index)
-                substring.append('%s' % cql.relation.value)  
-    
-                substring.append("\"%s\"" % cql.term.value)
-            
-                if len(substring):
-                    string.extend(['(', ' '.join(substring), ')'])
-            if len(stack):
-                return self._interpret_query(stack.pop(), stack, string)
-            else :
-                return ' '.join(string)
+    def _interpret(self, what):
+        text = []
+        if isinstance(what, Triple):
+            text.append(self._interpret(what.leftOperand))
+            try:
+                bl = boolNames[what.boolean.value]
+            except:
+                bl = what.boolean.value
+            text.append(' %s ' % bl)        
+            if isinstance(what.rightOperand, Triple):
+                text.append('(')
+                text.append(self._interpret(what.rightOperand))
+                text.append(')')
+            else:
+                text.append(self._interpret(what.rightOperand))            
+            return ''.join(text)
+        elif isinstance(what, SearchClause):
+            try:
+                idx = idxNames[what.index.value]
+            except:
+                idx = what.index.value
+            text.append(idx)
+            text.append(what.relation.value)
+            text.append('"%s"' % what.term.value)
+            return ' '.join(text)
+        else:
+            raise ValueError(what)
+
+
 
 
     def _has_boolean(self, clause):
@@ -426,15 +456,17 @@ class IstcHandler:
         countString = 'Record %s of %s' % (id+1, len(rs))
         
         if id > 0 and id < len(rs)-1:
-            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Previous</a>&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Next</a>' % (rsid, id-1, locString, rsid, id+1, locString)
+            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString, rsid, id+1, locString)
         elif id > 0 and id < len(rs):
-            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Previous</a>&nbsp;|&nbsp;Next' % (rsid, id-1, locString)
+            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s" style="margin-right: 37px;" ><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString)
+            #&nbsp;<img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/>
         elif id == 0 and id < len(rs)-1:
-            navstring = 'Previous&nbsp;|&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s">Next</a>' % (rsid, id+1, locString)
+            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id+1, locString)
+            #<img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/>&nbsp;
         else:
             navstring = ''
 
-        rlNav = '<div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<img src="/istc/images/link_back2.gif" alt=" Back " name="back" width="27" height="19" border=0 align="middle"></a></div>' % rsid
+        rlNav = '<div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<img src="/istc/images/link_back2.gif" alt=" Back " name="back"  height="19" border=0 align="middle"></a></div>' % rsid
 
         if len(rs):
             rec = rs[id].fetch_record(session)                               
@@ -583,7 +615,6 @@ class IstcHandler:
                             session.database = 'db_istc'
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
-                    
                 return tmpl.replace('%%%CONTENT%%%',  '<br/> '.join(output))
          
     
@@ -681,7 +712,7 @@ class IstcHandler:
         smtp.connect(host='mail1.liv.ac.uk', port=25)
         smtp.sendmail('istc@localhost', address, message.as_string())
         smtp.close()
-        return ('result', 'File emailed successfully', '')
+        return ('REMOVE ME', '<div id="maincontent"><h1>File emailed successfully</h1></div>', 'REMOVE ME')
         
     
     def emailRecs(self, form):
@@ -707,7 +738,7 @@ class IstcHandler:
                     repl.append('<input type="hidden" name="recSelect" value="%s"/>' % rec)
             f = read_file('email.html')
             f = f.replace('%Details%', ''.join(repl))
-            return ('Email Request', f, '')
+            return ('REMOVE ME', f, '')
         else:
             if istc:
                 return self.send_email(istc=istc, address=address, expand=expand, locations=locations)
@@ -823,10 +854,9 @@ class IstcHandler:
             if (hitstart):
                 rows.append('<tr class="odd"><td colspan="2">-- start of index --</td></tr>')
                 rowCount += 1
-                prevlink = 'Previous'
+                prevlink = ''
             else:
-                prevlink="Previous"
-                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Previous</a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
+                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
                             
             dodgyTerms = []
             for i in range(len(scanData)):
@@ -892,13 +922,18 @@ class IstcHandler:
                 if (rowCount % 2 == 1): rowclass = 'odd';
                 else: rowclass = 'even';
                 rows.append('<tr class="%s"><td colspan="2">-- end of index --</td></tr>' % (rowclass))
-                nextlink = 'Next'
+                nextlink = ''
             else:
-                nextlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><!-- img -->Next</a>' % (idx, rel, cgi_encode(scanData[-1][0]), 0, numreq)
+                nextlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[-1][0]), 0, numreq)
 
+            
+            if nextlink == '' and prevlink != '':
+                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d" style="margin-right: 37px;"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
+            
             del scanData
+            rows.append('<div class="recordnav">%s</div>' % (' '.join([prevlink, nextlink])))
             rows.append('</table>')           
-            rows.append('<div class="recordnav">%s</div>' % (' | '.join([prevlink, nextlink])))
+            rows.append('<div class="recordnav">%s</div>' % (' '.join([prevlink, nextlink])))
                          
             #- end hit navigation
             
