@@ -10,62 +10,65 @@
 		 
 	<div id="menuall">
 
-
+	<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>	
 		<div class="menugrp">
-			<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>
-				<div class="menubody">
-					<xsl:call-template name="options">
-						<xsl:with-param name="op">
-							<xsl:text>print</xsl:text>
-						</xsl:with-param>
-					</xsl:call-template>
-					<xsl:call-template name="options">
-						<xsl:with-param name="op">
-							<xsl:text>email</xsl:text>
-						</xsl:with-param>
-					</xsl:call-template>
-					<xsl:call-template name="options">
-						<xsl:with-param name="op">
-							<xsl:text>save</xsl:text>
-						</xsl:with-param>
-					</xsl:call-template>      
-					<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div><br />
-				</div>
-			<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>
+			<div class="menubody" id="topmenu">
+				<xsl:call-template name="options">
+					<xsl:with-param name="op">
+						<xsl:text>print</xsl:text>
+					</xsl:with-param>
+				</xsl:call-template>
+				<xsl:call-template name="options">
+					<xsl:with-param name="op">
+						<xsl:text>email</xsl:text>
+					</xsl:with-param>
+				</xsl:call-template>
+				<xsl:call-template name="options">
+					<xsl:with-param name="op">
+						<xsl:text>save</xsl:text>
+					</xsl:with-param>
+				</xsl:call-template>      
+				<div class="menuitem">with expanded bibliographical refs <input type="checkbox" id="expandedbib"/></div><br/>
+			</div><br />
 		</div>
+	<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div> 
 		
 		
+	<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>		
 		<div class="menugrp">
-				<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>
-					<div class="menubody">
-						<strong>Browse:</strong>
-						<xsl:call-template name="author"/>
-						<xsl:call-template name="title"/>
-						<xsl:call-template name="printer"/>
-						<xsl:call-template name="printerloc"/>
-					</div>
-				<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>
-			</div>
-		
-		<div class="menugrp">
-			<span class="rnd4">&#160;</span><span class="rnd3">&#160;</span><span class="rnd2">&#160;</span><span class="rnd1">&#160;</span>
+			<div class="menubody">
 				<div class="menubody">
-		            <div class="menuitem">
-						<xsl:variable name="istc">
-							<xsl:value-of select="//controlfield[@tag='001']"/>
-						</xsl:variable>
-		            	<a>
-		            		<xsl:attribute name="href">
-								<xsl:text>/istc/edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
-							</xsl:attribute>
-							<xsl:text>Edit this Record (administrators only)</xsl:text>
-							<br />
-							<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/>
-		            	</a>
-		            </div><br />
-		       </div>
-			<span class="rnd1">&#160;</span><span class="rnd2">&#160;</span><span class="rnd3">&#160;</span><span class="rnd4">&#160;</span>
-       	</div>   
+					<strong>Browse:</strong>
+					<xsl:call-template name="author"/>
+					<xsl:call-template name="title"/>
+					<xsl:call-template name="printer"/>
+					<xsl:call-template name="printerloc"/>
+				</div>
+			</div><br />
+		</div>
+	<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div> 
+		
+		
+	<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>	
+		<div class="menugrp">
+			<div class="menubody">
+	            <div class="menuitem">
+					<xsl:variable name="istc">
+						<xsl:value-of select="//controlfield[@tag='001']"/>
+					</xsl:variable>
+	            	<a>
+	            		<xsl:attribute name="href">
+							<xsl:text>/istc/edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
+						</xsl:attribute>
+						<xsl:text>Edit Record (administrators only)</xsl:text>
+						<br />
+						<img class="menu" src="/istc/images/internallink.gif" alt="" border="0" align="middle"/>
+	            	</a>
+	            </div><br />
+		    </div><br />
+		</div>   
+	<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div> 
+       	
        	
         </div>
    	</xsl:template>	
@@ -78,9 +81,9 @@
 					<xsl:text>submitForm('</xsl:text><xsl:value-of select="$op"/><xsl:text>')</xsl:text>
 				</xsl:attribute>
 				<xsl:choose>
-					<xsl:when test="$op = 'print'"><xsl:text>Print Record</xsl:text><img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></xsl:when>	
-					<xsl:when test="$op = 'email'"><xsl:text>Email Record</xsl:text><img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></xsl:when>
-					<xsl:when test="$op = 'save'"><xsl:text>Save Record</xsl:text><img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/></xsl:when>			
+					<xsl:when test="$op = 'print'"><xsl:text>Print Record</xsl:text><img class="menu" src="/istc/images/print.gif" alt="" border="0" align="middle"/></xsl:when>	
+					<xsl:when test="$op = 'email'"><xsl:text>Email Record</xsl:text><img class="menu" src="/istc/images/email.gif" alt="" border="0" align="middle"/></xsl:when>
+					<xsl:when test="$op = 'save'"><xsl:text>Save Record</xsl:text><img class="menu" src="/istc/images/download.gif" alt="" border="0" align="middle"/></xsl:when>			
 				</xsl:choose>
 			</a>
 		</div><br/>
@@ -104,7 +107,7 @@
 					<xsl:attribute name="href">
 						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.creator&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
 					</xsl:attribute>
-					<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/><br/>
+					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/><br/>
 		 		</a>
 			</div><br/>
 			<div class="menuitemextra">
@@ -137,7 +140,7 @@
 					<xsl:attribute name="href">
 						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
 					</xsl:attribute>
-					<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/><br/>	
+					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/><br/>	
 		 		</a>
 			</div><br/>
 			<div class="menuitemextra">
@@ -170,7 +173,7 @@
 					<xsl:attribute name="href">
 						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.publisher&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
 					</xsl:attribute>
-					<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/>	 			
+					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/>	 			
 		 		</a>
 		 	</div><br/>
 		 	<div class="menuitemextra">
@@ -202,7 +205,7 @@
 					<xsl:attribute name="href">
 						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=bib.originPlace&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
 					</xsl:attribute>
-					<img class="menu" src="/istc/images/download.gif" alt="" width="27" border="0" align="middle"/>
+					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/>
 		 		</a>
 			 </div><br/>
 			 <div class="menuitemextra">
