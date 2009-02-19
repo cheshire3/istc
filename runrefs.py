@@ -33,18 +33,19 @@ parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
     
        
-if '-workflowload' in sys.argv:
+if '-wfload' in sys.argv:
     
     start = time.time()
     # build necessary objects
     flow = db.get_object(session, 'refsBuildIndexWorkflow')
-    df.load(session)
+    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
     lgr.log_info(session, 'Loading references...' )
 
     flow.process(session, df)
     (mins, secs) = divmod(time.time() - start, 60)
     (hours, mins) = divmod(mins, 60)
     lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
+
 
 elif '-load' in sys.argv:
     start = time.time()

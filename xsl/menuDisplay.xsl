@@ -9,7 +9,7 @@
 	<xsl:template match="/">
 		 
 	<div id="menuall">
-
+	%BACKTORESULTS%
 	<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>	
 		<div class="menugrp">
 			<div class="menubody" id="topmenu">
@@ -37,13 +37,13 @@
 	<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>		
 		<div class="menugrp">
 			<div class="menubody">
-				<div class="menubody">
+
 					<strong>Browse:</strong>
 					<xsl:call-template name="author"/>
 					<xsl:call-template name="title"/>
 					<xsl:call-template name="printer"/>
 					<xsl:call-template name="printerloc"/>
-				</div>
+
 			</div><br />
 		</div>
 	<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div> 

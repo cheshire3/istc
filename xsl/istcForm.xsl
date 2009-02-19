@@ -8,12 +8,15 @@
 	<xsl:template match="/">
 		<div id="formDiv" name="form" class="formDiv" onscroll="hideAllMenus()">
 			<form id="mainform" name="mainform" action="#">
-			<input type="hidden" id="opvalue" name="operation" value="save"/>
-			<input type="hidden" id="leader" name="leader">
+			<input type="hidden" id="opvalue" name="operation"/>
+			<input type="hidden" id="leader" name="leader">			
 				<xsl:attribute name="value">
 					<xsl:value-of select="//leader"/>				
 				</xsl:attribute>
 			</input>
+			<div class="field">
+				<input type="button" onclick="submitForm('save')" value=" Save "/>
+			</div>
 			<div class="field">
 			<p><strong>ISTC Number:</strong><br/>
 				<xsl:choose>
@@ -36,7 +39,7 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<select name="author_sel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100">Personal</option></select><br />
-						<input id="author" type="text" onfocus="setCurrent(this);" onkeyup="suggestDelay(this.id, event);" autocomplete="off" name="author_a" size="150"></input><br />					
+						<input id="author" type="text" onfocus="setCurrent(this);" onkeyup="suggestDelay(this.id, event);" autocomplete="off" name="author_a" size="99"></input><br />					
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
@@ -51,25 +54,14 @@
 						<xsl:apply-templates select="//datafield[@tag='245']/subfield[@code='a']"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<textarea name="245_a" id="title" type="text" onfocus="setCurrent(this);" cols="148" rows="4"><xsl:text> </xsl:text></textarea>
+						<textarea name="245_a" id="title" type="text" onfocus="setCurrent(this);" cols="97" rows="4"><xsl:text> </xsl:text></textarea>
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
 			</div>
 			<br/>
 			<div class="field">
-			<p><strong>Imprints:</strong><br/>
-				<xsl:choose>
-					<xsl:when test="//datafield[@tag='260']">
-						 <xsl:call-template name="accesspoint">
-							<xsl:with-param name="typename" select="'imprint'"/>
-							<xsl:with-param name="tagnumber" select="'260'"/>
-						</xsl:call-template> 
-					</xsl:when>
-					<xsl:otherwise>
-						<div id="addedimprints" style="display:none" class="added"><ul id="addedimprintslist"></ul></div>
-					</xsl:otherwise>
-				</xsl:choose>		
+			<p><strong>Imprints:</strong><br/>	
 				<div id="imprintstable" class="tablecontainer">
 					<table id="table_imprints"><tbody>
 						<tr><td class="melabel">Place:</td><td> <input type="text" onkeyup="suggestDelay(this.id, event);" autocomplete="off" onfocus="setCurrent(this);" name="imprints" id="260_a" size="36"></input><br/></td></tr>
@@ -77,6 +69,19 @@
 						<tr><td class="melabel">Date:</td><td> <input type="text" onfocus="setCurrent(this);" autocomplete="off" name="imprints" id="260_c" size="36"></input><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('imprints');" value="Add"></input></td><td></td></tr>
 				    </tbody></table>
+				</div><br />
+				<div class="addedcontainer">
+					<xsl:choose>
+						<xsl:when test="//datafield[@tag='260']">
+							 <xsl:call-template name="accesspoint">
+								<xsl:with-param name="typename" select="'imprint'"/>
+								<xsl:with-param name="tagnumber" select="'260'"/>
+							</xsl:call-template> 
+						</xsl:when>
+						<xsl:otherwise>
+							<div id="addedimprints" style="display:none" class="added"><ul id="addedimprintslist"></ul></div>
+						</xsl:otherwise>
+					</xsl:choose>	
 				</div>
 			</p>
 			</div>
@@ -127,50 +132,56 @@
 			</div>
 			<br/>
 			<div class="field">
-			<p><strong>General Note:</strong><br/>
-				<xsl:choose>
-					<xsl:when test="//datafield[@tag='500']">
-						 <xsl:call-template name="accesspoint">
-							<xsl:with-param name="typename" select="'generalnote'"/>
-							<xsl:with-param name="tagnumber" select="'500'"/>
-						</xsl:call-template> 
-					</xsl:when>
-					<xsl:otherwise>
-						<div id="addedgeneralnotes" style="display:none" class="added"><ul id="addedgeneralnoteslist"></ul></div>
-					</xsl:otherwise>
-				</xsl:choose>		
+			<p><strong>General Note:</strong><br/>		
 				<div id="generalnotestable" class="tablecontainer">
 					<table id="table_generalnotes"><tbody>
-						<tr><!-- <td class="melabel"></td> --><td> <textarea onfocus="setCurrent(this);" name="generalnotes" id="500_a" cols="148" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
+						<tr><!-- <td class="melabel"></td> --><td> <textarea onfocus="setCurrent(this);" name="generalnotes" id="500_a" cols="97" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('generalnotes');" value="Add"></input></td><td></td></tr>
 				    </tbody></table>
+				</div><br />
+				<div class="addedcontainer">
+					<xsl:choose>
+						<xsl:when test="//datafield[@tag='500']">
+							 <xsl:call-template name="accesspoint">
+								<xsl:with-param name="typename" select="'generalnote'"/>
+								<xsl:with-param name="tagnumber" select="'500'"/>
+							</xsl:call-template> 
+						</xsl:when>
+						<xsl:otherwise>
+							<div id="addedgeneralnotes" style="display:none" class="added"><ul id="addedgeneralnoteslist"></ul></div>
+						</xsl:otherwise>
+					</xsl:choose>
 				</div>
 			</p>
 			</div>
 			<br/>
 		 	<div class="field">
-			<p><strong>References:</strong><br/>				
-				<div id="referencestable" class="tablecontainer">
-					<table id="table_references"><tbody>
-						<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" size="50"></input><br/></td></tr>
-				   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" size="50"  autocomplete="off" /></td></tr>
-				    	<tr></tr>
-				    </tbody></table>
-				<div class="reflabel">
-				Full Reference 
+			<p>
+				<div id="refcontainer"><strong>References:</strong><br/>				
+					<div id="referencestable" class="tablecontainer">
+						<table id="table_references"><tbody>
+							<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" size="30"></input><br/></td></tr>
+					   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" size="30"  autocomplete="off" /></td></tr>
+					    	<tr></tr>
+					    </tbody></table>
+					</div>
 				</div>
-				<br/>
-			    <div id="refdisplay" class="float">
-					<p></p>
+				<div id="fullrefcontainer" class="reflabel">					
+					<div id="reflabel">
+					<strong>Full Reference:</strong>
+					</div>
+				    <div id="refdisplay">
+						<p></p>
+					</div>
 				</div>
+				<br />
+				<div>					
+					<input type="button" onclick="addEntry('references');" value="Add"/>
+					<input type="button" onclick="editRef();" value="edit/create ref"/>
+				</div><br />
 				
-				</div>
-				<div class="mebuttons">
-					<input class="mebutton" type="button" onclick="addEntry('references');" value="&gt;"></input><br/>
-					<input class="mebutton" type="button" onclick="editEntry('references');" value="&lt;"></input><br/>
-					<input class="editfullref" type="button" onclick="editRef();" value="edit ref"/>
-				</div>
-				<div class="meadded">
+			<!-- <div class="meadded"> -->	
+				<div class="addedcontainer">
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='510']">
 							<xsl:text>%RFRNC%</xsl:text>
@@ -189,47 +200,52 @@
 			<br/>
 			<div class="field">
 			<p><strong>Reproductions Notes:</strong><br/>
-				<xsl:choose>
-					<xsl:when test="//datafield[@tag='500']">
-						 <xsl:call-template name="accesspoint">
-							<xsl:with-param name="typename" select="'repnote'"/>
-							<xsl:with-param name="tagnumber" select="'500'"/>
-						</xsl:call-template> 
-					</xsl:when>
-					<xsl:otherwise>
-						<div id="addedrepnotes" style="display:none" class="added"><ul id="addedrepnoteslist"></ul></div>
-					</xsl:otherwise>
-				</xsl:choose>		
+					
 				<div id="repnotestable" class="tablecontainer">
 					<table id="table_repnotes"><tbody>
-						<tr><td class="melabel">Note:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="500_a" cols="140" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
-						<tr><td class="melabel">URL:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="500_u" cols="140" rows="1"><xsl:text> </xsl:text></textarea><br/></td></tr>
+						<tr><td class="melabel">Note:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="530_a" cols="89" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
+						<tr><td class="melabel">URL:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="530_u" cols="89" rows="1"><xsl:text> </xsl:text></textarea><br/></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('repnotes');" value="Add"></input></td><td></td></tr>
 				    </tbody></table>
+				</div><br />
+				<div class="addedcontainer">
+					<xsl:choose>
+						<xsl:when test="//datafield[@tag='530']">
+							 <xsl:call-template name="accesspoint">
+								<xsl:with-param name="typename" select="'repnote'"/>
+								<xsl:with-param name="tagnumber" select="'530'"/>
+							</xsl:call-template> 
+						</xsl:when>
+						<xsl:otherwise>
+							<div id="addedrepnotes" style="display:none" class="added"><ul id="addedrepnoteslist"></ul></div>
+						</xsl:otherwise>
+					</xsl:choose>	
 				</div>
 			</p>
 			</div>
 			<br/>
 			<div class="field">
 			<p><strong>British Library Shelfmark:</strong><br/>
-				<xsl:choose>
-					<xsl:when test="//datafield[@tag='852']">
-						 <xsl:call-template name="accesspoint">
-							<xsl:with-param name="typename" select="'blshelfmark'"/>
-							<xsl:with-param name="tagnumber" select="'852'"/>
-						</xsl:call-template> 
-					</xsl:when>
-					<xsl:otherwise>
-						<div id="addedblshelfmarks" style="display:none" class="added"><ul id="addedblshelfmarkslist"></ul></div>
-					</xsl:otherwise>
-				</xsl:choose>		
 				<div id="blshelfmarkstable" class="tablecontainer">
 					<table id="table_blshelfmarks"><tbody>
-						<tr><td class="melabel">Place:</td><td> <input type="text" onkeyup="suggest(this.id, event);" onfocus="setCurrent(this);" name="blshelfmarks" id="852_a" size="36"></input><br/></td></tr>
-						<tr><td class="melabel">Note:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_q" size="36"></input><br/></td></tr>
-						<tr><td class="melabel">Shelfmark:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_j" size="36"></input><br/></td></tr>
+						<tr><td class="melabel">Place:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_a" size="36" value="British Library"></input></td></tr>
+						<tr><td class="melabel">Note:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_q" size="36"></input></td></tr>
+						<tr><td class="melabel">Shelfmark:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_j" size="36"></input></td></tr>
 						<tr><td><input class="mebutton" type="button" onclick="addEntry('blshelfmarks');" value="Add"></input></td><td></td></tr>
 				    </tbody></table>
+				</div><br />
+				<div class="addedcontainer">
+					<xsl:choose>
+						<xsl:when test="//datafield[@tag='852']">
+							 <xsl:call-template name="accesspoint">
+								<xsl:with-param name="typename" select="'blshelfmark'"/>
+								<xsl:with-param name="tagnumber" select="'852'"/>
+							</xsl:call-template> 
+						</xsl:when>
+						<xsl:otherwise>
+							<div id="addedblshelfmarks" style="display:none" class="added"><ul id="addedblshelfmarkslist"></ul></div>
+						</xsl:otherwise>
+					</xsl:choose>	
 				</div>
 			</p>
 			</div>
@@ -248,7 +264,7 @@
 	
 	
 	<xsl:template match="datafield[@tag='245']/subfield[@code='a']">
-		<textarea name="245_a" id="title"  onfocus="setCurrent(this);" cols="148" rows="4">			
+		<textarea name="245_a" id="title"  onfocus="setCurrent(this);" cols="97" rows="4">			
 				<xsl:value-of select="."/>			
 		</textarea>
 	</xsl:template>
@@ -256,7 +272,7 @@
 	
 	<xsl:template match="datafield[@tag='100']/subfield[@code='a']">
 		<select name="author_sel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100" selected="selected">Personal</option></select><br/>
-		<input type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author_a" id="author_a" size="150">
+		<input type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author_a" id="author_a" size="99">
 			<xsl:attribute name="value">
 				<xsl:value-of select="."/>
 			</xsl:attribute>
@@ -344,6 +360,7 @@
 									<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>				
 								</xsl:attribute>			
 								<div class="icons">
+								<!-- delete -->
 									<a>
 										<xsl:attribute name="onclick">
 											<xsl:text>deleteEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
@@ -351,13 +368,40 @@
 										<xsl:attribute name="title">
 											<xsl:text>delete entry</xsl:text>
 										</xsl:attribute>
-										<img src="/istc/images/deletesmall.gif">
-										<xsl:attribute name="id">
-											<xsl:text>delete</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>
-										</xsl:attribute>
+										<img src="/istc/images/remove.png" onmouseover="this.src='/istc/images/remove-hover.png';" onmouseout="this.src='/istc/images/remove.png';">
+											<xsl:attribute name="class">
+												<xsl:text>addedimage</xsl:text>
+											</xsl:attribute>
 										</img>
 									</a>	
-									<span class="handle">move</span>									
+								<!-- Up -->
+									<a>
+										<xsl:attribute name="onclick">
+											<xsl:text>entryUp('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+										</xsl:attribute>
+										<xsl:attribute name="title">
+											<xsl:text>move up</xsl:text>
+										</xsl:attribute>
+										<img src="/istc/images/up.png" onmouseover="this.src='/istc/images/up-hover.png';" onmouseout="this.src='/istc/images/up.png';">	
+											<xsl:attribute name="class">
+												<xsl:text>addedimage</xsl:text>
+											</xsl:attribute>
+										</img>
+									</a>	
+								<!-- Down -->
+									<a>
+										<xsl:attribute name="onclick">
+											<xsl:text>entryDown('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+										</xsl:attribute>
+										<xsl:attribute name="title">
+											<xsl:text>move down</xsl:text>
+										</xsl:attribute>
+										<img src="/istc/images/down.png" onmouseover="this.src='/istc/images/down-hover.png';" onmouseout="this.src='/istc/images/down.png';">
+											<xsl:attribute name="class">
+												<xsl:text>addedimage</xsl:text>
+											</xsl:attribute>										
+										</img>
+									</a>									
 								</div>
 								<div class="multipleEntry">	
 								<p class="float">
@@ -373,12 +417,7 @@
 									</xsl:call-template>
 								</p>
 								</div>
-							</div>											
-							<br>
-								<xsl:attribute name="id">
-									<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>br</xsl:text>
-								</xsl:attribute>
-							</br>	
+							</div>												
 							<input type="hidden">
 								<xsl:attribute name="id">
 									<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>xml</xsl:text>

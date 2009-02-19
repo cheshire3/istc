@@ -82,7 +82,7 @@ elif '-load' in sys.argv:
     # build necessary objects
     flow = db.get_object(session, 'buildIndexWorkflow')
     baseDocFac = db.get_object(session, 'baseDocumentFactory')
-    baseDocFac.load(session, defpath + "/data/", codec='utf-8')
+    baseDocFac.load(session, defpath + "/data_small/", codec='utf-8')
     lgr.log_info(session, 'Loading files from %s...' % (baseDocFac.dataPath))
     #flow.load_cache(session, db)
     flow.process(session, baseDocFac)
