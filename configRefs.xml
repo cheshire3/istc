@@ -191,6 +191,23 @@
 	  </workflow>
 	</subConfig>
 	
+	<subConfig type="workflow" id="refsIndexExistingRecordWorkflow">
+	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+	  <workflow>
+	    <!-- input type:  record -->
+		<object type="recordStore" ref="refsRecordStore" function="create_record"/>
+		<object type="database" ref="db_refs" function="add_record"/>
+		<try>
+		  <object type="database" ref="db_refs" function="index_record"/>	
+		</try>
+		<except>
+		   <log level="warning">"*** Some indexes incomplete"</log>
+		</except>
+	  </workflow>
+	</subConfig>
+	
+	
+	
 
   </subConfigs>
 

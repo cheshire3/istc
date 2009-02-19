@@ -175,9 +175,10 @@
 					</div>
 				</div>
 				<br />
-				<div>					
-					<input type="button" onclick="addEntry('references');" value="Add"/>
-					<input type="button" onclick="editRef();" value="edit/create ref"/>
+				<div class="referencebuttonsdiv">					
+					<input style="float: left" type="button" onclick="addEntry('references');" value="Add"/>
+					<input style="float: right" type="button" onclick="editRef();" value="edit/create ref"/>
+				
 				</div><br />
 				
 			<!-- <div class="meadded"> -->	
