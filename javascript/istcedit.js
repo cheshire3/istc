@@ -15,6 +15,9 @@
 // 0.01 - 18/02/2009 - CS - Basic functions for edit interfaces
 */ 
 
+var timeout;
+
+
 //================================================================================================
 //Functions for multiple entry fields
 
@@ -188,17 +191,17 @@ function deleteEntry(d){
 followed by '_formgen' which is used to maintain distinct ids between access points read in from existing xml and those created in the current form,
 number is the number which forms part of the unique id */
 function editEntry(s, number){
-
-	var ph = document.getElementById('placeholder' + s);
-	if (ph != null){
-		var ul = ph.parentNode;
-		ul.removeChild(ph);
-	}
 	
 	var type = s.substring(0, s.indexOf('_formgen'));
   	if (type == '') {
   		type = s;
   	}  
+ 
+ 	var ph = document.getElementById('placeholder' + type);
+	if (ph != null){
+		var ul = ph.parentNode;
+		ul.removeChild(ph);
+	}
   
   	var string = document.getElementById(s + number + 'xml').value;
   	var values = string.split(' ||| ');
@@ -242,10 +245,7 @@ function editEntry(s, number){
 		var image = document.createElement('img');
 		image.setAttribute('src', '/istc/images/placeholder.png');
 		image.className = "addedimage";
-		var txtnode = document.createTextNode('placeholder'); 
-		var p = document.createElement('p');
-		p.appendChild(image);
-		placeholder.appendChild(p);
+		placeholder.appendChild(image);
 		parent.replaceChild(placeholder, item);
 	}
 	else {
@@ -275,7 +275,7 @@ function showValue(value){
 			cell.removeChild(cell.childNodes[0]);
 		}
 		var p = cell.appendChild(document.createElement('p'));
-		var ajax = new Ajax.Request(url, {method:'post', asynchronous:true, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 			var text = document.createTextNode(transport.responseText);	
 			p.appendChild(text);	
 		}});	
@@ -343,9 +343,12 @@ function clearRef(){
 function editRef(){
 	var abbrev = document.getElementById('510_a').value;
 	abbrev = abbrev.replace(/&/g, '%26');
+	if (abbrev.strip() == ' ' || abbrev.strip() == ''){
+		alert('Please add abbreviated reference in the reference box first to ensure a duplicate reference is not created');
+		return;
+	}
 	if (abbrev.strip() != ' ' && abbrev.strip() != ''){
 		showValue(abbrev);
-		alert(document.getElementById('refdisplay').childNodes[0]);
 		var full = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
 		full = full.replace(/&/g, '%26');	
 	}
@@ -551,6 +554,7 @@ function submitReference(){
 	}});	
 	if (output = 'success'){
 		alert('The reference has been saved successfully');
+		showValue(abbrev)
 		hideRefPopup();
 	}
 	else {

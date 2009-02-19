@@ -412,41 +412,54 @@ class IstcEditingHandler:
     
     def submit_ref(self, form):
         session.database = db3.id
-        refsStore = db3.get_object(session, 'refsRecordStore')
-        indexFlow = db3.get_object(session, 'refsBuildIndexWorkflow')
+        refsStore = db3.get_object(session, 'refsRecordStore')      
         abbrev = form.get('abbrev', '')
         full = form.get('full', '')
         if abbrev.strip() == '' or full.strip() == '':
             return self.get_refForm(form)
-        entry = StringDocument('<record><code>%s</code><full>%s</full></record>' % (abbrev, full))  
-        newRec = xmlp.process_document(session, entry)
-        raise ValueError(newRec.get_xml(session))    
-        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
-        rs = db3.search(session, q)
         try:
-            rec = rs[0].fetch_record(session)
-        except:
-            pass
-        else:
-            db3.unindex_record(session, rec)
-            db3.remove_record(session, rec)
-            refsStore.begin_storing(session)
-            refsStore.delete_record(session, rec.id)
-            refsStore.commit_storing(session)
+            entry = StringDocument('<record><code>%s</code><full>%s</full></record>' % (abbrev, full))  
+            newRec = xmlp.process_document(session, entry)
             
-        db3.begin_indexing(session)
-        refsStore.begin_storing(session)       
-        indexFlow.process(session, newRec)       
-        refsStore.commit_storing(session)
-        filename = '/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml'
-        os.rename(filename, '/home/cheshire/cheshire3/dbs/istc/refsData/refs.bak')
-        file = open(filename, 'w')
+            q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
+            rs = db3.search(session, q)
+            recid = None
+            try:
+                rec = rs[0].fetch_record(session)
+            except:
+                pass
+            else:
+                recid = rec.id
+                db3.unindex_record(session, rec)
+                db3.remove_record(session, rec)
+                refsStore.begin_storing(session)
+                refsStore.delete_record(session, rec.id)
+                refsStore.commit_storing(session)
+                
+            db3.begin_indexing(session)
+            refsStore.begin_storing(session)  
+            if recid == None:     
+                indexFlow = db3.get_object(session, 'refsIndexRecordWorkflow')          
+            else:
+                indexFlow = db3.get_object(session, 'refsIndexExistingRecordWorkflow')
+            indexFlow.process(session, newRec)     
+            refsStore.commit_storing(session)
+            db3.commit_indexing(session)
+            db3.commit_metadata(session)
+            filename = '/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml'
+            os.rename(filename, '/home/cheshire/cheshire3/dbs/istc/refsData/refs.bak')
+            file = open(filename, 'w')
+            
+            for r in refsStore:
+                file.write(r.get_xml(session))
+     
+            file.flush()
+            file.close()
+        except:
+            return 'failed'
+        else:
+            return 'success'
         
-        for r in refsStore:
-            file.write(r.get_xml(session))
- 
-        file.flush()
-        file.close()
 
         
 

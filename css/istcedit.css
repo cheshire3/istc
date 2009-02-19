@@ -169,6 +169,11 @@ div#refcontainer, div#fullrefcontainer {
 }
 
 
+.referencebuttonsdiv {
+	padding-bottom: 15px;	
+}
+
+
 .tablecontainer table{
 	padding-bottom: 5px;
 	}
@@ -205,8 +210,8 @@ td .mebutton {
 	width: 700;
 	height: 300;
 	position: fixed; 
-	background: #006c7d;
-	border: solid black 2px;
+	background: #E7ECED;
+	border: solid #006c7d 3px;
 	left: 130;	
 	}
 
