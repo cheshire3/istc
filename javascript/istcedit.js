@@ -222,6 +222,9 @@ function editEntry(s, number){
 	  		document.getElementById(value[0]).value = value[1];
 	  	}
 	}
+	if (type == 'references'){
+  		showValue(values[0].split(' | ')[1]);
+  	}
   	//delete the access point you are now editing and use placeholder if appropriate
   	var item = document.getElementById('li' + s + number);
   	var parent = item.parentNode;
@@ -232,7 +235,7 @@ function editEntry(s, number){
 			index = i;
 		}
 	}
-
+	
 	if (listItems.length > 1){
 		var placeholder = document.createElement('li');
 		placeholder.setAttribute('id', 'placeholder' + type);
@@ -247,12 +250,7 @@ function editEntry(s, number){
 	}
 	else {
 		deleteEntry(s + number);
-	}
-  		
-  	if (type == 'references'){
-  		showValue(values[0].split(' | ')[1]);
-  	}
-  	
+	} 	
 }
 
 
@@ -277,7 +275,7 @@ function showValue(value){
 			cell.removeChild(cell.childNodes[0]);
 		}
 		var p = cell.appendChild(document.createElement('p'));
-		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:true, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 			var text = document.createTextNode(transport.responseText);	
 			p.appendChild(text);	
 		}});	
@@ -347,6 +345,7 @@ function editRef(){
 	abbrev = abbrev.replace(/&/g, '%26');
 	if (abbrev.strip() != ' ' && abbrev.strip() != ''){
 		showValue(abbrev);
+		alert(document.getElementById('refdisplay').childNodes[0]);
 		var full = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
 		full = full.replace(/&/g, '%26');	
 	}

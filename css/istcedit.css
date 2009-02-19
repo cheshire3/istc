@@ -80,10 +80,7 @@ textarea, input {
 	
 	}
 
-.reflabel {
-	float: left;
-	margin-top: 20px;
-	}
+
 
 .melabel, .reflabel {
 	font-size: 10pt;
@@ -161,6 +158,17 @@ textarea, input {
 
 }
 
+div#refcontainer, div#fullrefcontainer {
+	float:left;	
+}
+
+
+#fullrefcontainer {	
+	width: 370px;
+	margin-left: 15px;
+}
+
+
 .tablecontainer table{
 	padding-bottom: 5px;
 	}
@@ -196,10 +204,10 @@ td .mebutton {
 .popup {
 	width: 700;
 	height: 300;
-	position: fixed;
-	background: #EDEDDC;
+	position: fixed; 
+	background: #006c7d;
 	border: solid black 2px;
-	left: 200;
+	left: 130;	
 	}
 
 .subForm {
