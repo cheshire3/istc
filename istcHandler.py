@@ -169,14 +169,13 @@ class IstcHandler:
             try:
                 q = qf.get_query(session, cql.encode('utf-8'))
             except:
-                return ('Search Error', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
+                return ('<div  id="maincontent"><h1>Search Error</h1><p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s</div>' % cql)           
             try:
                 rs = db.search(session, q)     
             except:
-                return ('Search Error', '<p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s' % cql, '')           
+                return ('<div  id="maincontent"><h1>Search Error</h1><p>Could not complete your query. <a href="http://istc.cheshire3.org">Please try again</a>. %s</div>' % cql)           
             rsid = rss.create_resultSet(session, rs)
-            rs.id = rsid
-  #          cqlStr = self._interpret_query(q, [], [])        
+            rs.id = rsid     
             cqlStr = self._interpret(q)
             html.append("<strong>Your search was for %s </strong><br/>" % cqlStr)
         
@@ -185,7 +184,7 @@ class IstcHandler:
                 rsid = form.get('rsid', None).value
             except:
                 # should never happen?
-                return ('An Error has Occurred', '<p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a> %s' % cql, '')
+                return ('<div  id="maincontent"><h1>An Error has Occurred</h1><p>Could not parse your query. <a href="http://istc.cheshire3.org">Please try again</a> %s</div>' % cql)
                 
             start = int(form.get('start', 0))
             try :
@@ -204,10 +203,8 @@ class IstcHandler:
                 navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
             elif start > 0 and start+pagesize >= len(rs):
                 navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s" style="margin-right: 37px;"><img class="menu"   src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString)
-                #&nbsp;<img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/>
             elif start == 0 and start+pagesize < len(rs):
                 navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start+pagesize, locString)
-                #<img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/>&nbsp;
             else :
                 navString = ''
 
@@ -235,11 +232,9 @@ class IstcHandler:
             html.append('<table>')
             
             for i in range(start, min(start+pagesize, len(rs))):
-
+                
                 rec = recStore.fetch_record(session, rs[i].id)
-                
-
-                
+                          
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="245"]/subfield[@code="a"]')
                     title = flattenTexts(elms[0])
@@ -248,8 +243,8 @@ class IstcHandler:
                         elms = rec.process_xpath(session, '//datafield[@tag="245"]')
                         title = flattenTexts(elms[0])
                     except:
-                        title = ""
-                                               
+                        title = ""   
+                                                                   
                 try:
                     elms = rec.process_xpath(session, '//datafield[@tag="100"]/subfield[@code="a"]')
                     author = "%s. " % flattenTexts(elms[0]).strip()
@@ -327,48 +322,12 @@ class IstcHandler:
             
         else:
             html.append("There are no records that match your query.  (%s)" % cql.decode('utf-8'))
-            menubits = []
+            return '<div id="maincontent"><div id="content"><h1>Search Results - 0 Hits</h1>%s</div></div>' % ''.join(html)
         
         if not locations == 'all':
-            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form></div>' % (''.join(menubits), hits, rsid, locations, ''.join(html)), 'REMOVE ME')
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form></div>' % (''.join(menubits), hits, rsid, locations, ''.join(html)))
         else :
-            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)), 'REMOVE ME')
-
-#
-#    def _interpret_query(self, cql, stack = [], string = []):    
-#
-#        if self._has_operand(cql, 'left'):           
-#            new = cql.leftOperand
-#            cql.leftOperand = None
-#            stack.append(cql)
-#            return self._interpret_query(new, stack, string)
-#        elif self._has_boolean(cql):
-#            string.append('%s' % cql.boolean.value)
-#            cql.boolean.value = None
-#            return self._interpret_query(cql, stack, string)
-#        elif self._has_operand(cql, 'right'):            
-#            new = cql.rightOperand
-#            cql.rightOperand = None
-#            stack.append(cql)
-#            return self._interpret_query(new, stack, string)
-#        else :
-#            if not isinstance(cql, Triple):    
-#                substring = [] 
-#                try:
-#                    index = idxNames['%s' % cql.index.value]
-#                except:
-#                    index = 'unknown'
-#                substring.append(index)
-#                substring.append('%s' % cql.relation.value)  
-#    
-#                substring.append("\"%s\"" % cql.term.value)
-#            
-#                if len(substring):
-#                    string.extend(['(', ' '.join(substring), ')'])
-#            if len(stack):
-#                return self._interpret_query(stack.pop(), stack, string)
-#            else :
-#                return ' '.join(string)
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)))
 
 
     def _interpret(self, what):
@@ -400,44 +359,6 @@ class IstcHandler:
             raise ValueError(what)
 
 
-
-
-    def _has_boolean(self, clause):
-        try:
-            clause.boolean.value
-        except:
-            return False
-        else:
-            if clause.boolean.value == None:
-                return False
-            else:
-                return True
-        
-            
-
-    def _has_operand(self, clause, side):
-        if side == 'left':
-            try:
-                clause.leftOperand
-            except:
-                return False
-            else :
-                if clause.leftOperand == None:
-                    return False
-                else :
-                    return True
-        elif side == 'right':
-            try:
-                clause.rightOperand
-            except:
-                return False
-            else :
-                if clause.rightOperand == None:
-                    return False
-                else :
-                    return True
-
-
     def display_rec(self, session, form):
         session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-screen')
@@ -459,22 +380,19 @@ class IstcHandler:
             navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString, rsid, id+1, locString)
         elif id > 0 and id < len(rs):
             navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s" style="margin-right: 37px;" ><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString)
-            #&nbsp;<img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/>
         elif id == 0 and id < len(rs)-1:
             navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id+1, locString)
-            #<img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/>&nbsp;
         else:
             navstring = ''
 
-        rlNav = '<div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<img src="/istc/images/link_back2.gif" alt=" Back " name="back"  height="19" border=0 align="middle"></a></div>' % rsid
+        rlNav = '<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div><div class="menugrp"><div class="menubody" id="backtoresults"><div class="menuitem"><a  href="/istc/search/search.html?operation=search&rsid=%s">Back to Results List<br/><img src="/istc/images/previous.gif" alt=" Back " name="back" border="0" align="middle"/></a></div></div></div><div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>' % rsid
 
         if len(rs):
             rec = rs[id].fetch_record(session)                               
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-#            return ('Record Details', doc.replace('%nav%', navstring).replace('%counter%', countString), menu.get_raw(session), rlNav)
-            return ('REMOVE ME', '<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session), doc.replace('%nav%', navstring).replace('%counter%', countString)), 'REMOVE ME', rlNav)
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString)))
         else:
             raise ValueError(id)
  
@@ -712,7 +630,7 @@ class IstcHandler:
         smtp.connect(host='mail1.liv.ac.uk', port=25)
         smtp.sendmail('istc@localhost', address, message.as_string())
         smtp.close()
-        return ('REMOVE ME', '<div id="maincontent"><h1>File emailed successfully</h1></div>', 'REMOVE ME')
+        return ('<div id="maincontent"><h1>File emailed successfully</h1></div>')
         
     
     def emailRecs(self, form):
@@ -738,7 +656,7 @@ class IstcHandler:
                     repl.append('<input type="hidden" name="recSelect" value="%s"/>' % rec)
             f = read_file('email.html')
             f = f.replace('%Details%', ''.join(repl))
-            return ('REMOVE ME', f, '')
+            return (f)
         else:
             if istc:
                 return self.send_email(istc=istc, address=address, expand=expand, locations=locations)
@@ -769,7 +687,6 @@ class IstcHandler:
         numreq = int(form.get('numreq', 25))
         rp = int(form.get('responsePosition', 4))
         qString = '%s %s "%s"' % (idx, rel, scanTerm)
-        t = []
 
         db = serv.get_object(session, 'db_istc')
         try:
@@ -779,10 +696,7 @@ class IstcHandler:
             try:
                 scanClause = qf.get_query(session, qString)      
             except:
-                t.append('Unparsable query: %s' % qString)
-                return (" ".join(t), '<p>An invalid query was submitted.</p>')
-            
-        t.append('Browse Indexes')
+                return ('<div id="maincontent"><h1>Unparsable query</h1><p>An invalid query was submitted (%s).</p>' % qString)
 
         hitstart = False
         hitend = False
@@ -845,7 +759,6 @@ class IstcHandler:
         totalTerms = len(scanData)
 
         if (totalTerms > 0):
-            t.append('Results')
             rows = ['<table width = "90%" cellspacing="5" summary="list of terms in this index">',
                     '<tr class="headrow"><td>Term</td><td>Records</td></tr>']
 
@@ -937,11 +850,10 @@ class IstcHandler:
                          
             #- end hit navigation
             
-            return (" ".join(t), '<div id="maincontent"><h1>Browse Indexes Results</h1>%s</div>' % '\n'.join(rows))
+            return ('<div id="maincontent"><h1>Browse Indexes Results</h1>%s</div>' % ('\n'.join(rows)))
 
         else:
-            t.append('Error')
-            return (" ".join(t), '<div id="maincontent"><h1>Browse Indexes</h1><p class="error">No terms retrieved from index. You may be browsing outside the range of terms within the index.</p></div>')
+            return ('<div id="maincontent"><h1>Browse Indexes Error</h1><p class="error">No terms retrieved from index. You may be browsing outside the range of terms within the index.</p></div>')
 
 ##     #- end browse() ------------------------------------------------------------
     
@@ -962,10 +874,8 @@ class IstcHandler:
         path = path[path.rfind('/')+1:]
         
         operation = form.get('operation', None)
-        e = ""
-        rl = ""
-        if path == 'search.html':
-            
+
+        if path == 'search.html':           
             f = file(self.searchTemplatePath)
             tmpl = f.read()
             f.close()
@@ -973,28 +883,19 @@ class IstcHandler:
             
             if operation:
                 if (operation == 'record'):
-                    (t, d, e, rl) = self.display_rec(session, form)
+                    d = self.display_rec(session, form)
                 elif (operation == 'search'):
-                    (t, d, e) = self.handle_istc(session, form)
+                    d = self.handle_istc(session, form)
                 elif (operation == 'print'):
                     data = self.printRecs(form)
                     self.send_html(data, req)
                     return
                 elif (operation == 'email'):
-                    (t, d, e) = self.emailRecs(form)
+                    d = self.emailRecs(form)
                 elif (operation == 'save'):
                     data = self.saveRecs(form)
                     self.send_txt(data, req)
                     return
-#                elif (operation == 'references'):
-#                    self.logger.log('getting refs')
-#                    content = self.get_fullRefs(session, form)
-#                    self.send_xml(content, req)
-#                    return
-#                elif (operation == 'usareferences'):
-#                    content = self.get_usaRefs(session, form)
-#                    self.send_xml(content, req)
-#                    return
                 elif (operation == 'format'):
                     content = self.get_format(session, form)
                     self.send_xml(content, req)
@@ -1005,11 +906,10 @@ class IstcHandler:
                     return
             else:
                 f= file("index.html")
-                t = "Search"
                 d = f.read()
                 f.close()
-        elif path == 'browse.html':
-            
+                
+        elif path == 'browse.html':            
             f = file(self.browseTemplatePath)
             tmpl = f.read()
             f.close()
@@ -1017,50 +917,39 @@ class IstcHandler:
             
             if operation:
                 if operation == 'scan':
-                    (t, d) = self.browse(form)
+                    d = self.browse(form)
                 else:
                     content = 'An invalid operation was attempted.'
                     self.send_html(content, req)
                     return
             else:
                 f = file('browse.html')
-                t = "Browse"
                 d = f.read()
                 f.close()
                 
-        elif path == 'about.html':
-            
+        elif path == 'about.html':            
             f = file(self.aboutTemplatePath)
             tmpl = f.read()
             f.close()
             tmpl = tmpl.replace('\n', '')
             
             f = file('about.html')
-            t = "About the Catalogue"
             d = f.read()
             f.close()
             
-        else:
-            
+        else:          
             f = file(self.searchTemplatePath)
             tmpl = f.read()
             f.close()
             tmpl = tmpl.replace('\n', '')
             
             f= file("index.html")
-            t = "Search"
             d = f.read()
             f.close()    
         extra = '' #TODO check if this is needed - not sure %EXTRA% ever exists
- #       raise ValueError(d)
- #       d = d.encode('utf8')
- #       d = d.replace('iso-8859-1', 'utf-8')
- #       e = e.encode('utf8')
+
         tmpl = tmpl.replace("%CONTENT%", d)
-        tmpl = tmpl.replace("%CONTENTTITLE%", t)
-        tmpl = tmpl.replace("%EXTRA%", extra)
-        tmpl = tmpl.replace("%EXTRATABLESTUFF%", e)
-        tmpl = tmpl.replace('%BACKTORESULTLIST%', rl)
+
 
 	self.send_html(tmpl, req)
 

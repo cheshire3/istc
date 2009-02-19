@@ -26,17 +26,22 @@ td button {
 	}
 
 
+div#maincontent {
+	width: 752px;
+	padding: 0 0 10px 0px;
+	}
+
 /* general form stuff */
 
 .field {
-	border: 1px solid #CCCC99;
-	background: #EDEDDC;
+	border: 2px solid #006c7d;
+	background: #E7ECED;
 	padding-left: 12px;
 	padding-right: 12px;
 	float: left;
-	font-size: 12pt;
+	font-size: 11pt;
 	margin-bottom: 10px;
-	min-width: 1100px;
+	min-width: 715px;	
 	}
 
 textarea, input {
@@ -84,6 +89,8 @@ textarea, input {
 	font-size: 10pt;
 	}
 	
+
+	
 .mebuttons {
 	float: left;
 	padding-left: 50px;
@@ -96,14 +103,20 @@ textarea, input {
 	float: left;
 	}
 
+.addedcontainer {
+	border-top: 2px solid #006c7d;		
+}
+
 .added {
-	width: 400px;
+	width: 710px;
 	background: #F2F2F2;
-	border: solid 1px #000000;
+	border: inset 2px #000000;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	margin-left: 0px;	
+	margin-top: 10px;
 	max-height: 200px;
+	min-height: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -119,6 +132,15 @@ textarea, input {
 	margin-left: 0px;
   	padding-left: 0px
 	}
+	
+.added li {
+	padding: 0px;
+	}
+	
+.addedimage {
+	padding: 3px;
+	}	
+
 	
 
 .icons {
@@ -136,11 +158,18 @@ textarea, input {
 	float: left;
 	margin-top: 8px;
 	max-width: 450px;
+
 }
+
+.tablecontainer table{
+	padding-bottom: 5px;
+	}
 
 .tablecontainer .label {
 	width: 75px;
 }
+
+
 
 .mebutton {
 	margin-top: 5px;
@@ -183,7 +212,6 @@ td .mebutton {
 
 .subFormTitle {
 	font-size: 11pt;
-	text-weight: bold;
 	margin-left: 20px;
 	float: left;
 	}

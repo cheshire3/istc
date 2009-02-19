@@ -31,11 +31,15 @@ class IstcEditingHandler:
         db.begin_indexing(session)
         req.write('done')    
     
-    def send_html(self, text, req, code=200):
+    
+    def send_html(self, data, req, code=200):
         req.content_type = 'text/html; charset=utf-8'
-        req.content_length = len(text)
+        req.content_length = len(data)
         req.send_http_header()
-        req.write(text)
+        if (type(data) == unicode):
+            data = data.encode('utf-8')
+        req.write(data)
+        req.flush()      
 
 
     def send_xml(self, data, req, code=200):
@@ -165,32 +169,6 @@ class IstcEditingHandler:
         marcObject.fields = marc
         return StringDocument(marcObject.toMARCXML())
 
-
-
-
-       
-#        for l in list:
-#            if l.value.strip() != '' and l.value.strip() != ' ' and l.name[l.name.find('_'):] != 'ind':
-#                if l.name.find('_'):
-#                    temp.append(l.name[:l.name.rfind('_')])
-#                else:
-#                    temp.append(l.name)
-#        tags = set(temp)
-#        data = []
-#        for t in tags:    
-#            if t not in ['operation', '001', '008']:
-#                for code in enumerate(alph):
-#                    field = form2.get('%s_%s' % (t, code), None)
-#                    if field != None:
-#                        data.append(('%s', '%s') % (code, field.value.strip()))
-#                indicators = form2.get('%s_ind' % t, '0|0').split('|')
-#                
-#                tuple = (indicators[0], indicators[1], data)
-#                try :
-#                    dict[t].append(tuple)
-#                except:
-#                    dict[t] = [tuple]
-#        raise ValueError(dict)
                 
 
     def save(self, form):
@@ -326,7 +304,8 @@ class IstcEditingHandler:
         editStore.store_record(session, rec)
         editStore.commit_storing(session) 
         structure = read_file('editTemplate.html')
-        page = formTxr.process_record(session, rec).get_raw(session)
+        structure = unicode(structure)
+        page = unicode(formTxr.process_record(session, rec).get_raw(session))
         page = page.replace('%RFRNC%', self._get_refxml(session, rec))
         page = structure.replace('%CONTENT%', page)
         return page
@@ -340,6 +319,7 @@ class IstcEditingHandler:
         else:
             output = []
             for index, t in enumerate(f510):
+                t = unicode(t)
                 abbrev = bibRefNormalizer.process_string(session, t)
                 other = t[len(abbrev) + 1:]
                 session.database = db3.id
@@ -351,19 +331,22 @@ class IstcEditingHandler:
                     full = abbrev
                 hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev, other)
                 
-                output.extend(['<li style="position: relative;" id="lireferences_formgen%d">' % index ,
-                               '<div id="references_formgen%d">' % index,
-                               '<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
-                               '<img src="/istc/images/deletesmall.gif" id="delete%d" />' % index,
-                               '</a> <span class="handle">move</span></div>',
-                               '<div class="multipleEntry">',
-                               '<p class="float" onclick="editEntry(\'references_formgen\', %d);" title="%s">' % (index, full.encode('utf-8')),
-                               '%s %s' % (abbrev, other),
-                               '</p></div></div>',
-                               '<br id="references_formgen%dbr">' % index,
-                               '<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
-                               '</li>'])
-            return '<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ' '.join(output)
+                output.extend([u'<li style="position: relative;" id="lireferences_formgen%d">' % index ,
+                               u'<div id="references_formgen%d">' % index,
+                               u'<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
+                               u'<img class="addedimage" src = "/istc/images/remove.png" onmouseover="this.src=\'/istc/images/remove-hover.png\';" onmouseout="this.src=\'/istc/images/remove.png\';" id="delete_formgen%d" /></a>' % index,
+                               u'<a onclick="entryUp(\'references_formgen%d\');" title="move up">' % index,
+                               u'<img class="addedimage" src = "/istc/images/up.png" onmouseover="this.src=\'/istc/images/up-hover.png\';" onmouseout="this.src=\'/istc/images/up.png\';" id="up_formgen%d"/></a>' % index,
+                               u'<a onclick="entryDown(\'references_formgen%d\');" title="move down">' % index,
+                               u'<img class="addedimage" src = "/istc/images/down.png" onmouseover="this.src=\'/istc/images/down-hover.png\';" onmouseout="this.src=\'/istc/images/down.png\';" id="down_formgen%d"/></a>' % index,                                               
+                               u'</div>',
+                               u'<div class="multipleEntry">',
+                               u'<p class="float" onclick="editEntry(\'references_formgen\', %d);" title="%s">' % (index, full), 
+                               u'%s %s' % (abbrev, other),
+                               u'</p></div></div>',
+                               u'<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
+                               u'</li>'])
+            return u'<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ''.join(output)
            
     def show_editMenu(self):
         global sourceDir
@@ -603,7 +586,7 @@ class IstcEditingHandler:
 
     def handle(self, req):
         form = FieldStorage(req, True)  
-        tmpl = read_file(templatePath)
+        tmpl = unicode(read_file(templatePath))
         content = None      
         operation = form.get('operation', None)
         if (operation) : 
