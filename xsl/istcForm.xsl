@@ -17,8 +17,9 @@
 			<div class="field">
 				<input type="button" onclick="submitForm('save')" value=" Save "/>
 			</div>
+			<a href="#top" class="toplink" name="istcnumber"><xsl:text> </xsl:text></a>		
 			<div class="field">
-			<p><strong>ISTC Number:</strong><br/>
+			<p><strong>ISTC Number: </strong>
 				<xsl:choose>
 					<xsl:when test="//controlfield[@tag='001']">
 						<xsl:apply-templates select="//controlfield[@tag='001']"/>
@@ -29,10 +30,10 @@
 				</xsl:choose>      
 			</p>
 			</div>
-			<br/>
+			<a href="#top" class="toplink" name="author">Top</a>
 			<div class="field">
-			<p><strong>Author(s):</strong><br/>
-				<input name="author_ind" id="author_ind" type="hidden" value="0-0"/>
+			<p><strong>Author(s): </strong>
+				<input name="author_ind" id="author_ind" type="hidden" value="0-0"/><br />
 				<xsl:choose>
 					<xsl:when test="//datafield[@tag='100']|datafield[@tag='130']">
 						<xsl:apply-templates select="//datafield[@tag='100']|datafield[@tag='130']"/>
@@ -44,8 +45,8 @@
 				</xsl:choose>      
 			</p>
 			</div>
-			<br/>
-			
+			<a href="#top" class="toplink" name="ltitle">Top</a>		
+		
 			<div class="field">
 			<p><strong>Title:</strong><br/>
 				<input name="245_ind" id="245_ind" type="hidden" value="1-0"/>
@@ -59,9 +60,10 @@
 				</xsl:choose>      
 			</p>
 			</div>
-			<br/>
+			<a href="#top" class="toplink" name="imprints">Top</a>
+		
 			<div class="field">
-			<p><strong>Imprints:</strong><br/>	
+			<p><strong>Imprints:</strong>	
 				<div id="imprintstable" class="tablecontainer">
 					<table id="table_imprints"><tbody>
 						<tr><td class="melabel">Place:</td><td> <input type="text" onkeyup="suggestDelay(this.id, event);" autocomplete="off" onfocus="setCurrent(this);" name="imprints" id="260_a" size="36"></input><br/></td></tr>
@@ -85,9 +87,10 @@
 				</div>
 			</p>
 			</div>
-			<br/>
+			<a href="#top" class="toplink" name="lformat">Top</a>
+				
 			<div class="field">
-			<p><strong>Format:</strong><br/>
+			<p><strong>Format: </strong>
 				<input name="300_ind" id="300_ind" type="hidden" value="0-0"/>
 				<xsl:choose>
 					<xsl:when test="//datafield[@tag='300']">
@@ -98,41 +101,44 @@
 					</xsl:otherwise>
 				</xsl:choose>      
 			</p>
-			</div>
-			<br/>
+			</div>		
+			<a href="#top" class="toplink" name="008field">Top</a>
+
 			<div class="field">
-			<p><strong>008 Field</strong></p>
+			<p><div class="horizontal"><strong>008 Field</strong></div>
 			<xsl:choose>
 				<xsl:when test="//controlfield[@tag='008']">
 					<xsl:apply-templates select="//controlfield[@tag='008']"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<div class="horizontal"><p>
+					<div class="horizontal">
 						<strong>Date Type:</strong><br/>
 						<select name="8_datetype"><option value=" ">Select...</option><option value="s">Single Date</option><option value="b">No Dates Given</option><option value="m">Beginning/End Dates</option></select><br />
-					</p></div>
-					<div class="horizontal"><p>
+					</div>
+					<div class="horizontal">
 						<strong>Original:</strong><br/>
 						<input name="8_original" type="text" size="8" maxlength="6" value="      "> </input>
-					</p></div>
-					<div class="horizontal"><p>
+					</div>
+					<div class="horizontal">
 						<strong>Date 1:</strong><br/>
 						<input name="8_date1" type="text" size="6" maxlength="4" value="    "> </input>
-					</p></div>
-					<div class="horizontal"><p>
+					</div>
+					<div class="horizontal">
 						<strong>Date 2:</strong><br/>
 						<input name="8_date2" type="text" size="6" maxlength="4" value="    "> </input>
-					</p></div>
-					<div class="horizontal"><p>
+					</div>
+					<div class="horizontal">
 						<strong>Language:</strong><br/>
 						<input name="8_lang" type="text" size="7" maxlength="3" value="   "></input>
-					</p></div>
+					</div>
 				</xsl:otherwise>
 			</xsl:choose>
+			</p>
 			</div>
-			<br/>
+			<a href="#top" class="toplink" name="generalnote">Top</a>
+
 			<div class="field">
-			<p><strong>General Note:</strong><br/>		
+			<p><strong>General Note:</strong>		
 				<div id="generalnotestable" class="tablecontainer">
 					<table id="table_generalnotes"><tbody>
 						<tr><!-- <td class="melabel"></td> --><td> <textarea onfocus="setCurrent(this);" name="generalnotes" id="500_a" cols="97" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
@@ -154,7 +160,8 @@
 				</div>
 			</p>
 			</div>
-			<br/>
+			<a href="#top" class="toplink" name="references">Top</a>
+	
 		 	<div class="field">
 			<p>
 				<div id="refcontainer"><strong>References:</strong><br/>				
@@ -181,7 +188,7 @@
 				
 				</div><br />
 				
-			<!-- <div class="meadded"> -->	
+			<!-- <div class="meadded">   -->
 				<div class="addedcontainer">
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='510']">
@@ -197,11 +204,11 @@
 					</xsl:choose>	
 				</div>	
 			</p>
-			</div> 
-			<br/>
+			</div> 	
+			<a href="#top" class="toplink" name="reproductionnotes">Top</a>	
+
 			<div class="field">
-			<p><strong>Reproductions Notes:</strong><br/>
-					
+			<p><strong>Reproductions Notes:</strong><br/>				
 				<div id="repnotestable" class="tablecontainer">
 					<table id="table_repnotes"><tbody>
 						<tr><td class="melabel">Note:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="530_a" cols="89" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
@@ -223,8 +230,9 @@
 					</xsl:choose>	
 				</div>
 			</p>
-			</div>
-			<br/>
+			</div>			
+			<a href="#top" class="toplink" name="blshelfmark">Top</a>
+
 			<div class="field">
 			<p><strong>British Library Shelfmark:</strong><br/>
 				<div id="blshelfmarkstable" class="tablecontainer">
@@ -272,7 +280,7 @@
 	
 	
 	<xsl:template match="datafield[@tag='100']/subfield[@code='a']">
-		<select name="author_sel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100" selected="selected">Personal</option></select><br/>
+		<select name="author_sel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100" selected="selected">Personal</option></select><br />
 		<input type="text" onfocus="setCurrent(this);" onkeyup="suggest(event, this.id)" name="author_a" id="author_a" size="99">
 			<xsl:attribute name="value">
 				<xsl:value-of select="."/>
@@ -282,7 +290,7 @@
 	
 	
 	<xsl:template match="datafield[@tag='130']/subfield[@code='a']">
-		<select name="author_sel"><option value="null">Select...</option><option value="130" selected="selected">Uniform Title</option><option value="100">Personal</option></select><br/>
+		<select name="author_sel"><option value="null">Select...</option><option value="130" selected="selected">Uniform Title</option><option value="100">Personal</option></select><br />
 		<input type="text" onfocus="setCurrent(this);" name="author_a" id="author_a" size="39">
 			<xsl:attribute name="value">
 				<xsl:value-of select="."/>
@@ -302,42 +310,42 @@
 		<xsl:variable name="f008">
 			<xsl:value-of select="."/>
 		</xsl:variable>
-		<div class="horizontal"><p>
+		<div class="horizontal">
 			<strong>Date Type: </strong><br/>
 			<select name="8_datetype"><option value=" ">Select...</option><option value="s">Single Date</option><option value="b">No Dates Given</option><option value="m">Beginning/End Dates</option></select><br />
-		</p></div>
-		<div class="horizontal"><p>
+		</div>
+		<div class="horizontal">
 			<strong>Original:</strong><br/>
 			<input name="8_original" type="text" size="8" maxlength="6">
 				<xsl:attribute name="value">
 					<xsl:value-of select="substring($f008, 1, 6)"/>
 				</xsl:attribute>
 			</input>
-		</p></div>
-		<div class="horizontal"><p>
+		</div>
+		<div class="horizontal">
 			<strong>Date 1:</strong><br/>
 			<input name="8_date1" type="text" size="6" maxlength="4">
 				<xsl:attribute name="value">
 					<xsl:value-of select="substring($f008, 8, 4)"/>
 				</xsl:attribute>
 			</input>
-		</p></div>
-		<div class="horizontal"><p>
+		</div>
+		<div class="horizontal">
 			<strong>Date 2:</strong><br/>
 			<input name="8_date2" type="text" size="6" maxlength="4">
 				<xsl:attribute name="value">
 					<xsl:value-of select="substring($f008, 12, 4)"/>
 				</xsl:attribute>
 			</input>
-		</p></div>
-		<div class="horizontal"><p>
+		</div>
+		<div class="horizontal">
 			<strong>Language:</strong><br/>
 			<input name="8_lang" type="text" size="7" maxlength="3">
 				<xsl:attribute name="value">
 					<xsl:value-of select="substring($f008, 36, 3)"/>
 				</xsl:attribute>
 			</input>
-		</p></div>
+		</div>
 	</xsl:template>
 	
  	  <xsl:template name="accesspoint">
