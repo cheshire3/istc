@@ -283,7 +283,7 @@ class IstcHandler:
                 html.append('<tr>') 
                 html.append('<td class="recnumber"><a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%d</a>.</td>' %  (rsid, i, locString, i+1))                
                 html.append('<td class="checkbox"><input type="checkbox" name="recSelect" value="%s"/></td>' % i)
-                html.append('<td class="hiddenlink"><a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%s<i>%s</i><br/>%s: %s, %s</a></td>' % (rsid, i, locString, author, title.strip(), place.strip(), printer.strip(), date))       
+                html.append('<td>%s<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s"><span class="titlespan">%s</span></a><br/>%s: %s, %s</td>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
                 html.append('</tr>')
             html.append('</table>')
             html.append('<div class="recordnav">%s</div><br/>' % navString)

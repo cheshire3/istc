@@ -1,0 +1,1847 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>Cheshire for Archives v3.4 Development :: Data Creation
+and Editing</title>
+<!-- screen CSS -->
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="/ead/css/struc-all.css">
+<link rel="stylesheet" type="text/css" href="/ead/css/style.css">
+<!--[if lt IE 7]>
+        <link rel="stylesheet" type="text/css" media="screen" href="/ead/css/ie6.css"></link>
+    <![endif]-->
+
+<link rel="stylesheet" type="text/css" href="/ead/css/localStyles.css">
+<!-- printout CSS -->
+
+
+<link rel="stylesheet" type="text/css" media="print"
+	href="/ead/css/print.css">
+<!-- favourite icon -->
+
+
+<link rel="favourite icon" href="/ead/img/c3_icon.png">
+
+<script type="text/javascript" src="/ead/js/ead.js"></script>
+
+<script type="text/javascript" src="/ead/js/visuals.js"></script>
+<script type="text/javascript" src="/ead/js/hijax.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/ead/css/form.css">
+<link type="text/css" rel="stylesheet" href="/ead/css/contextmenu.css">
+</head>
+<body>
+<div id="header">
+<div id="banner">
+<div id="crest"><a href="http://www.archiveshub.ac.uk"
+	title="Cheshire for Archives v3.4 Development"> <img
+	src="/ead/img/loopsmall2.gif"
+	alt="Cheshire for Archives v3.4 Development" class="rep-logo"> </a></div>
+<!--
+       		<div id="c3logo">
+       			<a href="http://www.cheshire3.org" title="To www.cheshire3.org">
+    			  <img src="/ead/img/c3_black.gif" alt="cheshire | 3"/>
+    			</a>
+       		</div>
+       		-->
+<div id="titles">
+<h1>Cheshire for Archives v3.4 Development</h1>
+<h2>Data Creation and Editing</h2>
+</div>
+</div>
+<!-- end banner div --> <!-- site navigation links -->
+<div id="navbar" class="navbar"><a href="/ead/index.html"
+	title="Search for EAD Records" class="navlink"> Search </a> | <a
+	href="/ead/browse.html" title="Browse Indexes" class="navlink">
+Browse Indexes </a> | <a href="/ead/subject.html" title="Find Subjects"
+	class="navlink"> Find Subjects </a> | <a href="/ead/about.html"
+	title="About Cheshire for Archives" class="navlink"> About </a> | <a
+	href="/ead/help.html" title="Search Help" class="navlink"> Help </a> |
+<a href="menu.html" title="Edit/Create Menu">Edit/Create Menu</a> | <a
+	href="/ead/edit/help.html" title="Edit/Create Help">Edit/Create
+Help</a> | <a href="javascript: toggleKeyboard();"
+	title="Show/Hide Character Keyboard">Character Keyboard</a></div>
+</div>
+<!-- content here may be 1 or 2 column - div classes/ids determined by handler -->
+<div id="content"><script type="text/javascript"
+	src="/ead/js/accesspoints.js"></script> <script type="text/javascript"
+	src="/ead/js/form.js"></script> <script type="text/javascript"
+	src="/ead/js/ead.js"></script> <script type="text/javascript"
+	src="/ead/js/prototype.js"></script> <script type="text/javascript"
+	src="/ead/js/keyboard.js"></script> <script type="text/javascript"
+	src="/ead/js/contextmenu.js"></script> <script type="text/javascript"
+	src="/ead/js/tablednd.js"></script> <script type="text/javascript"
+	src="/ead/js/collapsibleLists.js"></script> <script
+	type="text/javascript" src="/ead/js/cookies.js"></script> <script
+	type="text/javascript">
+        addLoadEvent( function(){
+			SimpleContextMenu.setup({'preventDefault':true, 'preventForms':true});
+	        SimpleContextMenu.attach('menuField', 'tagmenu');
+	        SimpleContextMenu.attach('menuFieldError', 'tagmenu');
+	        closeSplash();
+	    	createTreeFromList('someId', getCookie(''), false, false);
+			setRecid();
+			findRequiredFields();
+			checkButtons();
+		} );
+    </script> <!--[if lt IE 7]
+		<link rel="stylesheet" type="text/css" href="/ead/css/form-ie.css" />
+	[endif]-->
+
+<ul id="tagmenu" class="SimpleContextMenu">
+	<li onmouseover="hideSubMenus(); this.style.cursor='pointer';"
+		onclick="addTag('p')">paragraph</li>
+	<li onmouseover="showSubMenu('link', 1, 'tagmenu')" class="tosubctxt"><img
+		src="/ead/img/right-mini.gif" alt="-&gt;">links</li>
+	<li onmouseover="showSubMenu('title', 2, 'tagmenu')"><img
+		src="/ead/img/right-mini.gif" alt="-&gt;">titles</li>
+	<li onmouseover="showSubMenu('font', 3, 'tagmenu')"><img
+		src="/ead/img/right-mini.gif" alt="-&gt;">font</li>
+	<li onmouseover="showSubMenu('list', 4, 'tagmenu')"><img
+		src="/ead/img/right-mini.gif" alt="-&gt;">list</li>
+
+	<li onmouseover="hideSubMenus(); this.style.cursor='pointer';"
+		onclick="addTag('comment')">comment</li>
+	<li onmouseover="hideSubMenus(); this.style.cursor='pointer';"
+		onclick="toggleKeyboard()">keyboard on/off</li>
+</ul>
+
+<ul id="linkmenu" class="SimpleContextMenu">
+	<li onmouseover="showSubMenu('archival', 0, 'linkmenu')"><img
+		src="/ead/img/right-mini.gif" alt="-&gt;">archival</li>
+	<li onmouseover="hideSubMenu('archival'); this.style.cursor='pointer';"
+		onclick="addTag('extref href=&quot; &quot;')">www</li>
+	<li onmouseover="hideSubMenu('archival'); this.style.cursor='pointer';"
+		onclick="addTag('extref href=&quot;mailto: &quot;')">email</li>
+</ul>
+
+
+<ul id="titlemenu" class="SimpleContextMenu">
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('title')">plain</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('title render=&quot;bold&quot;')">bold</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('title render=&quot;italic&quot;')">italic</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('title render=&quot;doublequote&quot;')">quoted</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('title render=&quot;underline&quot;')">underline</li>
+</ul>
+
+
+<ul id="fontmenu" class="SimpleContextMenu">
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('emph render=&quot;bold&quot;')">bold</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('emph render=&quot;italic&quot;')">italic</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('emph render=&quot;doublequote&quot;')">quoted</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('emph render=&quot;underline&quot;')">underline</li>
+</ul>
+
+<ul id="listmenu" class="SimpleContextMenu">
+	<li onmouseover="this.style.cursor='pointer';" onclick="addTag('list')">list</li>
+
+	<li onmouseover="this.style.cursor='pointer';" onclick="addTag('item')">item</li>
+</ul>
+
+<ul id="archivalmenu" class="SimpleContextMenu">
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/related&quot; href=&quot; &quot;')">related</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/extended&quot; href=&quot; &quot;')">extended</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/child&quot; href=&quot; &quot;')">child</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/parent&quot; href=&quot; &quot;')">parent</li>
+
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/descendant&quot; href=&quot; &quot;')">descendant</li>
+	<li onmouseover="this.style.cursor='pointer';"
+		onclick="addTag('archref role=&quot;http://www.archiveshub.ac.uk/apps/linkroles/ancestor&quot; href=&quot; &quot;')">ancestor</li>
+</ul>
+
+
+
+<div class="toc" id="leftcol">
+
+<table title="operations" class="edit-ops">
+	<tbody>
+		<tr>
+			<td class="buttonlabel&quot;">File <a id="daohelp"
+				name="daohelp" target="_new"
+				href="http://localhost/ead/edit/help.html#file"> <img
+				class="whatsthis" src="/ead/img/whatisthissmall.gif"
+				alt="[What is this?]"> </a></td>
+			<td><input class="menubutton" id="save-button"
+				onclick="javascript: save()" value="Save"
+				title="Save the current changes to the Draft File Store"
+				type="button"></td>
+			<td><input class="menubutton" id="delete-button"
+				onclick="javascript: var cont = confirmOp('This operation will delete the current record from the Draft File Store and any changes made since it was last submitted to the database will be lost. If the record is also in the database that record will remain unchanged and will not be deleted.\n\nAre you sure you want to delete this record?'); if (cont) {discardRec($('pui').value);}"
+				value="Delete"
+				title="Delete this record from the editing data store" type="button"></td>
+		</tr>
+		<tr>
+			<td class="buttonlabel&quot;">Preview <a id="daohelp"
+				name="daohelp" target="_new"
+				href="http://localhost/ead/edit/help.html#preview"> <img
+				class="whatsthis" src="/ead/img/whatisthissmall.gif"
+				alt="[What is this?]"> </a></td>
+			<td><input class="menubutton" id="xml-button"
+				onclick="javascript: viewXml();" value="XML"
+				title="Preview the XML for this record (opens in new window/tab)"
+				type="button"></td>
+			<td><input class="menubutton" id="preview-button"
+				onclick="javascript: previewRec();" value="On-line Version"
+				title="Preview the on-line version of this record (opens in new window/tab)"
+				type="button"></td>
+		</tr>
+		<tr>
+			<td class="buttonlabel&quot;">Export <a id="daohelp"
+				name="daohelp" target="_new"
+				href="http://localhost/ead/edit/help.html#export"> <img
+				class="whatsthis" src="/ead/img/whatisthissmall.gif"
+				alt="[What is this?]"> </a></td>
+
+			<td><input class="menubutton" id="tofile-button"
+				onclick="javascript: var cont = confirmOp('This operation will load this description into the database. If it is not a new record it will overwrite the existing version. This record will not be indexed immediately, the database will need to be rebuilt before the changes appear in the database.\n\nAre you sure you want to write this file to disk?'); if (cont) {submit(false);}"
+				value="To File only"
+				title="Write this record to the data directory for indexing later"
+				type="button"></td>
+			<td><input class="menubutton" id="submit-button"
+				onclick="javascript: var cont = confirmOp('This operation will submit this record to your database for immediate display. If this is not a new file it will overwrite the existing version.\n\nAre you sure you want to submit this file?'); if (cont) {submit();}"
+				value=" To File + Database"
+				title="Write this file to the data directory and index in the live database"
+				type="button"></td>
+		</tr>
+	</tbody>
+</table>
+<!-- 
+<span class="buttonlabel">File</span><div class="float"><input type="button" class="menubutton" id="save-button" onclick="javascript: save()" value="Save" title="Save the current changes to the editing data store"></input></div>
+<div class="float"><input type="button" class="menubutton" id="delete-button" onclick="javascript: var cont = confirmOp('This operation will delete the current record from the editing store and any changes made since it was last submitted to the database will be lost. If the record is also in the database that record will remain unchanged and will not be deleted.\n\nAre you sure you want to delete this record?'); if (cont) {discardRec($('pui').value);}" value="Delete" title="Delete this record from the editing data store"></input></div><br/>
+<span class="buttonlabel">Preview</span><div class="float"><input type="button" class="menubutton" id="xml-button" onclick="javascript: viewXml();" value="XML" title="Preview the XML for this record (opens in new window/tab)"></input></div>
+<div class="float"><input type="button" class="menubutton" id="preview-button" onclick="javascript: previewRec();" value="On-line Version" title="Preview the on-line version of this record (opens in new window/tab)"></input></div><br/>
+<span class="buttonlabel">Export</span><div class="float"><input type="button" class="menubutton" id="tofile-button" onclick="javascript: var cont = confirmOp('This operation will load this description into the database. If it is not a new record it will overwrite the existing version. This record will not be indexed immediately, the database will need to be rebuilt before the changes appear in the database.\n\nAre you sure you want to write this file to disk?'); if (cont) {submit(false);}"" value="To File only" title="Write this record to the data directory for indexing later"></input></div>
+<div class="float"><input type="button" class="menubutton" id="submit-button" onclick="javascript: var cont = confirmOp('This operation will submit this record to your database for immediate display. If this is not a new file it will overwrite the existing version.\n\nAre you sure you want to submit this file?'); if (cont) {submit();}"" value=" To File + Database" title="Write this file to the data directory and index in the live database"></input></div><br />
+ --> <br>
+<br>
+
+<div id="treeDiv"><b><a name="link" class="valid"
+	id="collectionLevel"
+	onclick="javascript: displayForm('collectionLevel')"
+	style="background: yellow none repeat scroll 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">GB
+0001ddd - Test Record ddd with two dao</a></b>
+<ul id="someId" class="hierarchy" name="1">
+	<li><a href="#"><img alt="[-]" src="/images/folderOpen.gif"></a><a
+		name="link" class="valid" id="1"
+		onclick="javascript: displayForm('1')">GB 0001ddd/1 - blah</a><span
+		class="subcount"> {1 entries}</span>
+	<ul style="display: block;" class="hierarchy" name="2">
+		<li><img alt="-" src="/images/barLast.gif"><a name="link"
+			class="valid" id="1-1" onclick="javascript: displayForm('1-1')">GB
+		0001ddd/1/1 - blob</a><a id="delete_1-1"
+			onclick="javascript: deleteComponent('1-1')"><img
+			src="/ead/img/delete.png" class="deletelogo"
+			onmouseover="this.src='/ead/img/delete-hover.png';"
+			onmouseout="this.src='/ead/img/delete.png';"></a></li>
+	</ul>
+	</li>
+</ul>
+
+</div>
+
+</div>
+<!-- end of leftcol -->
+<div id="padder">
+<div id="rightcol" class="ead" onscroll="hideAllMenus()">
+<div id="formDiv" name="form" class="formDiv">
+<div id="formDiv" name="form" class="formDiv">
+<form id="eadForm" name="eadForm" action="#">
+<div class="float"><input class="formbutton" id="addC"
+	onclick="javascript: addComponent()" value="Add Component"
+	title="Add a component to this level of the record" type="button"></div>
+<div class="pui"><strong>Persistent Unique Identifier: </strong> <input
+	onfocus="setCurrent(this);" name="pui" id="pui" size="30"
+	disabled="true" value="gb0001ddd" type="text"><input id="owner"
+	value="Steve" type="hidden"></div>
+<br>
+<div class="section">
+<h3>Collection Level Description</h3>
+<input id="recid" value="gb0001ddd" type="hidden">
+<div id="sec-3-1" class="section"><span class="isadg">
+<h3>3.1: Identity Statement Area</h3>
+</span>
+<p id="unitidparent"><strong><span class="isadg">3.1.1:
+</span>Reference Code<a href="http://www.archiveshub.ac.uk/arch/refcode.shtml"
+	title="Reference Code help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong> Comprising <a
+	href="http://www.iso.org/iso/en/prods-services/iso3166ma/02iso-3166-code-lists/list-en1.html"
+	target="_new" title="Further information on ISO Country Codes">ISO
+Country Code</a>, <a href="http://www.nationalarchives.gov.uk/archon/"
+	target="_new" title="ARCHON Service">Archon Code</a>, and a unique
+identifier for this record or component. [<strong>all fields
+required</strong>] <br>
+<input style="border-color: white;" onfocus="setCurrent(this);"
+	name="did/unitid/@countrycode" id="countrycode" maxlength="2" size="3"
+	onblur="checkId(true)" value="GB" type="text"><input
+	style="border-color: white;" onfocus="setCurrent(this);"
+	name="did/unitid/@repositorycode" id="archoncode" maxlength="4"
+	size="5" onblur="checkId(true)" value="0001" type="text"><input
+	style="border-color: white;" onfocus="setCurrent(this);"
+	name="did/unitid" id="unitid" size="50" onblur="checkId(true)"
+	value="GB 0001ddd" type="text"></p>
+<p><strong><span class="isadg">3.1.2: </span>Title<a
+	href="http://www.archiveshub.ac.uk/arch/title.shtml"
+	title="Title help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong><br>
+<input style="border-color: white;" class="menuField"
+	onfocus="setCurrent(this);" name="did/unittitle" id="did/unittitle"
+	size="80" onchange="updateTitle(this)"
+	onkeypress="validateFieldDelay(this, 'true');"
+	value="Test Record ddd with two dao" type="text"></p>
+<div class="float">
+<p><strong><span class="isadg">3.1.3: </span>Dates of
+Creation<a href="http://www.archiveshub.ac.uk/arch/dates1.shtml"
+	title="Dates of Creation help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong><br>
+<input style="border-color: white;" class="menuField"
+	onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	name="did/unitdate" id="did/unitdate" size="39" value="1900-2000"
+	type="text"></p>
+</div>
+<div class="float">
+<p><strong>Normalised Date<a
+	href="http://www.archiveshub.ac.uk/arch/dates2.shtml"
+	title="Normalised Date help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong><br>
+<input style="border-color: white;" onfocus="setCurrent(this);"
+	name="did/unitdate/@normal" id="did/unitdate/@normal" size="39"
+	maxlength="21" value="1900-2000" type="text"></p>
+</div>
+<br>
+<p></p>
+<p><strong><span class="isadg">3.1.5: </span>Extent of Unit
+of Description<a href="http://www.archiveshub.ac.uk/arch/extent.shtml"
+	title="Extent help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong><br>
+<input style="border-color: white;" class="menuField"
+	onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	name="did/physdesc/extent" id="did/physdesc/extent" size="80"
+	value="3.1.5: Extent of Unit of Description" type="text"></p>
+<p><strong>Repository</strong><a id="repositoryhelp"
+	name="repositoryhelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/repository.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<input class="menuField" onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	name="did/repository" id="did/repository" size="80"
+	value="Repository Name" type="text"></p>
+<p><strong><span class="isadg">Sponsor</span></strong><a
+	id="sponsorhelp" name="sponsorhelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/sponsor.shtml%20"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><a class="smalllink" id="linkspo"
+	title="add sponsor" onclick="addElement('filedesc/titlestmt/sponsor')">hide
+content</a> [optional]<br>
+<input class="menuField" onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	name="filedesc/titlestmt/sponsor" id="filedesc/titlestmt/sponsor"
+	size="80" value="Sponsor" type="text"></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.2: Context Area</h3>
+</span>
+<p><strong><span class="isadg">3.2.1: </span>Name of
+Creator<a href="http://www.archiveshub.ac.uk/arch/name.shtml"
+	title="Name of Creator help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></strong> [<strong>also add manually as <a
+	href="#accesspoints" title="Add Access Point manually">Access Point</a></strong>]<br>
+<input style="border-color: white;" class="menuField"
+	onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	name="did/origination" id="did/origination" size="80" value="Mimas"
+	type="text"></p>
+<p><br>
+<strong><span class="isadg">3.2.2: </span>Administrative/Biographical
+History</strong><a href="http://www.archiveshub.ac.uk/arch/bioghist.shtml"
+	title="Administrative/Biographical History help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a><br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="bioghist[1]" id="bioghist[1]"
+	class="menuField">&lt;head&gt;&lt;/head&gt; &lt;p&gt;3.2.2: Administrative/Biographical History&lt;/p&gt; &lt;p&gt;Published in &lt;emph render="italic"&gt;Mimas Biography&lt;/emph&gt; &lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.2.3: </span>Archival History</strong><a
+	href="http://www.archiveshub.ac.uk/arch/custodhist.html"
+	title="Archival History help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> <a class="smalllink"
+	title="add content Archival History" id="linkcustodhist[1]"
+	onclick="addElement('custodhist[1]')">hide content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="custodhist[1]" id="custodhist[1]"
+	class="menuField">&lt;p&gt;3.2.2: Archival History&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.2.4: </span>Immediate Source of
+Acquisition</strong><a href="http://www.archiveshub.ac.uk/arch/acqinfo.html"
+	title="Immediate Source of Acquisition help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Immediate Source of Acquisition"
+	id="linkacqinfo[1]" onclick="addElement('acqinfo[1]')">hide content</a>
+[optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="acqinfo[1]" id="acqinfo[1]" class="menuField">&lt;p&gt;3.2.4: Immediate Source of Acquisition&lt;/p&gt; </textarea></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.3: Content and Structure Area</h3>
+</span>
+<p><br>
+<strong><span class="isadg">3.3.1: </span>Scope and Content</strong><a
+	href="http://www.archiveshub.ac.uk/arch/scope.shtml"
+	title="Scope and Content help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<textarea style="border-color: white;"
+	onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="scopecontent[1]" id="scopecontent[1]"
+	class="menuField">&lt;p&gt;3.3.1: Scope and Content one&lt;/p&gt; &lt;p&gt;Scope and content two&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.3.2: </span>Appraisal</strong><a
+	href="http://www.archiveshub.ac.uk/arch/appraisal.html"
+	title="Appraisal help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> <a class="smalllink"
+	title="add content Appraisal" id="linkappraisal[1]"
+	onclick="addElement('appraisal[1]')">hide content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="appraisal[1]" id="appraisal[1]"
+	class="menuField">&lt;p&gt;3.3.2: Appraisal&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.3.3: </span>Accruals</strong><a
+	href="http://www.archiveshub.ac.uk/arch/accruals.html"
+	title="Accruals help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> <a class="smalllink"
+	title="add content Accruals" id="linkaccruals[1]"
+	onclick="addElement('accruals[1]')">hide content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="accruals[1]" id="accruals[1]"
+	class="menuField">&lt;p&gt;3.3.3: Accruals&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.3.4: </span>System of Arrangement</strong><a
+	href="http://www.archiveshub.ac.uk/arch/arrangement.html"
+	title="System of Arrangement help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> <a class="smalllink"
+	title="add content System of Arrangement" id="linkarrangement[1]"
+	onclick="addElement('arrangement[1]')">hide content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="arrangement[1]" id="arrangement[1]"
+	class="menuField">&lt;p&gt;3.3.4: System of Arrangement&lt;/p&gt; &lt;list&gt; &lt;item&gt;first series&lt;/item&gt; &lt;item&gt;second series&lt;/item&gt; &lt;/list&gt; &lt;p&gt;Test of Mimas&lt;/p&gt; </textarea></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.4: Conditions of Access and Use Area</h3>
+</span>
+<p><br>
+<strong><span class="isadg">3.4.1: </span>Conditions Governing
+Access</strong><a href="http://www.archiveshub.ac.uk/arch/restrict.shtml"
+	title="Conditions Governing Access help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a><br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="accessrestrict[1]" id="accessrestrict[1]"
+	class="menuField">&lt;p&gt;3.4.1 Conditions Governing Access&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.4.2: </span>Conditions Governing
+Reproduction</strong><a href="http://www.archiveshub.ac.uk/arch/userestrict.html"
+	title="Conditions Governing Reproduction help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Conditions Governing Reproduction"
+	id="linkuserestrict[1]" onclick="addElement('userestrict[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="userestrict[1]" id="userestrict[1]"
+	class="menuField">&lt;p&gt;3.4.2: Conditions Governing Reproduction&lt;/p&gt; </textarea></p>
+<p><strong><span class="isadg">3.4.3: </span>Language of
+Material</strong><a href="http://www.archiveshub.ac.uk/arch/lang.shtml"
+	title="Language of Material help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> [Must include <a
+	href="http://www.loc.gov/standards/iso639-2/englangn.html"
+	title="ISO 639-2 codes - opens new window" target="_new">ISO 639-2
+3-letter code</a>]</p>
+<div id="language" class="langcontainer">
+<div id="addedlanguages" style="display: block;" class="added"><input
+	name="did/langmaterial/language" id="language_formgen1xml"
+	value="lang_code | eng ||| lang_name | language ||| " type="hidden">
+<div id="language_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('language_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('language_formgen', 1);" title="Click to edit">eng
+language</a></div>
+</div>
+<br id="language_formgen1br">
+</div>
+<div id="languagetable" class="tablecontainer">
+<table>
+	<tbody>
+		<tr>
+			<td>3-letter ISO code:</td>
+			<td><input style="border-color: white;" id="lang_code"
+				onfocus="setCurrent(this);" maxlength="3" size="5" type="text"></td>
+		</tr>
+		<tr>
+			<td>Language:</td>
+			<td><input style="border-color: white;" id="lang_name"
+				onfocus="setCurrent(this);" size="30" type="text"></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="languagebuttons" class="buttoncontainer"><input
+	class="apbutton" onclick="addLanguage();" value="Add to Record"
+	type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('language');"
+	value="Reset" type="button"></div>
+</div>
+<br>
+<p><br>
+<strong><span class="isadg">3.4.4: </span>Physical
+Characteristics</strong><a href="http://www.archiveshub.ac.uk/arch/phystech.html"
+	title="Physical Characteristics help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Physical Characteristics"
+	id="linkphystech[1]" onclick="addElement('phystech[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="phystech[1]" id="phystech[1]"
+	class="menuField">&lt;p&gt;3.4.4: Physical Characteristics&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.4.5: </span>Finding Aids</strong><a
+	href="http://www.archiveshub.ac.uk/arch/other.shtml"
+	title="Finding Aids help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="otherfindaid[1]" id="otherfindaid[1]"
+	class="menuField">&lt;p&gt;3.4.5: Finding Aids&lt;/p&gt; </textarea></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.5: Allied Materials Area</h3>
+</span>
+<p><br>
+<strong><span class="isadg">3.5.1: </span>Existence/Location of
+Originals</strong><a href="http://www.archiveshub.ac.uk/arch/originalsloc.html"
+	title="Existence/Location of Originals help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Existence/Location of Originals"
+	id="linkoriginalsloc[1]" onclick="addElement('originalsloc[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="originalsloc[1]" id="originalsloc[1]"
+	class="menuField">&lt;p&gt;3.5.1: Existence/Location of Originals&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.5.2: </span>Existence/Location of
+Copies</strong><a href="http://www.archiveshub.ac.uk/arch/altformavail.html"
+	title="Existence/Location of Copies help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Existence/Location of Copies"
+	id="linkaltformavail[1]" onclick="addElement('altformavail[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="altformavail[1]" id="altformavail[1]"
+	class="menuField">&lt;p&gt;3.5.2: Existence/Location of Copies&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.5.3: </span>Related Units of
+Description</strong><a
+	href="http://www.archiveshub.ac.uk/arch/relatedmaterial.html"
+	title="Related Units of Description help - opens in new window"
+	target="_new"><img class="whatsthis"
+	src="/ead/img/whatisthissmall.gif" alt="[What is this?]"></a> <a
+	class="smalllink" title="add content Related Units of Description"
+	id="linkrelatedmaterial[1]" onclick="addElement('relatedmaterial[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="relatedmaterial[1]" id="relatedmaterial[1]"
+	class="menuField">&lt;p&gt;3.5.3: Related Units of Description&lt;/p&gt; </textarea></p>
+<p><br>
+<strong><span class="isadg">3.5.4: </span>Publication Note</strong><a
+	href="http://www.archiveshub.ac.uk/arch/bibliography.html"
+	title="Publication Note help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> [Works based on or about the collection] <a
+	class="smalllink" title="add content Publication Note"
+	id="linkbibliography[1]" onclick="addElement('bibliography[1]')">hide
+content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="bibliography[1]" id="bibliography[1]"
+	class="menuField">&lt;p&gt;3.5.4: Publication Note&lt;/p&gt; </textarea></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.6: Note Area</h3>
+</span>
+<p><br>
+<strong><span class="isadg">3.6.1: </span>Note</strong><a
+	href="http://www.archiveshub.ac.uk/arch/note.html"
+	title="Note help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a> <a class="smalllink"
+	title="add content Note" id="linknote[1]"
+	onclick="addElement('note[1]')">hide content</a> [optional]<br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="note[1]" id="note[1]" class="menuField">&lt;p&gt;3.6.1 Note&lt;/p&gt; </textarea></p>
+</div>
+<div class="section"><span class="isadg">
+<h3>3.7: Description Area</h3>
+</span>
+<p><br>
+<strong><span class="isadg">3.7.1: </span>Archivist's Note</strong><a
+	href="http://www.archiveshub.ac.uk/arch/archnote.shtml"
+	title="Archivist's Note help - opens in new window" target="_new"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<textarea onkeypress="validateFieldDelay(this, 'true');"
+	onchange="validateField(this, 'true');" onfocus="setCurrent(this);"
+	rows="5" cols="80" name="processinfo[1]" id="processinfo[1]"
+	class="menuField">&lt;p&gt;3.7.1: Archivist's Note (in processinfo) &lt;date&gt;2009&lt;/date&gt; &lt;/p&gt; </textarea></p>
+</div>
+<div id="digitalobjectssection" class="section">
+<h3>Digital Objects<a id="daohelp" name="daohelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/images.shtml#dao-help"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></h3>
+<div id="daocontainer">
+<div class="embed" id="daoformxdiddao1"><b>Display image</b>
+<table>
+	<tbody>
+		<tr>
+			<td class="label">File URI:</td>
+			<td><input size="70" onfocus="setCurrent(this);"
+				value="http://www.archiveshub.ac.uk/temp/hubert-medium.jpg"
+				name="daoxdiddao1|href" id="daoxdiddao1|href" type="text"></td>
+		</tr>
+		<tr>
+			<td class="label">Description:</td>
+			<td><input size="70" onfocus="setCurrent(this);"
+				class="menuField" onkeypress="validateFieldDelay(this, 'true');"
+				onchange="validateField(this, 'true');" name="daoxdiddao1|desc"
+				id="daoxdiddao1|desc"
+				value="&lt;p&gt;Hubert medium 200px&lt;/p&gt; " type="text"></td>
+		</tr>
+	</tbody>
+</table>
+<input value="embed" name="daoxdiddao1|embed" id="daoxdiddao1|embed"
+	type="hidden"><input value="Delete"
+	onclick="deleteDao('daoformxdiddao1')" type="button"></div>
+<div class="embed" id="daoformxdiddao2"><b>Display image</b>
+<table>
+	<tbody>
+		<tr>
+			<td class="label">File URI:</td>
+			<td><input size="70" onfocus="setCurrent(this);"
+				value="http://www.archiveshub.ac.uk/temp/hubert-large.jpg"
+				name="daoxdiddao2|href" id="daoxdiddao2|href" type="text"></td>
+		</tr>
+		<tr>
+			<td class="label">Description:</td>
+			<td><input size="70" onfocus="setCurrent(this);"
+				class="menuField" onkeypress="validateFieldDelay(this, 'true');"
+				onchange="validateField(this, 'true');" name="daoxdiddao2|desc"
+				id="daoxdiddao2|desc"
+				value="&lt;p&gt;Hubert large 300px &lt;/p&gt; " type="text"></td>
+		</tr>
+	</tbody>
+</table>
+<input value="embed" name="daoxdiddao2|embed" id="daoxdiddao2|embed"
+	type="hidden"><input value="Delete"
+	onclick="deleteDao('daoformxdiddao2')" type="button"></div>
+<div id="createnewdao"><span>Add new DAO </span><select
+	name="daoselect" id="daoselect">
+	<option value="null">Select...</option>
+	<option value="new">Link to file</option>
+	<option value="embed">Display image</option>
+	<option value="thumb">Display thumbnail link to file</option>
+	<option value="multiple">Link to multiple files</option>
+</select><input value="Create" onclick="javascript: createDaoForm()"
+	type="button"></div>
+</div>
+</div>
+<div id="accesspointssection" class="section">
+<h3>Access Points<a id="accesspoints" name="accesspoints"
+	target="_new" href="http://www.archiveshub.ac.uk/arch/access.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></h3>
+<div id="subject" class="apcontainer">
+<p><strong>Subject</strong><a id="subjecthelp" name="subjecthelp"
+	target="_new" href="http://www.archiveshub.ac.uk/arch/subject.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://databases.unesco.org/thesaurus/', 'new', 'width=800 height=600');">[Search
+UNESCO]</a> <a class="extSearch"
+	onclick="window.open('http://authorities.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&PAGE=First', 'new', 'width=800 height=600');">[Search
+LCSH]</a></p>
+<div style="display: block;" class="added" id="addedsubjects"><input
+	name="controlaccess/subject" id="subject_formgen1xml"
+	value="subject_a | World War ||| subject_source | unesco ||| "
+	type="hidden">
+<div id="subject_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('subject_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('subject_formgen', 1);" title="Click to edit">World
+War </a></div>
+</div>
+<br id="subject_formgen1br">
+<input name="controlaccess/subject" id="subject_formgen2xml"
+	value="subject_a | Architecture ||| subject_z | Great Britain ||| subject_y | 18th century ||| subject_source | lcsh ||| "
+	type="hidden">
+<div id="subject_formgen2">
+<div class="icons"><a
+	onclick="deleteAccessPoint('subject_formgen2');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete2"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('subject_formgen', 2);" title="Click to edit">Architecture
+Great Britain 18th century </a></div>
+</div>
+<br id="subject_formgen2br">
+</div>
+<div id="subjecttable" class="tablecontainer">
+<table id="table_subject">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Subject:</td>
+			<td><input onfocus="setCurrent(this);" id="subject_subject"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Thesaurus:</td>
+			<td><input onfocus="setCurrent(this);" id="subject_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="subjectdropdown">
+				<option value="subject_dates">Dates</option>
+				<option value="subject_loc">Location</option>
+				<option value="subject_other">Other</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('subject');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="subjectbuttons" class="buttoncontainer"><input
+	class="apbutton" onclick="addAccessPoint('subject');"
+	value="Add to Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('subject');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="persname" class="apcontainer">
+<p><strong>Personal Name</strong><a id="persnamehelp"
+	name="persnamehelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/persname.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.nationalarchives.gov.uk/nra/searches/simpleSearch.asp?subjectType=P', 'new', 'width=800 height=600');">[Search
+NRA]</a></p>
+<div style="display: block;" class="added" id="addedpersnames"><input
+	name="controlaccess/persname" id="persname_formgen1xml"
+	value="persname_a | Smith ||| persname_forename | John ||| persname_y | 1938-1994 ||| persname_epithet | Labour politician ||| persname_source | nra ||| persname_rules | ncarules ||| "
+	type="hidden">
+<div id="persname_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('persname_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('persname_formgen', 1);" title="Click to edit">Smith
+John 1938-1994 Labour politician </a></div>
+</div>
+<br id="persname_formgen1br">
+</div>
+<div id="persnametable" class="tablecontainer">
+<table id="table_persname">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Surname:</td>
+			<td><input onfocus="setCurrent(this);" id="persname_surname"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="persname_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="persnamedropdown">
+				<option value="persname_forename">Forename</option>
+				<option value="persname_dates">Dates</option>
+				<option value="persname_title">Title</option>
+				<option value="persname_epithet">Epithet</option>
+				<option value="persname_other">Other</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('persname');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="persnamebuttons" class="buttoncontainer">
+<p class="apbutton">Rules: <select id="persname_rules"
+	onchange="checkRules('persname')">
+	<option value="none">None</option>
+	<option value="ncarules">NCA Rules</option>
+	<option value="aacr2">AACR2</option>
+</select></p>
+<input class="apbutton" onclick="addAccessPoint('persname');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('persname');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="famname" class="apcontainer">
+<p><strong>Family Name</strong><a id="famnamehelp"
+	name="famnamehelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/famname.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.nationalarchives.gov.uk/nra/searches/simpleSearch.asp?subjectType=F', 'new', 'width=800 height=600');">[Search
+NRA]</a></p>
+<div id="addedfamnames" style="display: none;" class="added"></div>
+<div id="famnametable" class="tablecontainer">
+<table id="table_famname">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Surname:</td>
+			<td><input onfocus="setCurrent(this);" id="famname_surname"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="famname_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="famnamedropdown">
+				<option value="famname_other">Other</option>
+				<option value="famname_dates">Dates</option>
+				<option value="famname_title">Title</option>
+				<option value="famname_epithet">Epithet</option>
+				<option value="famname_loc">Location</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('famname');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="famnamebuttons" class="buttoncontainer">
+<p class="apbutton">Rules: <select id="famname_rules"
+	onchange="checkRules('famname')">
+	<option value="none">None</option>
+	<option value="ncarules">NCA Rules</option>
+	<option value="aacr2">AACR2</option>
+</select></p>
+<input class="apbutton" onclick="addAccessPoint('famname');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('famname');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="corpname" class="apcontainer">
+<p><strong>Corporate Name</strong><a id="corpnamehelp"
+	name="corpnamehelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/corpname.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.nationalarchives.gov.uk/nra/searches/simpleSearch.asp?subjectType=O', 'new', 'width=800 height=600');">[Search
+NRA]</a></p>
+<div id="addedcorpnames" style="display: none;" class="added"></div>
+<div id="corpnametable" class="tablecontainer">
+<table id="table_corpname">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Organisation:</td>
+			<td><input onfocus="setCurrent(this);"
+				id="corpname_organisation" size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="corpname_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="corpnamedropdown">
+				<option value="corpname_dates">Dates</option>
+				<option value="corpname_loc">Location</option>
+				<option value="corpname_other">Other</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('corpname');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="corpnamebuttons" class="buttoncontainer">
+<p class="apbutton">Rules: <select id="corpname_rules"
+	onchange="checkRules('corpname')">
+	<option value="none">None</option>
+	<option value="ncarules">NCA Rules</option>
+	<option value="aacr2">AACR2</option>
+</select></p>
+<input class="apbutton" onclick="addAccessPoint('corpname');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('corpname');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="geogname" class="apcontainer">
+<p><strong>Place Name</strong><a id="geognamehelp"
+	name="geognamehelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/geogname.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.nationalarchives.gov.uk/nra/searches/simpleSearch.asp?subjectType=PL', 'new', 'width=800 height=600');">[Search
+NRA]</a></p>
+<div style="display: block;" class="added" id="addedgeognames"><input
+	name="controlaccess/geogname" id="geogname_formgen1xml"
+	value="geogname_a | Kent ||| geogname_z | England ||| geogname_source | ncarules ||| "
+	type="hidden">
+<div id="geogname_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('geogname_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('geogname_formgen', 1);" title="Click to edit">Kent
+England </a></div>
+</div>
+<br id="geogname_formgen1br">
+</div>
+<div id="geognametable" class="tablecontainer">
+<table id="table_geogname">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Place Name:</td>
+			<td><input onfocus="setCurrent(this);" id="geogname_location"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="geogname_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="geognamedropdown">
+				<option value="geogname_dates">Dates</option>
+				<option value="geogname_loc">Location</option>
+				<option value="geogname_other">Other</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('geogname');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="geognamebuttons" class="buttoncontainer">
+<p class="apbutton">Rules: <select id="geogname_rules"
+	onchange="checkRules('geogname')">
+	<option value="none">None</option>
+	<option value="ncarules">NCA Rules</option>
+	<option value="aacr2">AACR2</option>
+</select></p>
+<input class="apbutton" onclick="addAccessPoint('geogname');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('geogname');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="title" class="apcontainer">
+<p><strong>Book Title</strong><a id="booktitlehelp"
+	name="booktitlehelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/booktitle.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a></p>
+<div id="addedtitles" style="display: none;" class="added"></div>
+<div id="titletable" class="tablecontainer">
+<table id="table_title">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Title:</td>
+			<td><input onfocus="setCurrent(this);" id="title_title"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="title_source"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td><select onfocus="setCurrent(this);" id="titledropdown">
+				<option value="title_dates">Dates</option>
+			</select></td>
+			<td><a class="addfield" onclick="addField('title');">Add
+			Selected Field</a></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="titlebuttons" class="buttoncontainer">
+<p class="apbutton">Rules: <select id="title_rules"
+	onchange="checkRules('title')">
+	<option value="none">None</option>
+	<option value="aacr2">AACR2</option>
+</select></p>
+<input class="apbutton" onclick="addAccessPoint('title');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('title');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="genreform" class="apcontainer">
+<p><strong>Genre Form</strong><a id="genreformhelp"
+	name="genreformhelp" target="_new"
+	href="http://www.archiveshub.ac.uk/arch/genreform.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.getty.edu/research/conducting_research/vocabularies/aat/', 'new', 'width=800 height=600');">[Search
+AAT]</a> <a class="extSearch"
+	onclick="window.open('http://www.loc.gov/rr/print/tgm2/', 'new', 'width=800 height=600');">[Search
+TGM]</a></p>
+<div style="display: block;" class="added" id="addedgenreforms"><input
+	name="controlaccess/genreform" id="genreform_formgen1xml"
+	value="genreform_a | Genre type ||| " type="hidden">
+<div id="genreform_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('genreform_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('genreform_formgen', 1);"
+	title="Click to edit">Genre type </a></div>
+</div>
+<br id="genreform_formgen1br">
+</div>
+<div id="genreformtable" class="tablecontainer">
+<table id="table_genreform">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Genre:</td>
+			<td><input onfocus="setCurrent(this);" id="genreform_genre"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="genreform_source"
+				size="40" type="text"></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="genreformbuttons" class="buttoncontainer"><input
+	class="apbutton" onclick="addAccessPoint('genreform');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('genreform');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+<div id="function" class="apcontainer">
+<p><strong>Function</strong><a id="functionhelp" name="functionhelp"
+	target="_new" href="http://www.archiveshub.ac.uk/arch/function.shtml"><img
+	class="whatsthis" src="/ead/img/whatisthissmall.gif"
+	alt="[What is this?]"></a><br>
+<a class="extSearch"
+	onclick="window.open('http://www.getty.edu/research/conducting_research/vocabularies/aat/', 'new', 'width=800 height=600');">[Search
+AAT]</a> <a class="extSearch"
+	onclick="window.open('http://www.naa.gov.au/records-management/create-capture-describe/describe/agift/index.aspx', 'new', 'width=800 height=600');">[Search
+AGIFT]</a></p>
+<div style="display: block;" class="added" id="addedfunctions"><input
+	name="controlaccess/function" id="function_formgen1xml"
+	value="function_a | Function type ||| " type="hidden">
+<div id="function_formgen1">
+<div class="icons"><a
+	onclick="deleteAccessPoint('function_formgen1');" title="delete entry"><img
+	src="/ead/img/delete.png" class="deletelogo"
+	onmouseover="this.src='/ead/img/delete-hover.png';"
+	onmouseout="this.src='/ead/img/delete.png';" id="delete1"></a></div>
+<div class="accesspoint"><a
+	onclick="editAccessPoint('function_formgen', 1);" title="Click to edit">Function
+type </a></div>
+</div>
+<br id="function_formgen1br">
+</div>
+<div id="functiontable" class="tablecontainer">
+<table id="table_function">
+	<tbody>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Function:</td>
+			<td><input onfocus="setCurrent(this);" id="function_function"
+				size="40" type="text"></td>
+		</tr>
+		<tr nodrop="true" nodrag="true">
+			<td class="label">Source:</td>
+			<td><input onfocus="setCurrent(this);" id="function_source"
+				size="40" type="text"></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="functionbuttons" class="buttoncontainer"><input
+	class="apbutton" onclick="addAccessPoint('function');"
+	value="Add To Record" type="button"><br>
+<input class="apbutton" onclick="resetAccessPoint('function');"
+	value="Reset" type="button"></div>
+<br>
+</div>
+<br>
+</div>
+</div>
+</form>
+</div>
+
+</div>
+</div>
+</div>
+<!-- end of padder -->
+
+
+<div id="keyboard" style="display: none;">
+<div id="keyboardcontrolbar">
+<div id="keyboardtitle">Character Keyboard</div>
+
+<div style="float: right; padding-right: 2px;"><a id="hideicon"
+	style="display: inline;" href="javascript: hideCharTable()"><img
+	src="/ead/img/winmin.png" alt="?"
+	onmouseover="this.src='/ead/img/winmin-active.png';"
+	onmouseout="this.src='/ead/img/winmin.png';"></a> <a id="showicon"
+	style="display: none;" href="javascript: showCharTable()"><img
+	src="/ead/img/winmax.png" alt="?"
+	onmouseover="this.src='/ead/img/winmax-active.png';"
+	onmouseout="this.src='/ead/img/winmax.png';"></a> <a
+	href="javascript: toggleKeyboard()"><img
+	src="/ead/img/winclose.png" alt="?"
+	onmouseover="this.src='/ead/img/winclose-active.png';"
+	onmouseout="this.src='/ead/img/winclose.png';"></a></div>
+<br>
+</div>
+
+<div id="chartablelower">
+<button id="charlink" onclick="showCharTable('upper')">Caps
+Lock</button>
+<a id="keyboardlink" href="javascript:alert(theFieldName);">Which
+field?</a><br>
+
+<table summary="Accented vowel character entity keyboard"
+	class="keyboardSection">
+
+	<tbody>
+		<tr>
+			<!-- a -->
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'á');"
+				title="Lower-case a, acute accent">á</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'à');"
+				title="Lower-case a, grave accent">à</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'â');"
+				title="Lower-case a, circumflex accent">â</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ä');"
+				title="Lower-case a, dieresis or umlaut">ä</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ã');"
+				title="Lower-case a, tilde">ã</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'å');"
+				title="Lower-case a, ring">å</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ā');"
+				title="Lower-case a, macron">ā</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ă');"
+				title="Lower-case a, breve">ă</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ą');"
+				title="Lower-case a, ogonek">ą</button>
+			</td>
+		</tr>
+
+		<tr>
+			<!-- c -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ç');"
+				title="Lower-case c, cedilla">ç</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ć');"
+				title="Lower-case c, acute">ć</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'č');"
+				title="Lower-case c, caron">č</button>
+			</td>
+		</tr>
+
+		<tr>
+			<!-- e -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'é');"
+				title="Lower-case e, acute accent">é</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'è');"
+				title="Lower-case e, grave accent">è</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ê');"
+				title="Lower-case e circumflex accent">ê</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ë');"
+				title="Lower-case e, dieresis or umlaut">ë</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ē');"
+				title="Lower-case e, macron">ē</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ě');"
+				title="Lower-case e, caron">ě</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ę');"
+				title="Lower-case e, ogonek">ę</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- i -->
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'í');"
+				title="Lower-case i, acute accent">í</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ì');"
+				title="Lower-case i, grave accent">ì</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'î');"
+				title="Lower-case i, circumflex accent">î</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ï');"
+				title="Lower-case i, dieresis or umlaut">ï</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ī');"
+				title="Lower-case i, macron">ī</button>
+			</td>
+
+			<!-- l -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ł');"
+				title="Lower-case l with stroke">ł</button>
+			</td>
+			<!-- n -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ñ');"
+				title="Lower-case n, tilde">ñ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ń');"
+				title="Lower-case n, acute">ń</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ň');"
+				title="Lower-case n, caron">ň</button>
+			</td>
+		</tr>
+		<tr>
+
+			<!-- o -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ó');"
+				title="Lower-case o, acute accent">ó</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ò');"
+				title="Lower-case o, grave accent">ò</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ô');"
+				title="Lower-case o, circumflex accent">ô</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ö');"
+				title="Lower-case o, dieresis or umlaut">ö</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'õ');"
+				title="lower-case O, tilde">õ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ő');"
+				title="">ő</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ø');"
+				title="Lower-case o, slashed">ø</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- r -->
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ř');"
+				title="Lower-case r, caron">ř</button>
+			</td>
+			<!-- s -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ś');"
+				title="Lower-case s, acute">ś</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'š');"
+				title="Lower-case s, caron">š</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ş');"
+				title="Lower-case s, cedilla">ş</button>
+			</td>
+
+			<!-- t -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ţ');"
+				title="lower-case t, cedilla">ţ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ť');"
+				title="lower-case t, caron">ť</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- u -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ú');"
+				title="Lower-case u, acute accent">ú</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ù');"
+				title="Lower-case u, grave accent">ù</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'û');"
+				title="Lower-case u, circumflex accent">û</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ü');"
+				title="Lower-case u, dieresis or umlaut">ü</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ū');"
+				title="Lower-case u, macron">ū</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ů');"
+				title="Lower-case u, ring above">ů</button>
+			</td>
+		</tr>
+
+		<tr>
+			<!-- y -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ý');"
+				title="Lower-case y, acute">ý</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ÿ');"
+				title="Lower-case y, dieresis or umlaut">ÿ</button>
+			</td>
+			<!-- z -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ź');"
+				title="Lower-case z, acute">ź</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ż');"
+				title="Lower-case z, dot above">ż</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ž');"
+				title="Upper-case z, caron">ž</button>
+			</td>
+
+			<!-- other special / composite characters -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'æ');"
+				title="Lower-case ae dipthong (ligature)">æ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'œ');"
+				title="Lower-case oe ligature">œ</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'þ');"
+				title="Lower-case thorn, Icelandic">þ</button>
+			</td>
+		</tr>
+		<tr>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '&');"
+				title="Ampersand">&amp;</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '£');"
+				title="Pound sign">£</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '%');"
+				title="Percent">%</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '°');"
+				title="Degree">°</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '©');"
+				title="Copyright">©</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '&quot;');"
+				title="Quotation mark">"</button>
+			</td>
+			<td width="35"></td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ß');"
+				title="Lower-case sharp s, German (sz ligature)">ß</button>
+			</td>
+
+		</tr>
+
+	</tbody>
+</table>
+</div>
+
+<div id="chartableupper" style="display: none;">
+<button id="charlink" onclick="showCharTable('lower')">Caps
+Lock</button>
+<img class="capslock" src="/ead/img/CLon.gif"><a id="keyboardlink"
+	href="javascript:alert(theFieldName);">Which field?</a><br>
+
+<table summary="Accented vowel character entity keyboard"
+	class="keyboardSection">
+	<tbody>
+		<tr>
+
+			<!-- A -->
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Á');"
+				title="Upper-case A, acute accent">Á</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'À');"
+				title="Upper-case A, grave accent">À</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Â');"
+				title="Upper-case A, circumflex accent">Â</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ä');"
+				title="Upper-case A, dieresis or umlaut mark">Ä</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ã');"
+				title="Upper-case A, tilde">Ã</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Å');"
+				title="Upper-case A, ring">Å</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ā');"
+				title="Upper-case A, macron">Ā</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ă');"
+				title="Upper-case A, breve">Ă</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ą');"
+				title="Upper-case A, ogonek">Ą</button>
+			</td>
+
+		</tr>
+		<tr>
+			<!-- C -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ç');"
+				title="Upper-case C, cedilla">Ç</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ć');"
+				title="Upper-case C, acute">Ć</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Č');"
+				title="Upper-case C, caron">Č</button>
+			</td>
+
+		</tr>
+		<tr>
+			<!-- E -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'É');"
+				title="Upper-case E, acute accent">É</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'È');"
+				title="Upper-case E, grave accent">È</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ê');"
+				title="Upper-case E, circumflex accent">Ê</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ë');"
+				title="Upper-case E, dieresis or umlaut">Ë</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ē');"
+				title="Upper-case E, macron">Ē</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ě');"
+				title="Upper-case E, caron">Ě</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ę');"
+				title="Upper-case E, ogonek">Ę</button>
+			</td>
+
+		</tr>
+		<tr>
+			<!-- I -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Í');"
+				title="Upper-case I, acute accent">Í</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ì');"
+				title="Upper-case I, grave accent">Ì</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Î');"
+				title="Upper-case I, circumflex accent">Î</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ï');"
+				title="Upper-case I, dieresis or umlaut">Ï</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ī');"
+				title="Upper-case I, macron">Ī</button>
+			</td>
+			<!-- L -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ł');"
+				title="Upper-case L with stroke">Ł</button>
+			</td>
+			<!-- N -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ñ');"
+				title="Upper-case N, tilde">Ñ</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ń');"
+				title="Upper-case N, acute">Ń</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ň');"
+				title="Upper-case N, caron">Ň</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- O -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ó');"
+				title="Upper-case O, acute accent">Ó</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ò');"
+				title="Upper-case O, grave accent">Ò</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ô');"
+				title="Upper-case O, circumflex accent">Ô</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ö');"
+				title="Upper-case O, dieresis or umlaut">Ö</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Õ');"
+				title="Upper-case O, tilde">Õ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ő');"
+				title="Upper-case N, double acute">Ő</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ø');"
+				title="Upper-case O, slashed">Ø</button>
+			</td>
+
+		</tr>
+		<tr>
+			<!-- R -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ř');"
+				title="Upper-case R, caron">Ř</button>
+			</td>
+			<!-- S -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ś');"
+				title="Upper-case S, acute">Ś</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Š');"
+				title="Upper-case S, caron">Š</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ş');"
+				title="Upper-case S, cedilla">Ş</button>
+			</td>
+			<!-- T -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ţ');"
+				title="Upper-case T, cedilla">Ţ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ť');"
+				title="Upper-case T, caron">Ť</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- U -->
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ú');"
+				title="Upper-case U, acute accent">Ú</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ù');"
+				title="Upper-case U, grave accent">Ù</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Û');"
+				title="Upper-case U, circumflex accent">Û</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ü');"
+				title="Upper-case U, dieresis or umlaut">Ü</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ū');"
+				title="Upper-case U, macron">Ū</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ů');"
+				title="Upper-case U, caron">Ů</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- Y -->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ý');"
+				title="Upper-case Y, acute">Ý</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ÿ');"
+				title="Upper-case Y, dieresis or umlaut">Ÿ</button>
+			</td>
+
+			<!--Z-->
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ź');"
+				title="Upper-case Z, acute">Ź</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ż');"
+				title="Upper-case Z, dot above">Ż</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Ž');"
+				title="Upper-case Z, caron">Ž</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Æ');"
+				title="Upper-case AE dipthong (ligature)">Æ</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Œ');"
+				title="Upper-case OE ligature">Œ</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'Þ');"
+				title="Upper-case THORN, Icelandic">Þ</button>
+			</td>
+		</tr>
+		<!-- other special / composite characters -->
+
+		<tr>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '&');"
+				title="Ampersand">&amp;</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '£');"
+				title="Pound sign">£</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '%');"
+				title="Percent">%</button>
+			</td>
+
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '°');"
+				title="Degree">°</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '©');"
+				title="Copyright">©</button>
+			</td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, '&quot;');"
+				title="Quotation mark">"</button>
+			</td>
+			<td width="35"></td>
+			<td width="35">
+			<button onclick="cursorInsert(parent.currentEntryField, 'ß');"
+				title="Lower-case sharp s, German (sz ligature)">ß</button>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+</div>
+</div>
+
+
+
+</div>
+<!-- end content div -->
+<!-- generic footer -->
+<div id="footer">
+<div id="technologies"><!-- W3C XHTML validated --> <a
+	href="http://validator.w3.org/check?uri=referer"> <img
+	src="/ead/img/valid-xhtml10" alt="Valid XHTML 1.0!" height="31"
+	width="88"> </a> <!-- W3C CSS validated --> <a
+	href="http://jigsaw.w3.org/css-validator/"> <img
+	style="border: 0pt none; width: 88px; height: 31px;"
+	src="/ead/img/vcss" alt="Valid CSS!"> </a> <!-- python powered --> <a
+	href="http://www.python.org" title="to www.python.org"> <img
+	src="/ead/img/python-powered-w-70x28.png" alt="Python Powered"> </a>
+</div>
+<div id="supporters"><a href="http://www.jisc.ac.uk/"
+	title="Joint Information Systems Committee website"> <img
+	src="/ead/img/JISCcolour7.gif" alt=" [ JISC ] "> </a></div>
+<div id="version">Cheshire for Archives v3.4.x :: Ongoing
+Development</div>
+<div id="copyright">Copyright © the University of Liverpool 2005 -
+2009</div>
+</div>
+<!-- end footer div -->
+</body>
+</html>

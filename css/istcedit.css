@@ -1,3 +1,207 @@
+
+/*======================================================================================================= */
+/* general form stuff */
+
+div#maincontent {
+	width: 752px;
+	padding: 0 0 10px 0px;
+}
+
+div#content {
+	width: 743px;
+}
+
+.field {
+	border: 2px solid #006c7d;
+	background: #E7ECED;
+	padding-left: 12px;
+	padding-right: 12px;
+	float: left;
+	font-size: 11pt;
+	min-width: 715px;	
+}
+
+.field p {
+	margin-top: 10px;
+	margin-bottom: 10px;	
+	
+}
+
+textarea, input {
+	font-family: arial, helvetica, gill, sans-serif;
+	font-size: 11pt; 
+}
+
+#formDiv {
+	overflow: visible;	
+}
+
+.horizontal {
+	float: left;
+	padding-right: 20px;
+	padding-bottom: 5px;
+}
+
+div#gotodiv {
+	float: right;
+	padding-right: 5px;
+	padding-bottom: 10px;	
+}
+
+.toplink {
+	float:right;	
+	padding-right: 5px;
+	padding-bottom: 3px;
+	padding-top: 2px;
+	color: #006c7d;
+}
+
+#keyboardlink {
+	float: left;	
+}
+	
+/*======================================================================================================= */
+/* Relating to multiple entry fields */
+
+.melabel, .reflabel {
+	font-size: 10pt;
+}
+
+.mebuttons {
+	float: left;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+	
+.meadded {
+	padding-left: 45px;
+	padding-bottom: 10px;
+	float: left;
+}
+
+.addedcontainer {
+	border-top: 2px solid #006c7d;		
+}
+
+.added {
+	width: 710px;
+	background: #F2F2F2;
+	border: inset 2px #000000;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 0px;	
+	margin-top: 10px;
+	max-height: 200px;
+	min-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.added ul {
+	list-style-type: none;
+	margin-top: 5px;
+  	padding: 0px;
+}
+	
+.added li {
+	padding: 0px;
+	margin: -5px;
+}
+	
+.added li p{
+	padding-top: 0px;
+	font-size: 9pt;
+}
+	
+.addedimage {
+	padding-left: 3px;
+	padding-right: 3px
+}	
+
+.icons {
+	float: left;
+	padding-right: 5px;
+	padding-left: 3px;
+	margin-left: 10px;
+}
+
+
+.tablecontainer {
+	float: left;
+	margin-top: -10px;
+	max-width: 450px;
+}
+
+.tablecontainer table{
+	padding-bottom: 5px;
+}
+
+.tablecontainer .label {
+	width: 75px;
+}
+
+
+.mebutton {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 50px;
+	float: left;
+}
+
+td .mebutton {
+	margin-left: 0px;	
+}
+
+.multipleEntry {
+	margin-left: 80px;
+}
+
+.suggest {
+	z-index: 3;	
+}
+
+/*======================================================================================================= */
+/* reference specific stuff*/
+
+div#refcontainer .tablecontainer {
+	margin-top: 3px;
+}
+
+
+#fullrefcontainer {	
+	width: 370px; 
+	margin-left: 15px;
+}
+
+
+.referencebuttonsdiv {
+	padding-bottom: 15px;	
+}
+
+.editfullref{
+	float: left;
+	margin-top: 70px;
+}
+
+
+#refdisplay{
+	margin-top: 5px;
+}
+
+#refdisplay p{
+	font-size: 10pt;
+	max-width: 450px;
+	float: left;
+	min-height: 100px;
+	margin-top: 0px;	
+}
+
+
+div#refcontainer, div#fullrefcontainer {
+	float:left;	
+}
+
+/*======================================================================================================= */
 /* relating to char entity keyboard */
 
 #keyboard {
@@ -26,182 +230,8 @@ td button {
 	}
 
 
-div#maincontent {
-	width: 752px;
-	padding: 0 0 10px 0px;
-	}
-
-/* general form stuff */
-
-.field {
-	border: 2px solid #006c7d;
-	background: #E7ECED;
-	padding-left: 12px;
-	padding-right: 12px;
-	float: left;
-	font-size: 11pt;
-	margin-bottom: 10px;
-	min-width: 715px;	
-	}
-
-textarea, input {
-		font-family: arial, helvetica, gill, sans-serif;
-		font-size: 11pt; 
-	}
-
-#formDiv {
-	overflow: visible;
-	
-	}
-
-.horizontal {
-	float: left;
-	padding-right: 20px;
-	}
-
-/* Relating to multiple entry fields */
 
 
-.editfullref{
-	float: left;
-	margin-top: 70px;
-	}
-
-
-#refdisplay{
-	margin-top: 5px;
-	}
-
-#refdisplay p{
-	font-size: 10pt;
-	max-width: 450px;
-	float: left;
-	min-height: 100px
-	
-	}
-
-
-
-.melabel, .reflabel {
-	font-size: 10pt;
-	}
-	
-
-	
-.mebuttons {
-	float: left;
-	padding-left: 50px;
-	padding-right: 50px;
-	}
-	
-.meadded {
-	padding-left: 45px;
-	padding-bottom: 10px;
-	float: left;
-	}
-
-.addedcontainer {
-	border-top: 2px solid #006c7d;		
-}
-
-.added {
-	width: 710px;
-	background: #F2F2F2;
-	border: inset 2px #000000;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	margin-left: 0px;	
-	margin-top: 10px;
-	max-height: 200px;
-	min-height: 200px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-.added p {
-	font-size: 11pt;
-	margin-top: 0;
-	padding-top: 3px;
-	}
-
-.added ul {
-	list-style-type: none;
-	margin-left: 0px;
-  	padding-left: 0px
-	}
-	
-.added li {
-	padding: 0px;
-	}
-	
-.addedimage {
-	padding: 3px;
-	}	
-
-	
-
-.icons {
-	float: left;
-	padding-right: 5px;
-	padding-left: 3px;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	margin-left: 10px;
-
-}
-
-
-.tablecontainer {
-	float: left;
-	margin-top: 8px;
-	max-width: 450px;
-
-}
-
-div#refcontainer, div#fullrefcontainer {
-	float:left;	
-}
-
-
-#fullrefcontainer {	
-	width: 370px;
-	margin-left: 15px;
-}
-
-
-.referencebuttonsdiv {
-	padding-bottom: 15px;	
-}
-
-
-.tablecontainer table{
-	padding-bottom: 5px;
-	}
-
-.tablecontainer .label {
-	width: 75px;
-}
-
-
-
-.mebutton {
-	margin-top: 5px;
-	margin-left: 10px;
-	width: 50px;
-	float: left;
-}
-
-td .mebutton {
-	margin-left: 0px;	
-}
-
-.multipleEntry {
-	margin-left: 80px;
-}
-
-.suggest {
-	z-index: 3;	
-}
 
 /*======================================================================================================= */
 /* SubForm */

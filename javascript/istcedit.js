@@ -17,6 +17,16 @@
 
 var timeout;
 
+function goto(){
+
+	var select = document.getElementById('goto');
+	var value = select.value;
+	if (value != 'null') {
+		location.href = '#' + value;
+	}
+}
+
+
 
 //================================================================================================
 //Functions for multiple entry fields

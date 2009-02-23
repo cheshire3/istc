@@ -60,18 +60,31 @@
 			</ul>
 	  	</div>
 		
-	<div id="maincontent"">
+	<div id="maincontent">
+	<a name="top"></a>
 
-
-    <div id="content">
     <h1>&nbsp;Editing Interface</h1>
- 
+    <a id="keyboardlink" href="javascript: toggleKeyboard();">Character Keyboard</a>
+    <div id="gotodiv"><strong>Go To: </strong><select id="goto" onchange="javascript: goto()">
+    	<option value="null">Select...</option>
+    	<option value="istcnumber">ISTC Number</option>
+    	<option value="author">Author</option>
+    	<option value="ltitle">Title</option>
+    	<option value="imprints">Imprints</option>
+    	<option value="lformat">Format</option>
+    	<option value="008field">008 Field</option>
+    	<option value="generalnote">General Note</option>
+    	<option value="references">References</option>
+    	<option value="reproductionnotes">Reproduction Notes</option>
+    	<option value="blshelfmark">BL Shelfmark</option>
+    </select></div>
+ 	<div id="content">
 <!-- PAGE CONTAINER -->	
-	<a href="javascript: toggleKeyboard();">Character Keyboard</a>
+	
    %CONTENT%
 
- </div> 
 
+</div>
  		</div> <!-- End of maincontent -->
  		 <div class="popup" style="display:none" id="refPopup">
 			<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="hideRefPopup()"/></div>

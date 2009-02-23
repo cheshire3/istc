@@ -164,12 +164,13 @@ div#menu {
 	width: 133px;
 	margin: 15px 0 0 2px;
 	font-size: 8pt;
-
+	padding-top: 30px;
 	}
 
 div#menuall {
 	width: 133px;
 	float: right;
+
 	}
 
 .menugrp{
