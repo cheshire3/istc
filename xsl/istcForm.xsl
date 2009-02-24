@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
-	<xsl:output method="xml" omit-xml-declaration="yes" encoding="UTF-8" />
+	<xsl:output method="xml" omit-xml-declaration="yes" encoding="ascii" />
 	<xsl:preserve-space elements="controlfield datafield" />
 	
 	<xsl:template match="/">
