@@ -184,19 +184,12 @@
 				<br />
 				<div class="referencebuttonsdiv">					
 					<input style="float: left" type="button" onclick="addEntry('references');" value="Add"/>
-					<input style="float: right" type="button" onclick="editRef();" value="edit/create ref"/>
-				
+					<input style="float: right" type="button" onclick="editRef();" value="edit/create ref"/>			
 				</div><br />
-				
-			<!-- <div class="meadded">   -->
 				<div class="addedcontainer">
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='510']">
 							<xsl:text>%RFRNC%</xsl:text>
-							<!-- <xsl:call-template name="accesspoint">
-								<xsl:with-param name="typename" select="'reference'"/>
-								<xsl:with-param name="tagnumber" select="'510'"/>
-							</xsl:call-template> -->
 						</xsl:when>
 						<xsl:otherwise>
 							<div id="addedreferences" style="display:none" class="added"><ul id="addedreferenceslist"></ul></div>
@@ -230,7 +223,108 @@
 					</xsl:choose>	
 				</div>
 			</p>
-			</div>			
+			</div>		
+			<a href="#top" class="toplink" name="holdings">Top</a>
+			<div class="field">
+			<p><strong>Holdings:</strong><br />
+				<div id="holdingstable" class="tablecontainer">
+					<table id="table_holdings"><tbody>
+						<tr><td class="melabel">Country:</td><td> <select name="holdings" id="holdings_country"><option value="951">British Isles</option><option value="995">Belgium</option><option value="957">France</option><option value="997">Germany</option><option value="954">Italy</option><option value="955">Spain/Portugal</option><option value="996">Netherlands</option><option value="952">U.S.A.</option><option value="958">Other Europe</option><option value="953">Other</option><option value="994">Doubtful</option></select></td></tr>
+						<tr><td class="melabel">Library:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_a" size="36"></input></td></tr>
+						<tr><td class="melabel">Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_b" size="36"></input></td></tr>
+						<tr><td><input class="mebutton" type="button" onclick="addEntry('holdings');" value="Add"></input></td><td></td></tr>
+					</tbody></table>
+				</div><br />
+				<div class="addedcontainer">
+					<div style="display:block" class="added"> 
+					  	<xsl:attribute name="id">
+					  		<xsl:text>addedholdings</xsl:text>
+					  	</xsl:attribute>
+					  	<ul>
+					  		 <xsl:attribute name="id">
+						  		<xsl:text>addedholdingslist</xsl:text>
+						  	</xsl:attribute>					  						
+							<xsl:for-each select="//datafield[@tag='951']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'951holding'"/>
+									<xsl:with-param name="tagnumber" select="'951'"/>
+								</xsl:call-template> 
+							</xsl:for-each>						
+	 						<xsl:for-each select="//datafield[@tag='995']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'995holding'"/>
+									<xsl:with-param name="tagnumber" select="'995'"/>
+								</xsl:call-template> 
+							</xsl:for-each>
+							<xsl:for-each select="//datafield[@tag='957']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'957holding'"/>
+									<xsl:with-param name="tagnumber" select="'957'"/>
+								</xsl:call-template> 
+							</xsl:for-each>
+							<xsl:for-each select="//datafield[@tag='997']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'997holding'"/>
+									<xsl:with-param name="tagnumber" select="'997'"/>
+								</xsl:call-template> 
+							</xsl:for-each>		
+							<xsl:for-each select="//datafield[@tag='954']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'954holding'"/>
+									<xsl:with-param name="tagnumber" select="'954'"/>
+								</xsl:call-template> 
+							</xsl:for-each>	
+							<xsl:for-each select="//datafield[@tag='955']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'955holding'"/>
+									<xsl:with-param name="tagnumber" select="'955'"/>
+								</xsl:call-template> 
+							</xsl:for-each>
+							<xsl:for-each select="//datafield[@tag='996']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'996holding'"/>
+									<xsl:with-param name="tagnumber" select="'996'"/>
+								</xsl:call-template> 
+							</xsl:for-each>					
+							<xsl:for-each select="//datafield[@tag='952']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'952holding'"/>
+									<xsl:with-param name="tagnumber" select="'952'"/>
+								</xsl:call-template> 
+							</xsl:for-each>		
+							<xsl:for-each select="//datafield[@tag='958']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'958holding'"/>
+									<xsl:with-param name="tagnumber" select="'958'"/>
+								</xsl:call-template> 
+							</xsl:for-each>			
+							<xsl:for-each select="//datafield[@tag='953']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'953holding'"/>
+									<xsl:with-param name="tagnumber" select="'953'"/>
+								</xsl:call-template> 
+							</xsl:for-each>
+							<xsl:for-each select="//datafield[@tag='994']">
+								 <xsl:call-template name="accesspointlist">
+									<xsl:with-param name="typename" select="'994holding'"/>
+									<xsl:with-param name="tagnumber" select="'994'"/>
+								</xsl:call-template> 
+							</xsl:for-each>
+						</ul>									
+					</div>	 
+					
+					<xsl:choose>	
+						<xsl:when test="//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']">
+						
+						</xsl:when>					
+						<xsl:otherwise>
+							<div id="addedholdings" style="display:none" class="added"><ul id="addedholdingslist"></ul></div>
+						</xsl:otherwise>
+					</xsl:choose>	
+				</div>
+			</p>
+			</div>
+	
 			<a href="#top" class="toplink" name="blshelfmark">Top</a>
 
 			<div class="field">
@@ -348,106 +442,115 @@
 		</div>
 	</xsl:template>
 	
- 	  <xsl:template name="accesspoint">
-		  	<xsl:param name="typename"/>
-		  	<xsl:param name="tagnumber"/>
-		  	<div style="display:block" class="added"> 
-			  	<xsl:attribute name="id">
-			  		<xsl:text>added</xsl:text><xsl:value-of select="$typename"/><xsl:text>s</xsl:text>
+ 	<xsl:template name="accesspoint">
+	  	<xsl:param name="typename"/>
+	  	<xsl:param name="tagnumber"/>
+	  	<div style="display:block" class="added"> 
+		  	<xsl:attribute name="id">
+		  		<xsl:text>added</xsl:text><xsl:value-of select="$typename"/><xsl:text>s</xsl:text>
+		  	</xsl:attribute>
+		  	<ul>
+		  		 <xsl:attribute name="id">
+			  		<xsl:text>added</xsl:text><xsl:value-of select="$typename"/><xsl:text>slist</xsl:text>
 			  	</xsl:attribute>
-			  	<ul>
-			  		 <xsl:attribute name="id">
-				  		<xsl:text>added</xsl:text><xsl:value-of select="$typename"/><xsl:text>slist</xsl:text>
-				  	</xsl:attribute>
-					<xsl:for-each select="//datafield[@tag = $tagnumber]">
-						<li>
-							<xsl:attribute name="id">
-								<xsl:text>li</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>				
-							</xsl:attribute>	
-					  	 	<div>
-								<xsl:attribute name="id">
-									<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>				
-								</xsl:attribute>			
-								<div class="icons">
-								<!-- delete -->
-									<a>
-										<xsl:attribute name="onclick">
-											<xsl:text>deleteEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
-										</xsl:attribute>
-										<xsl:attribute name="title">
-											<xsl:text>delete entry</xsl:text>
-										</xsl:attribute>
-										<img src="/istc/images/remove.png" onmouseover="this.src='/istc/images/remove-hover.png';" onmouseout="this.src='/istc/images/remove.png';">
-											<xsl:attribute name="class">
-												<xsl:text>addedimage</xsl:text>
-											</xsl:attribute>
-										</img>
-									</a>	
-								<!-- Up -->
-									<a>
-										<xsl:attribute name="onclick">
-											<xsl:text>entryUp('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
-										</xsl:attribute>
-										<xsl:attribute name="title">
-											<xsl:text>move up</xsl:text>
-										</xsl:attribute>
-										<img src="/istc/images/up.png" onmouseover="this.src='/istc/images/up-hover.png';" onmouseout="this.src='/istc/images/up.png';">	
-											<xsl:attribute name="class">
-												<xsl:text>addedimage</xsl:text>
-											</xsl:attribute>
-										</img>
-									</a>	
-								<!-- Down -->
-									<a>
-										<xsl:attribute name="onclick">
-											<xsl:text>entryDown('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
-										</xsl:attribute>
-										<xsl:attribute name="title">
-											<xsl:text>move down</xsl:text>
-										</xsl:attribute>
-										<img src="/istc/images/down.png" onmouseover="this.src='/istc/images/down-hover.png';" onmouseout="this.src='/istc/images/down.png';">
-											<xsl:attribute name="class">
-												<xsl:text>addedimage</xsl:text>
-											</xsl:attribute>										
-										</img>
-									</a>									
-								</div>
-								<div class="multipleEntry">	
-								<p class="float">
-									<xsl:attribute name="onclick">
-										<xsl:text>editEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', </xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>);</xsl:text>
-									</xsl:attribute>
-									<xsl:attribute name="title">
-										<xsl:text>Click to edit</xsl:text>
-									</xsl:attribute>		 
-									<xsl:call-template name="accesspointstring">					
-										<xsl:with-param name="typename" select="$typename"/>
-										<xsl:with-param name="separater" select="' '"/>
-									</xsl:call-template>
-								</p>
-								</div>
-							</div>												
-							<input type="hidden">
-								<xsl:attribute name="id">
-									<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>xml</xsl:text>
-								</xsl:attribute>
-								<xsl:attribute name="name">
-									<xsl:value-of select="$typename"/><xsl:text>s</xsl:text>
-								</xsl:attribute>
-								<xsl:attribute name="value">
-									<div class="accesspoint">					 
-										<xsl:call-template name="accesspointstring">					
-											<xsl:with-param name="tagnumber" select="$tagnumber"/>
-											<xsl:with-param name="separater" select="' ||| '"/>
-										</xsl:call-template>
-									</div>
-								</xsl:attribute>
-							</input>	
-						</li>		
-				 	</xsl:for-each>	 	
-			 	</ul>										
-			</div>	  	
-		  </xsl:template>
+				<xsl:for-each select="//datafield[@tag = $tagnumber]">
+				<xsl:call-template name="accesspointlist">					
+					<xsl:with-param name="typename" select="$typename"/>
+					<xsl:with-param name="tagnumber" select="$tagnumber"/>
+				</xsl:call-template>
+			 	</xsl:for-each>
+		 	</ul>										
+		</div>	  	
+	</xsl:template>
+	
+	<xsl:template name="accesspointlist">
+		<xsl:param name="typename"/>
+		<xsl:param name="tagnumber"/>			
+		<li>
+			<xsl:attribute name="id">
+				<xsl:text>li</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>				
+			</xsl:attribute>	
+	  	 	<div>
+				<xsl:attribute name="id">
+					<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/>				
+				</xsl:attribute>			
+				<div class="icons">
+				<!-- delete -->
+					<a>
+						<xsl:attribute name="onclick">
+							<xsl:text>deleteEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:text>delete entry</xsl:text>
+						</xsl:attribute>
+						<img src="/istc/images/remove.png" onmouseover="this.src='/istc/images/remove-hover.png';" onmouseout="this.src='/istc/images/remove.png';">
+							<xsl:attribute name="class">
+								<xsl:text>addedimage</xsl:text>
+							</xsl:attribute>
+						</img>
+					</a>	
+				<!-- Up -->
+					<a>
+						<xsl:attribute name="onclick">
+							<xsl:text>entryUp('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:text>move up</xsl:text>
+						</xsl:attribute>
+						<img src="/istc/images/up.png" onmouseover="this.src='/istc/images/up-hover.png';" onmouseout="this.src='/istc/images/up.png';">	
+							<xsl:attribute name="class">
+								<xsl:text>addedimage</xsl:text>
+							</xsl:attribute>
+						</img>
+					</a>	
+				<!-- Down -->
+					<a>
+						<xsl:attribute name="onclick">
+							<xsl:text>entryDown('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:text>move down</xsl:text>
+						</xsl:attribute>
+						<img src="/istc/images/down.png" onmouseover="this.src='/istc/images/down-hover.png';" onmouseout="this.src='/istc/images/down.png';">
+							<xsl:attribute name="class">
+								<xsl:text>addedimage</xsl:text>
+							</xsl:attribute>										
+						</img>
+					</a>									
+				</div>
+				<div class="multipleEntry">	
+				<p class="float">
+					<xsl:attribute name="onclick">
+						<xsl:text>editEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', </xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>);</xsl:text>
+					</xsl:attribute>
+					<xsl:attribute name="title">
+						<xsl:text>Click to edit</xsl:text>
+					</xsl:attribute>		 
+					<xsl:call-template name="accesspointstring">					
+						<xsl:with-param name="tagnumber" select="$tagnumber"/>
+						<xsl:with-param name="separater" select="' '"/>
+					</xsl:call-template>
+				</p>
+				</div>
+			</div>												
+			<input type="hidden">
+				<xsl:attribute name="id">
+					<xsl:value-of select="$typename"/><xsl:text>s_formgen</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>xml</xsl:text>
+				</xsl:attribute>
+				<xsl:attribute name="name">
+					<xsl:value-of select="$typename"/><xsl:text>s</xsl:text>
+				</xsl:attribute>
+				<xsl:attribute name="value">
+					<div class="accesspoint">					 
+						<xsl:call-template name="accesspointstring">					
+							<xsl:with-param name="tagnumber" select="$tagnumber"/>
+							<xsl:with-param name="separater" select="' ||| '"/>
+						</xsl:call-template>
+					</div>
+				</xsl:attribute>
+			</input>	
+		</li>		
+	</xsl:template>
 	
 	
 	<xsl:template name="accesspointstring">
@@ -455,12 +558,25 @@
 	  	 <xsl:param name="separater"/>
 	  	 <xsl:choose>
 	  	 	<xsl:when test="$separater = ' '">
+	  	 		<xsl:choose>
+	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">  	 				
+	  	 				<xsl:value-of select="$tagnumber"/>
+	  	 				<xsl:text> - </xsl:text>
+	  	 			</xsl:when>
+	  	 		</xsl:choose>
 	  	 		<xsl:for-each select="subfield">
 	  	 			<xsl:value-of select="."/>
 	  	 			<xsl:value-of select="$separater"/>
 	  	 		</xsl:for-each>
 	  	 	</xsl:when>
 	  	 	<xsl:when test="$separater = ' ||| '">
+	  	 		<xsl:choose>
+	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">
+	  	 				<xsl:text>holdings_country | </xsl:text>
+	  	 				<xsl:value-of select="$tagnumber"/>
+	  	 				<xsl:value-of select="$separater"/>
+	  	 			</xsl:when>
+	  	 		</xsl:choose>
 	  	 		<xsl:for-each select="subfield">
 	  	 			<xsl:value-of select="$tagnumber"/>
 	  	 			<xsl:text>_</xsl:text>
