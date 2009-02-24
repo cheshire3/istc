@@ -55,9 +55,17 @@ function addEntry(s){
     	if (textbox == null){
     		textbox = rows[i].getElementsByTagName('textarea')[0];
     	}	
+    	if (textbox == null){
+    		textbox = rows[i].getElementsByTagName('select')[0];
+    	}
     	if (textbox.value != ""){
     		valueString += textbox.id + ' | ' + textbox.value + ' ||| ';
-    		textString += textbox.value + ' ';  		
+    		if (s == 'holdings' && i == 0){
+    			textString += textbox.value + ' - '; 
+    		}
+    		else {
+    			textString += textbox.value + ' ';  		
+    		}
     	}   
     	else {
     		valueString += textbox.id + ' |   ||| ';
@@ -128,6 +136,9 @@ function addEntry(s){
     }
     nameCount++;   	 
 	clearRef();
+	if (s == 'holdings'){
+		document.getElementById('holdings_country').selectedIndex = 0;
+	}
 }
 
 
@@ -201,11 +212,14 @@ function deleteEntry(d){
 followed by '_formgen' which is used to maintain distinct ids between access points read in from existing xml and those created in the current form,
 number is the number which forms part of the unique id */
 function editEntry(s, number){
-	
+
 	var type = s.substring(0, s.indexOf('_formgen'));
   	if (type == '') {
   		type = s;
   	}  
+  	if (type.match(/\d{3}\D*/)){
+  		type = type.substring(3);
+  	}
  
  	var ph = document.getElementById('placeholder' + type);
 	if (ph != null){
@@ -220,24 +234,41 @@ function editEntry(s, number){
   	var table = tableDiv.getElementsByTagName('tbody')[0];
   	var rows = table.getElementsByTagName('tr');
   	var inputs = table.getElementsByTagName('input');
-  	if (inputs.length == 1){
-
-  		inputs = table.getElementsByTagName('textarea');
-		for (var i = 0; i< values.length-2; i++){  
+	if (type == 'holdings'){
+	  	for (var i = 0; i< values.length-2; i++){ 
 	  		value = values[i].split(' | ');
-	  		document.getElementById(value[0]).value = value[1];
-	  	}  		
+	  		if (i == 0) {
+	  			select = document.getElementById('holdings' + value[0].substring(value[0].indexOf('_')));
+	  			for (var j = 0; j< select.length; j++){  
+	  				if(select[j].value == value[1]){
+     					select.selectedIndex = j;
+   					}
+	  			}
+	  		}
+	  		else {			
+	  			document.getElementById('holdings' + value[0].substring(value[0].indexOf('_'))).value = value[1];	  		
+	  		}
+	  	}
   	}
   	else {
-	  	// replace values in order
-	  	for (var i = 0; i< values.length-2; i++){  
-	  		value = values[i].split(' | ');
-	  		document.getElementById(value[0]).value = value[1];
+	  	if (inputs.length == 1){	
+	  		inputs = table.getElementsByTagName('textarea');
+			for (var i = 0; i< values.length-2; i++){  
+		  		value = values[i].split(' | ');
+		  		document.getElementById(value[0]).value = value[1];
+		  	}  		
+	  	}
+	  	else {
+		  	// replace values in order
+		  	for (var i = 0; i< values.length-2; i++){  
+		  		value = values[i].split(' | ');
+		  		document.getElementById(value[0]).value = value[1];
+		  	}
+		}
+		if (type == 'references'){
+	  		showValue(values[0].split(' | ')[1]);
 	  	}
 	}
-	if (type == 'references'){
-  		showValue(values[0].split(' | ')[1]);
-  	}
   	//delete the access point you are now editing and use placeholder if appropriate
   	var item = document.getElementById('li' + s + number);
   	var parent = item.parentNode;
