@@ -89,6 +89,28 @@
 		</paths>
 	</subConfig>
 
+ 	   <subConfig type="recordStore" id="pgeditingStore">
+	      <objectType>cheshire3.sql.postgres.PostgresRecordStore</objectType>
+	      <paths>
+			<path type="databaseName">db_istc</path>
+            <path type="tableName">editingStore</path>
+	        <object type="inTransformer" ref="XmlTransformer" />
+	        <object type="outParser" ref="LxmlParser" />
+	      </paths>
+	      <options>
+	      </options>
+	    </subConfig>
+
+
+
+	<subConfig type="documentStore" id="notesStore">
+		<objectType>cheshire3.sql.postgres.PostgresDocumentStore</objectType>
+        <paths>
+            <path type="databaseName">db_istc</path>
+            <path type="tableName">internalNotesStore</path>
+            <object type="idNormalizer" ref="StringIntNormalizer"/>
+        </paths>
+	</subConfig>
         
   </subConfigs>
 </config>

@@ -226,102 +226,113 @@
 			</div>		
 			<a href="#top" class="toplink" name="holdings">Top</a>
 			<div class="field">
-			<p><strong>Holdings:</strong><br />
-				<div id="holdingstable" class="tablecontainer">
-					<table id="table_holdings"><tbody>
-						<tr><td class="melabel">Country:</td><td> <select name="holdings" id="holdings_country"><option value="951">British Isles</option><option value="995">Belgium</option><option value="957">France</option><option value="997">Germany</option><option value="954">Italy</option><option value="955">Spain/Portugal</option><option value="996">Netherlands</option><option value="952">U.S.A.</option><option value="958">Other Europe</option><option value="953">Other</option><option value="994">Doubtful</option></select></td></tr>
-						<tr><td class="melabel">Library:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_a" size="36"></input></td></tr>
-						<tr><td class="melabel">Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_b" size="36"></input></td></tr>
-						<tr><td><input class="mebutton" type="button" onclick="addEntry('holdings');" value="Add"></input></td><td></td></tr>
-					</tbody></table>
-				</div><br />
-				<div class="addedcontainer">
-					<div style="display:block" class="added"> 
-					  	<xsl:attribute name="id">
-					  		<xsl:text>addedholdings</xsl:text>
-					  	</xsl:attribute>
-					  	<ul>
-					  		 <xsl:attribute name="id">
-						  		<xsl:text>addedholdingslist</xsl:text>
-						  	</xsl:attribute>					  						
-							<xsl:for-each select="//datafield[@tag='951']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'951holding'"/>
-									<xsl:with-param name="tagnumber" select="'951'"/>
-								</xsl:call-template> 
-							</xsl:for-each>						
-	 						<xsl:for-each select="//datafield[@tag='995']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'995holding'"/>
-									<xsl:with-param name="tagnumber" select="'995'"/>
-								</xsl:call-template> 
-							</xsl:for-each>
-							<xsl:for-each select="//datafield[@tag='957']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'957holding'"/>
-									<xsl:with-param name="tagnumber" select="'957'"/>
-								</xsl:call-template> 
-							</xsl:for-each>
-							<xsl:for-each select="//datafield[@tag='997']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'997holding'"/>
-									<xsl:with-param name="tagnumber" select="'997'"/>
-								</xsl:call-template> 
-							</xsl:for-each>		
-							<xsl:for-each select="//datafield[@tag='954']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'954holding'"/>
-									<xsl:with-param name="tagnumber" select="'954'"/>
-								</xsl:call-template> 
-							</xsl:for-each>	
-							<xsl:for-each select="//datafield[@tag='955']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'955holding'"/>
-									<xsl:with-param name="tagnumber" select="'955'"/>
-								</xsl:call-template> 
-							</xsl:for-each>
-							<xsl:for-each select="//datafield[@tag='996']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'996holding'"/>
-									<xsl:with-param name="tagnumber" select="'996'"/>
-								</xsl:call-template> 
-							</xsl:for-each>					
-							<xsl:for-each select="//datafield[@tag='952']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'952holding'"/>
-									<xsl:with-param name="tagnumber" select="'952'"/>
-								</xsl:call-template> 
-							</xsl:for-each>		
-							<xsl:for-each select="//datafield[@tag='958']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'958holding'"/>
-									<xsl:with-param name="tagnumber" select="'958'"/>
-								</xsl:call-template> 
-							</xsl:for-each>			
-							<xsl:for-each select="//datafield[@tag='953']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'953holding'"/>
-									<xsl:with-param name="tagnumber" select="'953'"/>
-								</xsl:call-template> 
-							</xsl:for-each>
-							<xsl:for-each select="//datafield[@tag='994']">
-								 <xsl:call-template name="accesspointlist">
-									<xsl:with-param name="typename" select="'994holding'"/>
-									<xsl:with-param name="tagnumber" select="'994'"/>
-								</xsl:call-template> 
-							</xsl:for-each>
-						</ul>									
-					</div>	 
-					
-					<xsl:choose>	
-						<xsl:when test="//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']">
-						
-						</xsl:when>					
-						<xsl:otherwise>
-							<div id="addedholdings" style="display:none" class="added"><ul id="addedholdingslist"></ul></div>
-						</xsl:otherwise>
-					</xsl:choose>	
+			<p>
+				<div id="holdingscontainer"><strong>Holdings:</strong><br />
+					<div id="holdingstable" class="tablecontainer">
+						<table id="table_holdings"><tbody>
+							<tr><td class="melabel">Country:</td><td> <select name="holdings" id="holdings_country"><option value="951">British Isles</option><option value="995">Belgium</option><option value="957">France</option><option value="997">Germany</option><option value="954">Italy</option><option value="955">Spain/Portugal</option><option value="996">Netherlands</option><option value="952">U.S.A.</option><option value="958">Other Europe</option><option value="953">Other</option><option value="994">Doubtful</option></select></td></tr>
+							<tr><td class="melabel">Library:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_a" size="30"></input></td></tr>
+							<tr><td class="melabel">Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="holdings" id="holdings_b" size="30"></input></td></tr>
+							<tr></tr>
+						</tbody></table>
+					</div>
 				</div>
+				<div id="usacontainer" class="usalabel">					
+				    <div id="usadisplay">
+						<p></p>
+					</div>
+				</div>
+				<br />
+				<div class="holdingbuttonsdiv">					
+					<input style="float: left" type="button" onclick="addEntry('holdings');" value="Add"/>
+					<input id="usabutton" style="display: none" type="button" onclick="editUsa();" value="edit/create usa location"/>			
+				</div><br />
+				<xsl:choose>					
+					<xsl:when test="//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']">										
+						<div class="addedcontainer">
+							<div style="display:block" class="added"> 
+							  	<xsl:attribute name="id">
+							  		<xsl:text>addedholdings</xsl:text>
+							  	</xsl:attribute>
+							  	<ul>
+							  		 <xsl:attribute name="id">
+								  		<xsl:text>addedholdingslist</xsl:text>
+								  	</xsl:attribute>					  						
+									<xsl:for-each select="//datafield[@tag='951']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'951holding'"/>
+											<xsl:with-param name="tagnumber" select="'951'"/>
+										</xsl:call-template> 
+									</xsl:for-each>						
+			 						<xsl:for-each select="//datafield[@tag='995']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'995holding'"/>
+											<xsl:with-param name="tagnumber" select="'995'"/>
+										</xsl:call-template> 
+									</xsl:for-each>
+									<xsl:for-each select="//datafield[@tag='957']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'957holding'"/>
+											<xsl:with-param name="tagnumber" select="'957'"/>
+										</xsl:call-template> 
+									</xsl:for-each>
+									<xsl:for-each select="//datafield[@tag='997']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'997holding'"/>
+											<xsl:with-param name="tagnumber" select="'997'"/>
+										</xsl:call-template> 
+									</xsl:for-each>		
+									<xsl:for-each select="//datafield[@tag='954']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'954holding'"/>
+											<xsl:with-param name="tagnumber" select="'954'"/>
+										</xsl:call-template> 
+									</xsl:for-each>	
+									<xsl:for-each select="//datafield[@tag='955']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'955holding'"/>
+											<xsl:with-param name="tagnumber" select="'955'"/>
+										</xsl:call-template> 
+									</xsl:for-each>
+									<xsl:for-each select="//datafield[@tag='996']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'996holding'"/>
+											<xsl:with-param name="tagnumber" select="'996'"/>
+										</xsl:call-template> 
+									</xsl:for-each>					
+									<xsl:for-each select="//datafield[@tag='952']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'952holding'"/>
+											<xsl:with-param name="tagnumber" select="'952'"/>
+										</xsl:call-template> 
+									</xsl:for-each>		
+									<xsl:for-each select="//datafield[@tag='958']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'958holding'"/>
+											<xsl:with-param name="tagnumber" select="'958'"/>
+										</xsl:call-template> 
+									</xsl:for-each>			
+									<xsl:for-each select="//datafield[@tag='953']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'953holding'"/>
+											<xsl:with-param name="tagnumber" select="'953'"/>
+										</xsl:call-template> 
+									</xsl:for-each>
+									<xsl:for-each select="//datafield[@tag='994']">
+										 <xsl:call-template name="accesspointlist">
+											<xsl:with-param name="typename" select="'994holding'"/>
+											<xsl:with-param name="tagnumber" select="'994'"/>
+										</xsl:call-template> 
+									</xsl:for-each>
+								</ul>									
+							</div>	 
+						</div>					
+					</xsl:when>					
+					<xsl:otherwise>
+							<div class="addedcontainer"><div id="addedholdings" style="display:none" class="added"><ul id="addedholdingslist"></ul></div></div>
+					</xsl:otherwise>
+				</xsl:choose>	
+				
 			</p>
 			</div>
 	
@@ -352,6 +363,18 @@
 				</div>
 			</p>
 			</div>
+			
+			<a href="#top" class="toplink" name="internalnotes">Top</a> 
+			
+			<div class="field">
+			<p><strong>Internal Notes:</strong><br/>These will not form part of any MARC or XML export, and will only be visible to those using the editing system.
+
+					<textarea name="internal_notes" id="internal_notes" type="text" onfocus="setCurrent(this);" cols="97" rows="7">%%INTERNALNOTES%%</textarea>
+
+			</p>
+			</div>
+			
+			
 			</form>
 		</div>
 	</xsl:template>
