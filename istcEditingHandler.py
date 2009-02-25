@@ -306,9 +306,9 @@ class IstcEditingHandler:
 #       if not f or not len(f.value):
 #            #TODO: create appropriate html file - this is for admin
 #            return read_file('upload.html')
-    #    xml = read_file(f)
-        ws = re.compile('[\s]+')
-        xml = ws.sub(' ', read_file(f))
+        xml = read_file(f)
+#        ws = re.compile('[\s]+')
+#        xml = ws.sub(' ', read_file(f))
         doc = StringDocument(xml)  
         rec = xmlp.process_document(session, doc)
         
