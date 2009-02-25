@@ -24,6 +24,7 @@ function goto(){
 	if (value != 'null') {
 		location.href = '#' + value;
 	}
+	var select = document.getElementById('goto').selectedIndex = 0;
 }
 
 
@@ -39,8 +40,47 @@ var indicators = new Array();
 		indicators['510'] = '4-0';
 		indicators['959'] = '1-0';
 
+
+function validEntry(s){
+	if (s == 'imprints'){
+		if (document.getElementById('260_a').value.strip() == '' && document.getElementById('260_b').value.strip() == '' && document.getElementById('260_c').value.strip() == ''){
+			return false;
+		}
+	}
+	if (s == 'generalnotes'){
+		if (document.getElementById('500_a').value.strip() == ''){
+			return false;
+		}
+	}
+	if (s == 'references'){
+		if (document.getElementById('510_a').value.strip() == ''){
+			return false;
+		}	
+	}
+	if (s == 'repnotes'){
+		if (document.getElementById('530_a').value.strip() == ''){
+			return false;
+		}	
+	}	
+	if (s == 'holdings'){
+		if (document.getElementById('holdings_a').value.strip() == ''){
+			return false;
+		}
+	}
+	if (s == 'blshelfmarks'){
+		if (document.getElementById('852_a').value.strip() == '' || document.getElementById('852_j').value.strip() == ''){
+			return false;
+		}
+	}	
+	return true;
+}
+
+
 function addEntry(s){
 
+	if (!validEntry(s)){
+		return;
+	}
    	var fm = document.getElementById('istcForm');
 	var tableDiv = ($(s + 'table'));
 	
@@ -136,6 +176,7 @@ function addEntry(s){
     }
     nameCount++;   	 
 	clearRef();
+	clearUsa();
 	if (s == 'holdings'){
 		document.getElementById('holdings_country').selectedIndex = 0;
 	}
@@ -212,7 +253,7 @@ function deleteEntry(d){
 followed by '_formgen' which is used to maintain distinct ids between access points read in from existing xml and those created in the current form,
 number is the number which forms part of the unique id */
 function editEntry(s, number){
-
+	clearUsa();
 	var type = s.substring(0, s.indexOf('_formgen'));
   	if (type == '') {
   		type = s;
@@ -234,19 +275,27 @@ function editEntry(s, number){
   	var table = tableDiv.getElementsByTagName('tbody')[0];
   	var rows = table.getElementsByTagName('tr');
   	var inputs = table.getElementsByTagName('input');
+  	var usa = false;
 	if (type == 'holdings'){
 	  	for (var i = 0; i< values.length-2; i++){ 
 	  		value = values[i].split(' | ');
 	  		if (i == 0) {
-	  			select = document.getElementById('holdings' + value[0].substring(value[0].indexOf('_')));
+	  			var select = document.getElementById('holdings' + value[0].substring(value[0].indexOf('_')));
 	  			for (var j = 0; j< select.length; j++){  
 	  				if(select[j].value == value[1]){
      					select.selectedIndex = j;
    					}
 	  			}
+	  			if (value[1] == '952'){
+	  				usa = true;
+	  			}
 	  		}
-	  		else {			
-	  			document.getElementById('holdings' + value[0].substring(value[0].indexOf('_'))).value = value[1];	  		
+	  		else {	
+	  			document.getElementById('holdings' + value[0].substring(value[0].indexOf('_'))).value = value[1];
+	  			if (usa && i==1){
+	  				showUsa(value[1]);
+	  			}		
+	  				  				  		
 	  		}
 	  	}
   	}
@@ -295,19 +344,6 @@ function editEntry(s, number){
 }
 
 
-function registerLists(){
-	added = document.getElementsByClassName('added');
-	for (var i = 0; i< added.length; i++){
-		if (added[i].style.display == 'block'){
-			list = document.getElementById(added[i].id + 'list');
-			if (list.getElementsByTagName('li').length > 1){
-				Sortable.create(added[i].id + 'list', {handle:'handle', constraint: 'vertical' });
-			}
-		}
-	}
-}
-
-
 function showValue(value){
 		var url = '/istc/edit/';
 		var data = 'operation=references&q=' + value;		
@@ -323,51 +359,21 @@ function showValue(value){
 		cell.appendChild(p);
 }
 
-/*
-function getFullRef(element){
-	clearRef();
-	var cell = document.getElementById('refdisplay');
-	var p = cell.appendChild(document.createElement('p'));
-	var value = element.value;
-	var url = '/istc/edit/';
-	var data = 'operation=references&q=' + value;
-	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
-		var text = document.createTextNode(transport.responseText);	
-		p.appendChild(text);
-		cell.appendChild(p);	
-	}});		
-}*/
-
-
-/*
-function getFormRef(e){
-	
-	var element;
-	if (!e) {
-		var e = window.event;
-	}
-	if (e.target){
-		element = e.target;
-	}else{
-		element = window.event.srcElement;
-	}
-	if (element.id == 'addedreferences') {
-		clearRef();
-		var cell = document.getElementById('refdisplay');
-		var p = cell.appendChild(document.createElement('p'));
-		value = document.getElementById('510_a').value;
-		if (value != "" && value != " "){
-			var url = '/istc/edit/';
-			var data = 'operation=references&q=' + value + '&r=False';
-			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
-				var text = document.createTextNode(transport.responseText);
-				p.appendChild(text);
-			}});
+function showUsa(value){
+		var url = '/istc/edit/';
+		var data = 'operation=usa&q=' + value;		
+		var cell = document.getElementById('usadisplay');
+		if (cell.childNodes[0]){
+			cell.removeChild(cell.childNodes[0]);
 		}
-		cell.appendChild(p);		
-	}
-}*/
-
+		var p = cell.appendChild(document.createElement('p'));
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var text = document.createTextNode('Full USA location: ' + transport.responseText);	
+			p.appendChild(text);	
+		}});	
+		cell.appendChild(p);
+		document.getElementById('usabutton').style.display = 'block';		
+}
 
 
 function clearRef(){
@@ -378,6 +384,14 @@ function clearRef(){
 	cell.appendChild(document.createElement('p'));
 }
 
+function clearUsa(){
+	var cell = document.getElementById('usadisplay');
+	for (var i=0; i < cell.childNodes.length; i++){
+		cell.removeChild(cell.childNodes[i]);	
+	}
+	cell.appendChild(document.createElement('p'));
+	document.getElementById('usabutton').style.display = 'none';
+}
 
 
 
@@ -396,13 +410,44 @@ function editRef(){
 	else {
 		full = ' ';
 	}
-	document.getElementById('subAbbrRef').value = abbrev;
-	document.getElementById('subFullRef').value = full;
-	document.getElementById('refPopup').style.display = 'block';
-	
-	
-
+	var span = document.createElement('span');
+	span.appendChild(document.createTextNode('References Editing'));
+	document.getElementById('subformtitle').removeChild(document.getElementById('subformtitle').firstChild);
+	document.getElementById('subformtitle').appendChild(span);
+	document.getElementById('subabbr').value = abbrev;
+	document.getElementById('subfull').value = full;
+	document.getElementById('formtype').value = 'refs';
+	document.getElementById('popupform').style.display = 'block';
 }
+
+
+function editUsa(){
+	var abbrev = document.getElementById('holdings_a').value;
+	abbrev = abbrev.replace(/&/g, '%26');
+	if (abbrev.strip() == ' ' || abbrev.strip() == ''){
+		alert('Please add abbreviated library location in the library box first to ensure a duplicate entry is not created');
+		return;
+	}
+	if (abbrev.strip() != ' ' && abbrev.strip() != ''){
+		showUsa(abbrev);
+		var full = document.getElementById('usadisplay').childNodes[0].firstChild.nodeValue;
+		full = full.replace(/&/g, '%26');	
+	}
+	else {
+		full = ' ';
+	}
+	var span = document.createElement('span');
+	span.appendChild(document.createTextNode('U.S.A. Locations Editing'));
+	document.getElementById('subformtitle').removeChild(document.getElementById('subformtitle').firstChild);
+	document.getElementById('subformtitle').appendChild(span);
+	document.getElementById('subabbr').value = abbrev;
+	document.getElementById('subfull').value = full;
+	document.getElementById('formtype').value = 'usa';
+	document.getElementById('popupform').style.display = 'block';
+}
+
+
+
 //end of functions for multiple entry fields
 
 //================================================================================================
@@ -415,6 +460,7 @@ var indexMap = new Array();
 		indexMap['260_b'] = 'idx-printer';
 		indexMap['author'] = 'idx-author';
 		indexMap['510_a'] = 'idx-key-refs-exact';
+		indexMap['holdings_a'] = '';
 
 
 //the option currently selected - used to select but keep focus on textbox
@@ -513,8 +559,9 @@ function suggest(id, e){
 
 
 function selectClick(elem, target, mode){
+
 	var element = elem;
-	var targetElem = ($(target));
+	var targetElem = document.getElementById(target);
 	if (optionSel != -1 || mode == 'mouse'){
 		targetElem.value = element.value;
 	}
@@ -525,18 +572,7 @@ function selectClick(elem, target, mode){
 	}
 }
 
-/*
-function selectReturn(elem, target, e){
-	if (keyCheck(e) == 13){
-		var element = elem;
-		var targetElem = ($(target)); 
-		targetElem.value = element.value;
-		targetElem.parentNode.removeChild(element);
-		if (target == '510_a'){
-			showValue(element.value);
-		}
-	}
-}*/
+
 
 //checks which key was pressed - list available here http://webonweboff.com/tips/js/event_key_codes.aspx
 function keyCheck(e){
@@ -577,15 +613,24 @@ function hideCharTable(){
 //
 // Submit Functions
 
-function submitReference(){
-	var abbrev = document.getElementById('subAbbrRef').value;
-	var full = document.getElementById('subFullRef').value;
+function submitSubForm(){
+	
+	var operation = document.getElementById('formtype').value;
+
+	var abbrev = document.getElementById('subabbr').value;
+	var full = document.getElementById('subfull').value;
 	if (abbrev.strip() == '' || full.strip() == ''){
 		alert('All fields must me completed before submitting');
 		return;
 	}
 	var url = '/istc/edit/';
-	var data = 'operation=submitref&abbrev=' + abbrev + '&full=' + full;
+	if (operation == ''){
+		var data = 'operation=submitusa';
+	}
+	else {
+		var data = 'operation=submitref';
+	}
+	data += '&abbrev=' + abbrev + '&full=' + full;
 	var outcome = 'unsuccessful';
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 		var response = transport.responseText;
@@ -594,12 +639,12 @@ function submitReference(){
 		}
 	}});	
 	if (output = 'success'){
-		alert('The reference has been saved successfully');
-		showValue(abbrev)
-		hideRefPopup();
+		alert('The data has been saved successfully');
+	//	showValue(abbrev)
+		hidePopup();
 	}
 	else {
-		alert('The reference was not saved successfully, please try again.');
+		alert('The data was not saved successfully, please try again.');
 	}
 }
 
@@ -624,10 +669,10 @@ function submitForm(op){
 //
 //Popup Div Functions
 
-function hideRefPopup(){
-	document.getElementById('refPopup').style.display = 'none';
+function hidePopup(){
+	document.getElementById('popupform').style.display = 'none';
 }
 
-function showRefPopup(){
-	document.getElementById('refPopup').style.display = 'block';
+function showPopup(){
+	document.getElementById('popupform').style.display = 'block';
 }

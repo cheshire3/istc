@@ -73,13 +73,12 @@ class IstcEditingHandler:
 
 
     def build_marc(self, form):
-        multipleEntryFields = ['imprints', 'generalnotes', 'references', 'blshelfmarks']
+        multipleEntryFields = ['imprints', 'generalnotes', 'references', 'holdings', 'blshelfmarks']
         list = form.list
         dict = {}
         marc = {}
-        
-        for l in list:
 
+        for l in list:
             if l.value.strip() != '' and l.value.strip() != ' ' and l.name not in ['operation']:
                 if l.name == '1':
                     marc[1] = [l.value.strip()]
@@ -88,7 +87,7 @@ class IstcEditingHandler:
                         marc[0] = [''.join([l.value[5:9], l.value[17:20]])]
                     except:
                         marc[0] = [' am    ']
-                elif l.name in multipleEntryFields:
+                elif l.name in multipleEntryFields or l.name[3:] in multipleEntryFields:
                     if l.value.find('|||') != -1:
                         meList = l.value.split('|||')
                         ind = '0-0'
@@ -107,7 +106,6 @@ class IstcEditingHandler:
                             marc[n].append(tuple)
                         except:
                             marc[n] = [tuple]
-                            
                 else:
                     name = l.name.split('_')
                     try:
@@ -117,6 +115,7 @@ class IstcEditingHandler:
                     try:
                         dict[n][name[1]] = l.value.strip()
                     except:
+                       
                         dict[n] = {name[1] : l.value.strip()}   
         try:
             marc[0]
@@ -173,15 +172,15 @@ class IstcEditingHandler:
 
     def save(self, form):
         recid = form.get("controlfield[@tag='001']", None)
+        rec = xmlp.process_document(session, self.build_marc(form))
+        rec.id = recid
         try:
-            retrievedRec = editStore.fetch_record(session, recid)
-        except:
-            rec = xmlp.process_document(session, self.build_marc(form))
-            raise ValueError(rec.get_xml(session))
-            rec.id = recid
-            editStore.store_record(session, rec)
-            editStore.commit_storing(session)
-            return rec
+            editStore.delete_record(session, recid)
+        except: 
+            pass
+        editStore.store_record(session, rec)
+        editStore.commit_storing(session)
+        return rec
  
  
     def get_fullRefs(self, session, form, recursive=True):
@@ -191,9 +190,9 @@ class IstcEditingHandler:
         r = form.get('r', '') 
         if r != '':
             recursive=False
-        session.database = db3.id
+        session.database = dbrefs.id
         q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
-        rs = db3.search(session, q)
+        rs = dbrefs.search(session, q)
         if len(rs):
             recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
         else :
@@ -201,7 +200,7 @@ class IstcEditingHandler:
                 while ref.rfind(' ') != -1 and not len(rs):
                     ref = ref[:ref.rfind(' ')].strip()
                     q.term.value = ref.decode('utf-8')
-                    rs = db3.search(session, q)
+                    rs = dbrefs.search(session, q)
                 if len(rs):
                     recRefs = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
                 else:
@@ -210,6 +209,20 @@ class IstcEditingHandler:
                 recRefs = '' 
         return recRefs
 
+
+    def get_fullUsa(self, session, form):
+        code = form.get('q', None)
+        code = code.replace('*', '\*')
+        code = code.replace('?', '\?')        
+
+        session.database = dbusa.id
+        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % (code))
+        rs = dbusa.search(session, q)
+        if len(rs):
+            fullUsa = rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+        else :
+           fullUsa = '' 
+        return fullUsa
        
         
     def _walk_directory(self, d, type='checkbox'):
@@ -289,10 +302,13 @@ class IstcEditingHandler:
     def edit_file(self, form):
         dataPath = cheshirePath + '/cheshire3/dbs/istc/data/'
         f = '%s%s.xml' % (dataPath, form.get('q', None))
+        
 #       if not f or not len(f.value):
 #            #TODO: create appropriate html file - this is for admin
 #            return read_file('upload.html')
-        xml = read_file(f)
+    #    xml = read_file(f)
+        ws = re.compile('[\s]+')
+        xml = ws.sub(' ', read_file(f))
         doc = StringDocument(xml)  
         rec = xmlp.process_document(session, doc)
         
@@ -307,6 +323,7 @@ class IstcEditingHandler:
         structure = unicode(structure)
         page = unicode(formTxr.process_record(session, rec).get_raw(session))
         page = page.replace('%RFRNC%', self._get_refxml(session, rec))
+        page = page.replace('%%INTERNALNOTES%%', ' ')
         page = structure.replace('%CONTENT%', page)
         return page
 
@@ -322,9 +339,9 @@ class IstcEditingHandler:
                 t = unicode(t)
                 abbrev = bibRefNormalizer.process_string(session, t)
                 other = t[len(abbrev) + 1:]
-                session.database = db3.id
+                session.database = dbrefs.id
                 q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))
-                rs = db3.search(session, q)
+                rs = dbrefs.search(session, q)
                 if len(rs):
                     full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
                 else:
@@ -376,10 +393,10 @@ class IstcEditingHandler:
         letters = form.get('s', None)
         index = form.get('i', None)
         if index == 'idx-key-refs-exact':
-            session.db = db3.id
+            session.db = dbrefs.id
             q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
-           # idx = db3.get_object(session, '%s' % index)
-            terms = db3.scan(session, q, 50, direction="=")            
+           # idx = dbrefs.get_object(session, '%s' % index)
+            terms = dbrefs.scan(session, q, 50, direction="=")            
         else:
             q = qf.get_query(session, 'c3.%s = "%s"' % (index, letters))
           #  idx = db.get_object(session, '%s' % index)
@@ -402,17 +419,11 @@ class IstcEditingHandler:
 
 #SUB-FORM FUNCTIONS
 
-    
-    def get_refForm(self, form):
-        page = read_file('refSubForm.html')
-        page = page.replace('%%ABBREV%%', form.get('abbrev', ''))
-        page = page.replace('%%FULL%%', form.get('full', ''))
-        return page
-    
+        
     
     def submit_ref(self, form):
-        session.database = db3.id
-        refsStore = db3.get_object(session, 'refsRecordStore')      
+        session.database = dbrefs.id
+        refsStore = dbrefs.get_object(session, 'refsRecordStore')      
         abbrev = form.get('abbrev', '')
         full = form.get('full', '')
         if abbrev.strip() == '' or full.strip() == '':
@@ -422,7 +433,7 @@ class IstcEditingHandler:
             newRec = xmlp.process_document(session, entry)
             
             q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))     
-            rs = db3.search(session, q)
+            rs = dbrefs.search(session, q)
             recid = None
             try:
                 rec = rs[0].fetch_record(session)
@@ -430,22 +441,22 @@ class IstcEditingHandler:
                 pass
             else:
                 recid = rec.id
-                db3.unindex_record(session, rec)
-                db3.remove_record(session, rec)
+                dbrefs.unindex_record(session, rec)
+                dbrefs.remove_record(session, rec)
                 refsStore.begin_storing(session)
                 refsStore.delete_record(session, rec.id)
                 refsStore.commit_storing(session)
                 
-            db3.begin_indexing(session)
+            dbrefs.begin_indexing(session)
             refsStore.begin_storing(session)  
             if recid == None:     
-                indexFlow = db3.get_object(session, 'refsIndexRecordWorkflow')          
+                indexFlow = dbrefs.get_object(session, 'refsIndexRecordWorkflow')          
             else:
-                indexFlow = db3.get_object(session, 'refsIndexExistingRecordWorkflow')
+                indexFlow = dbrefs.get_object(session, 'refsIndexExistingRecordWorkflow')
             indexFlow.process(session, newRec)     
             refsStore.commit_storing(session)
-            db3.commit_indexing(session)
-            db3.commit_metadata(session)
+            dbrefs.commit_indexing(session)
+            dbrefs.commit_metadata(session)
             filename = '/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml'
             os.rename(filename, '/home/cheshire/cheshire3/dbs/istc/refsData/refs.bak')
             file = open(filename, 'w')
@@ -629,6 +640,10 @@ class IstcEditingHandler:
                 content = self.get_fullRefs(session, form)
                 self.send_xml(content, req)
                 return
+            elif (operation == 'usa'):
+                content = self.get_fullUsa(session, form)
+                self.send_xml(content, req)
+                return
         else:
             content = self.show_editMenu()
             # send the display
@@ -638,12 +653,14 @@ rebuild = True
 serv = None
 session = None
 db = None
-db3 = None
+dbrefs = None
+dbusa = None
 qf = None
 baseDocFac = None
 sourceDir = None
 editStore = None
 recordStore = None
+noteStore = None
 authStore = None
 xmlp = None
 formTxr = None
@@ -651,7 +668,7 @@ indentingTxr = None
 
 
 def build_architecture(data=None):
-    global session, serv, db, db3, qf, editStore, recordStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
+    global session, serv, db, dbusa, dbrefs, qf, editStore, recordStore, noteStore, authStore, formTxr, xmlp, indentingTxr, sourceDir
     
     session = Session()
     session.database = 'db_istc'
@@ -659,12 +676,14 @@ def build_architecture(data=None):
     session.user = None
     serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
     db = serv.get_object(session, 'db_istc')
-    db3 = serv.get_object(session, 'db_refs')
+    dbusa = serv.get_object(session, 'db_usa')
+    dbrefs = serv.get_object(session, 'db_refs')
     qf = db.get_object(session, 'baseQueryFactory')
     baseDocFac = db.get_object(session, 'baseDocumentFactory')
     sourceDir = baseDocFac.get_default(session, 'data')
     editStore = db.get_object(session, 'editingStore')
     recordStore = db.get_object(session, 'recordStore')
+    noteStore = db.get_object(session, 'notesStore')
     authStore = db.get_object(session, 'istcAuthStore')
     xmlp = db.get_object(session, 'LxmlParser')
     formTxr = db.get_object(session, 'formCreationTxr')

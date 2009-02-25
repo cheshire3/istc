@@ -78,6 +78,7 @@
     	<option value="reproductionnotes">Reproduction Notes</option>
     	<option value="holdings">Holdings</option>
     	<option value="blshelfmark">BL Shelfmark</option>
+    	<option value="internalnotes">Internal Notes</option>
     </select></div>
  	<div id="content">
 <!-- PAGE CONTAINER -->	
@@ -87,14 +88,15 @@
 
 </div>
  		</div> <!-- End of maincontent -->
- 		 <div class="popup" style="display:none" id="refPopup">
-			<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="hideRefPopup()"/></div>
+ 		 <div class="popup" style="display:none" id="popupform">
+			<div id="subformheader"><h3 id="subformtitle" class="subformtitle">Title</h3><input id="subclose" type="button" value="close" onClick="hidePopup()"/></div>
 		 		<br/>
-		 		<table id="subreftable"><tbody>
-		 		<tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68"/></td></tr>
-		 		<tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4"> </textarea></td></tr>
+		 		<table id="subtable"><tbody>
+		 		<tr><td class="sublabel">Abbreviation: </td><td><input id="subabbr" readonly="readonly" type="text" size="68"/></td></tr>
+		 		<tr><td class="sublabel">Full Entry: </td><td><textarea id="subfull" cols="66" rows="4"> </textarea></td></tr>
 		 		</tbody></table>
-		 		<input id="subrefsubmit" type="button" value="submit" onclick="submitReference();"/>
+		 		<input type="hidden" id="formtype" value="none"/>
+		 		<input id="subformsubmit" type="button" value="submit" onclick="submitSubForm();"/>
 		 </div>
 		 </div> <!-- End of container -->
 		
