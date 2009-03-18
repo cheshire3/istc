@@ -105,7 +105,7 @@
 				</table>
 				<xsl:if test="$format='screen'">
 					<div class="recordnav">%nav%</div>
-					<form id="mainform" action="/istc/search/search.html" method="get">
+					<form id="mainform" action="search.html" method="get">
 						<input type="hidden" id="opvalue" name="operation" value="print"/>
 						<input type="hidden" id="expand" name="expand" value="false"/>
 						<input type="hidden" id="locations" name="locations">

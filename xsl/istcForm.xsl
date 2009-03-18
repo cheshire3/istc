@@ -13,7 +13,7 @@
     </script>
 	<!-- PAGE CONTAINER -->	
 			<div id="formDiv" name="form" class="formDiv" onscroll="hideAllMenus()">
-				<form accept-charset="UTF-8" id="mainform" name="mainform" action="/istc/edit/edit.html" method="post" enctype="multipart/form-data">
+				<form accept-charset="UTF-8" id="mainform" name="mainform" action="edit.html" method="post" enctype="multipart/form-data">
 				<input type="hidden" id="opvalue" name="operation"/>
 				<input type="hidden" id="owner" name="owner" value="%OWNER%"/>
 				<input type="hidden" id="leader" name="leader">			
