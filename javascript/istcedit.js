@@ -133,7 +133,7 @@ function checkIds(type){
 		}
 	}
 	if (valid){
-		var url = '/istc/edit/';
+		var url = '../edit/';
 		var data = 'operation=checkStore&id=' + id;
 		var error = false;
 		var conflict = '';
@@ -518,7 +518,7 @@ function editEntry(s, number){
 //Functions for Holdings and USA second databases
 
 function updateFullRef(value){
-		var url = '/istc/edit/';
+		var url = '../edit/';
 		var data = 'operation=references&q=' + value;		
 		var cell = document.getElementById('refs_full');
 		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
@@ -528,7 +528,7 @@ function updateFullRef(value){
 }
 
 function updateFullUsa(value){
-		var url = '/istc/edit/';
+		var url = '../edit/';
 		var data = 'operation=usa&q=' + value;		
 		var cell = document.getElementById('usa_full');
 		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
@@ -538,7 +538,7 @@ function updateFullUsa(value){
 }
 
 function showValue(value){
-		var url = '/istc/edit/';
+		var url = '../edit/';
 		var data = 'operation=references&q=' + value;		
 		var cell = document.getElementById('refdisplay');
 		if (cell.childNodes[0]){
@@ -553,7 +553,7 @@ function showValue(value){
 }
 
 function showUsa(value){
-		var url = '/istc/edit/';
+		var url = '../edit/';
 		var data = 'operation=usa&q=' + value;		
 		var cell = document.getElementById('usadisplay');
 		if (cell.childNodes[0]){
@@ -734,7 +734,7 @@ function suggest(id, e){
 		}
 		if (element.value != ''){
 		//AJAX call to get values from index
-			var url = '/istc/edit/';
+			var url = '../edit/';
 			var data = 'operation=suggest&i=' + index + '&s=' + element.value;
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
@@ -825,7 +825,7 @@ function clearSuggests(){
 }
 
 function getAll(letters, type){
-	var url = '/istc/edit/';
+	var url = '../edit/';
 	var data = 'operation=all&letters=' + letters + '&type=' + type;
 	document.getElementById('colcontainer').innerHTML = '';
 	if (letters != ''){
@@ -924,7 +924,7 @@ function submitSubForm(){
 		alert('All fields must me completed before submitting');
 		return;
 	}
-	var url = '/istc/edit/';
+	var url = '../edit/';
 	if (operation == 'usa'){
 		var data = 'operation=submitusasub';
 	}
@@ -966,7 +966,7 @@ function saveForm(){
 		var istcNo = document.getElementById('ISTCNo').value
 		if (istcNo.strip() != '' && validate_ISTCNo(istcNo.strip())){
 			//already in main db
-			var url = '/istc/edit/';
+			var url = '../edit/';
 			var data = 'operation=checkDir&id=' + istcNo;
 			var error = false;
 			var conflict = '';
@@ -1026,7 +1026,7 @@ function save(){
 	var form = document.getElementById('mainform');	
 	var timestamp;
 	document.getElementById('opvalue').value = 'save';
-	var url = '/istc/edit/';
+	var url = '../edit/';
 	var data = ($('mainform')).serialize();
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 		var response = transport.responseText;
@@ -1040,7 +1040,7 @@ function save(){
 	span.removeChild(span.firstChild);
 	span.appendChild(time);
 	if (reload == true){
-		window.location.href='/istc/edit/?operation=load&recid=' + istcNo;
+		window.location.href='../edit/?operation=load&recid=' + istcNo;
 	}
 	return true;
 }
@@ -1106,10 +1106,10 @@ function deleteFromStore(){
 }
 
 function deleteRec(id){
-	var url = '/istc/edit/';
+	var url = '../edit/';
 	var data = 'operation=discard&recid=' + encodeURIComponent(id);
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
-		location.href="/istc/edit/edit.html";		    
+		location.href="../edit/edit.html";		    
 	}});		
 }
 
