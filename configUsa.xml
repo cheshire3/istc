@@ -8,13 +8,24 @@
     <object type="indexStore" ref="usaIndexStore"/>
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
-
+  
      <subConfigs>
         <path type="includeConfigs">configs.d</path>
     </subConfigs>
 
 
   <subConfigs>
+    
+  	<subConfig type="documentFactory" id="usaDocumentFactory">
+	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
+	   <options>
+	   	  <default type="format">xml</default>
+	      <default type="data">/home/cheshire/cheshire3/dbs/istc/usaData/usaCodes.xml</default>
+	      <default type="tagName">record</default>
+	      <default type="codec">utf-8</default>
+	   </options>
+    </subConfig>        
+    
     
     <subConfig type="recordStore" id="usaRecordStore">
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
@@ -114,6 +125,83 @@
 	<setting type="sortStore">1</setting>
       </options>
     </subConfig>
+
+	<!-- Building Workflows -->
+
+	  <subConfig type="workflow" id="usaPreParserWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  document -->       
+        <object type="preParser" ref="CharacterEntityPreParser"/>        
+        <object type="preParser" ref="AmpPreParser"/>
+      </workflow>
+    </subConfig>
+    
+    
+    <subConfig type="workflow" id="usaBuildIndexWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  documentFactory -->        
+        <object type="recordStore" ref="usaRecordStore" function="begin_storing"/>
+        <object type="database" ref="db_usa" function="begin_indexing"/>
+        <for-each>
+          <!-- input type: document -->
+          <log level="info">"  " + input.filename</log>
+          <object type="workflow" ref="usaBuildIndexSingleWorkflow"/>
+        </for-each>
+        <object type="recordStore" ref="usaRecordStore" function="commit_storing"/>             
+        <object type="database" ref="db_usa" function="commit_indexing"/> 
+        <object type="database" ref="db_usa" function="commit_metadata"/>        
+      </workflow>
+    </subConfig>
+
+    <subConfig type="workflow" id="usaBuildIndexSingleWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+		<!-- input type:  document -->
+		<object type="workflow" ref="usaPreParserWorkflow"/>
+		<try>
+		  <object type="parser" ref="LxmlParser"/>
+		</try>
+		<except>
+		  <assign from="'unparsable: ' + str(err)" to="input"/>
+		</except>
+		<!-- type: record -->
+      	<object type="workflow" ref="usaIndexRecordWorkflow"/> 
+      </workflow>
+    </subConfig>
+
+    
+    <subConfig type="workflow" id="usaIndexRecordWorkflow">
+	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+	  <workflow>
+	    <!-- input type:  record -->
+		<object type="recordStore" ref="usaRecordStore" function="create_record"/>
+		<object type="database" ref="db_usa" function="add_record"/>
+		<try>
+		  <object type="database" ref="db_usa" function="index_record"/>	
+		</try>
+		<except>
+		   <log level="warning">"*** Some indexes incomplete"</log>
+		</except>
+	  </workflow>
+	</subConfig>
+	
+	<subConfig type="workflow" id="usaIndexExistingRecordWorkflow">
+	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+	  <workflow>
+	    <!-- input type:  record -->
+		<object type="recordStore" ref="usaRecordStore" function="create_record"/>
+		<object type="database" ref="db_usa" function="add_record"/>
+		<try>
+		  <object type="database" ref="db_usa" function="index_record"/>	
+		</try>
+		<except>
+		   <log level="warning">"*** Some indexes incomplete"</log>
+		</except>
+	  </workflow>
+	</subConfig>
+
 
 
   </subConfigs>

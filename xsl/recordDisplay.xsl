@@ -952,12 +952,12 @@
 				</xsl:choose>												
 			</xsl:if>
 			
-			<xsl:if test="//datafield[@tag='997'] and ($locations = 'all' or $locations = 'germany')">
+			<xsl:if test="//datafield[@tag='997'][not(subfield[@code='x'])] and ($locations = 'all' or $locations = 'germany')">
 				<xsl:variable name="l4">
 					<xsl:text>Germany:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v4">
-					<xsl:for-each select="//datafield[@tag='997']/subfield">
+					<xsl:for-each select="//datafield[@tag='997'][not(subfield[@code='x'])]/subfield">
 						<xsl:value-of select="."/><xsl:text>; </xsl:text>
 					</xsl:for-each>
 				</xsl:variable>

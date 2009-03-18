@@ -8,16 +8,18 @@
     <object type="indexStore" ref="refsIndexStore"/>
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
-
- <!--     <subConfigs>
+  
+  
+     <subConfigs>
         <path type="includeConfigs">configs.d</path>
-    </subConfigs>-->
+    </subConfigs>
 
   <subConfigs>
   	<subConfig type="documentFactory" id="refsDocumentFactory">
 	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
-	      <default type="data">/home/cheshire/cheshire3/dbs/istc/refsData</default>
+	   	  <default type="format">xml</default>
+	      <default type="data">/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml</default>
 	      <default type="tagName">record</default>
 	      <default type="codec">utf-8</default>
 	   </options>

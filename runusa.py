@@ -21,54 +21,65 @@ session.database = 'db_usa'
 db = serv.get_object(session, 'db_usa')
 defpath = db.get_path(session, "defaultPath")
 recordStore = db.get_object(session, 'usaRecordStore')
-sax = db.get_object(session, 'SaxParser')
+lgr = db.get_path(session, 'defaultLogger')
 
-
-df = db.get_object(session, 'defaultDocumentFactory')
+df = db.get_object(session, 'usaDocumentFactory')
 parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
     
-       
-
 
 if '-load' in sys.argv:
-    start = time.time()
-    #flow = db.get_object(session, 'buildIndexWorkflow')
-
-
     
-    db.begin_indexing(session)
-    recordStore.begin_storing(session)
-    df.load(session, defpath + "/usaData/", codec='iso-8859-1', tagName='record')
-    print 'Loading'
-    x = 0
-    for doc in df:    
-        x += 1
-        
-        doc = app.process_document(session, doc)
-        rec = parser.process_document(session, doc)
-        recordStore.create_record(session, rec)
-        db.add_record(session, rec)
+    start = time.time()
+    # build necessary objects
+    flow = db.get_object(session, 'usaBuildIndexWorkflow')
+    df.load(session)
+    lgr.log_info(session, 'Loading usa locations...' )
 
-   
-    x = 0
-    print "Indexing records..."
-    for rec in recordStore:    
-        x += 1
-        
-        try:
-            db.index_record(session, rec)
-        except UnicodeDecodeError:
-            print '[Some indexes not built - non unicode characters!]'
-
-
-
-
-
-
-    db.commit_indexing(session)
-    recordStore.commit_storing(session)
-    db.commit_metadata(session)
+    flow.process(session, df)
     (mins, secs) = divmod(time.time() - start, 60)
     (hours, mins) = divmod(mins, 60)
-    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)
+    lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
+
+
+#if '-load' in sys.argv:
+#    start = time.time()
+#    #flow = db.get_object(session, 'buildIndexWorkflow')
+#
+#
+#    
+#    db.begin_indexing(session)
+#    recordStore.begin_storing(session)
+#    df.load(session, defpath + "/usaData/", codec='iso-8859-1', tagName='record')
+#    print 'Loading'
+#    x = 0
+#    for doc in df:    
+#        x += 1
+#        
+#        doc = app.process_document(session, doc)
+#        rec = parser.process_document(session, doc)
+#        recordStore.create_record(session, rec)
+#        db.add_record(session, rec)
+#
+#   
+#    x = 0
+#    print "Indexing records..."
+#    for rec in recordStore:    
+#        x += 1
+#        
+#        try:
+#            db.index_record(session, rec)
+#        except UnicodeDecodeError:
+#            print '[Some indexes not built - non unicode characters!]'
+#
+#
+#
+#
+#
+#
+#    db.commit_indexing(session)
+#    recordStore.commit_storing(session)
+#    db.commit_metadata(session)
+#    (mins, secs) = divmod(time.time() - start, 60)
+#    (hours, mins) = divmod(mins, 60)
+#    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)

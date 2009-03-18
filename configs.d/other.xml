@@ -32,6 +32,13 @@
 	    </paths>
 	</subConfig>
 	
+	<subConfig type="transformer" id="toTextTxrWeb">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/toMARCTxtWeb.xsl</path>
+	    </paths>
+	</subConfig>	
+	
 	<subConfig type="transformer" id="toMarcTxr">
 	    <objectType>cheshire3.transformer.MarcTransformer</objectType>
 	</subConfig>

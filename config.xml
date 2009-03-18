@@ -21,12 +21,13 @@
 	   <objectType>cheshire3.queryFactory.SimpleQueryFactory</objectType>
     </subConfig>
     
-  	<subConfig type="documentFactory" id="baseDocumentFactory">
+  	<subConfig type="documentFactory" id="istcDocumentFactory">
 	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
 	      <default type="data">/home/cheshire/cheshire3/dbs/istc/data</default>
 	      <default type="format">dir</default>
 	      <default type="cache">0</default>
+	      <default type="codec">utf-8</default>
 	   </options>
     </subConfig>    
   
@@ -36,7 +37,6 @@
       <paths>
        <path type="defaultPath">stores</path>
        <path type="metadataPath">recordStoreMetadata.bdb</path>
-       	<!-- <object type="idNormalizer" ref = "StringIntNormalizer"/>-->
        	<object type="inTransformer" ref="XmlTransformer"/>
         <object type="outParser" ref="LxmlParser"/>
       </paths>
@@ -65,6 +65,13 @@
 		</paths>
 	</subConfig>
 	
+	<subConfig type="authStore" id="istcSuperAuthStore">
+		<objectType>cheshire3.objectStore.BdbObjectStore</objectType>
+		<paths>
+			<path type="databasePath">istcSuperAuthStore.bdb</path>
+		</paths>
+	</subConfig>
+	
 	<subConfig type="resultSetStore" id="resultSetStore">
 		<objectType>cheshire3.sql.postgres.PostgresResultSetStore</objectType>
         <paths>
@@ -78,18 +85,19 @@
         </options>
 	</subConfig>
 
-	<subConfig type="recordStore" id="editingStore">
+	<subConfig type="recordStore" id="bdbeditingStore">
 		<objectType>cheshire3.recordStore.BdbRecordStore</objectType>
 		<paths>
 			<path type="defaultPath">stores</path>
 			<path type="databasePath">editingStore.bdb</path>
 			<path type="metadataPath">editingStoreMetadata.bdb</path>
+			<object type="idNormalizer" ref = "StringIntNormalizer"/>
 			<object type="inTransformer" ref="XmlTransformer" />
 			<object type="outParser" ref="LxmlParser" />
 		</paths>
 	</subConfig>
 
- 	   <subConfig type="recordStore" id="pgeditingStore">
+ 	   <subConfig type="recordStore" id="editingStore">
 	      <objectType>cheshire3.sql.postgres.PostgresRecordStore</objectType>
 	      <paths>
 			<path type="databaseName">db_istc</path>
@@ -108,7 +116,6 @@
         <paths>
             <path type="databaseName">db_istc</path>
             <path type="tableName">internalNotesStore</path>
-            <object type="idNormalizer" ref="StringIntNormalizer"/>
         </paths>
 	</subConfig>
         

@@ -45,6 +45,20 @@
      	</source>
      </subConfig>
 
+     <subConfig type="index" id="idx-author-exact">
+ 		<objectType>cheshire3.index.SimpleIndex</objectType>
+ 		<paths>
+ 			<object type="indexStore" ref="indexStore" />
+ 			<object type="recordStore" ref="recordStore" />
+ 		</paths>
+ 		<source>
+ 			<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
+ 			<process>
+ 				<object type="extractor" ref="SimpleExtractor" />
+ 				<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+ 			</process>
+ 		</source>
+ 	</subConfig>
 
      <subConfig type="index" id="idx-author">
  		<objectType>cheshire3.index.SimpleIndex</objectType>
@@ -152,6 +166,30 @@
     		</process>
     	</source>
     </subConfig>
+
+    <subConfig type="index" id="idx-publoc-exact">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="PublocTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
     
     <subConfig type="index" id="idx-countryOfPrint">
     	<objectType>cheshire3.index.SimpleIndex</objectType>
@@ -199,8 +237,8 @@
     		</process>
     	</source>
     </subConfig>
-
-
+      
+    
     <subConfig type="index" id="idx-printer">
     	<objectType>cheshire3.index.SimpleIndex</objectType>
     	<paths>
@@ -222,8 +260,31 @@
     		</process>
     	</source>
     </subConfig>
-
-
+   
+   
+       <subConfig type="index" id="idx-printer-exact">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+     
+    
     <subConfig type="index" id="idx-kwd-bibref">
 		<objectType>cheshire3.index.ProximityIndex</objectType>
 		<paths>
@@ -389,16 +450,16 @@
     	</paths>
     	<source>
     		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
-    		<xpath>datafield[@tag='951']</xpath>
-    		<xpath>datafield[@tag='995']</xpath>
-    		<xpath>datafield[@tag='957']</xpath>
-    		<xpath>datafield[@tag='997']</xpath>
-    		<xpath>datafield[@tag='954']</xpath>
-    		<xpath>datafield[@tag='955']</xpath>
-    		<xpath>datafield[@tag='996']</xpath>
-    		<xpath>datafield[@tag='958']</xpath>
-    		<xpath>datafield[@tag='953']</xpath>
-    		<xpath>datafield[@tag='994']</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]</xpath>
     		<process>
     			<object type="workflow" ref="ProxExtractorWorkflow" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
@@ -421,19 +482,43 @@
     	</paths>
     	<source>
     		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
-    		<xpath>datafield[@tag='951']</xpath>
-    		<xpath>datafield[@tag='995']</xpath>
-    		<xpath>datafield[@tag='957']</xpath>
-    		<xpath>datafield[@tag='997']</xpath>
-    		<xpath>datafield[@tag='954']</xpath>
-    		<xpath>datafield[@tag='955']</xpath>
-    		<xpath>datafield[@tag='996']</xpath>
-    		<xpath>datafield[@tag='958']</xpath>
-    		<xpath>datafield[@tag='953']</xpath>
-    		<xpath>datafield[@tag='994']</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]</xpath>
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-location-private">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='951']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='995']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='957']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='997']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='954']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='955']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='996']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='958']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='953']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='994']/subfield[@code='x']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="SpaceNormalizer" />
     		</process>
     	</source>
     </subConfig>

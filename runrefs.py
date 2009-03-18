@@ -33,12 +33,12 @@ parser = db.get_object(session, 'LxmlParser')
 app = db.get_object(session, 'AmpPreParser')
     
        
-if '-wfload' in sys.argv:
+if '-load' in sys.argv:
     
     start = time.time()
     # build necessary objects
     flow = db.get_object(session, 'refsBuildIndexWorkflow')
-    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
+    df.load(session)
     lgr.log_info(session, 'Loading references...' )
 
     flow.process(session, df)
@@ -47,43 +47,43 @@ if '-wfload' in sys.argv:
     lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
 
 
-elif '-load' in sys.argv:
-    start = time.time()
-    #flow = db.get_object(session, 'buildIndexWorkflow')
-    db.begin_indexing(session)
-    recordStore.begin_storing(session)
-    #df.load(session, defpath + "/refsData/", codec='iso-8859-1', tagName='record')
-    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
-    
-    print 'Loading'
-    x = 0
-    for doc in df:    
-        x += 1
-        
-        doc = app.process_document(session, doc)
-        rec = parser.process_document(session, doc)
-        recordStore.create_record(session, rec)
-        db.add_record(session, rec)
-
-   
-    x = 0
-    print "Indexing records..."
-    for rec in recordStore:    
-        x += 1
-        
-        try:
-            db.index_record(session, rec)
-        except UnicodeDecodeError:
-            print '[Some indexes not built - non unicode characters!]'
-
-
-
-
-
-
-    db.commit_indexing(session)
-    recordStore.commit_storing(session)
-    db.commit_metadata(session)
-    (mins, secs) = divmod(time.time() - start, 60)
-    (hours, mins) = divmod(mins, 60)
-    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)
+#elif '-load' in sys.argv:
+#    start = time.time()
+#    #flow = db.get_object(session, 'buildIndexWorkflow')
+#    db.begin_indexing(session)
+#    recordStore.begin_storing(session)
+#    #df.load(session, defpath + "/refsData/", codec='iso-8859-1', tagName='record')
+#    df.load(session, defpath + "/refsData/", codec='utf-8', tagName='record')
+#    
+#    print 'Loading'
+#    x = 0
+#    for doc in df:    
+#        x += 1
+#        
+#        doc = app.process_document(session, doc)
+#        rec = parser.process_document(session, doc)
+#        recordStore.create_record(session, rec)
+#        db.add_record(session, rec)
+#
+#   
+#    x = 0
+#    print "Indexing records..."
+#    for rec in recordStore:    
+#        x += 1
+#        
+#        try:
+#            db.index_record(session, rec)
+#        except UnicodeDecodeError:
+#            print '[Some indexes not built - non unicode characters!]'
+#
+#
+#
+#
+#
+#
+#    db.commit_indexing(session)
+#    recordStore.commit_storing(session)
+#    db.commit_metadata(session)
+#    (mins, secs) = divmod(time.time() - start, 60)
+#    (hours, mins) = divmod(mins, 60)
+#    print 'Indexing complete (%dh %dm %ds)' % (hours, mins, secs)

@@ -34,6 +34,7 @@ recordStore = db.get_object(session, 'recordStore')
 lgr = db.get_path(session, 'defaultLogger')
 sax = db.get_object(session, 'SaxParser')
 authStore = db.get_object(session, 'istcAuthStore')
+superAuthStore = db.get_object(session, 'istcSuperAuthStore')
 qf = db.get_object(session, 'baseQueryFactory')
 df = db.get_object(session, 'defaultDocumentFactory')
 parser = db.get_object(session, 'LxmlParser')
@@ -69,19 +70,45 @@ if ('-adduser' in sys.argv):
         print 'OK: Username and passwords set for this user'
     #print user
     sys.exit()  
+    
+if ('-addsuperuser' in sys.argv):
+    un = raw_input('Please enter a username: ')
+    if not un: inputError('You must enter a username for this user.')
+    pw = getpass.getpass('Please enter a password for this user: ')
+    if not (pw and len(pw)): inputError('You must enter a password for this user.')
+    pw2 = getpass.getpass('Please re-enter the password to confirm: ')
+    if pw != pw2: inputError('The two passwords submitted did not match. Please try again.')
+    rn = raw_input('Real name of this user (not mandatory): ')
+    addy = raw_input('Email address for this user (not mandatory): ')
+    xml = read_file('xsl/admin.xml').replace('%USERNAME%', un)
+    for k,v in {'%password%': crypt(pw, pw[:2]), '%realName%': rn, '%email%': addy}.iteritems():
+        if v and len(v):
+            xml = xml.replace(k, '\n  <%s>%s</%s>' % (k[1:-1],v,k[1:-1]))
+        else:
+            xml = xml.replace(k, '')
+    doc = StringDocument(xml)
+    rec = parser.process_document(session, doc)
+    id = rec.process_xpath(session, '/config/@id')[0]
+    rec.id = id
+    superAuthStore.store_record(session, rec)
+    superAuthStore.commit_storing(session)
+    try:
+        user = superAuthStore.fetch_object(session, id)
+    except c3errors.FileDoesNotExistException:
+        print 'ERROR: User not successfully created. Please try again.'
+    else:
+        print 'OK: Username and passwords set for this user'
+    #print user
+    sys.exit()  
        
-if '-test' in sys.argv:
-    from PyZ3950.CQLParser import parse as ps
-    q = ps('c3.idx-ISTC-number any "ia*"')
-    rs = db.search(session, q)
-    sys.exit()
+
 
 elif '-load' in sys.argv:
     
     start = time.time()
     # build necessary objects
     flow = db.get_object(session, 'buildIndexWorkflow')
-    baseDocFac = db.get_object(session, 'baseDocumentFactory')
+    baseDocFac = db.get_object(session, 'istcDocumentFactory')
     baseDocFac.load(session, defpath + "/data_small/", codec='utf-8')
     lgr.log_info(session, 'Loading files from %s...' % (baseDocFac.dataPath))
     #flow.load_cache(session, db)

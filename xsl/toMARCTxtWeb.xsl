@@ -2,7 +2,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 	
-  <xsl:output method="text" version="1.0" encoding="utf-8"/>
+  <xsl:output method="xml" version="1.0" encoding="ascii"/>
   <xsl:preserve-space elements="xsl:text"/>
   
   <xsl:template match="/">
@@ -16,12 +16,12 @@
   <xsl:template match="leader"/>
   
   <xsl:template match="controlfield">
-  	<xsl:value-of select="@tag"/><xsl:text> </xsl:text><xsl:value-of select="."/>
+  	<span><xsl:value-of select="@tag"/><xsl:text> </xsl:text><xsl:value-of select="."/></span><br/>
   </xsl:template>
   
   <xsl:template match="datafield">
-  	<xsl:value-of select="@tag"/><xsl:text> </xsl:text><xsl:value-of select="@ind1"/><xsl:value-of select="@ind2"/>
-  	<xsl:apply-templates select="subfield"/>
+  	<span><xsl:value-of select="@tag"/><xsl:text> </xsl:text><xsl:value-of select="@ind1"/><xsl:value-of select="@ind2"/>
+  	<xsl:apply-templates select="subfield"/></span><br/>
   </xsl:template>
   
   <xsl:template match="subfield">

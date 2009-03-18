@@ -69,7 +69,7 @@
 	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
 	  <workflow>
 	    <!-- input type:  record -->
-	    <!-- assign identifier -->
+	    <object type="workflow" ref="assignDataIdentifierWorkflow"/>
 		<object type="recordStore" ref="recordStore" function="store_record"/>
 		<object type="database" function="add_record"/>
 		<try>
@@ -117,6 +117,14 @@
             <object type="extractor" ref="ProxExtractor" />
             <object type="tokenizer" ref="PreserveMaskingTokenizer" />
             <object type="tokenMerger" ref="ProxTokenMerger"/>
+        </workflow>
+    </subConfig>
+
+    <subConfig type="workflow" id="Diacritic-Space-NormalizerWorkflow">
+        <objectType>workflow.CachingWorkflow</objectType>
+        <workflow>
+            <object type="normalizer" ref="DiacriticNormalizer" />
+            <object type="normalizer" ref="SpaceNormalizer" />
         </workflow>
     </subConfig>
     
