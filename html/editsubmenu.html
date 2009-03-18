@@ -19,7 +19,7 @@
     
     <h3 class="editheader">A file from the main database</h3>
     <h4>Type in ISTC Number</h4><div id="typediv">
-    <form id="sourceDirForm" name="sourceTypeForm" action="/istc/edit/" method="post" enctype="multipart/form-data" onsubmit="return checkIds('text');">
+    <form id="sourceDirForm" name="sourceTypeForm" action="menu.html" method="post" enctype="multipart/form-data" onsubmit="return checkIds('text');">
     <input type="hidden" name="operation" id="operation" value="edit"/>
     
    	<input id="ISTCNo" type="text"  name="filename" onkeyup="suggest(this.id, event);" onkeydown="if (event.keyCode == 13){return false;}" autocomplete="off"/><br/>
@@ -28,7 +28,7 @@
     <br/><br/></div>
     <h4>Look up ISTC Number Alphabetically</h4>
     <div id="alphabet">
-    <form id="sourceDirForm" name="sourceDirForm" action="/istc/edit/" method="post" enctype="multipart/form-data" onsubmit="return checkIds('checkbox');">
+    <form id="sourceDirForm" name="sourceDirForm" action="menu.html" method="post" enctype="multipart/form-data" onsubmit="return checkIds('checkbox');">
 	
 	<div id="alphalinks">
 	<a class="alpha" href="javascript: getAll('ia', 'radio');">A</a>
@@ -74,7 +74,7 @@
     
     </div>
     <h3 class="editheader">A draft file</h3>
-    <form name="storeDirForm" id="storeDirForm" action="/istc/edit/" method="post" enctype="multipart/form-data">
+    <form name="storeDirForm" id="storeDirForm" action="menu.html" method="post" enctype="multipart/form-data">
     <input type="hidden" name="operation" id="operation3" value="load"/>
    <input type="submit" value=" Load File "/>
    <input type="button" onclick="deleteFromStore()" value=" Discard Draft "/>

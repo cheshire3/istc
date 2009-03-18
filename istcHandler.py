@@ -326,9 +326,9 @@ class IstcHandler:
             return '<div id="maincontent"><div id="content"><h1>Search Results - 0 Hits</h1>%s</div></div>' % ''.join(html)
         
         if not locations == 'all':
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form></div>' % (''.join(menubits), hits, rsid, locations, ''.join(html)))
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" /><input type="hidden" name="locations" value="%s" />%s</form></div>' % (''.join(menubits), hits, rsid, locations, ''.join(html)))
         else :
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="/istc/search/search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)))
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Search Results - %d Hits</h1><form id="mainform" action="search.html" method="get"><input type="hidden" name="rsid" value="%s" /><input type="hidden" name="type" value="selected" /><input type="hidden" id="opvalue" name="operation" value="print" /><input type="hidden" id="expand" name="expand" value="false" />%s</form></div>' % (''.join(menubits), hits, rsid, ''.join(html)))
 
 
     def _interpret(self, what):

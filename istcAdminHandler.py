@@ -253,7 +253,7 @@ class IstcAdminHandler:
         req.write('<div id="maincontent">')   
    
         if os.path.exists(lockfilepath) or os.path.exists(reflockfilepath) or os.path.exists(usalockfilepath) :
-            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database. Please try again in 10 minutes.</p>\n<p><a href="/istc/admin/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database. Please try again in 10 minutes.</p>\n<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')
         else :
             lock1 = open(lockfilepath, 'w')
             lock1.close() 
@@ -372,7 +372,7 @@ class IstcAdminHandler:
                     os.remove(reflockfilepath) 
                     
             req.write('<span class="ok">[OK]</span><br/>\n')    
-            req.write('<p><a href="/istc/admin/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')
         foot = unicode(read_file('footer.html'))
         req.write('</div>')      
         req.write(foot)

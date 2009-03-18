@@ -3,7 +3,7 @@
 	
     <h3 class="editheader">Delete ISTC Description for Main Database</h3>
     <h4>Type in ISTC Number</h4><div id="typediv">
-    <form action="/istc/edit/delete.html" name="fileops" method="post"  onsubmit="return confirmDelete('text');">
+    <form action="delete.html" name="fileops" method="post"  onsubmit="return confirmDelete('text');">
     <input id="ISTCNo"  name="filename" type="text" onkeyup="suggest(this.id, event);" onkeydown="if (event.keyCode == 13){return false;}" onblur="clearSuggests()" autocomplete="off"/> <br/>
     <input class="deletebutton" type="submit" value=" Delete " name="operation" onmousedown="op='delete';"/>
 	<input class="deletebutton" type="submit" value=" Delete + Unindex " name="operation" onmousedown="op='unindex';"/>
@@ -12,7 +12,7 @@
     <br/><br/></div>
     <h4>Look up ISTC Number Alphabetically</h4>
     <div id="alphabet">
-    <form action="/istc/edit/delete.html" name="fileops" method="post" onsubmit="return confirmDelete('checkbox');">
+    <form action="delete.html" name="fileops" method="post" onsubmit="return confirmDelete('checkbox');">
 	
 	<div id="alphalinks">
 	<a class="alpha" href="javascript: getAll('ia', 'checkbox');">A</a>

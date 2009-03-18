@@ -69,7 +69,7 @@ class IstcEditingHandler:
         try:
             user = authStore.fetch_object(session, userid)
         except:
-            return '<p>User with id "%s" does not exist!</p><a href="/istc/edit.menu.html">Return to \'Main Menu\'.<a/>' % (userid)
+            return '<p>User with id "%s" does not exist!</p><a href="menu.html">Return to \'Main Menu\'.<a/>' % (userid)
 
         if (form.get('submit', None)):
             userRec = authStore.fetch_record(session, userid)
@@ -101,7 +101,7 @@ class IstcEditingHandler:
                 self._submit_userLxml(userid, userNode)                    
                 user = authStore.fetch_object(session, userid)
                 rebuild = True                   
-                return '<div id="maincontent"><h1>Details successfully updated</h1><a href="/istc/edit/menu.html">Return to \'Main Menu\'.<a/>'
+                return '<div id="maincontent"><h1>Details successfully updated</h1><a href="menu.html">Return to \'Main Menu\'.<a/>'
             else:
                 content = '<span class="userediterror">Unable to update details - current password missing or incorrect. Please try again.</span> %s' % read_file('editusermenu.html')                        
                 replaceHash = {
@@ -535,7 +535,7 @@ class IstcEditingHandler:
             rs = db.search(session, q)
             private = []
             if len(rs):
-                private.append('<form action="/istc/edit/" method="get" enctype="multipart/form-data" onsubmit="return checkIds(\'private\');"><input type="hidden" name="operation" id="operation2" value="edit"/><ul class="unmarked">')
+                private.append('<form action="edit.html" method="get" enctype="multipart/form-data" onsubmit="return checkIds(\'private\');"><input type="hidden" name="operation" id="operation2" value="edit"/><ul class="unmarked">')
                 for r in rs:
                     istcNo = r.fetch_record(session).process_xpath(session, '//controlfield[@tag="001"]/text()')[0]
                     private.extend(['<li class="unmarked">'
@@ -598,9 +598,9 @@ class IstcEditingHandler:
         req.write(nav)
         req.write('<div id="maincontent">')
         if (len(filepaths) == 0):
-            return '%s<br />\n<br/><a href="/istc/edit/menu.html" title="Main Menu" class="navlink">Back to \'Main Menu\'</a>.' % self.review_records(operation)     
+            return '%s<br />\n<br/><a href="menu.html" title="Main Menu" class="navlink">Back to \'Main Menu\'</a>.' % self.review_records(operation)     
         if os.path.exists(lockfilepath):
-            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be deleted or unindexed. Please try again in 10 minutes.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be deleted or unindexed. Please try again in 10 minutes.</p>\n<p><a href="menu.html">Back to \'Main Menu\'</a>.</p>')
         else :  
             lock = open(lockfilepath, 'w')
             lock.close() 
@@ -669,7 +669,7 @@ class IstcEditingHandler:
                     req.write('\n<p>Files will remain in the database until the database is rebuilt.</p>')
                 if (errorTotal > 0):
                     req.write('\n<strong> with %d possible error(s) (see above for details)</strong>' %errorTotal)
-                req.write('\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\'.</a></p>')
+                req.write('\n<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')
                 
             finally:
                 if os.path.exists(lockfilepath):
@@ -886,7 +886,7 @@ class IstcEditingHandler:
         req.write('<div id="maincontent">')
         
         if operation == 'index' and os.path.exists(lockfilepath):
-            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be submitted. Please try again in 10 minutes.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be submitted. Please try again in 10 minutes.</p>\n<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
         else :  
             #do initialisation stuff create rec etc.
             preparseWorkflow = db.get_object(session, 'preParserWorkflow')
@@ -960,7 +960,7 @@ class IstcEditingHandler:
         editStore.delete_record(session, '%s-%s' % (recid, owner))
         editStore.commit_storing(session)
         req.write('<span class="ok">[OK]</span><br/>\n')    
-        req.write('<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+        req.write('<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
         foot = unicode(read_file('footer.html'))
         req.write('</div>')      
         req.write(foot)
@@ -1045,7 +1045,7 @@ class IstcEditingHandler:
         if abbrev.strip() == '' or full.strip() == '':
             return 
         if os.path.exists(reflockfilepath):
-            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be indexed. Please try again in 10 minutes.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be indexed. Please try again in 10 minutes.</p>\n<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
         else :  
             lock = open(reflockfilepath, 'w')
             lock.close() 
@@ -1057,9 +1057,9 @@ class IstcEditingHandler:
                 if os.path.exists(reflockfilepath):
                     os.remove(reflockfilepath)  
             if success == True:
-                req.write('<p><span class="ok">[OK]</span> - The Bibliographical References have been successfully updated.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')           
+                req.write('<p><span class="ok">[OK]</span> - The Bibliographical References have been successfully updated.</p>\n<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')           
             else :
-                req.write('<p><span class="error">[ERROR]</span> - There was a problem while updating the Bibliographical References. Please contact John Goldfinch.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+                req.write('<p><span class="error">[ERROR]</span> - There was a problem while updating the Bibliographical References. Please contact John Goldfinch.</p>\n<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
 
         foot = unicode(read_file('footer.html'))   
         req.write('</div>')      
@@ -1142,7 +1142,7 @@ class IstcEditingHandler:
         if abbrev.strip() == '' or full.strip() == '':
             return 
         if os.path.exists(usalockfilepath):
-            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be indexed. Please try again in 10 minutes.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+            req.write('<p><span class="error">[ERROR]</span> - Another user is already indexing this database so no files can currently be indexed. Please try again in 10 minutes.</p>\n<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')
         else :  
             lock = open(usalockfilepath, 'w')
             lock.close() 
@@ -1154,9 +1154,9 @@ class IstcEditingHandler:
                 if os.path.exists(usalockfilepath):
                     os.remove(usalockfilepath)  
             if success == True:
-                req.write('<p><span class="ok">[OK]</span> - The USA Locations have been successfully updated.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')           
+                req.write('<p><span class="ok">[OK]</span> - The USA Locations have been successfully updated.</p>\n<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')           
             else :
-                req.write('<p><span class="error">[ERROR]</span> - There was a problem while updating the USA Locations. Please contact John Goldfinch.</p>\n<p><a href="/istc/edit/menu.html">Back to \'Main Menu\' page.</a></p>')
+                req.write('<p><span class="error">[ERROR]</span> - There was a problem while updating the USA Locations. Please contact John Goldfinch.</p>\n<p><a href="menu.html">Back to \'Main Menu\'.</a></p>')
 
         foot = unicode(read_file('footer.html'))   
         req.write('</div>')      
