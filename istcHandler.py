@@ -201,33 +201,33 @@ class IstcHandler:
             rs = self.sort_resultSet(session, rs, sortIndex)
 
             if start > 0 and start+pagesize < len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
+                navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
             elif start > 0 and start+pagesize >= len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s" style="margin-right: 37px;"><img class="menu"   src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString)
+                navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s" style="margin-right: 37px;"><img class="menu"   src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString)
             elif start == 0 and start+pagesize < len(rs):
-                navString = '<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start+pagesize, locString)
+                navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start+pagesize, locString)
             else :
                 navString = ''
 
             if sortIndex == 'idx-ISTCnumber':
                 string1 = '<span class="sortedBy">ISTC Number</span>'
             else:
-                string1 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number</a>' % (rsid, locString)
+                string1 = '<a class="sortlink" href="search.html?operation=search&rsid=%s&sort=idx-ISTCnumber%s">ISTC Number</a>' % (rsid, locString)
             
             if sortIndex == 'idx-title':
                 string2 = '<span class="sortedBy">Title</span>'
             else:
-                string2 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-title%s">Title</a>' % (rsid, locString)
+                string2 = '<a class="sortlink" href="search.html?operation=search&rsid=%s&sort=idx-title%s">Title</a>' % (rsid, locString)
             
             if sortIndex == 'idx-year':
                 string3 = '<span class="sortedBy">Year</span>'
             else:
-                string3 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-year%s">Year</a>' % (rsid, locString)
+                string3 = '<a class="sortlink" href="search.html?operation=search&rsid=%s&sort=idx-year%s">Year</a>' % (rsid, locString)
             
             if sortIndex == 'idx-publoc':
                 string4 = '<span class="sortedBy">Place of Publication</span>'
             else:
-                string4 = '<a class="sortlink" href="/istc/search/search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a>' % (rsid, locString)
+                string4 = '<a class="sortlink" href="search.html?operation=search&rsid=%s&sort=idx-publoc%s">Place of Publication</a>' % (rsid, locString)
                 
             html.append('<div class="recordnav">%s</div><br/><p>Sort by %s, %s, %s or %s<br/><br/>' % (navString, string1, string2, string3, string4))
             html.append('<table>')
@@ -282,9 +282,9 @@ class IstcHandler:
                 except:
                     date= ""
                 html.append('<tr>') 
-                html.append('<td class="recnumber"><a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s">%d</a>.</td>' %  (rsid, i, locString, i+1))                
+                html.append('<td class="recnumber"><a href="search.html?operation=record&rsid=%s&q=%s%s">%d</a>.</td>' %  (rsid, i, locString, i+1))                
                 html.append('<td class="checkbox"><input type="checkbox" name="recSelect" value="%s"/></td>' % i)
-                html.append('<td>%s<a href="/istc/search/search.html?operation=record&rsid=%s&q=%s%s"><span class="titlespan">%s</span></a><br/>%s: %s, %s</td>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
+                html.append('<td>%s<a href="search.html?operation=record&rsid=%s&q=%s%s"><span class="titlespan">%s</span></a><br/>%s: %s, %s</td>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
                 html.append('</tr>')
             html.append('</table>')
             html.append('<div class="recordnav">%s</div><br/>' % navString)
@@ -305,9 +305,9 @@ class IstcHandler:
                 menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
                                  '<div class="menugrp">',
                                 '<div class="menubody">',
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=print&rsid=%s%s">Print all Records<img class="menu" src="/istc/images/print.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=email&rsid=%s%s">Email all Records<img class="menu" src="/istc/images/email.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
-                            '<div class="menuitem"><a href="/istc/search/search.html?operation=save&rsid=%s%s">Save all Records<img class="menu" src="/istc/images/download.gif" alt=""   border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="search.html?operation=print&rsid=%s%s">Print all Records<img class="menu" src="/istc/images/print.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="search.html?operation=email&rsid=%s%s">Email all Records<img class="menu" src="/istc/images/email.gif" alt=""  border="0" align="middle"/></a></div><br />' % (rsid, locString),
+                            '<div class="menuitem"><a href="search.html?operation=save&rsid=%s%s">Save all Records<img class="menu" src="/istc/images/download.gif" alt=""   border="0" align="middle"/></a></div><br />' % (rsid, locString),
                             '</div><br />',
                             '</div>',
                             '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
@@ -315,7 +315,7 @@ class IstcHandler:
             menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
                              '<div class="menugrp">',
                              '<div class="menubody">',
-                             '<div class="menuitem"><a href="/istc/edit/menu.html">Editing Menu<br />(editors only)<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"></a></div><br />',
+                             '<div class="menuitem"><a href="../edit/menu.html">Editing Menu<br />(editors only)<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"></a></div><br />',
                              '</div><br />',
                             '</div>',
                             '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
