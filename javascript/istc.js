@@ -19,27 +19,22 @@
 var timeout;
 var op = null;
 
-function confirmOp(){
-	switch(op) {
-		case 'unindex':
-			var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. The record will also be removed from all indexes, which may take some time. Are you sure you wish to continue?';
-			break
-		case 'delete':
-			var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. Are you sure you wish to continue?';
-			break
-			
-		default:
-			if (arguments.length == 1){
-				/*hopefully a message we should send*/
-				var msg = arguments[0];
+
+
+
+
+function addLoadEvent(func) {
+	var oldonload = window.onload;
+	if (typeof window.onload != 'function') {
+    	window.onload = func;
+	} else {
+	window.onload = function() {
+			if (oldonload) {
+				oldonload();
 			}
-			break
+			func();
+		}
 	}
-	if (msg) {
-		if (window.confirm) { return window.confirm(msg); }
-		else if (confirm) { return confirm(msg); }
-		else { return true; } // no mechanism for confirmation supported by browser - go ahead anyway
-	} else {return true; } // no requirement for confirmation
 }
 
 //================================================================================================
@@ -69,10 +64,10 @@ function submitForm(op){
 			document.getElementById('expand').value = "false";
 		}
 	}	
-	form = document.getElementById('mainform');
-	table = form.getElementsByTagName('table')[0];
+	var form = document.getElementById('mainform');
+	var table = form.getElementsByTagName('table')[0];
 	if (table){
-		checkboxes = table.getElementsByTagName('input');
+		var checkboxes = table.getElementsByTagName('input');
 		var valid = false;
 		for (var i=0; i<checkboxes.length; i++){
 			if (checkboxes[i].checked){

@@ -24,9 +24,10 @@ from cheshire3.cqlParser import parse, SearchClause, Triple
 import urllib
 
 class IstcHandler:
-    searchTemplatePath = cheshirePath + "/cheshire3/www/istc/html/searchtemplate.html"
-    browseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/browsetemplate.html"
-    aboutTemplatePath = cheshirePath + "/cheshire3/www/istc/html/abouttemplate.html"
+    baseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/baseTemplate.html"
+    searchNavPath = cheshirePath + "/cheshire3/www/istc/html/searchNav.html"
+    browseNavPath = cheshirePath + "/cheshire3/www/istc/html/browseNav.html"
+    aboutNavPath = cheshirePath + "/cheshire3/www/istc/html/aboutNav.html"
     rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
     printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
 
@@ -314,7 +315,7 @@ class IstcHandler:
             menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
                              '<div class="menugrp">',
                              '<div class="menubody">',
-                             '<div class="menuitem"><a href="/~cheshire/cgi-bin/restricted/edit.html">Create editors only<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"></a></div><br />',
+                             '<div class="menuitem"><a href="/istc/edit/menu.html">Editing Menu<br />(editors only)<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"></a></div><br />',
                              '</div><br />',
                             '</div>',
                             '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
@@ -865,21 +866,22 @@ class IstcHandler:
         form = FieldStorage(req)
 
         #get the template 
-#        f = file(self.templatePath)
-#        tmpl = f.read()
-#        f.close()
-#        tmpl = tmpl.replace('\n', '')
+        f = file(self.baseTemplatePath)
+        tmpl = f.read()
+        f.close()
+        tmpl = tmpl.replace('\n', '')
                
         path = req.uri[1:] 
         path = path[path.rfind('/')+1:]
-        
+          
         operation = form.get('operation', None)
 
         if path == 'search.html':           
-            f = file(self.searchTemplatePath)
-            tmpl = f.read()
+            f = file(self.searchNavPath)
+            nav = f.read()
             f.close()
-            tmpl = tmpl.replace('\n', '')
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
             
             if operation:
                 if (operation == 'record'):
@@ -910,10 +912,11 @@ class IstcHandler:
                 f.close()
                 
         elif path == 'browse.html':            
-            f = file(self.browseTemplatePath)
-            tmpl = f.read()
+            f = file(self.browseNavPath)
+            nav = f.read()
             f.close()
-            tmpl = tmpl.replace('\n', '')
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
             
             if operation:
                 if operation == 'scan':
@@ -928,20 +931,22 @@ class IstcHandler:
                 f.close()
                 
         elif path == 'about.html':            
-            f = file(self.aboutTemplatePath)
-            tmpl = f.read()
+            f = file(self.aboutNavPath)
+            nav = f.read()
             f.close()
-            tmpl = tmpl.replace('\n', '')
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
             
             f = file('about.html')
             d = f.read()
             f.close()
             
         else:          
-            f = file(self.searchTemplatePath)
-            tmpl = f.read()
+            f = file(self.searchNavPath)
+            nav = f.read()
             f.close()
-            tmpl = tmpl.replace('\n', '')
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
             
             f= file("index.html")
             d = f.read()
@@ -979,6 +984,9 @@ rebuild = True
 
 def build_architecture(data=None):
     global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, docParser, externalDataTxr, qf
+
+    if rss:
+        rss.commit_storing(session)
 
     session = Session()
     serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')

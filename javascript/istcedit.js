@@ -27,6 +27,158 @@ function goto(){
 	var select = document.getElementById('goto').selectedIndex = 0;
 }
 
+function confirmDelete(type){
+	var valid = false;
+	if (type == 'text'){
+		var input = document.getElementById('ISTCNo');
+		if (input.value.strip() != ''){
+			valid = true;
+		}
+		if (input.value.length != 10){
+			alert('The ISTC number you have entered does not contain the correct number of characters. Please check and try again');
+			return false;
+		}
+	}
+	else {
+		var div = document.getElementById('colcontainer');
+		if (div){
+			var checkboxes = div.getElementsByTagName('input');
+			for (var i=0; i<checkboxes.length; i++){
+				if (checkboxes[i].checked){
+					valid = true;
+					break;
+				}
+			}
+		}
+	}
+	if (valid){	
+		switch(op) {
+			case 'unindex':
+				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. The record will also be removed from all indexes. Are you sure you wish to continue?';
+				break;
+			case 'delete':
+				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. Are you sure you wish to continue?';
+				break;	
+			default:
+				if (arguments.length == 1){
+					/*hopefully a message we should send*/
+					var msg = arguments[0];
+				}
+				break;
+		}	
+	}
+	else {
+		if (type == 'text'){
+			alert('Please enter ISTC Number first');
+		}
+		else {
+			alert('Please select records first');
+		}
+		return false;
+	}		
+	if (msg) {
+		if (window.confirm) { return window.confirm(msg); }
+		else if (confirm) { return confirm(msg); }
+		else { return true; } // no mechanism for confirmation supported by browser - go ahead anyway
+	} else {return true; } // no requirement for confirmation	
+}
+
+
+function checkIds(type){
+	var valid = false;
+	var id;
+	if (type == 'text'){
+		var input = document.getElementById('ISTCNo');
+		if (input.value.strip() != ''){
+			id = input.value.strip();
+			valid = true;
+		}
+		if (!validate_ISTCNo(input.value.strip())){
+			alert('The ISTC number you have entered is not valid. It should contain two letters followed by eight numbers');
+			return false;
+		}
+	}
+	else if (type == 'private'){
+		var div = document.getElementById('privatecontainer');
+		if (div){
+			var checkboxes = div.getElementsByTagName('input');
+			for (var i=0; i<checkboxes.length; i++){
+				if (checkboxes[i].checked){
+					id = checkboxes[i].value;
+					valid = true;
+					break;
+				}
+			}
+			if (!valid){
+				alert('Please select a record to edit');
+				return false;
+			}
+		}
+	}
+	else {
+		var div = document.getElementById('colcontainer');
+		if (div){
+			var checkboxes = div.getElementsByTagName('input');
+			for (var i=0; i<checkboxes.length; i++){
+				if (checkboxes[i].checked){
+					id = checkboxes[i].value;
+					valid = true;
+					break;
+				}
+			}
+			if (!valid){
+				alert('Please select a record to edit');
+				return false;
+			}
+		}
+	}
+	if (valid){
+		var url = '/istc/edit/';
+		var data = 'operation=checkStore&id=' + id;
+		var error = false;
+		var conflict = '';
+		var owner = '';
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var response = transport.responseText;
+			if (response.substring(0, 4) == "<!--"){
+				error = true;
+			}			
+			conflict = response.substring(response.indexOf('<value>')+7, response.indexOf('</value>'));
+			if (response.indexOf('<owner>') > -1){
+				owner = response.substring(response.indexOf('<owner>')+7, response.indexOf('</owner>'));
+			}
+		}});
+		if (conflict == 'true'){
+			if (owner == 'user'){
+				alert('You already have a draft version of this file in the draft store. If you want to edit the current draft you need to open it from the draft store. If you want to edit the version from the main database you need to first delete the version from the draft store.');
+				return false;
+			}
+			else if (owner == 'other') {
+				return confirm('Another user has a draft version of this file in the draft store. If both versions are submitted to the main database data will be lost.\nAre you sure you want to continue?');				
+			}
+		}
+		else {
+			return true;
+		}
+		
+		
+		
+	} else return false;
+
+}
+
+
+function checkUserInfo(){
+	var userid = document.getElementById('userid').value;
+	if (userid.strip() == ''){
+		return false;
+	}
+	else {
+		return true;
+	}
+	
+}
+
 
 
 //================================================================================================
@@ -91,7 +243,8 @@ function addEntry(s){
 	var rows = table.getElementsByTagName('tr');
 	var length = rows.length-1;
     for (var i = 0; i<length; i++){    
-    	var textbox = rows[i].getElementsByTagName('input')[0];  
+    	var textbox = rows[i].getElementsByTagName('input')[0];
+    	  
     	if (textbox == null){
     		textbox = rows[i].getElementsByTagName('textarea')[0];
     	}	
@@ -99,13 +252,23 @@ function addEntry(s){
     		textbox = rows[i].getElementsByTagName('select')[0];
     	}
     	if (textbox.value != ""){
-    		valueString += textbox.id + ' | ' + textbox.value + ' ||| ';
+    		
     		if (s == 'holdings' && i == 0){
-    			textString += textbox.value + ' - '; 
+    			textString += textbox.value + ' - ';
+    			valueString += textbox.id + ' | ' + textbox.value + ' ||| '; 
+    		}
+    		else if (s == 'holdings' && i == 3){
+    			if (textbox.checked == true){
+    				valueString += textbox.id + ' | Private ||| ';
+    				textString += ' - Private'; 
+    				textbox.checked = false;
+    			}  			
     		}
     		else {
-    			textString += textbox.value + ' ';  		
+    			textString += textbox.value + ' ';  
+    			valueString += textbox.id + ' | ' + textbox.value + ' ||| ';		
     		}
+    		
     	}   
     	else {
     		valueString += textbox.id + ' |   ||| ';
@@ -290,6 +453,12 @@ function editEntry(s, number){
 	  				usa = true;
 	  			}
 	  		}
+	  		else if (value[0] == 'holdings_x'){
+	  			if (value[1] == 'Private'){
+	  				document.getElementById('holdings_x').checked = true;
+	  				document.getElementById('holdings_x').value = 'on';
+	  			}
+	  		}
 	  		else {	
 	  			document.getElementById('holdings' + value[0].substring(value[0].indexOf('_'))).value = value[1];
 	  			if (usa && i==1){
@@ -343,6 +512,30 @@ function editEntry(s, number){
 	} 	
 }
 
+//end of functions for multiple entry fields
+//
+//================================================================================================
+//Functions for Holdings and USA second databases
+
+function updateFullRef(value){
+		var url = '/istc/edit/';
+		var data = 'operation=references&q=' + value;		
+		var cell = document.getElementById('refs_full');
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var text = transport.responseText;	
+			cell.value = text;	
+		}});			
+}
+
+function updateFullUsa(value){
+		var url = '/istc/edit/';
+		var data = 'operation=usa&q=' + value;		
+		var cell = document.getElementById('usa_full');
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var text = transport.responseText;	
+			cell.value = text;	
+		}});			
+}
 
 function showValue(value){
 		var url = '/istc/edit/';
@@ -393,6 +586,14 @@ function clearUsa(){
 	document.getElementById('usabutton').style.display = 'none';
 }
 
+function clearUsaText(){
+	var cell = document.getElementById('usadisplay');
+	for (var i=0; i < cell.childNodes.length; i++){
+		cell.removeChild(cell.childNodes[i]);	
+	}
+	cell.appendChild(document.createElement('p'));
+}
+
 
 
 function editRef(){
@@ -431,6 +632,7 @@ function editUsa(){
 	if (abbrev.strip() != ' ' && abbrev.strip() != ''){
 		showUsa(abbrev);
 		var full = document.getElementById('usadisplay').childNodes[0].firstChild.nodeValue;
+		full = full.substring(full.indexOf(':')+2);
 		full = full.replace(/&/g, '%26');	
 	}
 	else {
@@ -446,9 +648,18 @@ function editUsa(){
 	document.getElementById('popupform').style.display = 'block';
 }
 
+function checkUSA(){
+	if (document.getElementById('holdings_country').value == '952'){
+		document.getElementById('usabutton').style.display = 'block';
+	}
+	else {
+		document.getElementById('usabutton').style.display = 'none';
+		clearUsa()
+	}
+} 
 
 
-//end of functions for multiple entry fields
+//end of functions for Holdings and USA second databases
 
 //================================================================================================
 //autosuggest functions
@@ -456,11 +667,14 @@ function editUsa(){
 
 //maps html element ids to indexes
 var indexMap = new Array();
-		indexMap['260_a'] = 'idx-kwd-publoc';
-		indexMap['260_b'] = 'idx-printer';
-		indexMap['author'] = 'idx-author';
+		indexMap['260_a'] = 'idx-publoc-exact';
+		indexMap['260_b'] = 'idx-printer-exact';
+		indexMap['author'] = 'idx-author-exact';
 		indexMap['510_a'] = 'idx-key-refs-exact';
-		indexMap['holdings_a'] = '';
+		indexMap['refs_a'] = 'idx-key-refs-exact';
+		indexMap['holdings_a'] = 'idx-key-usa';
+		indexMap['usa_a'] = 'idx-key-usa';
+		indexMap['ISTCNo'] = 'idx-ISTCnumber';
 
 
 //the option currently selected - used to select but keep focus on textbox
@@ -477,10 +691,13 @@ function suggestDelay(id, e){
 
 
 function suggest(id, e){
-
-	var suggestBox = ($('suggestBox'));
+	var suggestBox = document.getElementById('suggestBox');
 	var tid = id;
-	
+	if (tid == 'holdings_a'){
+		if (document.getElementById('holdings_country').value != '952'){
+			return;
+		}		
+	}
 	//up
 	if (keyCheck(e) == 38){
 		optionSel = optionSel - 1;
@@ -509,6 +726,12 @@ function suggest(id, e){
 		if (suggestBox){
 			suggestBox.parentNode.removeChild(suggestBox);
 		}
+		if (tid == 'refs_a'){
+			updateFullRef('');
+		}
+		if (tid == 'usa_a'){
+			updateFullUsa('');
+		}
 		if (element.value != ''){
 		//AJAX call to get values from index
 			var url = '/istc/edit/';
@@ -535,9 +758,9 @@ function suggest(id, e){
 					select.className = 'suggest';
 					select.style.position = 'absolute';
 					select.style.width = element.offsetWidth + 'px';
-					select.onclick = function () {selectClick(this, tid, 'mouse'); };
-					select.onkeyup = function (e) {selectReturn(this, tid, e); };
-					if (tid = '510_a'){
+					var string = tid;
+					select.onclick = function () {selectClick(this, string, 'mouse'); };
+					if (tid == '510_a' || 'ISTCNo'){
 						for(var i=0; i < termList.length; i++) {
 							var value = termList[i].substring(0, termList[i].lastIndexOf(' ('));
 					   		select.options[i] = new Option(value, value);
@@ -549,6 +772,12 @@ function suggest(id, e){
 						}					
 					}
 					element.parentNode.appendChild(select);
+					if (tid == 'refs_a' || tid == '510_a'){
+						clearRef();
+					}
+					if (tid == 'usa_a'|| tid == 'holdings_a'){
+						clearUsaText();
+					}
 					optionSel = -1;
 				}
 						    
@@ -559,7 +788,6 @@ function suggest(id, e){
 
 
 function selectClick(elem, target, mode){
-
 	var element = elem;
 	var targetElem = document.getElementById(target);
 	if (optionSel != -1 || mode == 'mouse'){
@@ -570,8 +798,16 @@ function selectClick(elem, target, mode){
 		clearRef();
 		showValue(targetElem.value);
 	}
+	if (targetElem.id == 'refs_a'){
+		updateFullRef(targetElem.value);
+	}
+	if (targetElem.id == 'usa_a'){
+		updateFullUsa(targetElem.value);
+	}
+	if (targetElem.id == 'holdings_a'){
+		showUsa(targetElem.value)
+	}
 }
-
 
 
 //checks which key was pressed - list available here http://webonweboff.com/tips/js/event_key_codes.aspx
@@ -581,7 +817,50 @@ function keyCheck(e){
 }
 
 
+function clearSuggests(){
+	if (document.getElementById('suggestBox')){
+		var suggest = document.getElementById('suggestBox');
+		suggest.parentNode.removeChild(suggest);	
+	}
+}
 
+function getAll(letters, type){
+	var url = '/istc/edit/';
+	var data = 'operation=all&letters=' + letters + '&type=' + type;
+	document.getElementById('colcontainer').innerHTML = '';
+	if (letters != ''){
+		var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+			var response = transport.responseText;
+			document.getElementById('colcontainer').innerHTML = response;
+	
+		}});	
+	}
+}
+
+var op = null;
+
+function confirmOp(){
+	switch(op) {
+		case 'unindex':
+			var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. The record will also be removed from all indexes, which may take some time. Are you sure you wish to continue?';
+			break
+		case 'delete':
+			var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. Are you sure you wish to continue?';
+			break
+			
+		default:
+			if (arguments.length == 1){
+				/*hopefully a message we should send*/
+				var msg = arguments[0];
+			}
+			break
+	}
+	if (msg) {
+		if (window.confirm) { return window.confirm(msg); }
+		else if (confirm) { return confirm(msg); }
+		else { return true; } // no mechanism for confirmation supported by browser - go ahead anyway
+	} else {return true; } // no requirement for confirmation
+}
 
 
 // end of auto suggest functions
@@ -590,26 +869,48 @@ function keyCheck(e){
 //================================================================================================
 //keyboard related functions
 
+var currentCharTable = 'lower';
+
 function toggleKeyboard(){
   	var keyboard = ($('keyboard')); 
-    keyboard.style.top = '100px';
-    keyboard.style.left = '10px';
   	keyboard.toggle();  
-  	showCharTable();
+  	showCharTable('lower');
 }
 
 
-function showCharTable(){
-  	($('chartable')).style.display = 'block';
+function showCharTable(type){
+	if (type == 'lower'){
+  		($('chartablelower')).style.display = 'block';
+  		($('chartableupper')).style.display = 'none';
+  	}
+  	else if (type == 'upper'){
+  		($('chartableupper')).style.display = 'block';
+  		($('chartablelower')).style.display = 'none';   	
+  	}
+  	else {
+		($('chartable' + currentCharTable)).style.display = 'block';
+  	}
+//  	($('hideicon')).style.display = 'inline';
+//  	($('showicon')).style.display = 'none';
 }
 
 
 function hideCharTable(){
-  	($('chartable')).style.display = 'none';
+	if (($('chartableupper')).style.display == 'block'){
+		currentCharTable = 'upper';
+	}
+	else {
+		currentCharTable = 'lower';
+	}
+  	($('chartableupper')).style.display = 'none';
+  	($('chartablelower')).style.display = 'none';
+  	
+//  	($('showicon')).style.display = 'inline';
+// 	($('hideicon')).style.display = 'none';
 }
 
 
-//==================================================================================================
+//====================================================================================================
 //
 // Submit Functions
 
@@ -624,21 +925,22 @@ function submitSubForm(){
 		return;
 	}
 	var url = '/istc/edit/';
-	if (operation == ''){
-		var data = 'operation=submitusa';
+	if (operation == 'usa'){
+		var data = 'operation=submitusasub';
 	}
 	else {
-		var data = 'operation=submitref';
+		var data = 'operation=submitrefsub';
 	}
 	data += '&abbrev=' + abbrev + '&full=' + full;
-	var outcome = 'unsuccessful';
+	var outcome = 'failed';
 	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 		var response = transport.responseText;
-		if (response == 'success'){
-			output = 'success';
-		}
+		outcome = response; 
 	}});	
-	if (output = 'success'){
+	if (outcome == 'locked'){
+		alert('Another user is already indexing this database so no files can currently be indexed. Please try again in 10 minutes.');
+	}
+	else if (outcome == 'success'){
 		alert('The data has been saved successfully');
 	//	showValue(abbrev)
 		hidePopup();
@@ -648,21 +950,167 @@ function submitSubForm(){
 	}
 }
 
-function submitForm(op){
-	if (document.getElementById('expandedbib')){
-		if (document.getElementById('expandedbib').checked == true){
-			document.getElementById('expand').value = "true";
-		}
-		else if (document.getElementById('expandedbib')){
-			document.getElementById('expand').value = "false";
-		}
-	}	
-	form = document.getElementById('mainform');
+function validate_ISTCNo(string){
+	var istcNo = string;
+	var match = istcNo.match(/^\w{2}\d{8}$/);
+	if (match == null){
+		return false;
+	}
+	else {
+		return true;
+	}
+}
 
-
-	document.getElementById('opvalue').value = op;
-	document.getElementById('mainform').submit();	
+function saveForm(){
+	if (document.getElementById('ISTCNo').className != 'readonly'){
+		var istcNo = document.getElementById('ISTCNo').value
+		if (istcNo.strip() != '' && validate_ISTCNo(istcNo.strip())){
+			//already in main db
+			var url = '/istc/edit/';
+			var data = 'operation=checkDir&id=' + istcNo;
+			var error = false;
+			var conflict = '';
+			var owner = '';
+			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+				var response = transport.responseText;
+				conflict = response;
+				
+			}});		
+			if (conflict == 'true'){
+				alert('A file with this ISTC number already exists in the database. You will need to edit that file rather than create a new one.');
+				return false;
+			}
+			//already being created
 	
+			data = 'operation=checkStore&id=' + istcNo.strip();
+			error = false;
+			var conflict = '';
+			var owner = '';
+			var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+				var response = transport.responseText;
+				if (response.substring(0, 4) == "<!--"){
+					error = true;
+				}			
+				conflict = response.substring(response.indexOf('<value>')+7, response.indexOf('</value>'));
+				if (response.indexOf('<owner>') > -1){
+					owner = response.substring(response.indexOf('<owner>')+7, response.indexOf('</owner>'));
+				}
+			}});	
+			if (conflict == 'true'){
+				if (owner == 'user'){
+					alert('You already have a draft file with this ISTC number in the draft file store. The draft must be deleted before you can create a new draft with this ISTC number');
+					return false;
+				}
+				if (owner == 'other'){
+					var conf = confirm('Another user already has a draft file with this ISTC number in the draft file store. If both versions are submitted to the main database data will be lost.\nAre you sure you want to continue?')
+					if (conf == false){
+						return false;
+					}
+				}
+			}					
+			save();
+		}
+		else {
+			alert('The ISTC number must be completed correctly before saving this record. It should contain two letters followed by eight numbers');
+			return false;
+		}
+	}
+	else {
+		save();
+	}
+}
+
+function save(){
+	var istcNo = document.getElementById('ISTCNo').value.strip();			
+	var reload = false;
+	var form = document.getElementById('mainform');	
+	var timestamp;
+	document.getElementById('opvalue').value = 'save';
+	var url = '/istc/edit/';
+	var data = ($('mainform')).serialize();
+	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		var response = transport.responseText;
+		timestamp = response;
+	}});
+	var span = document.getElementById('savetime');
+	var time = document.createTextNode(timestamp);
+	if (span.firstChild.nodeValue.strip() == ''){
+		reload = true;
+	}
+	span.removeChild(span.firstChild);
+	span.appendChild(time);
+	if (reload == true){
+		window.location.href='/istc/edit/?operation=load&recid=' + istcNo;
+	}
+	return true;
+}
+
+function submitForm(op){
+	if(save()){	
+		document.getElementById('opvalue').value = op;
+		if (op == 'discard'){
+			var ok = confirmOp('You are about to delete this draft file. All changes made since it was last submitted to the database will be lost. The live data will not be affected. \nAre you sure you want to continue?')
+			if (ok){
+				document.getElementById('mainform').submit();
+			}
+			else {
+				return;
+			}
+		}
+		else {
+			document.getElementById('mainform').submit();
+		}
+	}
+}
+
+
+function checkButtons(){
+	if (document.getElementById('ISTCNo').value.strip() == ''){
+		document.getElementById('xmlbutton').setAttribute('disabled', 'true');
+		document.getElementById('marcbutton').setAttribute('disabled', 'true');
+		document.getElementById('emailbutton').setAttribute('disabled', 'true');		
+		document.getElementById('filebutton').setAttribute('disabled', 'true');
+		document.getElementById('indexbutton').setAttribute('disabled', 'true');		
+		
+	}
+}
+
+
+function deleteFromStore(){
+	var recid = null;
+
+	if (document.getElementById('storeDirForm').recid.length){
+		for (var i=0; i < document.getElementById('storeDirForm').recid.length; i++) {
+			if (document.getElementById('storeDirForm').recid[i].checked) {
+		      	recid = document.getElementById('storeDirForm').recid[i].value;
+		    }
+		}
+	}
+	else {
+		if (document.getElementById('storeDirForm').recid.checked) {
+			recid = document.getElementById('storeDirForm').recid.value;
+		}
+	}
+	if (recid == null) {
+		return;
+	}
+	else {
+		var ok = confirmOp('You are about to delete ' + recid.substring(0, recid.lastIndexOf('-')) + ' from the draft file store. All changes made since it was last submitted to the database will be lost. The live data will not be affected. \nAre you sure you want to continue?')
+		if (ok){
+			deleteRec(recid)
+		}
+		else {
+			return;
+		}
+	}
+}
+
+function deleteRec(id){
+	var url = '/istc/edit/';
+	var data = 'operation=discard&recid=' + encodeURIComponent(id);
+	var ajax = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
+		location.href="/istc/edit/edit.html";		    
+	}});		
 }
 
 //==================================================================================================
@@ -676,3 +1124,4 @@ function hidePopup(){
 function showPopup(){
 	document.getElementById('popupform').style.display = 'block';
 }
+

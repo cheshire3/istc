@@ -1,0 +1,17 @@
+<div id="maincontent" onclick="clearSuggests()">
+	<h1>Add/Edit USA Locations</h1>
+	
+    
+    <h3 class="editheader">Add or Edit a USA Location</h3>
+
+
+		<form id="mainform" name="mainform" action="/istc/edit/edit.html" method="post" enctype="multipart/form-data">
+ 		<table><tbody>
+ 		<tr><td>Abbreviated Location: </td><td><input onkeyup="suggest(this.id, event);" autocomplete="off" name="abbrev" id="usa_a" type="text" size="68" value="" onkeydown="if (event.keyCode == 13){return false;}"/><br/></td></tr>
+ 		<tr><td>Full Location: </td><td><textarea  name="full" id="usa_full" cols="66" rows="4" onkeydown="if (event.keyCode == 13){return false;}"> </textarea></td></tr>
+ 		</tbody></table>
+ 		<input type="hidden" name="operation" value="submitusa"/>
+ 		<input id="subusasubmit" type="submit" value="submit"/>
+ 		</form>
+
+</div>

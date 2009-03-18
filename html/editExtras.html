@@ -1,136 +1,73 @@
-<?xml version="1.0" ?>
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
- <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta http-equiv="Content-Language" content="en-GB">
- 	<meta name="keywords" content="">
-	<meta name="Description" content="">
-	<meta name="DC.Creator" content="The British Library">
-	<meta name="DC.Publisher" content="The British Library">
-	<meta name="DC.Contributor" content="The British Library">
-
-	<meta name="DC.Type" content="Text">
-	<meta name="DC.Format" scheme="IMT" content="text/html">
-	<meta name="DC.Identifier" scheme="URI" content="http://www.bl.uk/">
-	<meta name="DC.Source" scheme="URI" content="http://www.bl.uk/">
-	<meta name="DC.Language" scheme="RFC1766" content="en-GB">
-	<meta name="DC.Rights" content="http://www.bl.uk/">
-	<meta name="DC.Title" content="The British Library">
-	<meta name="DC.Date.Created" scheme="W3CDTF" content="2005-10-27">
-	<meta name="DC.Date.Modified" scheme="W3CDTF" content="2005-10-27">
-
-
-        <title>British Library - Incunabula Short Title Catalogue</title>
-        <meta name="copyright" content="&copy; University of Liverpool" />
-
-		<link rel="stylesheet" href="/istc/css/structure.css" type="text/css" />
-        <link rel="stylesheet" href="/istc/css/istcedit.css" type="text/css" />
-        <script type="text/javascript" src="/istc/javascript/prototype.js"></script>
-        <script type="text/javascript" src="/istc/javascript/scriptaculous.js"></script>
-        <script type="text/javascript" src="/istc/javascript/keyboard.js"></script>
-        <script type="text/javascript" src="/istc/javascript/istcedit.js"></script>
-        <script type="text/javascript">
-    	function loadPage() {
-	        	        
-		}	
-    	function unloadPage() {
-    		
-    	}    
-    	</script>
-		</head>
- 
- <body rightmargin="0" class="backgroundwhite" onload="loadPage();">
- 		<div id="container">
-		<div id="topgraphic">
-			<img src="/istc/images/titlebar-color.jpg" alt="British Library - Incunabla Short Title Catalogue" name="banner" width="603" height="101" border="0" usemap="#bannerMap" id="banner" />
-			<map name="bannerMap" id="bannerMap">
-			  <area shape="rect" coords="2,2,51,99" href="http://www.bl.uk" alt="The British Library" />
-			  <area shape="rect" coords="53,2,601,99" href="http://www.bl.uk/catalogues/istc/index.html" alt="Incunabla Short Title Catalogue" />
-			</map>
-		</div>
-	
-		<div id="topnav">
-		    <ul>
-			    <li><a href="http://www.bl.uk/catalogues/istc/index.html">Home</a></li> 
-				<li><a href="../search/index.html">Search</a></li>
-			    <li><a href="../search/browse.html">Browse</a></li>	
-			    <li><a href="../search/about.html">About</a></li>
-			    <li><a href="../search/help.html">Help</a></li>
-			</ul>
-	  	</div>
 		
-	<div id="maincontent">
-	<a name="top"></a>
+<link rel="stylesheet" href="/istc/css/istcedit.css" type="text/css" />
 
-    <h1>&nbsp;Editing Interface</h1>
-    <a id="keyboardlink" href="javascript: toggleKeyboard();">Character Keyboard</a>
-    <div id="gotodiv"><strong>Go To: </strong><select id="goto" onchange="javascript: goto()">
-    	<option value="null">Select...</option>
-    	<option value="istcnumber">ISTC Number</option>
-    	<option value="author">Author</option>
-    	<option value="ltitle">Title</option>
-    	<option value="imprints">Imprints</option>
-    	<option value="lformat">Format</option>
-    	<option value="008field">008 Field</option>
-    	<option value="generalnote">General Note</option>
-    	<option value="references">References</option>
-    	<option value="reproductionnotes">Reproduction Notes</option>
-    	<option value="holdings">Holdings</option>
-    	<option value="blshelfmark">BL Shelfmark</option>
-    	<option value="internalnotes">Internal Notes</option>
-    </select></div>
- 	<div id="content">
-<!-- PAGE CONTAINER -->	
+
+<div id="fullmaincontent" onclick="clearSuggests()">
+	<a name="top"></a>
+	<h1>Editing Interface</h1>
+	    <p>Last saved at: <span id="savetime">%%timestamp%%</span></p>
+	    <a class="keyboardlink" href="javascript: toggleKeyboard();">Character Keyboard</a>
+	    <div id="gotodiv"><strong>Go To: </strong><select id="goto" onchange="javascript: goto()">
+	    	<option value="null">Select...</option>
+	    	<option value="istcnumber">ISTC Number</option>
+	    	<option value="lauthor">Author</option>
+	    	<option value="ltitle">Title</option>
+	    	<option value="imprints">Imprints</option>
+	    	<option value="lformat">Format</option>
+	    	<option value="008field">008 Field</option>
+	    	<option value="generalnote">General Note</option>
+	    	<option value="references">References</option>
+	    	<option value="reproductionnotes">Reproduction Notes</option>
+	    	<option value="holdings">Holdings</option>
+	    	<option value="blshelfmark">BL Shelfmark</option>
+	    	<option value="internalnotes">Internal Notes</option>
+	    </select></div>
+	 	<div id="fullcontent">
+
 	
    %CONTENT%
+</div> <!-- this is here cause something in the form isn't closing properly - remove when you find it!!!! -->
+		</div> <!-- End of fullcontent -->
+
+</div> <!-- End of fullmaincontent -->
 
 
+<div class="popup" style="display: none" id="popupform">
+	<div id="subformheader">
+		<h3 id="subformtitle" class="subformtitle">Title</h3>
+		<input id="subclose" type="button" value="close" onClick="hidePopup()" />
+	</div>
+	<br />
+	<table id="subtable">
+		<tbody>
+			<tr>
+				<td class="sublabel">Abbreviation:</td>
+				<td><input class="readonly" id="subabbr" readonly="readonly" type="text"
+					size="68" /></td>
+			</tr>
+			<tr>
+				<td class="sublabel">Full Entry:</td>
+				<td><textarea id="subfull" cols="66" rows="4"> </textarea></td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="hidden" id="formtype" value="none" /> 
+	<input id="subformsubmit" type="button" value="submit" onclick="submitSubForm();" />
 </div>
- 		</div> <!-- End of maincontent -->
- 		 <div class="popup" style="display:none" id="popupform">
-			<div id="subformheader"><h3 id="subformtitle" class="subformtitle">Title</h3><input id="subclose" type="button" value="close" onClick="hidePopup()"/></div>
-		 		<br/>
-		 		<table id="subtable"><tbody>
-		 		<tr><td class="sublabel">Abbreviation: </td><td><input id="subabbr" readonly="readonly" type="text" size="68"/></td></tr>
-		 		<tr><td class="sublabel">Full Entry: </td><td><textarea id="subfull" cols="66" rows="4"> </textarea></td></tr>
-		 		</tbody></table>
-		 		<input type="hidden" id="formtype" value="none"/>
-		 		<input id="subformsubmit" type="button" value="submit" onclick="submitSubForm();"/>
-		 </div>
-		 </div> <!-- End of container -->
-		
-    	<div id="footernav">
-     		<table width="100%" border="0" cellpadding="10">   
-		       <tr>
-		         <td><ul>
-		           <li><a href="http://www.bl.uk/copyrightstatement.html">Copyright &copy; The British Library Board</a></li>
-		
-		         </ul>         </td>
-		       </tr>
-		    </table>
-  		</div>
-  		
-  	
 
-  
-  
-
- 
- 
 <div id="keyboard"  style="display:none">
-<div id="keyboardcontrolbar" class="handle">
-	<div class="float" style="font-weight: normal; font-size: 11pt; padding-left: 2px; width: 63%; text-align: right;">Character Keyboard</div>
+<div id="keyboardcontrolbar">
+	<div style="float: left; font-weight: normal; font-size: 11pt; padding-left: 2px; width: 63%; text-align: right;">Character Keyboard</div>
 	
-	<div style="float:right; padding-right: 2px;">
-		<a href="javascript: hideCharTable()" ><img src="/images/winmin.png" alt="?" onmouseover="this.src='/images/winmin-active.png';" onmouseout="this.src='/images/winmin.png';"/></a>
-		<a href="javascript: showCharTable()" ><img src="/images/winmax.png" alt="?" onmouseover="this.src='/images/winmax-active.png';" onmouseout="this.src='/images/winmax.png';"/></a>	
-		<a href="javascript: toggleKeyboard()" ><img src="/images/winclose.png" alt="?" onmouseover="this.src='/images/winclose-active.png';" onmouseout="this.src='/images/winclose.png';"/></a>
+	<div id="kbfunctions">
+		<a href="javascript: hideCharTable()" ><img src="/istc/images/winmin.png" alt="?" onmouseover="this.src='/istc/images/winmin-active.png';" onmouseout="this.src='/istc/images/winmin.png';"/></a>
+		<a href="javascript: showCharTable()" ><img src="/istc/images/winmax.png" alt="?" onmouseover="this.src='/istc/images/winmax-active.png';" onmouseout="this.src='/istc/images/winmax.png';"/></a>	
+		<a href="javascript: toggleKeyboard()" ><img src="/istc/images/winclose.png" alt="?" onmouseover="this.src='/istc/images/winclose-active.png';" onmouseout="this.src='/istc/images/winclose.png';"/></a>
 	</div>
 	<br />
 </div>
 <div id="chartablelower">
-	<button id="charlink" onClick="showCharTable('upper')">Caps Lock</button><a id="keyboardlink" href="javascript:alert(theFieldName);">Which field?</a><br/>
+	<button id="charlink" onClick="showCharTable('upper')">Caps Lock</button><a id="whichlink" href="javascript:alert(theFieldName);">Which field?</a><br/>
     
     <table summary="Accented vowel character entity keyboard" class="keyboardSection">
    
@@ -235,7 +172,7 @@
     </div>
     
     <div id="chartableupper" style="display:none">
-	<button id="charlink" onClick="showCharTable('lower')">Caps Lock</button><img class="capslock" src="/ead/img/CLon.gif"/><a id="keyboardlink" href="javascript:alert(theFieldName);">Which field?</a><br/>
+	<button id="charlink" onClick="showCharTable('lower')">Caps Lock</button><img class="capslock" src="/ead/img/CLon.gif"/><a id="whichlink" href="javascript:alert(theFieldName);">Which field?</a><br/>
     
     <table summary="Accented vowel character entity keyboard" class="keyboardSection">
       <tr>
@@ -339,11 +276,3 @@
 
     </table>
     </div>
-
-
-
-
-  </div>
-  
- </body>
-</html>

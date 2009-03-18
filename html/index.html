@@ -2,14 +2,12 @@
 <script type="text/javascript" src="/istc/javascript/searchForm.js"></script>
 
 	
-  		<div id="maincontent">
+<div id="maincontent">
 
-			<h1>Search</h1>
+	<h1>Search</h1>
 
 
-
-<form action="search.html" method="post">
-
+	<form action="search.html" method="post">
 	  
 		<p class="searchClause">	
 	      	<select name="fieldidx1"id="fieldidx1" onchange="updateSelects(1);">
@@ -37,90 +35,90 @@
 			</select>	   	  
 	    </p>
 	    
-	    
+<!-- No script version -->	    
 	    <noscript>
 	    
-	    <p class="boolOp">
-	      <input type="radio" name="fieldbool1" value="and" checked="checked" id="fieldbool1-and"/><label for="fieldbool1-and">AND&nbsp;&nbsp;</label>  
-	      <input type="radio" name="fieldbool1" value="or" id="fieldbool1-or"/><label for="fieldbool1-or">OR&nbsp;&nbsp;</label>
-	      <input type="radio" name="fieldbool1" value="not" id="fieldbool1-not"/><label for="fieldbool1-not">NOT&nbsp;&nbsp;</label>
-	    </p>
+		    <p class="boolOp">
+		      <input type="radio" name="fieldbool1" value="and" checked="checked" id="fieldbool1-and"/><label for="fieldbool1-and">AND&nbsp;&nbsp;</label>  
+		      <input type="radio" name="fieldbool1" value="or" id="fieldbool1-or"/><label for="fieldbool1-or">OR&nbsp;&nbsp;</label>
+		      <input type="radio" name="fieldbool1" value="not" id="fieldbool1-not"/><label for="fieldbool1-not">NOT&nbsp;&nbsp;</label>
+		    </p>
 	    
-	    <p class="searchClause">	
-	      	<select name="fieldidx2"id="fieldidx2">
-			<option value="cql.anywhere">General Keywords</option>
-			<option value="dc.creator">Author</option>
-			<option value="dc.title">Title</option>
-			<option value="bib.originPlace">Place of Printing</option>
-			<option value="istc.countryOfPrint">Country of Printing</option>
-			<option value="dc.publisher">Printer</option>
-			<option value="istc.referencedBy">Bibliographical References</option>
-			<option value="dc.identifier">ISTC Number</option>
-			<option value="dc.format">Format</option>
-			<option value="norzig.posessingInstitution">Location of Copy</option>
-			<option value="istc.countryOfCopy">Country of Copy</option>
-			<option value="istc.year">Start or exact Year (008)</option>
-			<option value="dc.date">Publication Date</option>
-			<option value="dc.language">Language</option>
-			<option value="istc.BLshelfmark">BL Shelfmark</option>
-			</select>
-			 for: <input type="text" name="fieldcont2" id="fieldcont2" size="30" />
-			<select name="fieldrel2" id="fieldrel2">
-				<option value="all" selected="selected">all of these words</option>
-				<option value="any">any of these words</option>
-				<option value="=">as a phrase</option>
-			</select>	   	  
-	    </p>
-	    
-	    <p class="boolOp">
-	      <input type="radio" name="fieldbool2" value="and" checked="checked" id="fieldbool2-and"/><label for="fieldbool2-and">AND&nbsp;&nbsp;</label>  
-	      <input type="radio" name="fieldbool2" value="or" id="fieldbool2-or"/><label for="fieldbool2-or">OR&nbsp;&nbsp;</label>
-	      <input type="radio" name="fieldbool2" value="not" id="fieldbool2-not"/><label for="fieldbool2-not">NOT&nbsp;&nbsp;</label>
-	    </p>
-	    
-	    <p class="searchClause">	
-	      	<select name="fieldidx3"id="fieldidx3">
-			<option value="cql.anywhere">General Keywords</option>
-			<option value="dc.creator">Author</option>
-			<option value="dc.title">Title</option>
-			<option value="bib.originPlace">Place of Printing</option>
-			<option value="istc.countryOfPrint">Country of Printing</option>
-			<option value="dc.publisher">Printer</option>
-			<option value="istc.referencedBy">Bibliographical References</option>
-			<option value="dc.identifier">ISTC Number</option>
-			<option value="dc.format">Format</option>
-			<option value="norzig.posessingInstitution">Location of Copy</option>
-			<option value="istc.countryOfCopy">Country of Copy</option>
-			<option value="istc.year">Start or exact Year (008)</option>
-			<option value="dc.date">Publication Date</option>
-			<option value="dc.language">Language</option>
-			<option value="istc.BLshelfmark">BL Shelfmark</option>
-			</select>
-			 for: <input type="text" name="fieldcont3" id="fieldcont3" size="30" />
-			<select name="fieldrel3" id="fieldrel3">
-				<option value="all" selected="selected">all of these words</option>
-				<option value="any">any of these words</option>
-				<option value="=">as a phrase</option>
-			</select>	   	  
-	    </p>
+		    <p class="searchClause">	
+		      	<select name="fieldidx2"id="fieldidx2">
+				<option value="cql.anywhere">General Keywords</option>
+				<option value="dc.creator">Author</option>
+				<option value="dc.title">Title</option>
+				<option value="bib.originPlace">Place of Printing</option>
+				<option value="istc.countryOfPrint">Country of Printing</option>
+				<option value="dc.publisher">Printer</option>
+				<option value="istc.referencedBy">Bibliographical References</option>
+				<option value="dc.identifier">ISTC Number</option>
+				<option value="dc.format">Format</option>
+				<option value="norzig.posessingInstitution">Location of Copy</option>
+				<option value="istc.countryOfCopy">Country of Copy</option>
+				<option value="istc.year">Start or exact Year (008)</option>
+				<option value="dc.date">Publication Date</option>
+				<option value="dc.language">Language</option>
+				<option value="istc.BLshelfmark">BL Shelfmark</option>
+				</select>
+				 for: <input type="text" name="fieldcont2" id="fieldcont2" size="30" />
+				<select name="fieldrel2" id="fieldrel2">
+					<option value="all" selected="selected">all of these words</option>
+					<option value="any">any of these words</option>
+					<option value="=">as a phrase</option>
+				</select>	   	  
+		    </p>
+		    
+		    <p class="boolOp">
+		      <input type="radio" name="fieldbool2" value="and" checked="checked" id="fieldbool2-and"/><label for="fieldbool2-and">AND&nbsp;&nbsp;</label>  
+		      <input type="radio" name="fieldbool2" value="or" id="fieldbool2-or"/><label for="fieldbool2-or">OR&nbsp;&nbsp;</label>
+		      <input type="radio" name="fieldbool2" value="not" id="fieldbool2-not"/><label for="fieldbool2-not">NOT&nbsp;&nbsp;</label>
+		    </p>
+		    
+		    <p class="searchClause">	
+		      	<select name="fieldidx3"id="fieldidx3">
+				<option value="cql.anywhere">General Keywords</option>
+				<option value="dc.creator">Author</option>
+				<option value="dc.title">Title</option>
+				<option value="bib.originPlace">Place of Printing</option>
+				<option value="istc.countryOfPrint">Country of Printing</option>
+				<option value="dc.publisher">Printer</option>
+				<option value="istc.referencedBy">Bibliographical References</option>
+				<option value="dc.identifier">ISTC Number</option>
+				<option value="dc.format">Format</option>
+				<option value="norzig.posessingInstitution">Location of Copy</option>
+				<option value="istc.countryOfCopy">Country of Copy</option>
+				<option value="istc.year">Start or exact Year (008)</option>
+				<option value="dc.date">Publication Date</option>
+				<option value="dc.language">Language</option>
+				<option value="istc.BLshelfmark">BL Shelfmark</option>
+				</select>
+				 for: <input type="text" name="fieldcont3" id="fieldcont3" size="30" />
+				<select name="fieldrel3" id="fieldrel3">
+					<option value="all" selected="selected">all of these words</option>
+					<option value="any">any of these words</option>
+					<option value="=">as a phrase</option>
+				</select>	   	  
+		    </p>
 
-	  </noscript>
+	  	</noscript>
+<!-- End no script version -->	    
 
-
-<p id="addClauseP">
-    <script type="text/javascript">
+		<p id="addClauseP">
+    		<script type="text/javascript">
 	 
-	document.write('<a href="javascript:addSearchClause(1)" id="addClauseLink" title="Add another search clause, like the one above [requires JavaScript]">...Add another search term</a>');
+				document.write('<a href="javascript:addSearchClause(1)" id="addClauseLink" title="Add another search clause, like the one above [requires JavaScript]">...Add another search term</a>');
 	
 			
-	</script>		
-</p>
+			</script>		
+		</p>
 
-Only show German locations <input type="checkbox" name="locations" value="germany"/>
-<br />
-<br />
-<input type="hidden" name="operation" value="search"/>
-<input type="submit" value="Start Search" />
-</form>
+		Only show German locations <input type="checkbox" name="locations" value="germany"/>
+		<br />
+		<br />
+		<input type="hidden" name="operation" value="search"/>
+		<input type="submit" value="Start Search" />
+	</form>
 
 </div>
