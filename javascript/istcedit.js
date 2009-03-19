@@ -738,21 +738,21 @@ function suggest(id, e){
 		}
 		if (element.value != ''){
 		//AJAX call to get values from index
-
+			var terms;
 			var url = 'suggest.html';
 			var data = 'operation=suggest&i=' + index + '&s=' + element.value;
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
-				var terms = response.substring(8,response.indexOf('</select>'));
-				createSuggestBox(terms, tid, element);
+				terms = response.substring(8,response.indexOf('</select>'));
+				
 			}});	
+			createSuggestBox(terms, tid, element);
 		}	
 	}
 }
 
 
 function createSuggestBox(terms, tid, element){
-alert(tid);
 	if (terms != ''){
 		var termList = terms.split(' | ');
 	}
