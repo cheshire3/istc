@@ -147,6 +147,7 @@ class IstcAdminHandler:
                 user = None
                 
             if user is not None:
+                values['%USERNAME%'] = ''
                 values['%USER%'] = 'checked="true"'
                 values['%SUPERUSER%'] = ''
                 return page.replace('%USERS%', '<p class="error">User with username/id "%s" already exists! Please try again with a different username.</p>%s' % (userid, self.list_users(values)))
@@ -184,6 +185,9 @@ class IstcAdminHandler:
                 self._submit_userLxml(userid, userNode)                    
                 user = userStore.fetch_object(session, userid)
                 values['%USERNAME%'] = ''
+                values['%FULLNAME%'] = ''
+                values['%EMAIL%'] = ''
+                values['%TELEPHONE%'] = ''
                 values['%USER%'] = 'checked="true"'
                 values['%SUPERUSER%'] = ''
                 return page.replace('%USERS%', self.list_users(values))
