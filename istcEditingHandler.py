@@ -1299,11 +1299,11 @@ indentingTxr = None
 
 def build_architecture(data=None):
     global session, serv, db, dbusa, dbrefs, qf, editStore, recordStore, noteStore, authStore, formTxr, xmlp, indentingTxr, sourceDir, lockfilepath, reflockfilepath, usalockfilepath
-    
-    if editStore:
-        editStore.commit_storing(session)
-    if noteStore:
-        noteStore.commit_storing(session)
+#    
+#    if editStore:
+#        editStore.commit_storing(session)
+#    if noteStore:
+#        noteStore.commit_storing(session)
     
     session = Session()
     session.database = 'db_istc'
