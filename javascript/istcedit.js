@@ -780,10 +780,11 @@ function suggest(id, e){
 						clearUsaText();
 					}
 					optionSel = -1;		    
-				}});	
+					
 			
 			
-				}	
+				}
+			}});	
 		}	
 	}
 }
