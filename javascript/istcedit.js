@@ -571,10 +571,12 @@ function showUsa(value){
 
 function clearRef(){
 	var cell = document.getElementById('refdisplay');
-	for (var i=0; i < cell.childNodes.length; i++){
-		cell.removeChild(cell.childNodes[i]);	
+	if (cell){
+		for (var i=0; i < cell.childNodes.length; i++){
+			cell.removeChild(cell.childNodes[i]);	
+		}
+		cell.appendChild(document.createElement('p'));
 	}
-	cell.appendChild(document.createElement('p'));
 }
 
 function clearUsa(){
@@ -588,10 +590,12 @@ function clearUsa(){
 
 function clearUsaText(){
 	var cell = document.getElementById('usadisplay');
-	for (var i=0; i < cell.childNodes.length; i++){
-		cell.removeChild(cell.childNodes[i]);	
+	if (cell){
+		for (var i=0; i < cell.childNodes.length; i++){
+			cell.removeChild(cell.childNodes[i]);	
+		}
+		cell.appendChild(document.createElement('p'));
 	}
-	cell.appendChild(document.createElement('p'));
 }
 
 
@@ -743,8 +747,7 @@ function suggest(id, e){
 			var data = 'operation=suggest&i=' + index + '&s=' + element.value;
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
-				terms = response.substring(8,response.indexOf('</select>'));
-				
+				terms = response.substring(8,response.indexOf('</select>'));				
 			}});	
 			createSuggestBox(terms, tid, element);
 		}	
