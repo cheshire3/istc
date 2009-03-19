@@ -740,49 +740,49 @@ function suggest(id, e){
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
 				var response = transport.responseText;
 				terms = response.substring(8,response.indexOf('</select>'));
-						    
-			}});	
-			
-			if (terms != ''){
+				if (terms != ''){
 				var termList = terms.split(' | ');
-			}
-			else {
-				var termList = [];
-			}
-			var len = parseInt(termList.length);
-			if (len > 10){
-				//only display 10 at a time
-				len = 10;
-			}
-			if (len > 0){ 
-				//create the select box
-				var select = document.createElement('select');
-				select.setAttribute('id', 'suggestBox');
-				select.setAttribute('size', len);
-				select.className = 'suggest';
-				select.style.position = 'absolute';
-				select.style.width = element.offsetWidth + 'px';
-				var string = tid;
-				select.onclick = function () {selectClick(this, string, 'mouse'); };
-				if (tid == '510_a' || 'ISTCNo'){
-					for(var i=0; i < termList.length; i++) {
-						var value = termList[i].substring(0, termList[i].lastIndexOf(' ('));
-				   		select.options[i] = new Option(value, value);
-					}
 				}
 				else {
-					for(var i=0; i < termList.length; i++) {
-				   		select.options[i] = new Option(termList[i], termList[i].substring(0, termList[i].lastIndexOf(' (')));
-					}					
+					var termList = [];
 				}
-				element.parentNode.appendChild(select);
-				if (tid == 'refs_a' || tid == '510_a'){
-					clearRef();
+				var len = parseInt(termList.length);
+				if (len > 10){
+					//only display 10 at a time
+					len = 10;
 				}
-				if (tid == 'usa_a'|| tid == 'holdings_a'){
-					clearUsaText();
-				}
-				optionSel = -1;
+				if (len > 0){ 
+					//create the select box
+					var select = document.createElement('select');
+					select.setAttribute('id', 'suggestBox');
+					select.setAttribute('size', len);
+					select.className = 'suggest';
+					select.style.position = 'absolute';
+					select.style.width = element.offsetWidth + 'px';
+					var string = tid;
+					select.onclick = function () {selectClick(this, string, 'mouse'); };
+					if (tid == '510_a' || 'ISTCNo'){
+						for(var i=0; i < termList.length; i++) {
+							var value = termList[i].substring(0, termList[i].lastIndexOf(' ('));
+					   		select.options[i] = new Option(value, value);
+						}
+					}
+					else {
+						for(var i=0; i < termList.length; i++) {
+					   		select.options[i] = new Option(termList[i], termList[i].substring(0, termList[i].lastIndexOf(' (')));
+						}					
+					}
+					element.parentNode.appendChild(select);
+					if (tid == 'refs_a' || tid == '510_a'){
+						clearRef();
+					}
+					if (tid == 'usa_a'|| tid == 'holdings_a'){
+						clearUsaText();
+					}
+					optionSel = -1;		    
+				}});	
+			
+			
 				}	
 		}	
 	}
