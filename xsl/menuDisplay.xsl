@@ -58,7 +58,7 @@
 					</xsl:variable>
 	            	<a>
 	            		<xsl:attribute name="href">
-							<xsl:text>/istc/edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
+							<xsl:text>../edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
 						</xsl:attribute>
 						<xsl:text>Edit Record (administrators only)</xsl:text>
 						<br />
@@ -105,7 +105,7 @@
 				<strong>Author</strong>
 				<a>			
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.creator&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.creator&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
 					</xsl:attribute>
 					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/><br/>
 		 		</a>
@@ -113,7 +113,7 @@
 			<div class="menuitemextra">
 				<a>			
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.creator&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.creator&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$author"/>
 					</xsl:attribute>
 		 			<span class="extralink"><xsl:value-of select="$author"/></span>	
 		 		</a>
@@ -138,7 +138,7 @@
 				<strong>Title</strong>				
 				<a>
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
 					</xsl:attribute>
 					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/><br/>	
 		 		</a>
@@ -146,7 +146,7 @@
 			<div class="menuitemextra">
 				<a>
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.title&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$title"/>
 					</xsl:attribute>
 					<xsl:choose>
 						<xsl:when test="string-length($title)&gt;25">
@@ -171,7 +171,7 @@
 				<strong>Printer</strong>				
 				<a>	
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.publisher&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.publisher&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
 					</xsl:attribute>
 					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/>	 			
 		 		</a>
@@ -179,7 +179,7 @@
 		 	<div class="menuitemextra">
 		 		<a>	
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=dc.publisher&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=dc.publisher&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printer"/>
 					</xsl:attribute>
 					<xsl:choose>
 						<xsl:when test="string-length($printer)&gt;25">
@@ -203,7 +203,7 @@
 				<strong>Printer Location</strong>
 				<a>
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=bib.originPlace&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=bib.originPlace&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
 					</xsl:attribute>
 					<img class="menu" src="/istc/images/internallink.gif" alt=""  border="0" align="middle"/>
 		 		</a>
@@ -211,7 +211,7 @@
 			 <div class="menuitemextra">
 			 	<a>
 					<xsl:attribute name="href">
-						<xsl:text>/istc/search/browse.html?operation=scan&amp;fieldidx1=bib.originPlace&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
+						<xsl:text>browse.html?operation=scan&amp;fieldidx1=bib.originPlace&amp;fieldrel1=exact&amp;fieldcont1=</xsl:text><xsl:value-of select="$printerloc"/>
 					</xsl:attribute>
 		 			<xsl:value-of select="$printerloc"/>
 		 		</a>
