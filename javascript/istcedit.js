@@ -738,7 +738,7 @@ function suggest(id, e){
 		}
 		if (element.value != ''){
 		//AJAX call to get values from index
-			var terms;
+			var terms = '';
 			var url = 'suggest.html';
 			var data = 'operation=suggest&i=' + index + '&s=' + element.value;
 			var ajaxSuggest = new Ajax.Request(url, {method:'post', asynchronous:false, postBody:data, evalScripts:true, onSuccess: function(transport) {	
