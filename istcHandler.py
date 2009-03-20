@@ -201,7 +201,7 @@ class IstcHandler:
             rs = self.sort_resultSet(session, rs, sortIndex)
 
             if start > 0 and start+pagesize < len(rs):
-                navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
+                navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
             elif start > 0 and start+pagesize >= len(rs):
                 navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s" style="margin-right: 37px;"><img class="menu"   src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString)
             elif start == 0 and start+pagesize < len(rs):
@@ -378,11 +378,11 @@ class IstcHandler:
         countString = 'Record %s of %s' % (id+1, len(rs))
         
         if id > 0 and id < len(rs)-1:
-            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString, rsid, id+1, locString)
+            navstring = '<a href="search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString, rsid, id+1, locString)
         elif id > 0 and id < len(rs):
-            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s" style="margin-right: 37px;" ><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString)
+            navstring = '<a href="search.html?operation=record&rsid=%s&q=%d%s" style="margin-right: 37px;" ><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (rsid, id-1, locString)
         elif id == 0 and id < len(rs)-1:
-            navstring = '<a href="/istc/search/search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id+1, locString)
+            navstring = '<a href="search.html?operation=record&rsid=%s&q=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, id+1, locString)
         else:
             navstring = ''
 
@@ -770,7 +770,7 @@ class IstcHandler:
                 rowCount += 1
                 prevlink = ''
             else:
-                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
+                prevlink = '<a href="browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
                             
             dodgyTerms = []
             for i in range(len(scanData)):
@@ -838,11 +838,11 @@ class IstcHandler:
                 rows.append('<tr class="%s"><td colspan="2">-- end of index --</td></tr>' % (rowclass))
                 nextlink = ''
             else:
-                nextlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[-1][0]), 0, numreq)
+                nextlink = '<a href="browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[-1][0]), 0, numreq)
 
             
             if nextlink == '' and prevlink != '':
-                prevlink = '<a href="/istc/search/browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d" style="margin-right: 37px;"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
+                prevlink = '<a href="browse.html?operation=scan&amp;fieldidx1=%s&amp;fieldrel1=%s&amp;fieldcont1=%s&amp;responsePosition=%d&amp;numreq=%d" style="margin-right: 37px;"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>' % (idx, rel, cgi_encode(scanData[0][0]), numreq+1, numreq)
             
             del scanData
             rows.append('<div class="recordnav">%s</div>' % (' '.join([prevlink, nextlink])))
