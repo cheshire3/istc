@@ -560,9 +560,15 @@
 						<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
 							<xsl:choose>
 								<xsl:when test="$format='screen'">
-									<a target="_new">
-										<xsl:value-of select="."/><xsl:text>; </xsl:text>
-									</a>
+									<xsl:choose>
+										<xsl:when test="starts-with(., 'BSB-Ink')">							
+												<xsl:text>&lt;a href="http://mdzx.bib-bvb.de/bsbink/Ausgabe_</xsl:text><xsl:value-of select="substring-after(., 'BSB-Ink ')"/><xsl:text>.html" target="_new"></xsl:text><xsl:value-of select="."/><xsl:text>&lt;/a>; </xsl:text>
+											
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:value-of select="."/><xsl:text>; </xsl:text>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of select="."/><xsl:text>; </xsl:text>
