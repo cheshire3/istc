@@ -292,6 +292,7 @@ class IstcHandler:
             #add page navigation
             pages = []
             if hits > pagesize:
+                pages.append('<span id="pagejumpspan">Display Records: ')
                 total = hits/pagesize
                 if hits%pagesize != 0:
                     total += 1
@@ -302,7 +303,7 @@ class IstcHandler:
                         pages.append('<option value="search.html?operation=search&rsid=%s&start=%s" selected>%s-%s</option> ' % (rsid, jumpstart, jumpstart+1, jumpstart+pagesize))
                     else :
                         pages.append('<option value="search.html?operation=search&rsid=%s&start=%s">%s-%s</option> ' % (rsid, jumpstart, jumpstart+1, jumpstart+pagesize))
-                pages.append('</select>')
+                pages.append('</select></span>')
                 html.extend(pages)
                 
             html.append('<div class="recordnav">%s</div><br/>' % navString)
