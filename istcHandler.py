@@ -287,8 +287,26 @@ class IstcHandler:
                 html.append('<td>%s<a href="search.html?operation=record&rsid=%s&q=%s%s"><span class="titlespan">%s</span></a><br/>%s: %s, %s</td>' % (author, rsid, i, locString, title.strip(), place.strip(), printer.strip(), date))       
                 html.append('</tr>')
             html.append('</table>')
-            html.append('<div class="recordnav">%s</div><br/>' % navString)
+            
+            
+            #add page navigation
+            pages = []
+            if hits > pagesize:
+                total = hits/pagesize
+                if hits%pagesize != 0:
+                    total += 1
+                pages.append('<select id="pagejump" name="pagejump" onchange="changePage()">')
+                for i in range(0, total):
+                    jumpstart = i*pagesize                    
+                    if jumpstart == start:
+                        pages.append('<option value="search.html?operation=search&rsid=%s&start=%s" selected>%s-%s</option> ' % (rsid, jumpstart, jumpstart+1, jumpstart+pagesize))
+                    else :
+                        pages.append('<option value="search.html?operation=search&rsid=%s&start=%s">%s-%s</option> ' % (rsid, jumpstart, jumpstart+1, jumpstart+pagesize))
+                pages.append('</select>')
+                html.extend(pages)
                 
+            html.append('<div class="recordnav">%s</div><br/>' % navString)
+            
             menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
                              '<div class="menugrp">',
                              '<div class="menubody" id="topmenu">',
@@ -393,7 +411,7 @@ class IstcHandler:
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString)))
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
         else:
             raise ValueError(id)
  

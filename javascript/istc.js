@@ -89,5 +89,12 @@ function submitForm(op){
 	}
 }
 
+function changePage(){
 
+	var select = document.getElementById('pagejump');
+	var value = select.value;
+	if (value != 'null') {
+		location.href = value;
+	}
+}
 

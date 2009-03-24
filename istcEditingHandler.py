@@ -930,6 +930,7 @@ class IstcEditingHandler:
                     db.begin_indexing(session)
                     recordStore.begin_storing(session)
 
+                    recordStore.store_record(session, rec)
                     #add workflow processing here
                     doc = preparseWorkflow.process(session, StringDocument(rec.get_xml(session)))
                     rec = xmlp.process_document(session, doc)

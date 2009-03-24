@@ -30,6 +30,12 @@ td.hiddenlink a {
 	text-decoration:none;
 	color: #000;
 	}
+	
+#pagejump {
+	float:left;
+	margin-left: 58px;
+	margin-top: 15px;
+	}
 
 /* End of Hits List Display */
 
