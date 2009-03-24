@@ -561,9 +561,18 @@
 							<xsl:choose>
 								<xsl:when test="$format='screen'">
 									<xsl:choose>
-										<xsl:when test="starts-with(., 'BSB-Ink')">							
-												<xsl:text>&lt;a href="http://mdzx.bib-bvb.de/bsbink/Ausgabe_</xsl:text><xsl:value-of select="substring-before(substring-after(., 'BSB-Ink '), ' ')"/><xsl:text>.html" target="_new"></xsl:text><xsl:value-of select="."/><xsl:text>&lt;/a>; </xsl:text>
-											
+										<xsl:when test="starts-with(., 'BSB-Ink')">		
+											<xsl:choose>
+												<xsl:when test="contains(., '(')">
+													<xsl:text>&lt;a href="http://mdzx.bib-bvb.de/bsbink/Ausgabe_</xsl:text><xsl:value-of select="substring-before(substring-after(., 'BSB-Ink '), ' ')"/><xsl:text>.html" target="_new"></xsl:text><xsl:value-of select="."/><xsl:text>&lt;/a>; </xsl:text>				
+												</xsl:when>
+												<xsl:when test="contains(., ',')">
+													<xsl:text>&lt;a href="http://mdzx.bib-bvb.de/bsbink/Ausgabe_</xsl:text><xsl:value-of select="substring-before(substring-after(., 'BSB-Ink '), ',')"/><xsl:text>.html" target="_new"></xsl:text><xsl:value-of select="."/><xsl:text>&lt;/a>; </xsl:text>				
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:text>&lt;a href="http://mdzx.bib-bvb.de/bsbink/Ausgabe_</xsl:text><xsl:value-of select="substring-after(., 'BSB-Ink ')"/><xsl:text>.html" target="_new"></xsl:text><xsl:value-of select="."/><xsl:text>&lt;/a>; </xsl:text>				
+												</xsl:otherwise>											
+											</xsl:choose>																								
 										</xsl:when>
 										<xsl:otherwise>
 											<xsl:value-of select="."/><xsl:text>; </xsl:text>
