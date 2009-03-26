@@ -141,7 +141,7 @@ class IstcEditingHandler:
         #- end _submit_userLxml()
 
 
-    def build_marc(self, form):
+    def build_marc(self, form, date=None):
         self.logger.log('building marc')
         multipleEntryFields = ['imprints', 'generalnotes', 'references', 'holdings', 'blshelfmarks']
         list = form.list
@@ -264,10 +264,12 @@ class IstcEditingHandler:
                         inds = dict[k]['ind'].split('-')
                     else :
                         list.append((y, dict[k][y]))                    
-                marc[k].append((inds[0], inds[1], list))  
-            marcObject = MARC()
-            self.logger.log(marc)
-            marcObject.fields = marc           
+                marc[k].append((inds[0], inds[1], list)) 
+        if date != None:
+            marc[959] = [('0', '0', [('a', '%s-%s' % (time.strftime('%Y%m%d'), session.user.username))])]
+        marcObject = MARC()
+        self.logger.log(marc)
+        marcObject.fields = marc           
         return marcObject.toMARCXML()
 
  
@@ -512,11 +514,13 @@ class IstcEditingHandler:
                                u'<img class="addedimage" src = "/istc/images/up.png" onmouseover="this.src=\'/istc/images/up-hover.png\';" onmouseout="this.src=\'/istc/images/up.png\';" id="up_formgen%d"/></a>' % index,
                                u'<a onclick="entryDown(\'references_formgen%d\');" title="move down">' % index,
                                u'<img class="addedimage" src = "/istc/images/down.png" onmouseover="this.src=\'/istc/images/down-hover.png\';" onmouseout="this.src=\'/istc/images/down.png\';" id="down_formgen%d"/></a>' % index,                                               
+                               u'<a onclick="insertAbove(\'references_formgen\', %d);" title="insert above">' % index,
+                               u'<img class="addedimage" src = "/istc/images/insert.png" onmouseover="this.src=\'/istc/images/insert-hover.png\';" onmouseout="this.src=\'/istc/images/insert.png\';" id="insert_formgen%d"/></a>' % index,                                               
                                u'</div>',
                                u'<div class="multipleEntry">',
-                               u'<p class="float" onclick="editEntry(\'references_formgen\', %d);" title="%s">' % (index, full), 
+                               u'<p class="addedString" title="%s"><a onclick="editEntry(\'references_formgen\', %d);">' % (full, index), 
                                u'%s %s' % (abbrev, other),
-                               u'</p></div></div>',
+                               u'</a></p></div></div>',
                                u'<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
                                u'</li>'])
             return u'<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ''.join(output)
@@ -851,8 +855,9 @@ class IstcEditingHandler:
                 for r in editStore:
                     if r.id[:r.id.rfind('-')] == id :
                         exists = 'true'
+                        owner = r.id[r.id.rfind('-')+1:]
                         break;
-                return '<wrapper><value>%s</value><owner>other</owner></wrapper>' % exists
+                return '<wrapper><value>%s</value><owner>%s</owner></wrapper>' % (exists, owner)
             else:
                 return '<wrapper><value>%s</value><owner>user</owner></wrapper>' % exists                  
 
@@ -893,7 +898,7 @@ class IstcEditingHandler:
             indexWorkflow = db.get_object(session, 'indexRecordWorkflow')
             
             recid = form.get('1', None)
-            rec = xmlp.process_document(session, StringDocument(self.build_marc(form)))
+            rec = xmlp.process_document(session, StringDocument(self.build_marc(form, '959')))
             rec.id = recid
             
            

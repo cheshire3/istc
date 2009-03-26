@@ -27,7 +27,7 @@ div#fullcontent {
 	float:left;
 	width: 743px;
 	padding-left: 5px;
-	}
+}
 
 
 .field {
@@ -40,10 +40,10 @@ div#fullcontent {
 	min-width: 715px;	
 }
 
+
 .field p {
 	margin-top: 10px;
-	margin-bottom: 10px;	
-	
+	margin-bottom: 10px;		
 }
 
 .functions {
@@ -90,11 +90,13 @@ div#gotodiv {
 
 .error {
 	color: red;
-	}
+}
+	
 	
 .ok {
 	color: green;
-	}
+}
+
 /*======================================================================================================= */
 /* Menu pages stuff */
 h3.editheader {
@@ -178,7 +180,7 @@ li.unmarked {
 	list-style: none;
 }
 
-li a img {
+li.unmarked a img {
 	border: 1px solid white;
 
 	}
@@ -233,32 +235,40 @@ div#adduser table {
 	border-top: 2px solid #006c7d;		
 }
 
-.added {
+.added, .smalladded {
 	width: 710px;
 	background: #F2F2F2;
 	border: inset 2px #000000;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	margin-left: 0px;	
-	margin-top: 10px;
-	max-height: 200px;
-	min-height: 200px;
+	margin-top: 10px;	
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
-.added ul {
+.added {
+		max-height: 200px;
+		min-height: 200px;
+	}
+	
+.smalladded {
+		max-height: 100px;
+		min-height: 100px;
+	}
+
+.added ul, .smalladded ul {
 	list-style-type: none;
 	margin-top: 5px;
   	padding: 0px;
 }
 	
-.added li {
+.added li, .smalladded li {
 	padding: 0px;
 	margin: -5px;
 }
 	
-.added li p{
+.added li p, .smalladded li p{
 	padding-top: 0px;
 	font-size: 9pt;
 }
@@ -298,6 +308,11 @@ div#adduser table {
 	float: left;
 }
 
+#addshelfmarkbutton {
+	float:right;
+	margin-top: 5px;
+	}
+
 td .mebutton {
 	margin-left: 0px;	
 }
@@ -309,6 +324,20 @@ td .mebutton {
 .suggest {
 	z-index: 3;	
 }
+
+.addedString {
+	cursor: pointer;
+}
+
+.addedString a {
+	color: black;
+	text-decoration: none;	
+}
+
+.addedString a:hover {
+	text-decoration: underline;	
+}
+
 
 /*======================================================================================================= */
 /* reference/usa location specific stuff*/

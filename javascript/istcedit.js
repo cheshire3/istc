@@ -153,8 +153,9 @@ function checkIds(type){
 				alert('You already have a draft version of this file in the draft store. If you want to edit the current draft you need to open it from the draft store. If you want to edit the version from the main database you need to first delete the version from the draft store.');
 				return false;
 			}
-			else if (owner == 'other') {
-				return confirm('Another user has a draft version of this file in the draft store. If both versions are submitted to the main database data will be lost.\nAre you sure you want to continue?');				
+			else {
+				alert(owner + ' has a draft version of this file in the draft store. You will not be able to edit this file until the other user submits or discards their draft.');				
+				return false;
 			}
 		}
 		else {
@@ -220,7 +221,7 @@ function validEntry(s){
 		}
 	}
 	if (s == 'blshelfmarks'){
-		if (document.getElementById('852_a').value.strip() == '' || document.getElementById('852_j').value.strip() == ''){
+		if (document.getElementById('852_a').value.strip() == '' || document.getElementById('852_j[1]').value.strip() == ''){
 			return false;
 		}
 	}	
@@ -229,7 +230,7 @@ function validEntry(s){
 
 
 function addEntry(s){
-
+	alert(s);
 	if (!validEntry(s)){
 		return;
 	}
@@ -242,38 +243,39 @@ function addEntry(s){
 	var table = tableDiv.getElementsByTagName('tbody')[0];
 	var rows = table.getElementsByTagName('tr');
 	var length = rows.length-1;
-    for (var i = 0; i<length; i++){    
+    for (var i = 0; i<length; i++){   
     	var textbox = rows[i].getElementsByTagName('input')[0];
     	  
     	if (textbox == null){
     		textbox = rows[i].getElementsByTagName('textarea')[0];
     	}	
     	if (textbox == null){
+    		alert('select');
     		textbox = rows[i].getElementsByTagName('select')[0];
     	}
-    	if (textbox.value != ""){
+    	if (textbox.value.strip() != '' && textbox.value.strip() != ' '){
     		
     		if (s == 'holdings' && i == 0){
     			textString += textbox.value + ' - ';
     			valueString += textbox.id + ' | ' + textbox.value + ' ||| '; 
+    			textbox.value = '';
     		}
     		else if (s == 'holdings' && i == 3){
+    			alert(textbox.checked);
     			if (textbox.checked == true){
     				valueString += textbox.id + ' | Private ||| ';
     				textString += ' - Private'; 
     				textbox.checked = false;
     			}  			
     		}
-    		else {
+    		else {    		
     			textString += textbox.value + ' ';  
-    			valueString += textbox.id + ' | ' + textbox.value + ' ||| ';		
+    			valueString += textbox.id + ' | ' + textbox.value + ' ||| ';
+    			textbox.value = '';	    			
     		}
     		
     	}   
-    	else {
-    		valueString += textbox.id + ' |   ||| ';
-    	}
-    	textbox.value = '';
+    	
     }
     var tag = textbox.id.split('_')[0];
     var indicatorValue = '0-0';
@@ -291,10 +293,11 @@ function addEntry(s){
 	var number = nameCount;
     nameDiv = document.createElement('div');
     nameDiv.setAttribute('class', 'multipleEntry');
+    
     p = document.createElement('p');
-    p.className = 'float'; 
-
-    p.onclick = function () {editEntry(s, number); };
+    a = document.createElement('a');
+    a.onclick = function () {editEntry(s, number); };
+     
 	if (s == 'references' && document.getElementById('refdisplay').childNodes[0].firstChild){
 		if (document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue.strip() != ''){
 			var title = document.getElementById('refdisplay').childNodes[0].firstChild.nodeValue;
@@ -307,7 +310,9 @@ function addEntry(s){
 		var title = 'Click to edit';
 	}
     p.setAttribute('title', title);
-    p.appendChild(txtnode);
+    p.className = 'addedString';
+    a.appendChild(txtnode);
+    p.appendChild(a);
     nameDiv.appendChild(p);
     
     var icondiv = createIcons(s);
@@ -343,6 +348,9 @@ function addEntry(s){
 	if (s == 'holdings'){
 		document.getElementById('holdings_country').selectedIndex = 0;
 	}
+	if (s == 'blshelfmarks'){
+		resetShelfmarks();
+	}
 }
 
 
@@ -356,6 +364,7 @@ function createIcons(s){
    var innerHTMLString = '<a onclick ="deleteEntry(' + d + ');" class="addedimage" title="delete entry"><img src = "/istc/images/remove.png" onmouseover="this.src=\'/istc/images/remove-hover.png\';" onmouseout="this.src=\'/istc/images/remove.png\';"/></a>'; 
    innerHTMLString += '<a onclick ="entryUp(' + d + ');" class="addedimage" title="move up"><img src = "/istc/images/up.png" onmouseover="this.src=\'/istc/images/up-hover.png\';" onmouseout="this.src=\'/istc/images/up.png\';"/></a>';
    innerHTMLString += '<a onclick ="entryDown(' + d + ');" class="addedimage" title="move down"><img src = "/istc/images/down.png" onmouseover="this.src=\'/istc/images/down-hover.png\';" onmouseout="this.src=\'/istc/images/down.png\';"/></a>';
+   innerHTMLString += '<a onclick ="insertAbove(' + s + ',' + nameCount + ');" class="addedimage" title="insert above"><img src = "/istc/images/insert.png" onmouseover="this.src=\'/istc/images/insert-hover.png\';" onmouseout="this.src=\'/istc/images/insert.png\';"/></a>';
    
    icondiv.innerHTML = innerHTMLString;
    return icondiv;
@@ -363,6 +372,7 @@ function createIcons(s){
 
 
 function entryUp(d){
+
 	var item = document.getElementById('li' + d);
 	var parent = item.parentNode;
 	var listItems = parent.getElementsByTagName('li');
@@ -406,9 +416,44 @@ function deleteEntry(d){
   	if (list.getElementsByTagName('li').length < 1){
   		list.parentNode.style.display = 'none';
   	}
-  	else if (list.getElementsByTagName('li').length == 1){
-  		Sortable.destroy(list.getAttribute('id'));
-  	}
+}
+
+
+function insertAbove(s, number){
+
+	var type = s.substring(0, s.indexOf('_formgen'));
+  	if (type == '') {
+  		type = s;
+  	}  
+
+ 	var ph = document.getElementById('placeholder' + type);
+
+	if (ph != null){
+		var ul = ph.parentNode;
+		ul.removeChild(ph);
+	}
+
+  	var item = document.getElementById('li' + s + number);
+  	
+  	var parent = item.parentNode;
+  	
+	var placeholder = document.createElement('li');
+	placeholder.setAttribute('id', 'placeholder' + type);
+	var image = document.createElement('img');
+	image.setAttribute('src', '/istc/images/placeholder.png');
+	image.className = "addedimage";
+	placeholder.appendChild(image);
+	parent.insertBefore(placeholder, item);
+}
+
+
+function resetShelfmarks(){	
+	var table = document.getElementById('table_blshelfmarks');
+	var tbody = table.getElementsByTagName('tbody')[0];
+	var tds = tbody.childNodes;
+	for (var i=tds.length-2; i>2; i--){
+		tbody.removeChild(tds[i]);
+	}	
 }
 
 
@@ -467,6 +512,51 @@ function editEntry(s, number){
 	  				  				  		
 	  		}
 	  	}
+  	} else if (type == 'blshelfmarks'){
+  		resetShelfmarks();
+  		for (var i = 0; i< values.length-2; i++){  
+	  		value = values[i].split(' | ');
+	  		if (value[0].match(/852_j\S*/)){
+	  			try {
+	  				document.getElementById(value[0]).value = value[1];
+	  			}
+	  			catch (err){
+	  				var row = document.createElement('tr');
+					var cell1 = document.createElement('td');
+					cell1.className = 'melabel';
+					cell1.appendChild(document.createTextNode('Shelfmark:'));
+					row.appendChild(cell1);
+					
+					var cell2 = document.createElement('td');
+					var input = document.createElement('input');
+					input.setAttribute('size', '36');
+					input.setAttribute('type', 'text');
+					input.setAttribute('autocomplete', 'off');
+					input.setAttribute('name', 'blshelfmarks');
+					input.setAttribute('id', value[0]);
+					input.setAttribute('value', value[1]);
+					cell2.appendChild(input);
+					row.appendChild(cell2);
+					
+					var cell3 = document.createElement('td');
+					var image = document.createElement('img');
+					image.setAttribute('src', '/istc/images/remove.png');
+					image.onmouseover = function() {this.src='/istc/images/remove-hover.png';};
+					image.onmouseout = function() {this.src='/istc/images/remove.png';};
+					image.onclick = function() {deleteShelfmark(value[0])}
+					cell3.appendChild(image);
+					row.appendChild(cell3);
+					
+					var buttonrow = document.getElementById('buttonrow');
+					table.insertBefore(row, buttonrow);	  				
+	  			}
+	  		}
+	  		else {
+	  			document.getElementById(value[0]).value = value[1];
+	  		}
+	  	}
+  	
+  	
   	}
   	else {
 	  	if (inputs.length == 1){	
@@ -510,6 +600,49 @@ function editEntry(s, number){
 	else {
 		deleteEntry(s + number);
 	} 	
+}
+
+
+function addShelfmark(){
+	var table = document.getElementById('table_blshelfmarks');
+	var tbody = table.getElementsByTagName('tbody')[0];
+	var count = tbody.childNodes.length -2;
+	
+	var row = document.createElement('tr');
+	var cell1 = document.createElement('td');
+	cell1.className = 'melabel';
+	cell1.appendChild(document.createTextNode('Shelfmark:'));
+	row.appendChild(cell1);
+	
+	var cell2 = document.createElement('td');
+	var input = document.createElement('input');
+	input.setAttribute('size', '36');
+	input.setAttribute('type', 'text');
+	input.setAttribute('autocomplete', 'off');
+	input.setAttribute('name', 'blshelfmarks');
+	input.setAttribute('id', '852_j[' + count + ']');
+	cell2.appendChild(input);
+	row.appendChild(cell2);
+	
+	var cell3 = document.createElement('td');
+	var image = document.createElement('img');
+	image.setAttribute('src', '/istc/images/remove.png');
+	image.onmouseover = function() {this.src='/istc/images/remove-hover.png';};
+	image.onmouseout = function() {this.src='/istc/images/remove.png';};
+	image.onclick = function() {deleteShelfmark('852_j[' + count + ']')}
+	cell3.appendChild(image);
+	row.appendChild(cell3);
+	
+	var buttonrow = document.getElementById('buttonrow');
+	tbody.insertBefore(row, buttonrow);
+}
+
+function deleteShelfmark(id){
+	var input = document.getElementById(id);
+	var td = input.parentNode;
+	var tr = td.parentNode;
+	var tbody = tr.parentNode;
+	tbody.removeChild(tr);
 }
 
 //end of functions for multiple entry fields
@@ -903,8 +1036,6 @@ function showCharTable(type){
   	else {
 		($('chartable' + currentCharTable)).style.display = 'block';
   	}
-//  	($('hideicon')).style.display = 'inline';
-//  	($('showicon')).style.display = 'none';
 }
 
 
@@ -916,10 +1047,7 @@ function hideCharTable(){
 		currentCharTable = 'lower';
 	}
   	($('chartableupper')).style.display = 'none';
-  	($('chartablelower')).style.display = 'none';
-  	
-//  	($('showicon')).style.display = 'inline';
-// 	($('hideicon')).style.display = 'none';
+  	($('chartablelower')).style.display = 'none';  	
 }
 
 
@@ -955,7 +1083,6 @@ function submitSubForm(){
 	}
 	else if (outcome == 'success'){
 		alert('The data has been saved successfully');
-	//	showValue(abbrev)
 		hidePopup();
 	}
 	else {
@@ -1015,10 +1142,8 @@ function saveForm(){
 					return false;
 				}
 				if (owner == 'other'){
-					var conf = confirm('Another user already has a draft file with this ISTC number in the draft file store. If both versions are submitted to the main database data will be lost.\nAre you sure you want to continue?')
-					if (conf == false){
-						return false;
-					}
+					alert(owner + ' already has a draft file with this ISTC number in the draft file store. You will not be able to edit this file until the other user submits it.')
+					return false;					
 				}
 			}					
 			save();
