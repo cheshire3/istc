@@ -116,7 +116,7 @@
 								</xsl:call-template> 
 							</xsl:when>
 							<xsl:otherwise>
-								<div id="addedimprints" style="display:none" class="added"><ul id="addedimprintslist"></ul></div>
+								<div id="addedimprints" style="display:none" class="smalladded"><ul id="addedimprintslist"></ul></div>
 							</xsl:otherwise>
 						</xsl:choose>	
 					</div>
@@ -380,8 +380,14 @@
 						<table id="table_blshelfmarks"><tbody>
 							<tr><td class="melabel">Place:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_a" size="36" autocomplete="off"  value="British Library"></input></td></tr>
 							<tr><td class="melabel">Note:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_q" size="36" autocomplete="off" ></input></td></tr>
-							<tr><td class="melabel">Shelfmark:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_j" size="36" autocomplete="off" ></input></td></tr>
-							<tr><td><input class="mebutton" type="button" onclick="addEntry('blshelfmarks');" value="Add"></input></td><td></td></tr>
+							<tr><td class="melabel">Shelfmark:</td><td> <input type="text" onfocus="setCurrent(this);" name="blshelfmarks" id="852_j[1]" size="36" autocomplete="off" ></input>
+							</td></tr>
+							<tr id="buttonrow"><td><input class="mebutton" type="button" onclick="addEntry('blshelfmarks');" value="Add"></input></td><td>
+							<input type="button" id="addshelfmarkbutton" value="Add Another Shelfmark">
+								<xsl:attribute name="onclick" >
+									<xsl:text>addShelfmark();</xsl:text>
+								</xsl:attribute>					
+							</input></td></tr>
 					    </tbody></table>
 					</div><br />
 					<div class="addedcontainer">
@@ -393,7 +399,7 @@
 								</xsl:call-template> 
 							</xsl:when>
 							<xsl:otherwise>
-								<div id="addedblshelfmarks" style="display:none" class="added"><ul id="addedblshelfmarkslist"></ul></div>
+								<div id="addedblshelfmarks" style="display:none" class="smalladded"><ul id="addedblshelfmarkslist"></ul></div>
 							</xsl:otherwise>
 						</xsl:choose>	
 					</div>
@@ -408,7 +414,20 @@
 				</p>
 				</div>
 				
+				<a href="javascript: toggleKeyboard();" class="keyboardlink">Keyboard</a><a href="#top" class="toplink" name="internalnotes">Top</a> 
 				
+				<div class="field">
+				<p><strong>Last Updated: </strong>
+				<input type="text" readonly="true" class="readonly">
+					<xsl:attribute name="id">
+						<xsl:text>959_a</xsl:text>
+					</xsl:attribute>
+					<xsl:attribute name="value">
+						<xsl:value-of select="//datafield[@tag='959']/subfield[@code='a']"/>
+					</xsl:attribute>
+				</input>				
+				</p>
+				</div>
 				</form>
 			</div>
 	</xsl:template>
@@ -502,9 +521,19 @@
  	<xsl:template name="accesspoint">
 	  	<xsl:param name="typename"/>
 	  	<xsl:param name="tagnumber"/>
-	  	<div style="display:block" class="added"> 
+	  	<div style="display:block"> 
 		  	<xsl:attribute name="id">
 		  		<xsl:text>added</xsl:text><xsl:value-of select="$typename"/><xsl:text>s</xsl:text>
+		  	</xsl:attribute>
+		  	<xsl:attribute name="class">
+		  		<xsl:choose>
+		  			<xsl:when test="$tagnumber='260' or $tagnumber='852'">
+		  				<xsl:text>smalladded</xsl:text>
+		  			</xsl:when>
+		  			<xsl:otherwise>
+		  				<xsl:text>added</xsl:text>
+		  			</xsl:otherwise>
+		  		</xsl:choose>
 		  	</xsl:attribute>
 		  	<ul>
 		  		 <xsl:attribute name="id">
@@ -573,20 +602,39 @@
 								<xsl:text>addedimage</xsl:text>
 							</xsl:attribute>										
 						</img>
-					</a>									
+					</a>		
+				<!-- Insert -->
+					<a>
+						<xsl:attribute name="onclick">
+							<xsl:text>insertAbove('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', '</xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>');</xsl:text>
+						</xsl:attribute>
+						<xsl:attribute name="title">
+							<xsl:text>insert above</xsl:text>
+						</xsl:attribute>
+						<img src="/istc/images/insert.png" onmouseover="this.src='/istc/images/insert-hover.png';" onmouseout="this.src='/istc/images/insert.png';">
+							<xsl:attribute name="class">
+								<xsl:text>addedimage</xsl:text>
+							</xsl:attribute>										
+						</img>
+					</a>								
 				</div>
 				<div class="multipleEntry">	
-				<p class="float">
-					<xsl:attribute name="onclick">
-						<xsl:text>editEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', </xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>);</xsl:text>
-					</xsl:attribute>
+				<p>
 					<xsl:attribute name="title">
 						<xsl:text>Click to edit</xsl:text>
-					</xsl:attribute>		 
-					<xsl:call-template name="accesspointstring">					
-						<xsl:with-param name="tagnumber" select="$tagnumber"/>
-						<xsl:with-param name="separater" select="' '"/>
-					</xsl:call-template>
+					</xsl:attribute>	
+					<xsl:attribute name="class">
+						<xsl:text>addedString</xsl:text>
+					</xsl:attribute>	
+					<a>
+						<xsl:attribute name="onclick">
+							<xsl:text>javascript: editEntry('</xsl:text><xsl:value-of select="$typename"/><xsl:text>s_formgen', </xsl:text><xsl:number level="single" count="//datafield[@tag = $tagnumber]" format="1"/><xsl:text>);</xsl:text>
+						</xsl:attribute>
+						<xsl:call-template name="accesspointstring">					
+							<xsl:with-param name="tagnumber" select="$tagnumber"/>
+							<xsl:with-param name="separater" select="' '"/>
+						</xsl:call-template>
+					</a>
 				</p>
 				</div>
 			</div>												
@@ -650,6 +698,16 @@
 			  	 			<xsl:text> | </xsl:text>
 			  	 			<xsl:value-of select="."/>
 			  	 			<xsl:value-of select="$separater"/>
+	  	 				</xsl:when>
+	  	 				<xsl:when test="$tagnumber ='852' and @code = 'j'">
+			  	 			<xsl:value-of select="$tagnumber"/>
+			  	 			<xsl:text>_</xsl:text>
+			  	 			<xsl:value-of select="@code"/>
+			  	 			<xsl:text>[</xsl:text>
+			  	 			<xsl:number level="single" count="subfield[@code = 'j']" format="1"/>
+			  	 			<xsl:text>] | </xsl:text>
+			  	 			<xsl:value-of select="."/>
+			  	 			<xsl:value-of select="$separater"/>	  	 					
 	  	 				</xsl:when>
 	  	 				<xsl:otherwise>
 			  	 			<xsl:value-of select="$tagnumber"/>
