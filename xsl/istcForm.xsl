@@ -202,8 +202,8 @@
 					<div id="refcontainer"><strong>References:</strong><br/>				
 						<div id="referencestable" class="tablecontainer">
 							<table id="table_references"><tbody>
-								<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a"></input><br/></td></tr>
-						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" autocomplete="off" /></td></tr>
+								<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" class="halfwidth"></input><br/></td></tr>
+						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" autocomplete="off" class="halfwidth"/></td></tr>
 						    	<tr></tr>
 						    </tbody></table>
 						</div>
@@ -266,8 +266,8 @@
 						<div id="holdingstable" class="tablecontainer">
 							<table id="table_holdings"><tbody>
 								<tr><td class="melabel">Country:</td><td><select name="holdings" id="holdings_country" onchange="javascript: checkUSA();"><option value="951">British Isles</option><option value="995">Belgium</option><option value="957">France</option><option value="997">Germany</option><option value="954">Italy</option><option value="955">Spain/Portugal</option><option value="996">Netherlands</option><option value="952">U.S.A.</option><option value="958">Other Europe</option><option value="953">Other</option><option value="994">Doubtful</option></select></td></tr>
-								<tr><td class="melabel">Library:</td><td><input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="holdings" id="holdings_a" size="30"></input><br/></td></tr>
-								<tr><td class="melabel">Details:</td><td><input type="text" onfocus="setCurrent(this);" autocomplete="off" name="holdings" id="holdings_b" size="30"></input></td></tr>
+								<tr><td class="melabel">Library:</td><td><input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="holdings" id="holdings_a" class="halfwidth"></input><br/></td></tr>
+								<tr><td class="melabel">Details:</td><td><input type="text" onfocus="setCurrent(this);" autocomplete="off" name="holdings" id="holdings_b" class="halfwidth"></input></td></tr>
 								<tr><td class="melabel">Private:</td><td><input type="checkbox" id="holdings_x" name="holdings_x" /></td></tr>
 								<tr></tr>
 							</tbody></table>
