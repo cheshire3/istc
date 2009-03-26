@@ -98,6 +98,26 @@ div#gotodiv {
 }
 
 /*======================================================================================================= */
+/* Width settings for input boxes */
+
+#author {
+	width: 710px;
+	}
+	
+#title{
+	width: 710px;
+	}
+	
+.fullwidth{
+	width: 710px;
+	}
+
+.tablewidth {
+	width: 655px;
+	}
+
+
+/*======================================================================================================= */
 /* Menu pages stuff */
 h3.editheader {
 	background: #98ced9;	

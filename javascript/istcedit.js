@@ -230,7 +230,7 @@ function validEntry(s){
 
 
 function addEntry(s){
-	alert(s);
+
 	if (!validEntry(s)){
 		return;
 	}
@@ -250,7 +250,6 @@ function addEntry(s){
     		textbox = rows[i].getElementsByTagName('textarea')[0];
     	}	
     	if (textbox == null){
-    		alert('select');
     		textbox = rows[i].getElementsByTagName('select')[0];
     	}
     	if (textbox.value.strip() != '' && textbox.value.strip() != ' '){
@@ -261,7 +260,6 @@ function addEntry(s){
     			textbox.value = '';
     		}
     		else if (s == 'holdings' && i == 3){
-    			alert(textbox.checked);
     			if (textbox.checked == true){
     				valueString += textbox.id + ' | Private ||| ';
     				textString += ' - Private'; 
