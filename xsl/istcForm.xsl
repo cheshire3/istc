@@ -75,7 +75,7 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<select name="author_sel"><option value="null">Select...</option><option value="130">Uniform Title</option><option value="100">Personal</option></select><br />
-							<input id="author" type="text" onfocus="setCurrent(this);" onkeyup="suggest('author', event);" autocomplete="off" name="author_a" size="99"></input><br />					
+							<input id="author" type="text" onfocus="setCurrent(this);" onkeyup="suggest('author', event);" autocomplete="off" name="author_a"></input><br />					
 						</xsl:otherwise>
 					</xsl:choose>      
 				</p>
@@ -90,7 +90,7 @@
 							<xsl:apply-templates select="//datafield[@tag='245']/subfield[@code='a']"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<textarea name="245_a" id="title" type="text" onfocus="setCurrent(this);" cols="97" rows="4"><xsl:text> </xsl:text></textarea>
+							<textarea name="245_a" id="title" type="text" onfocus="setCurrent(this);" rows="4"><xsl:text> </xsl:text></textarea>
 						</xsl:otherwise>
 					</xsl:choose>      
 				</p>
@@ -176,7 +176,7 @@
 				<p><strong>General Note:</strong>		
 					<div id="generalnotestable" class="tablecontainer">
 						<table id="table_generalnotes"><tbody>
-							<tr><!-- <td class="melabel"></td> --><td> <textarea onfocus="setCurrent(this);" name="generalnotes" id="500_a" cols="97" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
+							<tr><!-- <td class="melabel"></td> --><td> <textarea class="fullwidth" onfocus="setCurrent(this);" name="generalnotes" id="500_a" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
 							<tr><td><input class="mebutton" type="button" onclick="addEntry('generalnotes');" value="Add"></input></td><td></td></tr>
 					    </tbody></table>
 					</div><br />
@@ -202,8 +202,8 @@
 					<div id="refcontainer"><strong>References:</strong><br/>				
 						<div id="referencestable" class="tablecontainer">
 							<table id="table_references"><tbody>
-								<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" size="30"></input><br/></td></tr>
-						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" size="30"  autocomplete="off" /></td></tr>
+								<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a"></input><br/></td></tr>
+						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" autocomplete="off" /></td></tr>
 						    	<tr></tr>
 						    </tbody></table>
 						</div>
@@ -239,8 +239,8 @@
 				<p><strong>Reproductions Notes:</strong><br/>				
 					<div id="repnotestable" class="tablecontainer">
 						<table id="table_repnotes"><tbody>
-							<tr><td class="melabel">Note:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="530_a" cols="89" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
-							<tr><td class="melabel">URL:</td><td> <textarea onfocus="setCurrent(this);" name="repnotes" id="530_u" cols="89" rows="1"><xsl:text> </xsl:text></textarea><br/></td></tr>
+							<tr><td class="melabel">Note:</td><td> <textarea class="tablewidth" onfocus="setCurrent(this);" name="repnotes" id="530_a" rows="4"><xsl:text> </xsl:text></textarea><br/></td></tr>
+							<tr><td class="melabel">URL:</td><td> <textarea class="tablewidth" onfocus="setCurrent(this);" name="repnotes" id="530_u" rows="1"><xsl:text> </xsl:text></textarea><br/></td></tr>
 							<tr><td><input class="mebutton" type="button" onclick="addEntry('repnotes');" value="Add"></input></td><td></td></tr>
 					    </tbody></table>
 					</div><br />
@@ -410,7 +410,7 @@
 
 				<div class="field">
 				<p><strong>Internal Notes:</strong><br/>These will not form part of any MARC or XML export, and will only be visible to those using the editing system.
-					<textarea name="internal_notes" id="internal_notes" type="text" onfocus="setCurrent(this);" cols="97" rows="7">%%INTERNALNOTES%%</textarea>
+					<textarea class="fullwidth" name="internal_notes" id="internal_notes" type="text" onfocus="setCurrent(this);" rows="7">%%INTERNALNOTES%%</textarea>
 				</p>
 				</div>
 				
