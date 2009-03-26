@@ -54,10 +54,10 @@ function confirmDelete(type){
 	if (valid){	
 		switch(op) {
 			case 'unindex':
-				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. The record will also be removed from all indexes. Are you sure you wish to continue?';
+				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. The record will also be removed from all indexes and will not be available for searching. Are you sure you wish to continue?';
 				break;
 			case 'delete':
-				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. Are you sure you wish to continue?';
+				var msg = 'This operation will PERMANENTLY remove the file from the hard-disk. It will still be available foe searching until the database is next rebuilt. Are you sure you wish to continue?';
 				break;	
 			default:
 				if (arguments.length == 1){
@@ -1186,6 +1186,24 @@ function submitForm(op){
 		document.getElementById('opvalue').value = op;
 		if (op == 'discard'){
 			var ok = confirmOp('You are about to delete this draft file. All changes made since it was last submitted to the database will be lost. The live data will not be affected. \nAre you sure you want to continue?')
+			if (ok){
+				document.getElementById('mainform').submit();
+			}
+			else {
+				return;
+			}
+		}
+		else if (op == 'file'){
+			var ok = confirmOp('This operation will write this record to the data directory and it will be available for searching the next time the database is rebuilt. \nAre you sure you want to continue?')
+			if (ok){
+				document.getElementById('mainform').submit();
+			}
+			else {
+				return;
+			}
+		}
+		else if (op == 'index'){
+			var ok = confirmOp('This operation will index this record and make it immediately available for searching. This operation may take some time. \nAre you sure you want to continue?')
 			if (ok){
 				document.getElementById('mainform').submit();
 			}
