@@ -1139,8 +1139,8 @@ function saveForm(){
 					alert('You already have a draft file with this ISTC number in the draft file store. The draft must be deleted before you can create a new draft with this ISTC number');
 					return false;
 				}
-				if (owner == 'other'){
-					alert(owner + ' already has a draft file with this ISTC number in the draft file store. You will not be able to edit this file until the other user submits it.')
+				else {
+					alert(owner + ' already has a draft file with this ISTC number in the draft file store. You will not be able to create a file with this ISTC Number unless the other user deletes their version.')
 					return false;					
 				}
 			}					

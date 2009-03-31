@@ -38,6 +38,7 @@ from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
 from cheshire3.marc_utils import MARC
 from cheshire3 import exceptions as c3errors
+from cheshire3.cqlParser import parse, SearchClause, Triple
 from lxml import etree
 from copy import deepcopy
 import datetime
@@ -64,7 +65,8 @@ class IstcAdminHandler:
             data = data.encode('utf-8')
         req.write(data)
         req.flush()      
-
+        
+       
     
     def show_adminMenu(self):
         page = read_file('adminmenu.html')
@@ -106,7 +108,7 @@ class IstcAdminHandler:
             if ((ctr+1) % 2): rowclass = 'odd'
             else:  rowclass = 'even'
             cells = '<td>%s</td><td>%s</td><td>%s</td><td>%s</td>' % (uid, user.realName, user.email, user.tel)
-            cells = cells + '<td><a href="menu.html?operation=delete&amp;userid=%s&confirm=true" class="fileop">DELETE</a></td>' % (uid)  
+            cells = cells + '<td><a href="users.html?operation=delete&amp;userid=%s&confirm=true" class="fileop">DELETE</a></td>' % (uid)  
 
             lines.append('<tr class="%s">%s</tr>' % (rowclass, cells))
         lines.append('</table><br/>')
@@ -382,7 +384,249 @@ class IstcAdminHandler:
         req.write(foot)
         rebuild = True    
 
+        
+    def show_stats(self, file='searchhandler.log'):
+
+        allstring = read_file('%s%s' % (statspath, file))
+        output = []
+        regex = re.compile('searchhandler\S')
+        dateRegex = re.compile('[\S]*-(([\d]*)-([\d]*)-([\d]*))T([\d]{2})([\d]{2})([\d]{2}).log')
+        
+        files = os.listdir(statspath)
+        files.sort(reverse=True)
+        options= []
+        for f in files :
+            if(regex.match(f)):       
+                date = re.findall(dateRegex, f)
+                if (f == 'searchhandler.log' and f == file):
+                    options.append('<option value="%s" selected="true">%s</option>' % (f, 'current'))
+                elif (f == 'searchhandler.log'):
+                    options.append('<option value="%s">%s</option>' % (f, 'current'))                                    
+                elif (f == file):
+                    options.append('<option value="%s" selected="true">%s-%s-%s</option>' % (f, date[0][1], date[0][2], date[0][3]))
+                else :
+                    options.append('<option value="%s">%s-%s-%s</option>' % (f, date[0][1], date[0][2], date[0][3]))
+        if (file == 'searchhandler.log'):
+            dateString = time.strftime("%Y-%m-%d %H:%M:%S")
+        else :
+            dateString = '%s %s:%s:%s' % (date[0][0], date[0][4], date[0][5], date[0][6])
+        
+        output.append('<h3>Statistics for period ending: <select id="fileNameSelect" value="1" onChange="window.location.href=\'stats.html?file=\' + this.value">%s</select></h3>' % ''.join(options))
+
+        #start date
+        start = re.match('^\n?\[(\d{4}-\d{2}-\d{2})', allstring)
+        try:
+            output.append('<h1>Statistics from %s to %s </h1><div class="statsdiv">' % (start.group(1), time.strftime('%Y-%m-%d')))
+        except:
+            output.append('<h1>Statistics from %s to %s </h1><div class="statsdiv">' % (time.strftime('%Y-%m-%d'), time.strftime('%Y-%m-%d')))
+
+        #summary actions
+        search = re.findall('STATS:search', allstring)
+        browse = re.findall('STATS:browse', allstring)
+        printrecs = re.findall('STATS:print', allstring)
+        save = re.findall('STATS:save', allstring)
+        email = re.findall('STATS:email', allstring)
+        output.extend(['<h3>Full Counts</h3><table class="stats"><tr><td class="label">Operation</td><td class="label">Total</td></tr>',
+                      '<tr><td class="label">Search</td><td class="content">%s</td></tr>' % len(search),
+                      '<tr><td class="label">Browse</td><td class="content">%s</td></tr>' % len(browse),
+                      '<tr><td class="label">Print</td><td class="content">%s</td></tr>' % len(printrecs),
+                      '<tr><td class="label">Save</td><td class="content">%s</td></tr>' % len(save),
+                      '<tr><td class="label">E-Mail</td><td class="content">%s</td></tr>' % len(email),
+                      '</table>'])
+        #end summary actions
+        
+        #query details
+        indexes = {}
+        relations = {}
+        terms = {}
+        operators = {}        
+        queries = re.findall('QUERY:.*', allstring)
+        total = len(queries)
+        complex = 0
+        for query in queries:
+            query = query.replace('(', '').replace(')', '').replace('QUERY:', '')
+            q = qf.get_query(session, query)
+            lists = self._interpret(q, [[], [], [], []])
+            if len(lists[3]) > 0:
+                complex += 1
+            for l in lists[0]:
+                try:
+                    indexes[l] += 1
+                except:
+                    indexes[l] = 1
+            for l in lists[1]:
+                try:
+                    relations[l] += 1
+                except:
+                    relations[l] = 1            
+            for l in lists[2]:
+                try:
+                    terms[l] += 1
+                except:
+                    terms[l] = 1              
+            for l in lists[3]:
+                try:
+                    operators[l] += 1
+                except:
+                    operators[l] = 1   
+
+        output.extend(['<table class="stats"><tr><td class="label">Query Type</td><td class="label">Total</td></tr>',
+                       '<tr><td class="label">Total Single Clause Queries</td><td class="content">%d</td></tr>' % (total - complex),
+                       '<tr><td class="label">Total Multiple Clause Queries</td><td class="content">%d</td></tr>' % complex,                       
+                       '</table>' ])
+     
+        #operators
+        output.append('<table class="stats"><tr><td class="label">Booleans</td><td class="label">Total</td></tr>')
+        for k in ['and', 'or', 'not']:
+            try:
+                output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (k, operators[k]))
+            except:
+                output.append('<tr><td class="label">%s</td><td class="content">0</td></tr>' % (k))
+        output.append('</table><br /></div><br />')    
+                 
+        #indexes
+        output.append('<div class="statsdiv"><h3>Top 5s</h3><table class="stats"><tr><td class="label">Index</td><td class="label">Total</td></tr>')
+        top5 = []
+        for k in indexes.keys():
+            top5.append([indexes[k], k])
+        top5.sort(self.compare)
+        for t in top5[:5]:     
+            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (t[1], t[0]))
+        output.append('</table>')         
+        
+        #terms 
+        output.append('<table class="stats"><tr><td class="label">Terms</td><td class="label">Total</td></tr>')
+        top5 = []
+        for k in terms.keys():
+            top5.append([terms[k], k])
+        top5.sort(self.compare)
+        for t in top5[:5]: 
+            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (t[1], t[0]))
+        output.append('</table>')    
                 
+        #relations
+        output.append('<table class="stats"><tr><td class="label">Type of Search</td><td class="label">Total</td></tr>')
+        top5 = []
+        for k in relations.keys():
+            top5.append([relations[k], k])
+        top5.sort(self.compare)
+        for t in top5[:5]: 
+            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (t[1], t[0]))
+        output.append('</table><br /></div><br />')    
+        
+        #end query details
+        
+        if (file == 'searchhandler.log'):
+            output.extend(['<form action="stats.html?operation=reset" method="post" onsubmit="return confirm(\'This operation will reset all statistics. The existing logfile will be moved and will be accessible from the drop down menu on the statistics page. Are you sure you want to continue?\');">',
+                            '<p><input type="submit" name="resetstats" value=" Reset Statistics "/></p>',
+                        '</form>'])
+        
+        return '<div id="maincontent">%s</div>' % ''.join(output)
+
+
+    def compare(self, a, b):
+        return cmp(int(b[0]), int(a[0])) # compare as integers
+
+
+    def reset_statistics(self):
+        newfilepath = os.path.join(statspath, 'searchhandler-%s.log' % (time.strftime('%Y-%m-%dT%H%M%S')))
+        if not os.path.exists(searchlogfilepath): 
+            self.logger.log('No logfile present at %s' % (searchlogfilepath))
+            return 'No logfile present at specified location <code>%s</code>' % (searchlogfilepath)
+        
+        os.rename(searchlogfilepath, newfilepath)
+        file(searchlogfilepath, 'w').close()
+        self.logger.log('Search Statistics Reset')
+        return 'Statistics reset. New logfile started. \n<br />\nOld logfiles can still be viewed by selecting them from the drop down box on the statistics page.\n<br />\n<br />\n<a href="/istc/admin/index.html" class="navlink">Back to \'Administration Menu\'</a>'
+        #- end reset_statistics()
+        
+
+    def _interpret(self, what, output):
+        if isinstance(what, Triple):
+            self._interpret(what.leftOperand, output)
+            try:
+                bl = boolNames[what.boolean.value]
+            except:
+                bl = what.boolean.value
+            output[3].append(bl)        
+            if isinstance(what.rightOperand, Triple):
+                self._interpret(what.rightOperand, output)
+            else:
+                self._interpret(what.rightOperand, output)       
+            return output
+        elif isinstance(what, SearchClause):
+            try:
+                idx = idxNames[what.index.value]
+            except:
+                idx = what.index.value
+            output[0].append(idx)
+            output[1].append(what.relation.value)
+            for t in what.term.value.split():
+                output[2].append(t)
+            return output
+        else:
+            raise ValueError(what)
+        
+    
+    def show_dataReqForm(self):
+        menu = unicode(read_file('dataRequest.html'))
+        return menu
+
+
+    def get_libraryData(self, form, req):
+        wstring = form.get('q', None)
+        format = form.get('format', 'xml')
+        if wstring != None:
+            words = wstring.split()
+            qString = []
+            for w in words:
+                qString.append('c3.idx-kwd-location all "%s"' % w)
+            q = qf.get_query(session, ' prox/unit=element/distance=0 '.join(qString))
+            rs = db.search(session, q)
+            if len(rs):
+                if format == 'xml':
+                    output = [] 
+                    for r in rs :
+                        output.append(r.fetch_record(session).get_xml(session))
+                    f = open(cheshirePath + '/cheshire3/www/istc/output/istc-marc21xml.xml', 'w')
+                    f.write('\n\n'.join(output))
+                    f.flush()
+                    f.close()
+                    req.headers_out["Content-Disposition"] = "attachment; filename=istc-marc21xml.xml"
+                    req.content_type = "text/plain"
+                    try:
+                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-marc21xml.xml')
+                    except IOError, e:
+                        req.content_type = "text/html"
+                        req.write("Raised exception reads:\n<br>%s" % str(e))
+                        return apache.OK
+                    return apache.OK
+                elif format == 'aleph':
+                    marcAlephTxr = db.get_object(session, 'toTextTxr')
+                    output = [] 
+                    for r in rs :
+                        output.append(marcAlephTxr.process_record(session, r.fetch_record(session)).get_raw(session))
+                    f = open(cheshirePath + '/cheshire3/www/istc/output/istc-aleph.txt', 'w')
+                    f.write('\n\n'.join(output))
+                    f.flush()
+                    f.close()
+                    req.headers_out["Content-Disposition"] = "attachment; filename=istc-aleph.txt"
+                    req.content_type = "text/plain"
+                    try:
+                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-aleph.txt')
+                    except IOError, e:
+                        req.content_type = "text/html"
+                        req.write("Raised exception reads:\n<br>%s" % str(e))
+                        return apache.OK
+                    return apache.OK
+                elif format == 'exchange':
+                    pass                       
+        else:
+            content = self.show_dataReqForm()
+            content = tmpl.replace('%CONTENT%', content)
+            self.send_html(content, req)
+        
+                       
     def handle(self, req):
         form = FieldStorage(req, True)  
                 
@@ -390,28 +634,69 @@ class IstcAdminHandler:
         nav = unicode(read_file(self.editNavPath))
         tmpl = tmpl.replace('%NAVIGATION%', nav)
         
+        path = req.uri[1:] 
+        path = path[path.rfind('/')+1:]
+        
         content = None      
         operation = form.get('operation', None)
-        if (operation) : 
-            if (operation == 'rebuild'):
-                content = self.rebuild_database(form, req)   
-            elif (operation == 'adduser'):
-                content = self.add_user(form)
-                content = tmpl.replace('%CONTENT%', content)
-                self.send_html(content, req)
-            elif (operation == 'delete'):
-                content = self.delete_user(form)
-                content = tmpl.replace('%CONTENT%', content)
-                self.send_html(content, req)
-            elif (operation == 'edit'):
-                content = self.edit_user(form)
-                content = tmpl.replace('%CONTENT%', content)
-                self.send_html(content, req)            
-            else:
+        if path == 'database.html':
+            if (operation) : 
+                if (operation == 'rebuild'):
+                    content = self.rebuild_database(form, req) 
+                else:
+                    content = self.show_adminMenu()
+                    content = tmpl.replace('%CONTENT%', content)
+        elif path == 'users.html':
+            if (operation) :              
+                if (operation == 'adduser'):
+                    content = self.add_user(form)
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+                elif (operation == 'delete'):
+                    content = self.delete_user(form)
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+                elif (operation == 'edit'):
+                    content = self.edit_user(form)
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)            
+                else:
+                    content = self.show_adminMenu()
+                    content = tmpl.replace('%CONTENT%', content)
+                    # send the display
+                    self.send_html(content, req)
+            else :  
                 content = self.show_adminMenu()
                 content = tmpl.replace('%CONTENT%', content)
                 # send the display
-                self.send_html(content, req)         
+                self.send_html(content, req)
+        elif path == 'data.html':
+            if (operation) :
+                if (operation == 'library'):
+                    self.get_libraryData(form, req)
+
+                else:
+                    content = self.show_dataReqForm()
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+            else:
+                content = self.show_dataReqForm()
+                content = tmpl.replace('%CONTENT%', content)
+                self.send_html(content, req)           
+        elif path == 'stats.html':
+            if (operation) :
+                if operation == 'reset':
+                    content = self.reset_statistics()
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+                else:
+                   content = self.show_stats(form.get('file', 'searchhandler.log'))
+                   content = tmpl.replace('%CONTENT%', content)
+                   self.send_html(content, req) 
+            else :
+                content = self.show_stats(form.get('file', 'searchhandler.log'))
+                content = tmpl.replace('%CONTENT%', content)
+                self.send_html(content, req)
         else:
             content = self.show_adminMenu()
             content = tmpl.replace('%CONTENT%', content)
@@ -439,7 +724,7 @@ indentingTxr = None
 def build_architecture(data=None):
     global rebuild, session, serv, db, dbPath, dbusa, dbrefs, qf, editStore, recordStore, usaRecordStore, \
     refsRecordStore, noteStore, authStore, userStore, xmlp, sourceDir, lockfilepath, reflockfilepath, usalockfilepath, \
-    baseDocFac, usaDocFac, refsDocFac, buildSingleFlow, refsBuildSingleFlow, usaBuildSingleFlow
+    baseDocFac, usaDocFac, refsDocFac, buildSingleFlow, refsBuildSingleFlow, usaBuildSingleFlow, statspath, searchlogfilepath
     
     if editStore:
         editStore.commit_storing(session)
@@ -480,7 +765,8 @@ def build_architecture(data=None):
     rebuild = False
     
     
-    
+    statspath = cheshirePath + '/cheshire3/www/istc/logs/'
+    searchlogfilepath = statspath + 'searchhandler.log'
     logfilepath = cheshirePath + '/cheshire3/www/istc/logs/edithandler.log'
     lockfilepath = db.get_path(session, 'defaultPath') + '/indexing.lock'
     reflockfilepath = db.get_path(session, 'defaultPath') + '/refindexing.lock'

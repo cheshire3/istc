@@ -757,12 +757,12 @@ class IstcEditingHandler:
 
     
     def preview_marc(self, form):
-        marcTextTxrWeb = db.get_object(session, 'toTextTxrWeb')
+        marcAlephTxr = db.get_object(session, 'toAleph')
         recid = form.get('1', None)
         owner = form.get('owner', session.user.username)
         recid = '%s-%s' % (recid, owner)
         rec = editStore.fetch_record(session, recid)        
-        return u'<div id="maincontent"><h1>Marc Preview</h1>%s</div>' % unicode(marcTextTxrWeb.process_record(session, rec).get_raw(session))
+        return u'<div id="maincontent"><h1>Marc Preview</h1>%s</div>' % unicode(marcAlephTxr.process_record(session, rec).get_raw(session))
 
 
     def email(self, form):

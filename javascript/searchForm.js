@@ -43,7 +43,7 @@ function changeInputs(iSelIdx, current){
 		var formatDropDown = document.createElement('select')
 		formatDropDown.setAttribute('id', 'fieldcont' + current);
 		formatDropDown.setAttribute('name', 'fieldcont' + current);
-		formatDropDown.setAttribute('style', 'width: 300');
+		formatDropDown.className = 'termbox';
 		for (var i=0; i < formatList.length; i++){
 			options = formatList[i].split('|||');			
 			formatDropDown.options[i] = new Option(options[1],options[0]);
@@ -58,7 +58,7 @@ function changeInputs(iSelIdx, current){
 		var langDropDown = document.createElement('select')
 		langDropDown.setAttribute('id', 'fieldcont' + current);
 		langDropDown.setAttribute('name', 'fieldcont' + current);
-		langDropDown.setAttribute('style', 'width: 300');
+		langDropDown.className = 'termbox';
 		for (var i=0; i < langList.length; i++){
 			options = langList[i].split('|||');			
 			langDropDown.options[i] = new Option(options[1],options[0]);
@@ -73,7 +73,7 @@ function changeInputs(iSelIdx, current){
 		var countryDropDown = document.createElement('select')
 		countryDropDown.setAttribute('id', 'fieldcont' + current);
 		countryDropDown.setAttribute('name', 'fieldcont' + current);
-		countryDropDown.setAttribute('style', 'width: 300');
+		countryDropDown.className = 'termbox';
 		for (var i=0; i < countryList.length; i++){
 			options = countryList[i].split('|||');			
 			countryDropDown.options[i] = new Option(options[1],options[0]);
@@ -88,7 +88,7 @@ function changeInputs(iSelIdx, current){
 		var locDropDown = document.createElement('select')
 		locDropDown.setAttribute('id', 'fieldcont' + current);
 		locDropDown.setAttribute('name', 'fieldcont' + current);
-		locDropDown.setAttribute('style', 'width: 300');
+		locDropDown.className = 'termbox';
 		for (var i=0; i < locList.length; i++){
 			options = locList[i].split('|||');			
 			locDropDown.options[i] = new Option(options[1],options[0]);
@@ -104,7 +104,7 @@ function changeInputs(iSelIdx, current){
 		textEntry.setAttribute('type', 'text');
 		textEntry.setAttribute('id', 'fieldcont' + current);
 		textEntry.setAttribute('name', 'fieldcont' + current);
-		textEntry.setAttribute('style', 'width: 300');
+		textEntry.className = 'termbox';
 		var termfield = document.getElementById('fieldcont' + current);
 		var value = termfield.value;
 		var parent = termfield.parentNode;
@@ -209,7 +209,7 @@ function createClause(current, clauseState){
 	// text input
 	var inputElem = document.createElement('input');
 	inputElem.type = 'text';
-	inputElem.size = 30;
+	inputElem.className = 'termbox';
 	inputElem.name = 'fieldcont' + current;
 	inputElem.id = 'fieldcont' + current;
 	
@@ -238,6 +238,9 @@ function createSelect(name, optionList, selIdx){
 	var selectElem = document.createElement('select');
 	selectElem.id = name;
   	selectElem.name = name;
+  	if (name.indexOf('fieldrel') != -1){
+  		selectElem.className = 'relationbox';
+  	}
 	for (var i=0; i < optionList.length; i++){
 		var optionData = optionList[i].split('|||');
 		var optionElem = document.createElement('option');

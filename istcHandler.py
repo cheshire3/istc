@@ -120,7 +120,7 @@ class IstcHandler:
             sys.stderr.flush()
 
         qString = ' '.join(qClauses)
-        self.logger.log(qString)
+        self.logger.log('QUERY:' + qString)
         return qString
 
 
@@ -894,7 +894,7 @@ class IstcHandler:
         path = path[path.rfind('/')+1:]
           
         operation = form.get('operation', None)
-
+        rss.begin_storing(session)
         if path == 'search.html':           
             f = file(self.searchNavPath)
             nav = f.read()
@@ -906,14 +906,18 @@ class IstcHandler:
                 if (operation == 'record'):
                     d = self.display_rec(session, form)
                 elif (operation == 'search'):
+                    self.logger.log('STATS:search')
                     d = self.handle_istc(session, form)
                 elif (operation == 'print'):
+                    self.logger.log('STATS:print')
                     data = self.printRecs(form)
                     self.send_html(data, req)
                     return
                 elif (operation == 'email'):
+                    self.logger.log('STATS:email')
                     d = self.emailRecs(form)
                 elif (operation == 'save'):
+                    self.logger.log('STATS:save')
                     data = self.saveRecs(form)
                     self.send_txt(data, req)
                     return
@@ -939,6 +943,7 @@ class IstcHandler:
             
             if operation:
                 if operation == 'scan':
+                    self.logger.log('STATS:browse')
                     d = self.browse(form)
                 else:
                     content = 'An invalid operation was attempted.'
@@ -973,7 +978,7 @@ class IstcHandler:
         extra = '' #TODO check if this is needed - not sure %EXTRA% ever exists
 
         tmpl = tmpl.replace("%CONTENT%", d)
-
+        rss.commit_storing(session)
 
 	self.send_html(tmpl, req)
 
@@ -1004,8 +1009,6 @@ rebuild = True
 def build_architecture(data=None):
     global session, serv, db, db2, db3, dfp, recStore, indexStore, rss, usaRecStore, usaIndexStore, refsRecStore, refsIndexStore, docParser, externalDataTxr, qf
 
-    if rss:
-        rss.commit_storing(session)
 
     session = Session()
     serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
