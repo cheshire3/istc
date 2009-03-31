@@ -1,3 +1,18 @@
+/* Search Page */
+
+.termbox {
+	width: 250px;
+	margin-right: 4px;
+	}
+	
+.termboxtop {
+	width: 250px;
+	margin-right: 0px;
+	}
+
+.relationbox {
+	width: 160px;
+	}
 
 /* Browse */
 

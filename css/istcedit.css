@@ -97,6 +97,7 @@ div#gotodiv {
 	color: green;
 }
 
+
 /*======================================================================================================= */
 /* Width settings for input boxes */
 
@@ -119,6 +120,36 @@ div#gotodiv {
 .halfwidth {
 	width: 225px;
 	}
+
+/*======================================================================================================= */
+/* Statistics page stuff */
+
+table.stats {
+	float: left;
+	padding-right: 50px;
+	}
+	
+table.stats td {
+	padding: 5px;
+	font-size: 10pt;
+	}
+	
+table.stats td.label {
+	background-color: #98ced9;
+	font-weight: bold;
+	}
+	
+table.stats td.content {
+	background-color: #eeeeee;
+	width: 30px;
+	text-align: right;
+	}
+	
+div.statsdiv {
+	border-top: solid 1px #98ced9;
+	padding-bottom: 20px;
+	}	
+
 
 
 /*======================================================================================================= */
@@ -233,6 +264,10 @@ tr.even {
 }
 
 div#adduser table {
+	font-size: 10pt;
+	}
+	
+.label {
 	font-size: 10pt;
 	}
 
