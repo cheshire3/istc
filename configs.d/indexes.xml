@@ -450,16 +450,16 @@
     	</paths>
     	<source>
     		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
-    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<process>
     			<object type="workflow" ref="ProxExtractorWorkflow" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
@@ -482,16 +482,16 @@
     	</paths>
     	<source>
     		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
-    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]</xpath>
-    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />

@@ -1,70 +1,103 @@
 #!/home/cheshire/cheshire3/install/bin/python 
 # -*- coding: utf-8 -*-
 
-import time, sys, os
-#osp = sys.path
-#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-#sys.path.extend(osp)
+import time, sys, os, re
+
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
+
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
-import os, re
+from cheshire3.document import StringDocument
+from cheshire3.baseObjects import Session
+from cheshire3.server import SimpleServer
 
-#a = re.compile('<.*?>(.*?)</.*?>') # istc No
-#logfile = open("logquote.txt", 'w')
+cheshirePath = "/home/cheshire"
 
-repDict = {'' : '',
-           '' : '',
-           "'" : " &#39;",
-           'à' : '&#96;',
-           'á' : ' &#225;',
-           '&abreve;' : '&#259;',
-           'ć' : '&#263;',
-           'ę' : '&#280;',
-           'é' :  '&#233;',
-           'è' : '&#232;',
-           '&egrave;' : '&#232;',
-           '&ebreve;' : '&#277;',
-           '&îcirc;' : '&#110;',
-           '&îgrave;' : '&#236;',
-           '&îacute;' : '&#237;',
-           '&îbreve;' : '&#301;',
-           '&iszlig;' : '&#95;',
-           'Ã®' : '&#110;',
-           'ł' : '&#322;',
-           '&lstrok;' : '&#322;',
-           'ń' : '&#324;',
-           '&nbreve;' : '&#328;',
-           '&oslash;' : '&#120;',
-           '&obreve;' : '&#365;',
-           'Ö' : '&#86;',
-           'ó' : '&#243;',
-           'ö' : '&#246;',
-           'Š' : '&#352;',
-           '&tcaron;' : '&#357;',
-           'ü' : '&#252;',
-           '&ubreve;' : '&#365;',
-           '&uuml;' : '&#124;',
-           '&zacute;' : '&#378;',
-           '&zdot;' : '&#380;',
-           'K&bslash;enhavn' : 'K&oslash;benhavn',
-           'K&Bslash;enhavn' : 'K&oslash;benhavn',
-           'colec&tbreve;iei' : 'colec&#355;iei',
-           'Saj�-Solt�sz' : 'Saj&#83;-Solt&#105;sz',
-           'G�nt' : 'G&#124;nt',
-           'Gen�ve' : 'Gen&#104;ve'
-           }
+# Build environment...
+session = Session()
+serv = SimpleServer(session, cheshirePath + "/cheshire3/configs/serverConfig.xml")
 
+session.database = 'db_istc'
+db = serv.get_object(session, 'db_istc')
+
+
+
+#listFiles = os.listdir("encodingtest/")
 listFiles = os.listdir("oldformdata/")
+parser = db.get_object(session, 'LxmlParser')
+marcTxr = db.get_object(session, 'dataTransformer')
+indentingTxr = db.get_object(session, 'indentingTxr')
+istcnoregex = re.compile('<fld001>(\S*)</fld001>')
+preparser = db.get_object(session, 'CharacterEntityPreParser')
 
+errors = 0;
+errorids = []
+correct = 0;
 for file in listFiles:
     #print file
-    dataFile = open("oldformdata" +"/" + file, 'r')
+    dataFile = open("oldformdata" + "/" + file, 'r')
+#    dataFile = open("encodingtest" + "/" + file, 'r')
     dataString = dataFile.read()
-    dataString = multiReplace(dataString, repDict)
+    dataString = dataString.replace('&', '&amp;')
+    dataString = dataString.replace('', '&#263;').replace('', '&#281;').replace('', '')
     dataString = dataString.replace('&amp;#', '&#')
+    dataString = dataString.replace('&amp;amp;', '&amp;')
 
+    #extrabits
+    doc = StringDocument(dataString)   
+    try:
+        rec = parser.process_document(session, doc)
+        output = marcTxr.process_record(session, rec)
+        rec = parser.process_document(session, output)
+        output = indentingTxr.process_record(session, rec)
+        correct += 1
+    except:
+        errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
+#        print re.findall(istcnoregex, doc.get_raw(session))[0]
+#            raise
+    
+    else:
         
-    dataWrite = open("datatest/" + file, 'w')
-    dataWrite.write(dataString)
-    dataWrite.close
-    dataFile.close
+#        dataWrite = open("encodingtest/all" + file, 'w')
+        dataWrite = open("data/" + file, 'w')
+        dataWrite.write(output.get_raw(session))
+        dataWrite.close
+        dataFile.close
+    
+for id in errorids:
+    
+    dataFile = open("oldformdata/" + id + '.xml', 'r')
+    dataString = dataFile.readlines() 
+    newfile = []
+    for l in dataString:
+        l = l.replace('&', '&amp;')
+        l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
+        l = l.replace('&amp;#', '&#')
+        l = l.replace('&amp;amp;', '&amp;')
+        try:
+            l = l.decode('utf-8')
+        except:
+            l = l.decode('iso-8859-1')
+        newfile.append(l)
+        
+    doc = StringDocument(' '.join(newfile))
+    try:
+        rec = parser.process_document(session, doc)
+        output = marcTxr.process_record(session, rec)
+        rec = parser.process_document(session, output)
+        output = indentingTxr.process_record(session, rec)
+        correct += 1
+    except:
+        errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
+        print re.findall(istcnoregex, doc.get_raw(session))[0]
+        errors += 1
+        
+    else:
+ #       dataWrite = open("encodingtest/all" + file, 'w')
+        dataWrite = open("data/" + file, 'w')
+        dataWrite.write(output.get_raw(session))
+        dataWrite.close
+        dataFile.close
+
+print 'Sucessful: %s' % correct
+print 'Errors: %s' % errors
