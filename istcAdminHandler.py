@@ -537,7 +537,7 @@ class IstcAdminHandler:
         os.rename(searchlogfilepath, newfilepath)
         file(searchlogfilepath, 'w').close()
         self.logger.log('Search Statistics Reset')
-        return 'Statistics reset. New logfile started. \n<br />\nOld logfiles can still be viewed by selecting them from the drop down box on the statistics page.\n<br />\n<br />\n<a href="/istc/admin/index.html" class="navlink">Back to \'Administration Menu\'</a>'
+        return 'Statistics reset. New logfile started. \n<br />\nOld logfiles can still be viewed by selecting them from the drop down box on the statistics page.\n<br />\n<br />\n<a href="menu.html" class="navlink">Back to \'Administration Menu\'</a>'
         #- end reset_statistics()
         
 
