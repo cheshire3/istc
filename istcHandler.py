@@ -154,6 +154,8 @@ class IstcHandler:
         self.logger.log('entering handle_istc')
         pagesize = 20
         start = 0
+        sort = False
+        sortIndex = None
         
         session.database = db.id
         
@@ -165,7 +167,8 @@ class IstcHandler:
       
         html = []
         
-        if not (form.has_key('rsid')):          
+        if not (form.has_key('rsid')): 
+            self.logger.log('STATS:search')         
             cql = self.generate_query(form)
             try:
                 q = qf.get_query(session, cql.encode('utf-8'))
@@ -179,6 +182,8 @@ class IstcHandler:
             rs.id = rsid     
             cqlStr = self._interpret(q)
             html.append("<strong>Your search was for %s </strong><br/>" % cqlStr)
+            sort = True
+            sortIndex = 'idx-ISTCnumber'
         
         else:
             try:
@@ -197,8 +202,9 @@ class IstcHandler:
         if hits:
             menubits = []
             
-            sortIndex = form.get('sort', 'idx-ISTCnumber')                                      
-            rs = self.sort_resultSet(session, rs, sortIndex)
+            sortIndex = form.get('sort', sortIndex)           
+            if sortIndex != None or sort == True:                         
+                rs = self.sort_resultSet(session, rs, sortIndex)
 
             if start > 0 and start+pagesize < len(rs):
                 navString = '<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/previous.gif" alt="" border="0" align="middle"/></a>&nbsp;<a href="search.html?operation=search&rsid=%s&start=%d%s"><img class="menu" src="/istc/images/next.gif" alt="" border="0" align="middle"/></a>' % (rsid, start-pagesize, locString, rsid, start+pagesize, locString)
@@ -906,7 +912,6 @@ class IstcHandler:
                 if (operation == 'record'):
                     d = self.display_rec(session, form)
                 elif (operation == 'search'):
-                    self.logger.log('STATS:search')
                     d = self.handle_istc(session, form)
                 elif (operation == 'print'):
                     self.logger.log('STATS:print')
