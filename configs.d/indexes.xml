@@ -113,9 +113,6 @@
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
     		</process>
     	</source>
-    	<options>
-    		<setting type="sortStore">1</setting>
-    	</options>
     </subConfig>
 
 
@@ -387,10 +384,7 @@
 	  	  <object type="normalizer" ref="SpaceNormalizer"/> 
         </process>
       </source>
-      <options>
-		<setting type="sortStore">1</setting>
-      </options>
-    </subConfig>
+      </subConfig>
 
 
     <subConfig type="index" id="idx-format">
@@ -537,9 +531,6 @@
     	  <object type="workflow" ref="Space-Case-NormalizerWorkflow" />
 	   	</process>
 	  </source>
-      <options>
-		<setting type="sortStore">1</setting>
-      </options>
     </subConfig>
     
     <subConfig type="transformer" id="year008Txr">
