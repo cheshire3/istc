@@ -30,6 +30,8 @@ indentingTxr = db.get_object(session, 'indentingTxr')
 istcnoregex = re.compile('<fld001>(\S*)</fld001>')
 preparser = db.get_object(session, 'CharacterEntityPreParser')
 
+forliRE = re.compile('Forl.*grave;')
+
 errors = 0;
 errorids = []
 correct = 0;
@@ -38,11 +40,13 @@ for file in listFiles:
     dataFile = open("oldformdata" + "/" + file, 'r')
 #    dataFile = open("encodingtest" + "/" + file, 'r')
     dataString = dataFile.read()
+    dataString = forliRE.sub('Forl&#236;', dataString)
     dataString = dataString.replace('&', '&amp;')
     dataString = dataString.replace('', '&#263;').replace('', '&#281;').replace('', '')
     dataString = dataString.replace('&amp;#', '&#')
     dataString = dataString.replace('&amp;amp;', '&amp;')
-
+    
+    
     #extrabits
     doc = StringDocument(dataString)   
     try:
@@ -70,6 +74,7 @@ for id in errorids:
     dataString = dataFile.readlines() 
     newfile = []
     for l in dataString:
+        l = forliRE.sub('Forl&#236;', l)
         l = l.replace('&', '&amp;')
         l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
         l = l.replace('&amp;#', '&#')
@@ -94,7 +99,7 @@ for id in errorids:
         
     else:
  #       dataWrite = open("encodingtest/all" + file, 'w')
-        dataWrite = open("data/" + file, 'w')
+        dataWrite = open("data/%s.xml" % id, 'w')
         dataWrite.write(output.get_raw(session))
         dataWrite.close
         dataFile.close
