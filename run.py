@@ -109,10 +109,14 @@ elif '-load' in sys.argv:
     # build necessary objects
     flow = db.get_object(session, 'buildIndexWorkflow')
     baseDocFac = db.get_object(session, 'istcDocumentFactory')
-    baseDocFac.load(session, defpath + "/data/", codec='iso-8859-1')
+#    baseDocFac.load(session, defpath + "/data/", codec='iso-8859-1')
+    baseDocFac.load(session, defpath + "/data_small/", codec='utf-8')
     lgr.log_info(session, 'Loading files from %s...' % (baseDocFac.dataPath))
     #flow.load_cache(session, db)
-    flow.process(session, baseDocFac)
+    try:
+        flow.process(session, baseDocFac)
+    except:
+        raise
     (mins, secs) = divmod(time.time() - start, 60)
     (hours, mins) = divmod(mins, 60)
     lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
