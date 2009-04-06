@@ -891,8 +891,18 @@
 							<xsl:text>); </xsl:text>
 						</xsl:for-each>
 					</xsl:if>
-					<xsl:for-each select="//datafield[@tag='951']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='951'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -918,8 +928,18 @@
 					<xsl:text>Belgium:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v2">
-					<xsl:for-each select="//datafield[@tag='995']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='995'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -945,8 +965,18 @@
 					<xsl:text>France:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v3">
-					<xsl:for-each select="//datafield[@tag='957']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='957'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -972,8 +1002,18 @@
 					<xsl:text>Germany:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v4">
-					<xsl:for-each select="//datafield[@tag='997'][not(subfield[@code='x'])]/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='997'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -999,8 +1039,18 @@
 					<xsl:text>Italy:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v5">
-					<xsl:for-each select="//datafield[@tag='954']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='954'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -1026,8 +1076,18 @@
 					<xsl:text>Spain/Portugal:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v6">
-					<xsl:for-each select="//datafield[@tag='955']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='955'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -1053,8 +1113,18 @@
 					<xsl:text>Netherlands:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v7">
-					<xsl:for-each select="//datafield[@tag='996']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='996'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -1140,8 +1210,18 @@
 					<xsl:text>Other Europe:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v9">
-					<xsl:for-each select="//datafield[@tag='958']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='958'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -1167,8 +1247,18 @@
 					<xsl:text>Other:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v10">
-					<xsl:for-each select="//datafield[@tag='953']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='953'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
@@ -1194,8 +1284,18 @@
 					<xsl:text>Doubtful:</xsl:text>
 				</xsl:variable>
 				<xsl:variable name="v11">
-					<xsl:for-each select="//datafield[@tag='994']/subfield">
-						<xsl:value-of select="."/><xsl:text>; </xsl:text>
+					<xsl:for-each select="//datafield[@tag='994'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:choose>
