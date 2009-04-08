@@ -37,7 +37,7 @@ errorids = []
 correct = 0;
 for file in listFiles:
     #print file
-    dataFile = open("oldformdata" + "/" + file, 'r')
+    dataFile = open("oldformdata/" + file, 'r')
 #    dataFile = open("encodingtest" + "/" + file, 'r')
     dataString = dataFile.read()
     dataString = forliRE.sub('Forl&#236;', dataString)
@@ -56,53 +56,75 @@ for file in listFiles:
         output = indentingTxr.process_record(session, rec)
         correct += 1
     except:
-        errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
-#        print re.findall(istcnoregex, doc.get_raw(session))[0]
-#            raise
-    
-    else:
+        dataFile = open("oldformdata/" + file, 'r')
+        dataString = dataFile.readlines() 
+        newfile = []
+        
+        for l in dataString:
+            l = forliRE.sub('Forl&#236;', l)
+            l = l.replace('&', '&amp;')
+            l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
+            l = l.replace('&amp;#', '&#')
+            l = l.replace('&amp;amp;', '&amp;')
+            try:
+                l = l.decode('utf-8')
+            except:
+                l = l.decode('iso-8859-1')
+            newfile.append(l)
+            
+        doc = StringDocument(' '.join(newfile))
+        try:
+            rec = parser.process_document(session, doc)
+            output = marcTxr.process_record(session, rec)
+            rec = parser.process_document(session, output)
+            output = indentingTxr.process_record(session, rec)
+            correct += 1
+        except:
+            errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
+            print re.findall(istcnoregex, doc.get_raw(session))[0]
+            errors += 1   
         
 #        dataWrite = open("encodingtest/all" + file, 'w')
-        dataWrite = open("data/" + file, 'w')
-        dataWrite.write(output.get_raw(session))
-        dataWrite.close
-        dataFile.close
+    dataWrite = open("data/" + file, 'w')
+    dataWrite.write(output.get_raw(session))
+    dataWrite.close
+    dataFile.close
     
-for id in errorids:
-    
-    dataFile = open("oldformdata/" + id + '.xml', 'r')
-    dataString = dataFile.readlines() 
-    newfile = []
-    for l in dataString:
-        l = forliRE.sub('Forl&#236;', l)
-        l = l.replace('&', '&amp;')
-        l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
-        l = l.replace('&amp;#', '&#')
-        l = l.replace('&amp;amp;', '&amp;')
-        try:
-            l = l.decode('utf-8')
-        except:
-            l = l.decode('iso-8859-1')
-        newfile.append(l)
-        
-    doc = StringDocument(' '.join(newfile))
-    try:
-        rec = parser.process_document(session, doc)
-        output = marcTxr.process_record(session, rec)
-        rec = parser.process_document(session, output)
-        output = indentingTxr.process_record(session, rec)
-        correct += 1
-    except:
-        errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
-        print re.findall(istcnoregex, doc.get_raw(session))[0]
-        errors += 1
-        
-    else:
- #       dataWrite = open("encodingtest/all" + file, 'w')
-        dataWrite = open("data/%s.xml" % id, 'w')
-        dataWrite.write(output.get_raw(session))
-        dataWrite.close
-        dataFile.close
+#for id in errorids:
+#    
+#    dataFile = open("oldformdata/" + id + '.xml', 'r')
+#    dataString = dataFile.readlines() 
+#    newfile = []
+#    for l in dataString:
+#        l = forliRE.sub('Forl&#236;', l)
+#        l = l.replace('&', '&amp;')
+#        l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
+#        l = l.replace('&amp;#', '&#')
+#        l = l.replace('&amp;amp;', '&amp;')
+#        try:
+#            l = l.decode('utf-8')
+#        except:
+#            l = l.decode('iso-8859-1')
+#        newfile.append(l)
+#        
+#    doc = StringDocument(' '.join(newfile))
+#    try:
+#        rec = parser.process_document(session, doc)
+#        output = marcTxr.process_record(session, rec)
+#        rec = parser.process_document(session, output)
+#        output = indentingTxr.process_record(session, rec)
+#        correct += 1
+#    except:
+#        errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
+#        print re.findall(istcnoregex, doc.get_raw(session))[0]
+#        errors += 1
+#        
+#    else:
+# #       dataWrite = open("encodingtest/all" + file, 'w')
+#        dataWrite = open("data/%s.xml" % id, 'w')
+#        dataWrite.write(output.get_raw(session))
+#        dataWrite.close
+#        dataFile.close
 
 print 'Sucessful: %s' % correct
 print 'Errors: %s' % errors
