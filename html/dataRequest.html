@@ -7,8 +7,14 @@
 	<tr><td class="label">Output Format: </td><td><select name="format" id="output">
 		<option value="xml">MARC21XML</option>
 		<option value="aleph">MARC aleph</option>
-		<option value="exchange">MARC exchange</option>
-	</select></td></tr></table>
+		<!--<option value="exchange">MARC exchange</option>-->
+	</select></td></tr>
+	<tr><td class="label">Include locations:</td><td><select name="filter" id="filter"> 
+		<option value="'all'">All Location Data</option>
+		<option value="951">951 Field Only</option>
+		<option value="953">953 Field Only</option>
+		
+	</select></td><tr/></table>
 	<input type="submit" value=" Submit "/>
 	</form>
 

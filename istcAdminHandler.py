@@ -576,6 +576,9 @@ class IstcAdminHandler:
     def get_libraryData(self, form, req):
         wstring = form.get('q', None)
         format = form.get('format', 'xml')
+        outputfilter = form.get('filter', 'none').value
+        xslt = etree.XSLT(etree.parse(os.path.join(dbPath, 'xsl', 'filterMarcFields.xsl')))
+        params = {'locfilter': outputfilter}
         if wstring != None:
             words = wstring.split()
             qString = []
@@ -587,7 +590,7 @@ class IstcAdminHandler:
                 if format == 'xml':
                     output = [] 
                     for r in rs :
-                        output.append(r.fetch_record(session).get_xml(session))
+                        output.append(etree.tostring(xslt(r.fetch_record(session).get_dom(session), **params)))
                     f = open(cheshirePath + '/cheshire3/www/istc/output/istc-marc21xml.xml', 'w')
                     f.write('\n\n'.join(output))
                     f.flush()
@@ -605,7 +608,8 @@ class IstcAdminHandler:
                     marcAlephTxr = db.get_object(session, 'toTextTxr')
                     output = [] 
                     for r in rs :
-                        output.append(marcAlephTxr.process_record(session, r.fetch_record(session)).get_raw(session))
+                        rec = LxmlRecord(xslt(r.fetch_record(session).get_dom(session), **params))
+                        output.append(marcAlephTxr.process_record(session, rec).get_raw(session))
                     f = open(cheshirePath + '/cheshire3/www/istc/output/istc-aleph.txt', 'w')
                     f.write('\n\n'.join(output))
                     f.flush()
