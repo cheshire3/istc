@@ -214,6 +214,7 @@
     	<source mode="any|all|=|exact">
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="CaseNormalizer" />
     		</process>
     	</source>
     </subConfig>

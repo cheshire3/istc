@@ -5,6 +5,10 @@
   <xsl:output method="xml" version="1.0"/>
 <xsl:strip-space elements="*"/>
 
+	<xsl:param name="locfilter">
+		<xsl:text>all</xsl:text>
+	</xsl:param>
+
   <xsl:template match="/">
   		<xsl:apply-templates />
   </xsl:template>
@@ -56,15 +60,19 @@
   		<xsl:copy-of select="."/>
   	</xsl:template>
   
-    <xsl:template match="datafield[@tag='951']">
-     	<xsl:choose>
-     	<!-- 	<xsl:when test="contains(subfield[@code='a']/text(), 'Cambridge') and contains(subfield[@code='a']/text(), 'UL')"> -->
-     		<xsl:when test="contains(subfield[@code='a']/text(), 'JRL')">
-     			<xsl:copy-of select="."/>
-     		</xsl:when>
-     		<xsl:otherwise/>
-     	</xsl:choose>
-  		
+    <xsl:template match="datafield">  	
+     	<xsl:if test="starts-with(@tag, '9')">
+     		<xsl:choose>
+     			<xsl:when test="$locfilter=@tag">
+     				<xsl:copy-of select="."/>
+     			</xsl:when>
+     			<xsl:when test="$locfilter='all'">
+     				<xsl:copy-of select="."/>
+     			</xsl:when>
+     			<xsl:otherwise/>
+     		</xsl:choose>     		
+     	</xsl:if>
+     		  		
   	</xsl:template>
 
 	<xsl:template match="*"/>
