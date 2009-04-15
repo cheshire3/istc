@@ -580,11 +580,34 @@ class IstcAdminHandler:
         xslt = etree.XSLT(etree.parse(os.path.join(dbPath, 'xsl', 'filterMarcFields.xsl')))
         params = {'locfilter': outputfilter}
         if wstring != None:
-            words = wstring.split()
+            words = wstring.split(';')
+            anywords = []
+            groups = []
             qString = []
+            proxString = []
             for w in words:
-                qString.append('c3.idx-kwd-location all "%s"' % w)
-            q = qf.get_query(session, ' prox/unit=element/distance=0 '.join(qString))
+                w = w.strip()
+                wordset = w.split()
+                if len(wordset) == 1:
+                    anywords.append(w)
+                else:
+                    groups.append(w)
+            if len(anywords):
+                qString.append('c3.idx-kwd-location any "%s"' % ' '.join(anywords))
+            if len(groups):                
+                for group in groups:
+                    group = group.split()
+                    groupString = []
+                    for word in group:
+                        groupString.append('c3.idx-kwd-location all "%s"' % word)
+                    proxString.append(''.join(['(', ' prox/unit=element/distance=0 '.join(groupString), ')']))
+            if len(qString) and len(proxString):
+                qString.append(' or ')
+                qString.append(' or '.join(proxString))
+            elif len(proxString):
+                qString.append(' or '.join(proxString))
+            raise ValueError(qString)                     
+            q = qf.get_query(session, ' '.join(qString))
             rs = db.search(session, q)
             if len(rs):
                 if format == 'xml':
@@ -627,7 +650,11 @@ class IstcAdminHandler:
                         return apache.OK
                     return apache.OK
                 elif format == 'exchange':
-                    pass                       
+                    pass     
+            else:
+                content = self.show_dataReqForm()
+                content = tmpl.replace('%CONTENT%', content)
+                self.send_html(content, req) 
         else:
             content = self.show_dataReqForm()
             content = tmpl.replace('%CONTENT%', content)
