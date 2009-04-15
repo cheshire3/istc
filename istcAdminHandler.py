@@ -588,9 +588,12 @@ class IstcAdminHandler:
             rs = db.search(session, q)
             if len(rs):
                 if format == 'xml':
+                    indentTxr = db.get_object(session, 'indentingTxr')
                     output = [] 
                     for r in rs :
-                        output.append(etree.tostring(xslt(r.fetch_record(session).get_dom(session), **params)))
+                        newdoc = StringDocument(etree.tostring(xslt(r.fetch_record(session).get_dom(session), **params)))
+                        newrec = xmlp.process_document(session, newdoc)
+                        output.append(indentTxr.process_record(session, newrec).get_raw(session))
                     f = open(cheshirePath + '/cheshire3/www/istc/output/istc-marc21xml.xml', 'w')
                     f.write('\n\n'.join(output))
                     f.flush()
