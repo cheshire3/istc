@@ -605,8 +605,7 @@ class IstcAdminHandler:
                 qString.append(' or ')
                 qString.append(' or '.join(proxString))
             elif len(proxString):
-                qString.append(' or '.join(proxString))
-            raise ValueError(qString)                     
+                qString.append(' or '.join(proxString))                  
             q = qf.get_query(session, ' '.join(qString))
             rs = db.search(session, q)
             if len(rs):
