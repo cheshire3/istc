@@ -33,7 +33,14 @@ td.comphit {
 
 /* End of Browse */
 
+/* Contributors */
 
+div.contributor {
+	margin-top: 25px;	
+	margin-bottom: 40px;
+}
+
+/* End of Contributors */
 
 /* Hits List Display */
 

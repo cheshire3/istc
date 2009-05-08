@@ -1072,6 +1072,7 @@ class IstcEditingHandler:
         req.write(foot)
         return None
     
+    
     def replace_usa(self, abbrev, full):
         session.database = dbusa.id
         usaStore = dbusa.get_object(session, 'usaRecordStore')

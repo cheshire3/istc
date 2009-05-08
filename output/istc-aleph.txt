@@ -1,178 +1,1583 @@
 
-001 ia00891000
-008 800715s1495                        lat  
-100 10 $a Antonius de Bitonto
-245 10 $a Sermones dominicales per totum annum (Ed: Philippus de Rotingo)
-260 00 $a Strassburg $b Johann (Reinhard) Grüninger $c 20 Feb. 1495
-300 00 $c 8~~
-510 00 $a Goff A891
-510 00 $a HC(Add) 3218*
-510 00 $a Pell 2405
-510 00 $a Hillard 162
-510 00 $a Zehnacker 220
-510 00 $a Polain(B) 694
-510 00 $a IBP 434
-510 00 $a IDL 367
-510 00 $a IBE 470
-510 00 $a Madsen 276
-510 00 $a Ohly-Sack 231
-510 00 $a Sack(Freiburg) 245
-510 00 $a Voull(B) 2288,5
-510 00 $a BSB-Ink A-622
-510 00 $a GW 2211
-952 00 $a YUL
-953 00 $a New Plymouth (NZ), Dalberton Library (imperfect)
-955 00 $a Madrid BN
-957 00 $a Paris Mazarine
-957 00 $a Strasbourg BGS (imperfect)
-957 00 $a Strasbourg BNU (imperfect)
-958 00 $a Copenhagen RL
-958 00 $a Prague NL (as GW Anm.), NM
-958 00 $a Graz UB
-959 10 $a 080711SM
-995 00 $a Brussels, BR (2)
-996 00 $a Deventer SAB 24
-996 00 $a Utrecht UB 40
-997 00 $a Augsburg UB  $b (Inc.554)
-997 00 $a Bamberg SB
-997 00 $a Dettelbach FranziskKl
-997 00 $a Frankfurt $b (Main) StUB
-997 00 $a Freiburg i.Br. UB
-997 00 $a Fulda FranziskKl Frauenberg
-997 00 $a Giessen UB
-997 00 $a Koblenz GörresGym  $b (imperfect)
-997 00 $a Mainz StB  $b (2)
-997 00 $a München BSB  $b (2)
-997 00 $a Münster ULB  $b (imperfect)
-997 00 $a Regensburg SB
-997 00 $a Stuttgart WLB  $b (2)
-997 00 $a Tübingen UB
-997 00 $a Wesel MartiniK
-
-
-001 ia00936000
-008 800715s1493                        lat  
-100 10 $a Apuleius Madaurensis, Lucius
-245 10 $a Opera. Ed: Johannes Andreas, bishop of Aleria
-260 00 $a Venice $b Philippus Pincius $c 30 Apr. 1493
+001 ia00878000
+008 800715s1496                        lat  
+100 10 $a Antoninus Florentinus
+245 10 $a Summa theologica (Partes I-IV) (With Molitoris tabula, i.e., pt. V)
+260 00 $a Strassburg $b Johann (Reinhard) Grüninger $c 1496
 300 00 $c f~~
-500 00 $a Contents: Asinus aureus, sive Metamorphosis. Florida. Apologia. De deo Socratis. De Platonis dogmate. Add: [Pseudo- Aristoteles]: De mundo (Tr: Apuleius). Hermes Trismegistus: Asclepius (Tr: Apuleius). Alcinous: Epitome disciplinarum Platonis (Tr: Petrus Balbus). On the probably erroneous attribution of Alcinous, Epitome to Albinus (cf. GW), see Alcinoos, Enseignement des doctrines de Platon, ed. John Whittaker (Paris, 1990). De mundo is the Latin reworking by Apuleius of the Pseudo- Aristotelian tract. The translation of Asclepius is probably not by Apuleius (CIBN)
-510 00 $a Goff A936
-510 00 $a HC 1317*
-510 00 $a Pell 925
-510 00 $a Frasson-Cochet 13
-510 00 $a Jammes A-12
-510 00 $a Delisle 116
-510 00 $a Zehnacker 228
-510 00 $a Polain(B) 286
-510 00 $a IGI 771
-510 00 $a IBP 452
-510 00 $a Sajó-Soltész 273
-510 00 $a IDL 386
-510 00 $a IBE 503
-510 00 $a Sallander 1565
-510 00 $a Coll(S) 88
-510 00 $a Madsen 290
-510 00 $a Borm 201
-510 00 $a Schüling 76
-510 00 $a Günt(L) 3541
-510 00 $a Hubay(Augsburg) 159
-510 00 $a Mittler-Kind 219
-510 00 $a Oates 2069
-510 00 $a Rhodes(Oxford Colleges) 122
-510 00 $a Bod-inc A-371
-510 00 $a Sheppard 4391
-510 00 $a Pr 5297
-510 00 $a BMC V 495
-510 00 $a BSB-Ink A-660
-510 00 $a GW 2303
-951 00 $a Cambridge UL
+500 00 $a In five parts dated: I) 4 Sept. 1496; II) 24 Apr. 1496; III) 6. Mar. 1496; IV) 12 Aug. 1496; V) [undated]
+510 00 $a Goff A878
+510 00 $a HC(+Add) 1249*
+510 00 $a Pell 884
+510 00 $a Lefèvre 23
+510 00 $a Neveu 42
+510 00 $a Péligry 69
+510 00 $a Richard 46
+510 00 $a Zehnacker 215
+510 00 $a Polain(B) 272
+510 00 $a IGI 696
+510 00 $a IBP 424
+510 00 $a Sajó-Soltész 256
+510 00 $a IDL 360
+510 00 $a IBE 440
+510 00 $a Mendes 114
+510 00 $a Coll(U) 133
+510 00 $a Madsen 270
+510 00 $a Lőkkös(Cat BPU) 36
+510 00 $a Ernst(Hildesheim) II,II 17
+510 00 $a Ohly-Sack 218, 219, 220, 221
+510 00 $a Sack(Freiburg) 238
+510 00 $a Finger 71
+510 00 $a Borm 185
+510 00 $a Voull(B) 2295 (I), 2293 (II), 2292,5 (III), 2294 (IV), 2290 (V)
+510 00 $a Günt(L) 2809 (I)
+510 00 $a Pad-Ink 43, 44, 45
+510 00 $a Wilhelmi 47, 48
+510 00 $a Walsh 173
+510 00 $a Oates 190 (IV)
+510 00 $a Rhodes(Oxford Colleges) 109
+510 00 $a Bod-inc A-346
+510 00 $a Sheppard 375, 376-377
+510 00 $a Pr 472, 470, 469, 471
+510 00 $a BMC I 109
+510 00 $a BSB-Ink A-601
+510 00 $a GW 2192
+951 00 $a Cambridge UL (IV)
+951 00 $a Cambridge, Trinity College (II-IV)
+951 00 $a Manchester JRL R95850 (I-IV)
+951 00 $a Oxford Bodley (2, 1 var, deposited by University College)
+951 00 $a Oxford, All Souls College
+951 00 $a Shrewsbury School (I-III, imperfect)
+951 00 $a Dublin, Marsh's Library (IV)
+952 00 $a CBPac $b (I-II)
+952 00 $a DHS(W)L $b (I, II)
+952 00 $a Harv(M)L $b (I-V)
+952 00 $a HEHL $b (II, III var as in GW)
+952 00 $a NewL $b (I-IV)
+952 00 $a RedwL $b (I)
+952 00 $a UCinL $b (II, III var, IV)
+952 00 $a UNCaL $b (IV)
+952 00 $a UNHL $b (III)
+952 00 $a YUL $b (II)
+953 00 $a Quebec Laval UL
+954 00 $a Aosta C
+954 00 $a Asti Sem  $b (I-III)
+954 00 $a San Candido Coll  $b (I-II, IV, Tabula)
+955 00 $a Burgos BP
+955 00 $a Ciudad Real BP (II)
+955 00 $a Huesca BP (III)
+955 00 $a Madrid BN (I, III-IV)
+955 00 $a Madrid BUP
+955 00 $a Segorbe Sem (I-IV)
+955 00 $a Toledo BP (I-II, IV)
+955 00 $a Zamora BP (I, tabula)
+955 00 $a Lisboa BN (wanting II-IV)
+957 00 $a Carcassonne BM (wanting II-III, IV)
+957 00 $a La Rochelle BM (II only, imperfect)
+957 00 $a Mont Sainte-Odile Bibliothèque
+957 00 $a Rodez BM
+957 00 $a Rouen BM (II, IV)
+957 00 $a Selestat BM
+957 00 $a Strasbourg BM (imperfect)
+957 00 $a Strasbourg BNU
+958 00 $a Basel UB
+958 00 $a Budapest Semin centr (IV only, imperfect)
+958 00 $a Budapest Univ  (I, II, IV [imperfect], only [Tabula only])
+958 00 $a Copenhagen RL
+958 00 $a Esztergom Simor (2: 1, II and IV only; 1 IV only, imperfect)
+958 00 $a Frauenfeld Thurgauische KantonsB
+958 00 $a Genève BPU
+958 00 $a Graz UB
+958 00 $a Kalocsa Eccl metr (Tabula only)
+958 00 $a Lund UB (II-IV)
+958 00 $a Prague NL (2, 1 IV only)
+958 00 $a Salzburg UB
+958 00 $a Székesfehérvár Bibl episc (I and II only, imperfect)
+958 00 $a Uppsala UB
+959 10 $a 090210jg
+995 00 $a Brussels, BR B 671 (III), B 672 (III), B 673 (III, imperfect, wanting leaves x3 and x6), B 674 (I), B 675 (II), B 676 (IV), B 677 (IV)
+995 00 $a Brugge, BGS (IV and Repertorium)
+995 00 $a Gent, O.P. (II)
+995 00 $a Gent, UB (II)
+995 00 $a Tournai, Séminaire (III, IV)
+995 00 $a Mons, BU (III)
+995 00 $a Sint-Truiden, O.F.M. (II, imperfect, wanting the title-leaf)
+995 00 $a Leuven, Univ. copy destroyed
+996 00 $a The Hague RL (I, II, IV, V)
+996 00 $a Leiden UB 24 (I-III)
+996 00 $a Maastricht SB 7 (IV)
+996 00 $a Nijmegen Albertinum
+996 00 $a Utrecht Cath (coll. Warmond)
+996 00 $a Utrecht UB 39 (2, one III, IV only)
+997 00 $a Amberg SB  $b (I,II(2)
+997 00 $a Annaberg-Buchholz St.AnnaK
+997 00 $a Aschaffenburg HB Dlg.StiftsB  $b (III,IV, imperfect)
+997 00 $a Augsburg UB  $b (I-IV, Inc.953)
+997 00 $a Bamberg SB
+997 00 $a Bernkastel-Kues NikolHospital  $b (I-II)
+997 00 $a Darmstadt LHSB
+997 00 $a Dettelbach FranziskKl  $b (III,IV)
+997 00 $a Dillingen StudB  $b (2, imperfect)
+997 00 $a Döbeln NikolaiK  $b (I-III,V)
+997 00 $a Düsseldorf ULB  $b (III)
+997 00 $a Eichstätt UB  $b (2, 1 imperfect)
+997 00 $a Erlangen UB  $b (Inc.336)
+997 00 $a Frankfurt $b (Main) StUB (4, 3 imperfect)
+997 00 $a Freiburg i.Br. UB
+997 00 $a Füssen FranziskKl  $b (I,II)
+997 00 $a Fulda HLB
+997 00 $a Fulda PriesterSem
+997 00 $a Giessen UB  $b (I, tabula)
+997 00 $a Goslar MarktkirchenB  $b (I,II)
+997 00 $a Greifswald GeistlMin
+997 00 $a Greifswald UB  $b (II-IV)
+997 00 $a Halle MarienB  $b (III-IV)
+997 00 $a Halle ULB  $b (I-II,IV-V)
+997 00 $a Hammelburg FranziskKl Altstadt  $b (III)
+997 00 $a Hannover StB
+997 00 $a Heidelberg UB  $b (I-IV, imperfect)
+997 00 $a Hildesheim DomB  $b (I-IV)
+997 00 $a Jena ULB  $b (I-II)
+997 00 $a Karlsruhe BLB
+997 00 $a Koblenz GörresGym
+997 00 $a Köln USB  $b (I-IV)
+997 00 $a Leipzig UB  $b (I)
+997 00 $a Limburg DiözesanB  $b (2, imperfect)
+997 00 $a Lüneburg RatsB  $b (imperfect)
+997 00 $a Mainz StB  $b (2, 1 imperfect)
+997 00 $a München BSB  $b (19, 17 imperfect)
+997 00 $a München UB  $b (3, imperfect)
+997 00 $a Nürnberg StB  $b (imperfect)
+997 00 $a Ostritz ZisterzKl Marienthal  $b (III)
+997 00 $a Paderborn EAB  $b (2, 1 imperfect)
+997 00 $a Paderborn EAB Dep. Willebadessen PfarrB  $b (2, imperfect)
+997 00 $a Reutlingen StB  $b (III)
+997 00 $a Römhild StiftsK
+997 00 $a Rostock UB
+997 00 $a Stuttgart WLB  $b (2, 1 imperfect)
+997 00 $a Tübingen UB
+997 00 $a Weissenhorn MuseumsB  $b (II)
+997 00 $a Wesel MartiniK
+997 00 $a Wiesbaden HLB  $b (IV)
+997 00 $a Wolfenbüttel HAB  $b (3)
+997 00 $a Würzburg FranziskKl  $b (I,II)
+997 00 $a Würzburg UB
+
+
+001 ia00901100
+008 951212s1520                        lat  
+100 10 $a Antonius Nebrissensis, Aelius
+245 10 $a Expositio hymnorum
+260 00 $a Zaragoza $b Georgius Coci $c 1520
+300 00 $c 4~~
+500 00 $a Haebler described an imperfect copy
+510 00 $a Haeb(BI) 255
+510 00 $a Kurz 140
+510 00 $a Vindel(A) IV 324: 99
+510 00 $a Norton(1978) 710
+510 00 $a IBE Post-incunables 108
+510 00 $a Adams N119
+510 00 $a BMC(Sp) p. 113
+951 00 $a Cambridge UL, Trinity College
+955 00 $a Madrid BN
+
+
+001 ia00919000
+008 800715s1483                        lat  
+100 10 $a Anwykyll, John
+245 10 $a Compendium totius grammaticae (Partes I-IV)
+260 00 $a [Oxford $b Theodoricus Rood $c about 1483]
+300 00 $c 4~~
+500 00 $a For the UCalLAL fragment, see R. Rouse in L. Hellinga and J. Goldfinch, eds, Bibliography and the study of 15th-century civilisation (London, 1987), pp.206-207
+510 00 $a Goff A919
+510 00 $a Duff 28
+510 00 $a STC 695
+510 00 $a J.A. Dane, in The Library, 6th ser. 20 (1998) pp.59-61
+510 00 $a Oates 4166
+510 00 $a GW 2262
+951 00 $a Cambridge UL (3 leaves), Corpus Christi (2 leaves), Trinity Colleges (1 leaf)
+951 00 $a Manchester JRL R37630 (8 leaves)
+952 00 $a PML $b (2ff)
+952 00 $a UCalLAL $b (2ff. in binding of Goff A712)
+959 10 $a 0702
+994 00 $a Melbourne SL (1 leaf): in fact from Duff 29
+
+
+001 ia00920100
+008 860709s1489                        lat  
+100 10 $a Anwykyll, John
+245 10 $a Compendium totius grammaticae (Partes I-IV)
+260 00 $a Deventer $b Richardus Pafraet $c 4 May 1489
+300 00 $c 4~~
+500 00 $a Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands.
+510 00 $a HC 5556
+510 00 $a Camp 474
+510 00 $a ILC 261
+510 00 $a STC 696.1
+510 00 $a Duff 30
+510 00 $a Oates 3472, 3473
+510 00 $a Pr 8982
+510 00 $a BMC IX 51
+510 00 $a GW 2264
+951 00 $a Cambridge UL (2), Trinity College
+951 00 $a Manchester JRL 16367
+959 00 $a 9509
+
+
+001 ia00924000
+008 800715s1496                        grc  
+100 10 $a Apollonius Rhodius
+245 10 $a Argonautica [Greek]. With the Scholia of Lucillus, Sophocles, and Theon. Ed: Janus Lascaris
+260 00 $a Florence $b [Laurentius (Francisci) de Alopa, Venetus] $c 1496
+300 00 $c 4~~
+510 00 $a Goff A924
+510 00 $a HC 1292*
+510 00 $a Pell 912
+510 00 $a CIBN A-478
+510 00 $a Arnoult 109
+510 00 $a Lefèvre 26
+510 00 $a Péligry 75
+510 00 $a Delisle 106
+510 00 $a Polain(B) 283
+510 00 $a IDL 375
+510 00 $a IGI 753
+510 00 $a IBE 499
+510 00 $a IBP 445
+510 00 $a Sajó-Soltész 270
+510 00 $a Sallander 2042
+510 00 $a Madsen 282
+510 00 $a Günt(L) 1063
+510 00 $a Voull(B) 2990
+510 00 $a Mittler-Kind 72
+510 00 $a Walsh 2964, 2965
+510 00 $a Oates 2439, 2440
+510 00 $a Bod-inc A-361
+510 00 $a Sheppard 5198, 5199
+510 00 $a Rhodes(Oxford Colleges) 115
+510 00 $a Pr 6407
+510 00 $a BMC VI 667
+510 00 $a BSB-Ink A-650
+510 00 $a GW 2271
+951 00 $a Cambridge UL (2)
+951 00 $a Cambridge, Emmanuel College
+951 00 $a Cambridge, Fitzwilliam Museum (2, imperfect)
+951 00 $a Cambridge, St John's College
+951 00 $a Cambridge, Trinity College (3)
 951 00 $a Chatsworth
+951 00 $a Edinburgh, Napier UL
 951 00 $a Eton College
-951 00 $a Glasgow UL
-951 00 $a Oxford Bodley
+951 00 $a Glasgow UL (2, 1 Hunterian)
+951 00 $a London, Victoria and Albert Museum (imperfect)
+951 00 $a Manchester JRL Christie 27f10
+951 00 $a Oxford Bodley (2)
+951 00 $a Oxford, All Souls College
+951 00 $a Oxford, Corpus Christi College
+951 00 $a Oxford, Exeter College
+951 00 $a Oxford, Magdalen College
+951 00 $a Oxford, Merton College
 951 00 $a Oxford, New College
-951 00 $a Dublin, Trinity College
+951 00 $a Oxford, Queen's College (2)
+951 00 $a Salisbury CL
+951 00 $a Windsor RL
 952 00 $a BMawrCL
-952 00 $a ColUL
-952 00 $a FordUL
+952 00 $a ChL
+952 00 $a ColgUL
+952 00 $a HarvCL $b (2)
 952 00 $a HEHL
-952 00 $a LC
-952 00 $a LC(T)
+952 00 $a LC $b (2)
+952 00 $a LeUL
 952 00 $a NewL
 952 00 $a NYPL
-952 00 $a StJUL
-952 00 $a UBufL
-952 00 $a UCalBL
-952 00 $a UMich(S)L
+952 00 $a PhF(W)L
+952 00 $a PML
+952 00 $a PrinUL
+952 00 $a PStUL
+952 00 $a UMichL
+952 00 $a UPaL
+952 00 $a WArtGL
+952 00 $a WesUL
 952 00 $a YUL
-952 00 $a FWA
-953 00 $a New Plymouth (NZ), Dalberton Library
-954 00 $a Cagliari U
-954 00 $a Catania U
-954 00 $a Chiari Morc  $b (imperfect)
+953 00 $a Cape Town NL
+954 00 $a Belluno Loll
+954 00 $a Firenze Laur
 954 00 $a Firenze N
 954 00 $a Firenze Ricc
-954 00 $a Forlì C
-954 00 $a Gallarate Aloisianum
-954 00 $a Gubbio C
-954 00 $a Lecce Facoltà di Lettere
-954 00 $a Lodi Sem
-954 00 $a Lonato Da Como
-954 00 $a Lugo C  $b (imperfect)
-954 00 $a Mantova C
-954 00 $a Milano Ambr  $b (2)
-954 00 $a Milano N  $b (2)
-954 00 $a Napoli N
-954 00 $a Palazzolo C
-954 00 $a Palermo C
-954 00 $a Palermo R
-954 00 $a Pavia U  $b (imperfect)
-954 00 $a Pordenone Sem
-954 00 $a Roma Ang
-954 00 $a Roma Cas
-954 00 $a Roma Cors  $b (51.B.8)
-954 00 $a Roma N  $b (71.8.D.2)
-954 00 $a Sassari U
-954 00 $a Torino N
-954 00 $a Udine Sem
-954 00 $a Urbino U
-954 00 $a Vallombrosa Abb
-954 00 $a Venezia Lic Fosc
+954 00 $a Genova Durazzo *BP
+954 00 $a Milano Ambr
+954 00 $a Milano Ist Leone XIII  $b (imperfect)
+954 00 $a Milano N
+954 00 $a Milano Triv
+954 00 $a Modena Est
+954 00 $a Napoli N  $b (3)
+954 00 $a Parma Pal  $b (2)
+954 00 $a Perugia C
+954 00 $a Roma Cors  $b (49.E.8)
+954 00 $a Roma N  $b (70.4.B.9)
 954 00 $a Venezia N
-954 00 $a Vaticano BAV  $b (2)
+954 00 $a Verona C
+954 00 $a Vaticano BAV  $b (3)
 955 00 $a Madrid BN
-955 00 $a Palma BP
-955 00 $a Zaragoza BU
-957 00 $a Paris Inst. de France (2)
+955 00 $a Sevilla Colombina
+957 00 $a Paris BN (2, 1 vellum)
+957 00 $a Cahors BM (imperfect)
 957 00 $a Chantilly MCondé
-957 00 $a Moulins BM
-957 00 $a Strasbourg BNU
+957 00 $a Montpellier BM (imperfect)
+957 00 $a Toulouse BM
+957 00 $a Troyes BM
+958 00 $a Athens Gennad
+958 00 $a Basel UB
+958 00 $a Budapest Acad
 958 00 $a Copenhagen RL
-958 00 $a Esztergom Eccl metr
-958 00 $a Gdańsk PAN
-958 00 $a Innsbruck UB
-958 00 $a Kalocsa Eccl metr
-958 00 $a Kraków J
-958 00 $a Oslo UB
-958 00 $a Stockholm RL
-958 00 $a Szczecin WM
+958 00 $a Genève Bodmer
+958 00 $a Oslo UB (imperfect)
+958 00 $a Patmos Agios Ioannes (wanting tp)
+958 00 $a Prague NL (Roudnice)
 958 00 $a Uppsala UB
-958 00 $a Wrocław U (2)
-959 10 $a 090209jg
-995 00 $a Brussels, BR
+959 10 $a 090123AH
+995 00 $a Mariemont, Musée
 996 00 $a Amsterdam BPH (2)
-996 00 $a Leiden UB 29
-996 00 $a Utrecht UB 49
-997 00 $a Augsburg SStB
-997 00 $a Giessen UB
+996 00 $a Amsterdam UB
+996 00 $a The Hague MMW I 33 (2)
+996 00 $a Leiden UB 26
+996 00 $a Utrecht UB 48
+997 00 $a Berlin SB
+997 00 $a Dresden SLUB
 997 00 $a Göttingen SUB
-997 00 $a Heidelberg UB
+997 00 $a Gotha ForschLB
+997 00 $a Halle ULB
 997 00 $a Jena ULB
 997 00 $a Leipzig UB
-997 00 $a München BSB  $b (2, 1 imperfect)
+997 00 $a München BSB  $b (2)
+997 00 $a München UB
 997 00 $a Stuttgart WLB
+
+
+001 ia00928000
+008 800715s1477                        lat  
+100 10 $a Appianus
+245 10 $a Historia Romana (Partes I-II) (Tr: Petrus Candidus Decembrius)
+260 00 $a Venice $b Bernhard Maler (Pictor), Erhard Ratdolt and Peter Löslein $c 1477
+300 00 $c 4~~
+500 00 $a In two parts. Some copies have borders printed in red (GW Anm.)
+500 00 $a Pars I comprises the Proemium Appiani, Punica, Syriaca, Parthica (Pseudo-Appianus) and Mithridatica. Pars II comprises the five books of De bellis civilibus, Illyrica and Celticorum epitomen (CIBN)
+510 00 $a Goff A928
+510 00 $a H 1307* [II, I]
+510 00 $a Sander 482
+510 00 $a Essling 221
+510 00 $a Pell 915
+510 00 $a CIBN A-482
+510 00 $a Arnoult 110
+510 00 $a Lefèvre 27
+510 00 $a Parguez 73
+510 00 $a Péligry 76
+510 00 $a Torchet 64
+510 00 $a Zehnacker 224
+510 00 $a Delisle 113, 114
+510 00 $a Polain(B) 284
+510 00 $a IGI 763
+510 00 $a IBP 446
+510 00 $a Sajó-Soltész 271
+510 00 $a IDL 377
+510 00 $a IBE 493
+510 00 $a IJL2 28
+510 00 $a Coll(U) 139
+510 00 $a Coll(S) 83, 85
+510 00 $a Madsen 283, 4401, T3 (I)
+510 00 $a Lőkkös(Cat BPU) 37
+510 00 $a Hubay(Augsburg) 158
+510 00 $a Sack(Freiburg) 251
+510 00 $a Voull(B) 3768, 3769
+510 00 $a Voull(Trier) 1880, 1881
+510 00 $a Schmitt I 3768, 3769
+510 00 $a Günt(L) 3587, 3588
+510 00 $a Mittler-Kind 73
+510 00 $a Walsh 1726, 1727, 1728, 1729
+510 00 $a Oates 1739-42
+510 00 $a Rhodes(Oxford Colleges) 116
+510 00 $a Bod-inc A-363
+510 00 $a Sheppard 3532, 3533
+510 00 $a Pr 4367, 4368
+510 00 $a BMC V 244
+510 00 $a BSB-Ink A-651
+510 00 $a GW 2290
+951 00 $a Aberdeen UL
+951 00 $a Bath PL (I only)
+951 00 $a Birmingham PL (II)
+951 00 $a Cambridge UL (3, 2 II only)
+951 00 $a Cambridge, King's College (2, 1 imperfect)
+951 00 $a Cambridge, Trinity College
+951 00 $a Chatsworth
+951 00 $a Edinburgh NLS (2: Inc.133, imperfect, II wanting ff.135-138. Inc.134: Beattie(1) p.174, II only)
+951 00 $a Edinburgh UL (2)
+951 00 $a Glasgow UL (2, 1 Hunterian)
+951 00 $a Lampeter UL
+951 00 $a Liverpool PL (II)
+951 00 $a Liverpool UL
+951 00 $a London, Guildhall (imperfect)
+951 00 $a London, Victoria and Albert Museum
+951 00 $a Manchester JRL 13836
+951 00 $a Manchester, Chetham's Library
+951 00 $a Oxford Bodley (2, 1 I only)
+951 00 $a Oxford, All Souls College
+951 00 $a Oxford, Brasenose College
+951 00 $a Oxford, Queen's College (II)
+951 00 $a Dublin, Trinity College
+951 00 $a Maynooth, St Patrick's College
+952 00 $a AmBML
+952 00 $a BYUL
+952 00 $a CdelCL
+952 00 $a ChL
+952 00 $a ColUL $b (2, var)
+952 00 $a HarvCL $b (4, 1 II only)
+952 00 $a HEHL
+952 00 $a HL
+952 00 $a InUL
+952 00 $a JHUL
+952 00 $a MilCL
+952 00 $a NewL $b (-)
+952 00 $a ObCL $b (I)
+952 00 $a PHFL
+952 00 $a PML
+952 00 $a PrinUL
+952 00 $a RITL $b (II)
+952 00 $a SFPL
+952 00 $a UCalBL $b (2, 1 II only)
+952 00 $a UCalLAL
+952 00 $a UChiL
+952 00 $a UIllL
+952 00 $a UMichL
+952 00 $a UNCaL $b (frag)
+952 00 $a URoL $b (II)
+952 00 $a UCinL
+952 00 $a UVaL $b (II-)
+952 00 $a WArtGL
+952 00 $a WorFPL $b (II)
+952 00 $a YUL
+952 00 $a APR
+952 00 $a HBF
+952 00 $a PandJG $b (I)
+953 00 $a Canberra NL (II)
+953 00 $a Halifax (Nova Scotia), King's College UL (II)
+953 00 $a Mino, Osaka Aoyama Junior College
+953 00 $a Wellington ATL
+953 00 $a Winnipeg, Manitoba UL
+954 00 $a Belluno Loll  $b (I)
+954 00 $a Bergamo C
+954 00 $a Bologna C
+954 00 $a Bologna Coll di Spagna  $b (II)
+954 00 $a Brescia C
+954 00 $a Catanzaro C
+954 00 $a Civitavecchia Scuola di Guerra
+954 00 $a Fermo C
+954 00 $a Ferrara C  $b (2)
+954 00 $a Firenze Laur  $b (II)
+954 00 $a Firenze Maruc
+954 00 $a Firenze N
+954 00 $a Firenze Ricc
+954 00 $a Genova Durazzo *BP  $b (II)
+954 00 $a Genova U  $b (imperfect)
+954 00 $a Lucca Cap
+954 00 $a Lucca G  $b (I imperfect, wanting f.2)
+954 00 $a Mantova C  $b (I)
+954 00 $a Milano Ambr
+954 00 $a Modena Est  $b (2, 1 II, imperfect)
+954 00 $a Napoli C
+954 00 $a Napoli N  $b (4)
+954 00 $a Napoli U  $b (II)
+954 00 $a Padova Cap  $b (I)
+954 00 $a Padova Sem
+954 00 $a Padova U  $b (I var GW)
+954 00 $a Palermo C  $b (I, 2 II)
+954 00 $a Palermo Sem  $b (imperfect, wanting f.2)
+954 00 $a Parma Pal  $b (2)
+954 00 $a Ravenna C
+954 00 $a Reggio Emilia C  $b (I)
+954 00 $a Roma Banca
+954 00 $a Roma Cas  $b (II)
+954 00 $a Roma Cors  $b (I: 50.C.29, II:50.B.32)
+954 00 $a Roma N  $b (70.7.F.16-17= I:70.6.C.20 imperfect)
+954 00 $a Torino N  $b (2)
+954 00 $a Treviso C
+954 00 $a Venezia Fond Cini
+954 00 $a Venezia N
+954 00 $a Vercelli Sem  $b (imperfect)
+954 00 $a Viterbo C
+954 00 $a Vaticano BAV  $b (6)
+955 00 $a Barcelona BU
+955 00 $a Madrid BN (I)
+955 00 $a Madrid BU
+955 00 $a Madrid March
+955 00 $a Oñate BU
+955 00 $a Santiago BU
+955 00 $a Valencia BU (I, imperfect)
+957 00 $a Paris BN (3, 1 I only, 2 II only)
+957 00 $a Albi BM (II)
+957 00 $a Cahors BM
+957 00 $a Carcassonne BM (wanting II, imperfect)
+957 00 $a Chantilly MCondé
+957 00 $a Chateau-Gontier (wanting II)
+957 00 $a Langres SHAL (wanting II)
+957 00 $a Lyon BM (imperfect)
+957 00 $a Nantes BM (wanting II)
+957 00 $a Reims BM (wanting I)
+957 00 $a Strasbourg BNU
+958 00 $a Aarhus SB (I)
+958 00 $a Basel UB (II)
+958 00 $a Budapest Acad
+958 00 $a Bdapest Mus art (II only)
+958 00 $a Budapest Szabó Ervin
+958 00 $a Copenhagen RL (2)
+958 00 $a Genève BPU
+958 00 $a Győr Semin
+958 00 $a Oslo UB (II)
+958 00 $a Prague NL (3, 1 I only)
+958 00 $a Stockholm RL (2, 1 II only)
+958 00 $a Székesfehérvár Bibl episc (II only, imperfect)
+958 00 $a Tartu UL (II)
+958 00 $a Uppsala UB (II, imperfect)
+958 00 $a Salzburg UB (imperfect, wanting I)
+959 10 $a 090313jg
+995 00 $a Brussels, BR B 953 (I), B 1633 (I,II)
+995 00 $a Antwerpen, MPM (I)
+995 00 $a Leuven-Heverlee, S.J. (I,II)
+995 00 $a Liège, BU (I, II, imperfect, wanting leaf d4)
+996 00 $a Amsterdam UB
+996 00 $a Deventer SAB
+996 00 $a The Hague RL II 432
+996 00 $a The Hague MMW I 258 (2)
+996 00 $a Rotterdam Mus. Boymans
+997 00 $a Augsburg SStB
+997 00 $a Bamberg SB
+997 00 $a Berlin KunstB
+997 00 $a Berlin SB  $b (2, 1 imperfect)
+997 00 $a Bonn ULB  $b (II)
+997 00 $a Dresden LB  $b (copy destroyed)
+997 00 $a Erlangen UB  $b (II)
+997 00 $a Freiburg i.Br. DiözesanM
+997 00 $a Göttingen SUB
+997 00 $a Gotha ForschLB  $b (II)
+997 00 $a Hamburg GymChristianeum
+997 00 $a Heidelberg UB
+997 00 $a Karlsruhe BLB  $b (II)
+997 00 $a Köln USB
+997 00 $a Leipzig UB  $b (2, 2 imperfect)
+997 00 $a Lübeck StB  $b (copy lost)
+997 00 $a Mindelheim StB
+997 00 $a München BSB  $b (3)
+997 00 $a München UB
+997 00 $a Nürnberg StB  $b (2)
+997 00 $a Ochsenfurt StArch
+997 00 $a Oldenburg LB
+997 00 $a Stuttgart WLB  $b (2)
+997 00 $a Trier PriesterSem
+997 00 $a Tübingen UB  $b (1 leaf only)
+997 00 $a Wuppertal StB  $b (II, imperfect)
+997 00 $a Zeitz StiftsB
+
+
+001 ia00930000
+008 800715s1495                        lat  
+100 10 $a Appianus
+245 10 $a Historia Romana (Pars I) (Tr: Petrus Candidus Decembrius)
+260 00 $a Scandiano $b Peregrinus de Pasqualibus, Bononiensis $c 10 Jan. [1495]
+300 00 $c f~~
+500 00 $a The colophon reads 'M.CCCCLCXV.IIII. Idu&ubreve; Ianuarii'
+500 00 $a Pars I comprises the Proemium Appiani, Punica, Syriaca, Parthica (Pseudo-Appianus) and Mithridatica (CIBN)
+510 00 $a Goff A930
+510 00 $a HC(+Add) 1310
+510 00 $a GfT 2325
+510 00 $a Pell 917
+510 00 $a CIBN A-484
+510 00 $a Arnoult 111
+510 00 $a Parguez 74
+510 00 $a Zehnacker 226
+510 00 $a Polain(B) 4155
+510 00 $a IGI 765
+510 00 $a IBP 448
+510 00 $a IDL 379
+510 00 $a IBE 495
+510 00 $a Coll(U) 141
+510 00 $a Madsen 285
+510 00 $a Sack(Freiburg) 252
+510 00 $a Voull(B) 3558
+510 00 $a Günt(L) 2552
+510 00 $a Mittler-Kind 75
+510 00 $a Walsh 3585, 3586
+510 00 $a Oates 2727
+510 00 $a Rhodes(Oxford Colleges) 118
+510 00 $a Bod-inc A-365
+510 00 $a Sheppard 6062
+510 00 $a Pr 7325
+510 00 $a BMC VII 1118
+510 00 $a BSB-Ink A-653
+510 00 $a GW 2292
+951 00 $a Cambridge UL
+951 00 $a Cambridge, King's College
+951 00 $a Cambridge, Trinity College
+951 00 $a Oxford Bodley (with variants)
+951 00 $a Oxford, Corpus Christi College
+952 00 $a AmBML
+952 00 $a BPubL
+952 00 $a ColUL
+952 00 $a FordUL
+952 00 $a HarvCL
+952 00 $a HEHL $b (2)
+952 00 $a InUL
+952 00 $a LC $b (3)
+952 00 $a LC(T) $b (3)
+952 00 $a NewL
+952 00 $a NiUL
+952 00 $a PML
+952 00 $a WArtGL
+952 00 $a YUL
+952 00 $a PandJG
+954 00 $a Albenga Cap
+954 00 $a Bergamo C
+954 00 $a Bologna C
+954 00 $a Brescia C
+954 00 $a Cagliari U
+954 00 $a Cava dei Tirreni Badia
+954 00 $a Ferrara C
+954 00 $a Firenze Carm
+954 00 $a Genova Durazzo *BP
+954 00 $a Genova U
+954 00 $a Grosseto C
+954 00 $a Lonato Da Como
+954 00 $a Macerata C  $b (3)
+954 00 $a Milano N
+954 00 $a Milano Triv
+954 00 $a Modena Est
+954 00 $a Napoli N  $b (4)
+954 00 $a Napoli U
+954 00 $a Novara C
+954 00 $a Padova Ant
+954 00 $a Parma Pal
+954 00 $a Piacenza C  $b (3)
+954 00 $a Reggio Emilia C  $b (2)
+954 00 $a Roma Cas
+954 00 $a Roma Cors  $b (50.B.22)
+954 00 $a Roma N  $b (70.7.D.21)
+954 00 $a Roma Senato
+954 00 $a Torino N  $b (2)
+954 00 $a Venezia C  $b (2)
+954 00 $a Venezia N
+954 00 $a Verona C
+954 00 $a Vaticano BAV  $b (3)
+955 00 $a Barcelona BU
+955 00 $a Madrid RAH
+955 00 $a Madrid BCongreso
+955 00 $a Madrid BN
+957 00 $a Paris BN
+957 00 $a Langres SHAL
+957 00 $a Lyon BM (imperfect)
+957 00 $a Strasbourg BNU
+958 00 $a Basel UB
+958 00 $a Copenhagen RL
+958 00 $a Skokloster Castle
+958 00 $a Stockholm RL
+958 00 $a Uppsala UB (2)
+959 10 $a 090206jg
+995 00 $a Antwerpen, R.van Lennep
+996 00 $a Amsterdam UB 204
+997 00 $a Arnstadt KB
+997 00 $a Berlin SB
+997 00 $a Erlangen UB
+997 00 $a Freiburg i.Br. UB
+997 00 $a Göttingen SUB
+997 00 $a Gotha ForschLB
+997 00 $a Leipzig DB/BuchM
+997 00 $a Metten BenediktAbtei
+997 00 $a München BSB
+997 00 $a Stuttgart WLB
+997 00 $a Tübingen UB
+
+
+001 ia00932000
+008 800715s1494                        lat  
+100 10 $a Appianus
+245 10 $a Historia Romana (Pars II) (Tr: Petrus Candidus Decembrius)
+260 00 $a Reggio Emilia $b Franciscus de Mazalibus $c 22 Oct. 1494
+300 00 $c f~~
+500 00 $a Pars II comprises the five books of De bellis civilibus, Illyrica and Celticorum epitomen (CIBN)
+510 00 $a Goff A932
+510 00 $a HC 1309*
+510 00 $a Pell 916
+510 00 $a CIBN A-486
+510 00 $a Parguez 75
+510 00 $a Zehnacker 227
+510 00 $a Polain(B) 4156
+510 00 $a IGI 767
+510 00 $a IBP 450
+510 00 $a IDL 381
+510 00 $a IBE 497
+510 00 $a Coll(U) 140
+510 00 $a Madsen 287
+510 00 $a Sack(Freiburg) 253
+510 00 $a Voull(B) 3294
+510 00 $a Günt(L) 2336
+510 00 $a Mittler-Kind 77
+510 00 $a Walsh 3540
+510 00 $a Oates 2703
+510 00 $a Rhodes(Oxford Colleges) 120
+510 00 $a Bod-inc A-367
+510 00 $a Sheppard 6014
+510 00 $a Pr 7254
+510 00 $a BMC VII 1088
+510 00 $a BSB-Ink A-655
+510 00 $a GW 2294
+951 00 $a Cambridge UL
+951 00 $a Cambridge, King's College
+951 00 $a Cambridge, Trinity College
+951 00 $a Oxford Bodley
+951 00 $a Oxford, Corpus Christi College
+952 00 $a AmBML
+952 00 $a BPubL
+952 00 $a ColUL
+952 00 $a HarvCL
+952 00 $a HEHL
+952 00 $a HolCL
+952 00 $a InUL
+952 00 $a LC $b (2)
+952 00 $a LC(T) $b (3)
+952 00 $a PML
+952 00 $a WArtGL
+952 00 $a YUL
+952 00 $a PandJG
+953 00 $a Montreal McGill UL
+954 00 $a Bergamo C
+954 00 $a Bologna C
+954 00 $a Brescia C
+954 00 $a Cagliari U
+954 00 $a Cava dei Tirreni Badia
+954 00 $a Ferrara C
+954 00 $a Firenze Carm
+954 00 $a Firenze N
+954 00 $a Genova Durazzo *BP
+954 00 $a Genova U  $b (imperfect)
+954 00 $a Grosseto C
+954 00 $a Lonato Da Como
+954 00 $a Macerata C  $b (3)
+954 00 $a Milano Triv
+954 00 $a Modena Est
+954 00 $a Napoli N  $b (3)
+954 00 $a Novara C
+954 00 $a Padova Ant
+954 00 $a Parma Pal
+954 00 $a Piacenza C  $b (2)
+954 00 $a Reggio Emilia C  $b (2)
+954 00 $a Roma Cas
+954 00 $a Roma Cors  $b (50.B.16, imperfect)
+954 00 $a Roma N  $b (70.8.E.9)
+954 00 $a Torino N  $b (2)
+954 00 $a Venezia C  $b (2)
+954 00 $a Venezia N
+954 00 $a Verona C
+954 00 $a Vaticano BAV  $b (3)
+955 00 $a Madrid RAH
+955 00 $a Madrid BCongreso
+955 00 $a Madrid BN
+955 00 $a Palma BP
+957 00 $a Paris BN
+957 00 $a Lyon BM
+957 00 $a Strasbourg BNU
+958 00 $a Basel UB
+958 00 $a Copenhagen RL
+958 00 $a Stockholm RL
+958 00 $a Uppsala UB (2)
+958 00 $a Skokloster Castle (imperfect)
+959 10 $a 090206jg
+995 00 $a Antwerpen, R.van Lennep
+996 00 $a Amsterdam UB 203
+997 00 $a Berlin SB
+997 00 $a Erlangen UB
+997 00 $a Freiburg i.Br. UB
+997 00 $a Göttingen SUB
+997 00 $a Gotha ForschLB
+997 00 $a Leipzig DB/BuchM
+997 00 $a Metten BenediktAbtei
+997 00 $a München BSB  $b (3)
+997 00 $a Stuttgart WLB
+997 00 $a Tübingen UB
+
+
+001 ia00958000
+008 800715s1498                        grc  
+100 10 $a Aristophanes
+245 10 $a Comoediae novem [Greek]. Ed: Marcus Musurus, in part. With the Scholia
+260 00 $a Venice $b Aldus Manutius, Romanus $c 15 July 1498
+300 00 $c f~~
+500 00 $a Woodcuts
+500 00 $a For variants see CIBN
+510 00 $a Goff A958
+510 00 $a HC 1656*
+510 00 $a Sander 580
+510 00 $a Essling 1163
+510 00 $a Pell 1174
+510 00 $a CIBN A-503
+510 00 $a Hillard 174
+510 00 $a Arnoult 113
+510 00 $a Fernillot 63
+510 00 $a Lefèvre 31
+510 00 $a Neveu 49
+510 00 $a Parguez 78
+510 00 $a Péligry 78
+510 00 $a Torchet 67
+510 00 $a Zehnacker 231
+510 00 $a Delisle 140
+510 00 $a Polain(B) 288
+510 00 $a IGI 790
+510 00 $a IBP 464
+510 00 $a Sajó-Soltész 280
+510 00 $a IDL 394
+510 00 $a IBE 516
+510 00 $a IJL2 30
+510 00 $a Coll(S) 92
+510 00 $a Coll(U) 145
+510 00 $a Madsen 297
+510 00 $a Borm 204
+510 00 $a Voull(B) 4503
+510 00 $a Schmitt I 4503
+510 00 $a Günt(L) 3462
+510 00 $a Mittler-Kind 78
+510 00 $a Walsh 2663, 2664, 2665
+510 00 $a Oates 2183
+510 00 $a Rhodes(Oxford Colleges) 129
+510 00 $a Bod-inc A-383
+510 00 $a Sheppard 4649, 4650, 4651
+510 00 $a Pr 5566
+510 00 $a BMC V 559
+510 00 $a BSB-Ink A-673
+510 00 $a GW 2333
+951 00 $a Cambridge UL (imperfect)
+951 00 $a Cambridge, Corpus Christi College
+951 00 $a Cambridge, Emmanuel College
+951 00 $a Cambridge, King's College
+951 00 $a Cambridge, Newnham College
+951 00 $a Cambridge, Pembroke College
+951 00 $a Cambridge, Peterhouse
+951 00 $a Cambridge, St Catharine's College
+951 00 $a Cambridge, St John's College
+951 00 $a Cambridge, Trinity College (3)
+951 00 $a Chatsworth
+951 00 $a Durham UL
+951 00 $a Edinburgh NLS (Inc.200. Inc.200*. Inc.200** = BCL.S14. Inc.200*** = Pat.6)
+951 00 $a Edinburgh UL (2)
+951 00 $a Eton College
+951 00 $a Glasgow UL (2, 1 Hunterian)
+951 00 $a Holkham
+951 00 $a Liverpool UL
+951 00 $a London, St Paul's School
+951 00 $a London, Victoria and Albert Museum
+951 00 $a Longleat
+951 00 $a Manchester JRL Christie 35h5,6
+951 00 $a Oxford Bodley (3, 1 imperfect)
+951 00 $a Oxford, All Souls College
+951 00 $a Oxford, Balliol College
+951 00 $a Oxford, Brasenose College
+951 00 $a Oxford, Christ Church
+951 00 $a Oxford, Corpus Christi College
+951 00 $a Oxford, Exeter College
+951 00 $a Oxford, Merton College
+951 00 $a Oxford, New College
+951 00 $a Oxford, Oriel College
+951 00 $a Oxford, Queen's College
+951 00 $a Oxford, St John's College
+951 00 $a Oxford, Wadham College
+951 00 $a Shrewsbury School (imperfect)
+951 00 $a Winchester College
+951 00 $a Windsor RL
+951 00 $a National Trust
+951 00 $a Dublin, Trinity College (2)
+951 00 $a Dublin, Worth Library
+952 00 $a AmCL $b (frag)
+952 00 $a BPubL
+952 00 $a BrUL
+952 00 $a BYUL
+952 00 $a ChL
+952 00 $a ColUL
+952 00 $a CorMGL
+952 00 $a CornUL
+952 00 $a DarCL
+952 00 $a GU
+952 00 $a HamCL
+952 00 $a HarvCL $b (3)
+952 00 $a HEHL
+952 00 $a HolCL
+952 00 $a InUL
+952 00 $a LC $b (3)
+952 00 $a LC(B)
+952 00 $a LeUL
+952 00 $a LorCL
+952 00 $a NewL
+952 00 $a NwUL
+952 00 $a NYPL
+952 00 $a PhFL
+952 00 $a PML
+952 00 $a PrinUL $b (2)
+952 00 $a SoMeth(B)UL
+952 00 $a StanUL
+952 00 $a UCalBL
+952 00 $a UCalLAL
+952 00 $a UIllL
+952 00 $a UKanL
+952 00 $a UOreL
+952 00 $a UPaL
+952 00 $a USFL
+952 00 $a UTexL $b (2)
+952 00 $a UVaL
+952 00 $a WArtGL
+952 00 $a WesUL
+952 00 $a YUL $b (2)
+952 00 $a FDC
+952 00 $a JHSch
+952 00 $a MNB
+952 00 $a PandJG
+952 00 $a TKB $b (-)
+953 00 $a Buenos Aires BN
+953 00 $a Hino, Meisei UL
+953 00 $a Tokyo, Waseda UL
+954 00 $a Arezzo Cons
+954 00 $a Ascoli Piceno C  $b (imperfect)
+954 00 $a Bologna U
+954 00 $a Brescia C
+954 00 $a Cagliari U  $b (imperfect)
+954 00 $a Catania C
+954 00 $a Firenze Laur
+954 00 $a Firenze N
+954 00 $a Firenze Ricc
+954 00 $a Firenze Ridolfi
+954 00 $a Genova Durazzo *BP
+954 00 $a Genova U
+954 00 $a Macerata C
+954 00 $a Messina U
+954 00 $a Milano Ambr
+954 00 $a Milano N
+954 00 $a Milano Triv
+954 00 $a Modena Est
+954 00 $a Napoli N  $b (2)
+954 00 $a Napoli Orat
+954 00 $a Napoli U
+954 00 $a Padova Sem
+954 00 $a Padova U
+954 00 $a Palermo C  $b (2)
+954 00 $a Palermo R
+954 00 $a Perugia C
+954 00 $a Piacenza C
+954 00 $a Roma Cas
+954 00 $a Roma Cors  $b (55.I.21)
+954 00 $a Roma N  $b (68.6.F.9=68.8.E.18)
+954 00 $a Roma U
+954 00 $a Siena C
+954 00 $a Torino N  $b (2)
+954 00 $a Udine Arciv
+954 00 $a Venezia Lic Fosc
+954 00 $a Venezia N
+954 00 $a Venezia Sem
+954 00 $a Verona C
+954 00 $a Vicenza C
+954 00 $a Vaticano BAV  $b (5)
+955 00 $a Córdoba BCap
+955 00 $a El Escorial RMon
+955 00 $a León BP
+955 00 $a Madrid BPalacio Real
+955 00 $a Madrid BU
+955 00 $a Madrid March
+955 00 $a Salamanca BU
+955 00 $a Sevilla BCap
+955 00 $a Soria BP
+957 00 $a Paris BN (7)
+957 00 $a Paris Mazarine (imperfect)
+957 00 $a Paris, B. de l'Imprimerie nationale
+957 00 $a Châlons BM
+957 00 $a Chantilly MCondé
+957 00 $a Lyon BM (imperfect)
+957 00 $a Montpellier BIU
+957 00 $a Montpellier BM
+957 00 $a Nantes BM
+957 00 $a Rouen BM
+957 00 $a Strasbourg BNU
+957 00 $a Toulouse BM
+957 00 $a Troyes BM
+958 00 $a Athens Gennad
+958 00 $a Basel UB
+958 00 $a Budapest Bibl nat
+958 00 $a Copenhagen RL
+958 00 $a Genève Bodmer
+958 00 $a Göteborg UB
+958 00 $a Helsinki UL
+958 00 $a Kalocsa Eccl metr
+958 00 $a Kraków J
+958 00 $a Lund UB
+958 00 $a Oslo UB
+958 00 $a Patmos Agios Ioannes
+958 00 $a Poznań AA
+958 00 $a Prague NL (Roudnice)
+958 00 $a St Petersburg NL
+958 00 $a Stockholm RL
+958 00 $a Uppsala UB
+958 00 $a Valletta NL
+958 00 $a Västerås StB
+958 00 $a WrocBaw U (imperfect)
+959 10 $a 090325jg
+995 00 $a Brussels, BR
+995 00 $a Antwerpen, MPM
+995 00 $a Gent, UB
+995 00 $a Postel, O.Praem.
+996 00 $a Amsterdam BPH
+996 00 $a Groningen UB
+996 00 $a The Hague RL II 523 (3)
+996 00 $a The Hague MMW I 315
+996 00 $a Leeuwarden Buma 1
+996 00 $a Leiden UB 37
+996 00 $a Rotterdam Mus. Boymans
+996 00 $a Utrecht UB 50
+997 00 $a Berlin SB  $b (2)
+997 00 $a Bonn ULB
+997 00 $a Darmstadt LHSB
+997 00 $a Dresden LB  $b (copy destroyed)
+997 00 $a Erlangen UB
+997 00 $a Göttingen SUB
+997 00 $a Halle ULB
+997 00 $a Hamburg SUB
+997 00 $a Heidelberg UB
+997 00 $a Jena ULB
+997 00 $a Karlsruhe BLB
+997 00 $a Kiel UB
+997 00 $a Köln USB
+997 00 $a Leipzig UB
+997 00 $a München BSB  $b (3, 2 imperfect, 1 fragment)
+997 00 $a München UB
+997 00 $a Nürnberg StB
+997 00 $a Oldenburg LB
+997 00 $a Rostock UB
+997 00 $a Stuttgart WLB
+997 00 $a Tübingen UB
 997 00 $a Weimar HAAB
-997 00 $a Weissenburg StArch
+997 00 $a Wesel StArch
 997 00 $a Wiesbaden HLB
 997 00 $a Wolfenbüttel HAB
+997 00 $a Würzburg UB  $b (imperfect)
+997 00 $a Zeitz StiftsB
+
+
+001 ia00959000
+008 800715m14951498                    grc  
+100 10 $a Aristoteles
+245 10 $a Opera [Greek]. Contains also works of Galenus (II); Philo Judaeus (II); Theophrastus (II-IV); Alexander Aphrodisaeus (IV)
+260 00 $a Venice $b Aldus Manutius, Romanus $c 1495-98
+300 00 $c f~~
+500 00 $a In five parts, dated: I) 1 Nov. 1495; II) Feb. 1497; III) 29 Jan. 1497; IV) 1 June 1497; V) June 1498. For variants see CIBN and Hillard
+510 00 $a Goff A959
+510 00 $a HC 1657*
+510 00 $a Klebs 83.1
+510 00 $a Sander 591
+510 00 $a Essling 862
+510 00 $a Pell 1175
+510 00 $a CIBN A-504
+510 00 $a Hillard 175
+510 00 $a Aquilon 38
+510 00 $a Arnoult 114
+510 00 $a Fernillot 65
+510 00 $a Jammes A-13
+510 00 $a Lefèvre 32
+510 00 $a Parguez 79
+510 00 $a Péligry 79
+510 00 $a Zehnacker 232
+510 00 $a Delisle 144
+510 00 $a Polain(B) 289
+510 00 $a IGI 791
+510 00 $a IBP 465
+510 00 $a Sajó-Soltész 281
+510 00 $a IDL 405
+510 00 $a IBE 517
+510 00 $a IJL2 31
+510 00 $a Badalić(Croatia) 94
+510 00 $a Gspan-Badalić 718
+510 00 $a Mendes 123, 124, 125
+510 00 $a Coll(S) 93
+510 00 $a Coll(U) 157
+510 00 $a Madsen 298, 299, 4337, 4338
+510 00 $a Ohly-Sack 236
+510 00 $a Voull(B) 4482 (I), 4491 (II), 4489 (III), 4492 (IV), 4501 (V)
+510 00 $a Schmitt I 4482, 4489, 4491, 4492, 4501
+510 00 $a Günt(L) 3448, 3454, 3452, 3455, 3461
+510 00 $a Mittler-Kind 79
+510 00 $a Walsh 2630, 2630A, 2644, 2644A, 2643, 2643A, 2645, 2645A, 2662
+510 00 $a Oates 2162, 2163, 2164, 2172, 2170, 2173, 2174, 2182
+510 00 $a Rhodes(Oxford Colleges) 130
+510 00 $a Bod-inc A-384
+510 00 $a Sheppard 4611, 4612, 4613, 4623, 4624, 4625, 4626, 4627, 4628, 4629, 4630, 4631, 4632, 4633, 4647, 4648
+510 00 $a Pr 5547, 5555, 5553, 5556, 5565
+510 00 $a BMC V 553, 556, 555, 556, 558
+510 00 $a BSB-Ink A-698
+510 00 $a GW 2334
+951 00 $a Aberdeen UL (IV, imperfect)
+951 00 $a Birmingham PL (V)
+951 00 $a Cambridge UL (I: 3, 1 imperfect, II-III, IV (2, 1 wanting Theophrastus, 1 Theophrastus only), V)
+951 00 $a Cambridge, Christ's College
+951 00 $a Cambridge, Emmanuel College
+951 00 $a Cambridge, Fitzwilliam Museum (I)
+951 00 $a Cambridge, Gonville and Caius College (II, IV, V [2])
+951 00 $a Cambridge, King's College (I: 2, II, III: 2, IV, V: 2)
+951 00 $a Cambridge, Queens' College
+951 00 $a Cambridge, St John's College
+951 00 $a Cambridge, Trinity College (I-II: 3, III: 2, IV: 3, V: 2)
+951 00 $a Chatsworth
+951 00 $a Coleraine, Ulster UL
+951 00 $a Edinburgh NLS (Inc.190, 196, 198, 199.5 = Ry.II.a.5: Beattie(1) p.178. Inc.195 (III). Inc.197 (II, III imperfect). Inc.198* (III, IV imperfect))
+951 00 $a Edinburgh PL (I)
+951 00 $a Eton College
+951 00 $a Glasgow UL (2, 1 Hunterian)
+951 00 $a Hatfield Broad Oak, St Mary's Church (V)
+951 00 $a Leeds UL (Brotherton, Theophrastus only)
+951 00 $a London, Dr Williams's Library (I)
+951 00 $a London, King's College
+951 00 $a London, Lambeth Palace
+951 00 $a London, Natural History Museum
+951 00 $a London, Royal College of Surgeons (I)
+951 00 $a London, University College  (II)
+951 00 $a London, Wellcome Institute (III-IV)
+951 00 $a Manchester JRL Christie 33h7-13, R 9880 (III), 22939 (III-V, vellum)
+951 00 $a Manchester, Chetham's Library (II)
+951 00 $a Oxford Bodley (I-III: 3, IV: 5 (3 imperfect), V: 2 (1 vell))
+951 00 $a Oxford, All Souls College (II, III)
+951 00 $a Oxford, Balliol College
+951 00 $a Oxford, Brasenose College (IV)
+951 00 $a Oxford, Christ Church
+951 00 $a Oxford, Corpus Christi College(I, II-IV: 2, V)
+951 00 $a Oxford, Exeter College
+951 00 $a Oxford, Jesus College (IV)
+951 00 $a Oxford, Magdalen College (I, II, IV)
+951 00 $a Oxford, Merton College
+951 00 $a Oxford, New College (I, II: 4, III: 2, IV, V: 4 [one set, I-V, vellum])
+951 00 $a Oxford, Pembroke College (2)
+951 00 $a Oxford, Philosophical Faculty (I)
+951 00 $a Oxford, Queen's College
+951 00 $a Oxford, Wadham College (I)
+951 00 $a St Andrews UL (I, II: 2, III, IV: 2 (1 imperfect), V)
+951 00 $a Wells CL (I-II, IV-V)
+951 00 $a National Trust (2)
+951 00 $a Dublin, Trinity College
+951 00 $a Dublin, Worth Library
+952 00 $a BAthL $b (V-)
+952 00 $a BMawrCL $b (IV)
+952 00 $a BMSL $b (IV)
+952 00 $a BPubL $b (I-III, IV [2], V)
+952 00 $a ChiBGL $b (IV, -)
+952 00 $a ChL
+952 00 $a CMUL $b (II-IV, -)
+952 00 $a ColUL
+952 00 $a CorMGL
+952 00 $a CornUL
+952 00 $a CPhL
+952 00 $a DickCL $b (I, II [- ff246-end])
+952 00 $a DuUL $b (V)
+952 00 $a HarvCL $b (I [3], II-V [2])
+952 00 $a Harv(M)L $b (I-III, IV, pt.1)
+952 00 $a HEHL $b (2, 1 IV -)
+952 00 $a HUCL $b (II)
+952 00 $a JCBL
+952 00 $a LC
+952 00 $a LC(B) $b (I)
+952 00 $a LC(T) $b (III)
+952 00 $a LindHL $b (I-IV)
+952 00 $a NewL
+952 00 $a NYPL
+952 00 $a OcCL $b (I)
+952 00 $a PhFL $b (IV)
+952 00 $a PML
+952 00 $a PrinUL $b (I [2], II, III [2], IV, V [2])
+952 00 $a SFPL
+952 00 $a Sm(D)L
+952 00 $a SoMeth(B)UL $b (V-4ff)
+952 00 $a StanUL $b (-)
+952 00 $a SyrUL
+952 00 $a UCalBL $b (IV-)
+952 00 $a UCalLAL
+952 00 $a UChiL $b (I-V, IV)
+952 00 $a UIllL $b (-)
+952 00 $a UMichL $b (I)
+952 00 $a UMinL $b (I,IV-)
+952 00 $a UOkL
+952 00 $a UPaL
+952 00 $a UTex(M)L
+952 00 $a UTexL $b (I (3), II-V (2))
+952 00 $a WArtGL $b (I-IV, V [2])
+952 00 $a WatkL $b (I-IV, III -)
+952 00 $a YUL $b (I [3, var], II-III, IV (2, 1 -), V [2])
+952 00 $a FDC $b (IV, pt 1)
+952 00 $a GU
+952 00 $a JHSch
+952 00 $a PandJG $b (I, II [2], III-V)
+952 00 $a TKB
+953 00 $a Halifax (Nova Scotia), King's College UL (I, III [wanting title], IV [ff.1-343], V [wanting title])
+953 00 $a Fukuoka UL (I-IV, V imperfect)
+953 00 $a Kanazawa Institute of Technology
+953 00 $a Tokyo, Keio UL
+953 00 $a Melbourne SL (I)
+953 00 $a Montreal McGill(Osler) UL
+953 00 $a Sydney SL (I)
+953 00 $a Tokyo, Keio UL
+953 00 $a Toronto Fisher (IV)
+954 00 $a Alessandria C  $b (III)
+954 00 $a Bergamo C  $b (V)
+954 00 $a Bergamo Sem
+954 00 $a Bologna C
+954 00 $a Bologna Ist Rizzoli  $b (IV-V)
+954 00 $a Bologna U  $b (2 I, II-III, 2 IV, V)
+954 00 $a Brescia C  $b (I, III-IV)
+954 00 $a Como C
+954 00 $a Fabriano C  $b (I-II)
+954 00 $a Ferrara C  $b (V)
+954 00 $a Firenze Laur  $b (3, 1 vellum II-IV)
+954 00 $a Firenze Maruc  $b (2, 1 I-IV, 1 III)
+954 00 $a Firenze N  $b (3)
+954 00 $a Firenze Ricc  $b (I-III, 2 IV, V)
+954 00 $a Genova Durazzo *BP  $b (III imperfect)
+954 00 $a Genova Franzon
+954 00 $a Genova U
+954 00 $a Lucca Sem  $b (II, IV)
+954 00 $a Milano Ambr  $b (3, 1 I, III, V)
+954 00 $a Milano Mus Poldi Pezzoli
+954 00 $a Milano N
+954 00 $a Milano Triv
+954 00 $a Modena Est  $b (2, 1 V imperfect)
+954 00 $a Montecassino Ben  $b (I)
+954 00 $a Napoli N  $b (3)
+954 00 $a Napoli Orat  $b (IV)
+954 00 $a Napoli San Luigi  $b (II)
+954 00 $a Napoli U  $b (2)
+954 00 $a Padova Ant  $b (I)
+954 00 $a Padova C  $b (I)
+954 00 $a Padova U  $b (I imperfect, wanting f.65-234)
+954 00 $a Palermo C  $b (imperfect)
+954 00 $a Palermo Sem  $b (I, V)
+954 00 $a Parma Pal  $b (2, 1 I)
+954 00 $a Perugia C  $b (2, 1 I)
+954 00 $a Piacenza C
+954 00 $a Pisa U
+954 00 $a Poppi C  $b (V)
+954 00 $a Roma Ang  $b (2)
+954 00 $a Roma Cas  $b (2, 1 IV imperfect)
+954 00 $a Roma Cors  $b (55.H.27,22-25)
+954 00 $a Roma Lanc  $b (I: Inc.12)
+954 00 $a Roma N  $b (71.8.E.16-20)
+954 00 $a Roma U
+954 00 $a Roma U Urb
+954 00 $a Torino N  $b (3)
+954 00 $a Venezia Lic Fosc  $b (IV)
+954 00 $a Venezia N  $b (2, 1 IV.2)
+954 00 $a Verona C  $b (I-III, V)
+954 00 $a Verona Cap
+954 00 $a Vicenza C  $b (I)
+954 00 $a Vaticano BAV  $b (12, 4 I, 2 II, 1 V)
+955 00 $a Córdoba BCap (II-V)
+955 00 $a El Escorial RMon
+955 00 $a Madrid BN
+955 00 $a Madrid BPalacio Real
+955 00 $a Madrid BU
+955 00 $a Madrid March
+955 00 $a Montserrat Mon
+955 00 $a Salamanca BU
+955 00 $a Tarragona BP (V)
+955 00 $a Zaragoza SCarlos
+955 00 $a Coimbra BU
+955 00 $a Lisboa BN (3, wanting parts, 2 imperfect)
+957 00 $a Paris BN (9: 2 vellum [both II-V], 2 I only, 2 IV only [both imperfect], 2 V only [both imperfect])
+957 00 $a Paris, Inst. de France (3, 1 I only, 1 imperfect, 1 V only)
+957 00 $a Paris, Mazarine (2, 1 III-V, imperfect, 1 I only)
+957 00 $a Paris, Richelieu
+957 00 $a Paris, V. Cousin
+957 00 $a Blois BM (IV)
+957 00 $a Bourges BM (IV)
+957 00 $a Chantilly MCondé
+957 00 $a Chaumont BM (IV only)
+957 00 $a Lyon BM (2, imperfect)
+957 00 $a Montpellier BIU
+957 00 $a Strasbourg BNU
+957 00 $a Toulouse BM (imperfect)
+957 00 $a Troyes BM
+958 00 $a Athens EB (2, 1 IV.2 only)
+958 00 $a Athens Boule (II, III)
+958 00 $a Athens Gennad
+958 00 $a Athos Lavra
+958 00 $a Basel UB
+958 00 $a Budapest Bibl nat (2: I, II (imperfect), IV, V (imperfect), I (imperfect), IV)
+958 00 $a Budapest, Univ (2: I-V and I)
+958 00 $a Copenhagen RL (4, 1 IV.1, 1 (Pirckheimer - Dürer copy) IV.1, V)
+958 00 $a Dimitsana (Greece) PL (V)
+958 00 $a Dubrovnik MB
+958 00 $a Gdańsk PAN
+958 00 $a Genève Bodmer
+958 00 $a Kozani (Greece) PL (III,IV)
+958 00 $a Kraków J (I-III, IV (2))
+958 00 $a Linköping StB (I [2], II-V)
+958 00 $a Ljubljana A
+958 00 $a Lund UB (I,II,V)
+958 00 $a Miliès (Greece) PL (IV, imperfect)
+958 00 $a Oslo UB (II, IV)
+958 00 $a Patmos Agios Ioannes (II,V)
+958 00 $a Prague NL (3, 1 I only, 1 Roudnice)
+958 00 $a Sopron Gymn (I, V)
+958 00 $a St Petersburg NL
+958 00 $a Stockholm RL (I, III, IV [imperfect], V [2])
+958 00 $a Uppsala UB
+958 00 $a Valletta NL
+958 00 $a Västerås StB (IV.2)
+958 00 $a Warsaw N
+958 00 $a Wrocław U (IV (2), V)
+958 00 $a Zagorà (Greece) PL (I)
+958 00 $a Innsbruck UB (imperfect, wanting V)
+959 10 $a 090325jg
+995 00 $a Brussels, BR 1186 (I), B 1187 (I, imperfect, wanting the first leaf), B 1192 (V), B 1193 (V, imperfect, wanting the last leaf)
+995 00 $a Antwerpen, MPM (III)
+995 00 $a Leuven-Heverlee, S.J.
+995 00 $a Louvain-la-Neuve, UCL (II)
+996 00 $a Amsterdam UB 5 (IV) and a complete copy incl. 145
+996 00 $a Groningen UB 25
+996 00 $a The Hague RL II 521 (I, II, V)
+996 00 $a Leiden UB 38
+996 00 $a Rotterdam Mus. Boymans (II, III)
+996 00 $a Utrecht UB 54 (II-V)
+997 00 $a Bautzen StB  $b (II,IV)
+997 00 $a Berlin KunstB  $b (I)
+997 00 $a Berlin SB  $b (3, 2 vellum and imperfect)
+997 00 $a Bonn ULB
+997 00 $a Dresden SLUB  $b (2)
+997 00 $a Erfurt StuRB  $b (III)
+997 00 $a Erlangen UB  $b (I,IV)
+997 00 $a Frankfurt $b (Main) StUB (II, imperfect)
+997 00 $a Göttingen SUB
+997 00 $a Gotha ForschLB
+997 00 $a Hamburg SUB  $b (copy lost)
+997 00 $a Hannover NLB
+997 00 $a Heidelberg UB
+997 00 $a Jena ULB
+997 00 $a Kiel UB
+997 00 $a Köln USB  $b (II-V)
+997 00 $a Konstanz Heinrich-SusoGym  $b (IV, imperfect)
+997 00 $a Leipzig DB/BuchM  $b (IV)
+997 00 $a Leipzig UB  $b (3, 1 imperfect)
+997 00 $a Mainz UB  $b (1 leaf only)
+997 00 $a München BSB  $b (5, 3 imperfect, 1 fragment (1 leaf)
+997 00 $a München UB  $b (I-IV)
+997 00 $a Nürnberg StB  $b (I)
+997 00 $a Oldenburg LB
+997 00 $a Schulpforte LandesSch  $b (I,III-V)
+997 00 $a Schwerin LB  $b (V)
+997 00 $a Stuttgart WLB
+997 00 $a Weimar HAAB  $b (2, imperfect)
+997 00 $a Würzburg UB  $b (II)
+997 00 $a Zeitz StiftsB
+997 00 $a Zittau StB
+
+
+001 ia00972000
+008 800715s1500                        lat  
+100 10 $a Aristoteles
+245 10 $a De anima (Ed: Wolfgang Mosnauer) Tr: Joannes Argyropylus
+260 00 $a Venice $b Jacobus Pentius, de Leuco $c 23 Oct. [1500?]
+300 00 $c 4~~
+510 00 $a Goff A972
+510 00 $a HC 1708*
+510 00 $a Klebs 84.7
+510 00 $a IGI 799
+510 00 $a IBE 527
+510 00 $a IBP 478
+510 00 $a Sajó-Soltész 289
+510 00 $a Kotvan 85
+510 00 $a Gspan-Badalić 718b
+510 00 $a Riedl 77, 78
+510 00 $a Sallander 2045
+510 00 $a Coll(S) 96
+510 00 $a Walsh 2702
+510 00 $a Bod-inc A-389
+510 00 $a Sheppard 4681
+510 00 $a Pr 5588
+510 00 $a BMC V 566
+510 00 $a BSB-Ink A-676
+510 00 $a GW 2346
+951 00 $a Cambridge, Trinity College
+951 00 $a Oxford Bodley
+952 00 $a HarvCL
+952 00 $a UPaL
+954 00 $a Bologna U
+954 00 $a Modena Est
+954 00 $a Palermo R
+955 00 $a Sevilla Colombina
+958 00 $a Bratislava UKn
+958 00 $a Budapest Bibl nat
+958 00 $a Budapest Acad
+958 00 $a České Budějovice KrajsKn
+958 00 $a Gdańsk PAN
+958 00 $a Helsinki UL
+958 00 $a Kraków J
+958 00 $a Ljubljana NUK
+958 00 $a Poznań AA
+958 00 $a Prague NL
+958 00 $a St Petersburg NL
+958 00 $a Stockholm RL (2)
+958 00 $a Uppsala UB
+958 00 $a Wrocław O
+958 00 $a Graz UB
+959 10 $a 090206jg
+997 00 $a Augsburg SStB
+997 00 $a Heidelberg UB
+997 00 $a München BSB  $b (7)
+997 00 $a München UB
+997 00 $a Stuttgart WLB
+
+
+001 ia00973000
+008 800715s1476                        lat  
+100 10 $a Aristoteles
+245 10 $a De animalibus (Tr: Theodorus Gaza). Ed: Ludovicus Podocatharus
+260 00 $a Venice $b Johannes de Colonia and Johannes Manthen $c 1476
+300 00 $c f~~
+510 00 $a Goff A973
+510 00 $a HC 1699*
+510 00 $a Klebs 85.1
+510 00 $a GfT 563
+510 00 $a Osler(IM) 106 & pl.X
+510 00 $a Pell 1206
+510 00 $a CIBN A-521
+510 00 $a Fernillot 66
+510 00 $a Delisle 146
+510 00 $a Polain(B) 298
+510 00 $a IGI 803
+510 00 $a IBE 528
+510 00 $a IBP 481
+510 00 $a IJL2 34
+510 00 $a Sajó-Soltész 290
+510 00 $a Kotvan 88
+510 00 $a Badalić(Croatia) 100
+510 00 $a Louda 147
+510 00 $a Sallander 1569
+510 00 $a Madsen 305
+510 00 $a Lőkkös(Cat BPU) 40
+510 00 $a Voull(B) 3741
+510 00 $a Günt(L) 3318
+510 00 $a Ohly-Sack 242
+510 00 $a Borm 205
+510 00 $a Walsh 1688
+510 00 $a Rhodes(Oxford Colleges) 140
+510 00 $a Bod-inc A-390
+510 00 $a Sheppard 3479, 3480, 3481
+510 00 $a Pr 4312
+510 00 $a BMC V 232
+510 00 $a BSB-Ink A-678
+510 00 $a GW 2350
+951 00 $a Cambridge, Fitzwilliam Museum
+951 00 $a Cambridge, Trinity College
+951 00 $a Glasgow UL (Hunterian)
+951 00 $a Holkham
+951 00 $a London, Royal College of Surgeons
+951 00 $a London, Wellcome Institute
+951 00 $a Manchester JRL 18314
+951 00 $a Oxford Bodley (3)
+951 00 $a Oxford, New College
+951 00 $a Oxford, Pembroke College
+951 00 $a Reading UL
+951 00 $a Windsor RL
+952 00 $a BMSL
+952 00 $a BPubL
+952 00 $a BrUL
+952 00 $a BUMCL
+952 00 $a CornUL
+952 00 $a CPhL
+952 00 $a HarvCL
+952 00 $a HEHL $b (2, 1-)
+952 00 $a InUL
+952 00 $a JHUL
+952 00 $a LC
+952 00 $a NLM
+952 00 $a NYAcMedL
+952 00 $a PML
+952 00 $a Sm(D)L
+952 00 $a UCalBL $b (- tp)
+952 00 $a UOkL
+952 00 $a UTexL
+952 00 $a WArtGL
+952 00 $a WatkL
+952 00 $a YUL
+952 00 $a PandJG
+953 00 $a Montreal McGill(Osler) UL
+953 00 $a Rio de Janeiro BN
+953 00 $a Tokyo, Keio UL
+954 00 $a Bergamo C
+954 00 $a Bologna C
+954 00 $a Bologna U
+954 00 $a Brescia C  $b (imperfect)
+954 00 $a Casale Monferrato Sem
+954 00 $a Catania Sem
+954 00 $a Firenze N  $b (2)
+954 00 $a Genova Durazzo *BP
+954 00 $a Milano Ambr
+954 00 $a Milano N
+954 00 $a Milano U
+954 00 $a Napoli N  $b (2)
+954 00 $a Napoli U
+954 00 $a Padova Cap
+954 00 $a Padova U
+954 00 $a Palermo C
+954 00 $a Palermo R
+954 00 $a Parma Pal
+954 00 $a Perugia C  $b (2)
+954 00 $a Ravenna C
+954 00 $a Roma Ang
+954 00 $a Roma Cas
+954 00 $a Roma Cors  $b (50.C.13)
+954 00 $a Siracusa Alag  $b (imperfect)
+954 00 $a Subiaco Ben
+954 00 $a Sulmona C
+954 00 $a Torino N  $b (3)
+954 00 $a Torino Reale
+954 00 $a Trento Cap
+954 00 $a Venezia N
+954 00 $a Vicenza C  $b (imperfect)
+954 00 $a Vaticano BAV  $b (5)
+955 00 $a Barcelona BCatal
+955 00 $a Barcelona Marés (imperfect)
+955 00 $a Madrid BN
+955 00 $a Madrid BPalacio Real
+955 00 $a Salamanca BU (imperfect)
+955 00 $a Sevilla BU (imperfect)
+955 00 $a Toledo BCap (imperfect)
+955 00 $a Valladolid BU
+955 00 $a Zaragoza S.Carlos
+957 00 $a Paris BN (vellum)
+957 00 $a Paris V. Cousin
+957 00 $a Chantilly MCondé
+958 00 $a Athens Gennad
+958 00 $a Basel UB
+958 00 $a Bratislava UKn
+958 00 $a Budapest Univ (imperfect)
+958 00 $a Copenhagen RL
+958 00 $a Genève BPU
+958 00 $a Kharkov UL
+958 00 $a Kroměříž ZámKn
+958 00 $a Minsk NL
+958 00 $a Prague NL (Roudnice)
+958 00 $a Šibenik FK
+958 00 $a St Petersburg NL
+958 00 $a Stockholm RL
+958 00 $a Székesfehérvár Bibl episc (imperfect)
+958 00 $a Uppsala UB
+958 00 $a Vienna ÖNB
+958 00 $a Warsaw Publ (imperfect)
+958 00 $a Wrocław Kap
+958 00 $a Wrocław U
+959 10 $a 090313jg
+995 00 $a Brussels, BR
+995 00 $a Liège, BU
+997 00 $a Bonn ULB
+997 00 $a Frankfurt $b (Main) StUB
+997 00 $a Konstanz Heinrich-SusoGym
+997 00 $a Laubach SolmsB
+997 00 $a Leipzig DB/BuchM
+997 00 $a Leipzig UB  $b (2)
+997 00 $a Lindau StB
+997 00 $a München BSB  $b (2)
+997 00 $a München UB
+997 00 $a Stuttgart WLB
+997 00 $a Wolfenbüttel HAB  $b (2)

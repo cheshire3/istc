@@ -27,6 +27,7 @@ class IstcHandler:
     baseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/baseTemplate.html"
     searchNavPath = cheshirePath + "/cheshire3/www/istc/html/searchNav.html"
     browseNavPath = cheshirePath + "/cheshire3/www/istc/html/browseNav.html"
+    contributorsNavPath = cheshirePath + "/cheshire3/www/istc/html/contributorsNav.html"
     aboutNavPath = cheshirePath + "/cheshire3/www/istc/html/aboutNav.html"
     rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
     printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
@@ -987,6 +988,18 @@ class IstcHandler:
             f = file('about.html')
             d = f.read()
             f.close()
+
+        elif path == 'contributors.html':            
+            f = file(self.contributorsNavPath)
+            nav = f.read()
+            f.close()
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
+            
+            f = file('contributors.html')
+            d = f.read()
+            f.close()
+
             
         else:          
             f = file(self.searchNavPath)
