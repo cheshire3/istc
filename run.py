@@ -110,7 +110,7 @@ elif '-load' in sys.argv:
     flow = db.get_object(session, 'buildIndexWorkflow')
     baseDocFac = db.get_object(session, 'istcDocumentFactory')
 #    baseDocFac.load(session, defpath + "/data/", codec='iso-8859-1')
-    baseDocFac.load(session, defpath + "/data_small/", codec='utf-8')
+    baseDocFac.load(session, defpath + "/data/", codec='utf-8')
     lgr.log_info(session, 'Loading files from %s...' % (baseDocFac.dataPath))
     #flow.load_cache(session, db)
     try:
