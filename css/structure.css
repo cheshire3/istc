@@ -136,8 +136,13 @@ div#maincontent div#leftcolumn {
 div#maincontent h1 {
 	font-family:  arial; 
 	font-size: 14pt; 
-/*	color: #990; */
 	color: #006c7d;
+}
+
+div#maincontent h1.greyscale {
+	font-family:  arial; 
+	font-size: 14pt; 
+	color: black;
 }
 
 div#maincontent.withmenu {

@@ -60,6 +60,7 @@ background-color: #FFF;
 #content table {font-family:  Arial, Helvetica, sans-serif; }
 #content h1 {font-family:  Arial, Helvetica, sans-serif; font-size: 100%; color: #990;}
 
+#content h1.greyscale {font-family:  Arial, Helvetica, sans-serif; font-size: 100%; color: black;}
 
 
 #leftnav {
