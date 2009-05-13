@@ -615,7 +615,7 @@ class IstcHandler:
                             rec = rs[int(r)].fetch_record(session)
                             output.append(self._transform_record(rec, txr, expand, locations))
                             
-        return  tmpl.replace('%%%DATA%%%', self._RTFify(''.join(output)))
+        return  tmpl.replace('%%%DATA%%%', self._RTFify(' \pard\plain  '.join(output)))
 
 
     def _RTFify(self, string):
