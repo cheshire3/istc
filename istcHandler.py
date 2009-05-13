@@ -1073,20 +1073,23 @@ def build_architecture(data=None):
     rebuild = False
 
 idxNames = {"anywhere": 'General Keywords',
-            "creator":'Author',
-            "title":'Title',
-            "originplace":'Location of Print',
-            "publisher":'Printer',
-            "identifier":'ISTC Number',
-            "format":'Format',
-            "posessinginstitution":'Location',
-            "year":'Start or exact Year (008)',
-            "date":'Publication Date',
-            "language":'Language',
-            "blshelfmark":'BL Shelfmark',
-            "idx-pass-location_usa": 'USA Location',
-            "idx-bibref": 'Bibliographical References',
-                }
+        "creator":'Author',
+        "title":'Title',
+        "originplace":'Location of Print',
+        "countryofprint" : 'Country of Printing',
+        "publisher":'Printer',
+        "referencedby" : 'Bibliographical References',
+        "identifier":'ISTC Number',
+        "format":'Format',
+        "posessinginstitution":'Location',
+        "countryofcopy" : 'Country of Copy',
+        "year":'Start or exact Year (008)',
+        "date":'Publication Date',
+        "language":'Language',
+        "blshelfmark":'BL Shelfmark',
+        "idx-pass-location_usa": 'USA Location',
+        "idx-bibref": 'Bibliographical References',
+            }
 
 logfilepath = cheshirePath + '/cheshire3/www/istc/logs/searchhandler.log'
 

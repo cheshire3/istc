@@ -491,7 +491,11 @@ class IstcAdminHandler:
             top5.append([indexes[k], k])
         top5.sort(self.compare)
         for t in top5[:5]:     
-            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (t[1], t[0]))
+            try:
+                realIndex = idxNames[t[1]]
+            except:
+                realIndex = t[1]
+            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (realIndex, t[0]))
         output.append('</table>')         
         
         #terms 
@@ -511,7 +515,11 @@ class IstcAdminHandler:
             top5.append([relations[k], k])
         top5.sort(self.compare)
         for t in top5[:5]: 
-            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (t[1], t[0]))
+            try:
+                realRel = relationsMap[t[1]]
+            except:
+                realRel = t[1]
+            output.append('<tr><td class="label">%s</td><td class="content">%s</td></tr>' % (realRel, t[0]))
         output.append('</table><br /></div><br />')    
         
         #end query details
@@ -757,7 +765,8 @@ indentingTxr = None
 def build_architecture(data=None):
     global rebuild, session, serv, db, dbPath, dbusa, dbrefs, qf, editStore, recordStore, usaRecordStore, \
     refsRecordStore, noteStore, authStore, userStore, xmlp, sourceDir, lockfilepath, reflockfilepath, usalockfilepath, \
-    baseDocFac, usaDocFac, refsDocFac, buildSingleFlow, refsBuildSingleFlow, usaBuildSingleFlow, statspath, searchlogfilepath
+    baseDocFac, usaDocFac, refsDocFac, buildSingleFlow, refsBuildSingleFlow, usaBuildSingleFlow, statspath, searchlogfilepath, \
+    idxNames, relationsMap
     
     if editStore:
         editStore.commit_storing(session)
@@ -797,6 +806,32 @@ def build_architecture(data=None):
     
     rebuild = False
     
+    idxNames = {"anywhere": 'General Keywords',
+            "creator":'Author',
+            "title":'Title',
+            "originplace":'Location of Print',
+            "countryofprint" : 'Country of Printing',
+            "publisher":'Printer',
+            "referencedby" : 'Bibliographical References',
+            "identifier":'ISTC Number',
+            "format":'Format',
+            "posessinginstitution":'Location',
+            "countryofcopy" : 'Country of Copy',
+            "year":'Start or exact Year (008)',
+            "date":'Publication Date',
+            "language":'Language',
+            "blshelfmark":'BL Shelfmark',
+            "idx-pass-location_usa": 'USA Location',
+            "idx-bibref": 'Bibliographical References',
+                }
+    
+    relationsMap = {'all': 'All',
+                    'any': 'Any',
+                    '=' : 'Phrase',
+                    '<' : 'Before',
+                    '>' : 'After',
+                    'exact' : 'Exactly'
+                    }
     
     statspath = cheshirePath + '/cheshire3/www/istc/logs/'
     searchlogfilepath = statspath + 'searchhandler.log'
