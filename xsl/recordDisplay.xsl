@@ -122,12 +122,15 @@
 				</xsl:if>	
 			</xsl:when>
 			<xsl:otherwise>		
-				<xsl:text>\par \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
-\par \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
-\par \trowd\trql\trleft0\trpaddft3\trpaddt29\trpaddfl3\trpaddl29\trpaddfb3\trpaddb29\trpaddfr3\trpaddr29\cellx2250\cellx9975</xsl:text>
+				<xsl:text>
+\pard\plain \ltrpar\s1\aspalpha\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
+\par \pard\plain \ltrpar\s1\aspalpha\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 
+\par \trowd\trql\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\cellx1880\cellx9972</xsl:text>
   				<xsl:call-template name="contents"/>
-				<xsl:text>\par</xsl:text>
-				<xsl:value-of select="$newline"/>
+				<xsl:text>
+\par 
+\cell\row\pard \pard\plain \ltrpar\s1\aspalpha\brdrb\brdrs\brdrw20\brdrcf1\brsp42{\*\brdrb\brdlncol1\brdlnin0\brdlnout20\brdlndist0}\brsp42\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 </xsl:text>
+				
 			</xsl:otherwise>
 		</xsl:choose>	
 	</xsl:template>
@@ -1323,13 +1326,13 @@
 	<xsl:template name="textView">
 	<xsl:param name="label"/>
 	<xsl:param name="value"/>
-		<xsl:text>\pard\intbl\pard\plain \intbl\ltrpar\s10\ql\rtlch\afs24\lang255\ab\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\b\loch\fs24\lang1033\b {\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b </xsl:text>
+		<xsl:text>\pard\intbl\pard\plain \intbl\ltrpar\s9\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\aspalpha\ql\rtlch\af1\afs22\lang255\ab\ltrch\dbch\af4\langfe255\hich\f1\fs22\lang1033\b\loch\f1\fs22\lang1033\b {\rtlch \ltrch\loch\f1\fs22\lang1033\i0\b </xsl:text>
 		<xsl:value-of select="$label"/>
 		<xsl:text>}</xsl:text><xsl:value-of select="$newline"/>
-		<xsl:text>\cell\pard\plain \intbl\ltrpar\s10\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 {\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b0 </xsl:text>
+		<xsl:text>\cell\pard\plain \intbl\ltrpar\s9\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\aspalpha\ql\rtlch\af1\afs22\lang255\ltrch\dbch\af4\langfe255\hich\f1\fs22\lang1033\loch\f1\fs22\lang1033 {\rtlch \ltrch\loch\f1\fs22\lang1033\i0\b0 </xsl:text>
 		<xsl:value-of select="$value"/>
-		<xsl:text>}</xsl:text><xsl:value-of select="$newline"/>		
-		<xsl:text>\cell\row\pard \pard\plain \ltrpar\s1\ql\rtlch\afs24\lang255\ltrch\dbch\af2\langfe255\hich\fs24\lang1033\loch\fs24\lang1033 </xsl:text><xsl:value-of select="$newline"/>
+		<xsl:text>}</xsl:text><xsl:value-of select="$newline"/>
+		<xsl:text>\cell\row\pard \trowd\trql\trpaddft3\trpaddt0\trpaddfl3\trpaddl0\trpaddfb3\trpaddb0\trpaddfr3\trpaddr0\cellx1816\cellx9637</xsl:text><xsl:value-of select="$newline"/>
 	</xsl:template>	
 	
 
