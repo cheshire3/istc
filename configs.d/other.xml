@@ -161,7 +161,7 @@
     </subConfig>
 
     <subConfig type="normalizer" id="CountryofPrintNormalizer">
-    	<objectType>ISTCextensions.CountryofPrintNormalizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.CountryofPrintNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="BibRefNormalizer">
