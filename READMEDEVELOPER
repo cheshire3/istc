@@ -16,7 +16,7 @@ Add locations from a new country
 3 - add to the following xsl stylesheets
 		a - recordDisplay.xsl -- copy version for another country and change the tag number the country name and all variables of the 
 			form v[number] and l[number] to the next unique number (note they are not necessarily numbered in the order they appear)
-		b - istcForm.xsl -- Inside <div id="holdingscontainer"> there is a choose statement with all of the location tags listed
+		b - istcForm.xsl -- Inside <div id="holdingscontainer"> add to the list of <option> tags and then later there is a choose statement with all of the location tags listed
 			the new tag needs adding here and the further down there are some method calls to accesspointlist so copy an existing one
 			change the tags numbers.
 			Further down is the template called accesspointstring here there are two long choose statements which need the new tag 
