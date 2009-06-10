@@ -1,0 +1,26 @@
+09/06/09 - Catherine Smith
+
+
+ISTC DEVELOPER HINTS
+====================
+
+
+Add locations from a new country 
+================================
+
+1 - add the data to the records 
+2 - add new field to the following indexes (configs.d/indexes.xml) 
+		a - idx-kwd-location
+		b - idx-location
+		c - idx-location-private
+3 - add to the following xsl stylesheets
+		a - recordDisplay.xsl -- copy version for another country and change the tag number the country name and all variables of the 
+			form v[number] and l[number] to the next unique number (note they are not necessarily numbered in the order they appear)
+		b - istcForm.xsl -- Inside <div id="holdingscontainer"> there is a choose statement with all of the location tags listed
+			the new tag needs adding here and the further down there are some method calls to accesspointlist so copy an existing one
+			change the tags numbers.
+			Further down is the template called accesspointstring here there are two long choose statements which need the new tag 
+			adding to the list.
+4 - add to the following javascript files
+		a - searchForm.js - add to locList array
+5 - in ISTCextensions in code directory add to dictionary in LocCountriesNormalizer

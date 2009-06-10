@@ -356,7 +356,7 @@
     </subConfig>
     
     <subConfig type="index" id="idx-pass-kwd-bibref">
-        <objectType>ISTCextensions.ISTCPassThroughIndex</objectType>
+        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
         <paths>        
           <path type="database">db_refs</path>
           <path type="remoteIndex">idx-kwd-refs</path>
@@ -367,7 +367,7 @@
     </subConfig>
     
     <subConfig type="index" id="idx-pass-bibref">
-        <objectType>ISTCextensions.ISTCPassThroughIndex</objectType>
+        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
         <paths>        
           <path type="database">db_refs</path>
           <path type="remoteIndex">idx-refs</path>
@@ -464,6 +464,7 @@
     		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='993'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<process>
     			<object type="workflow" ref="ProxExtractorWorkflow" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
@@ -496,6 +497,7 @@
     		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='993'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
@@ -520,6 +522,7 @@
     		<xpath>datafield[@tag='958']/subfield[@code='x']</xpath>
     		<xpath>datafield[@tag='953']/subfield[@code='x']</xpath>
     		<xpath>datafield[@tag='994']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='993']/subfield[@code='x']</xpath>
     		<process>
     			<object type="extractor" ref="SimpleExtractor" />
     			<object type="normalizer" ref="SpaceNormalizer" />

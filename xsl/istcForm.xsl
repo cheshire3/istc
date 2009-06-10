@@ -284,7 +284,7 @@
 						<input id="usabutton" style="display: none" type="button" onclick="editUsa();" value="edit/create usa location"/>			
 					</div><br />
 					<xsl:choose>					
-						<xsl:when test="//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']">										
+						<xsl:when test="//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='993']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']">										
 							<div class="addedcontainer">
 								<div style="display:block" class="added"> 
 								  	<xsl:attribute name="id">
@@ -335,7 +335,13 @@
 												<xsl:with-param name="typename" select="'996holding'"/>
 												<xsl:with-param name="tagnumber" select="'996'"/>
 											</xsl:call-template> 
-										</xsl:for-each>					
+										</xsl:for-each>	
+										<xsl:for-each select="//datafield[@tag='993']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'993holding'"/>
+												<xsl:with-param name="tagnumber" select="'993'"/>
+											</xsl:call-template> 
+										</xsl:for-each>						
 										<xsl:for-each select="//datafield[@tag='952']">
 											 <xsl:call-template name="accesspointlist">
 												<xsl:with-param name="typename" select="'952holding'"/>
@@ -664,7 +670,7 @@
 	  	 <xsl:choose>
 	  	 	<xsl:when test="$separater = ' '">
 	  	 		<xsl:choose>
-	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">  	 				
+	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='993' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">  	 				
 	  	 				<xsl:value-of select="$tagnumber"/>
 	  	 				<xsl:text> - </xsl:text>
 	  	 			</xsl:when>
@@ -684,7 +690,7 @@
 	  	 	</xsl:when>
 	  	 	<xsl:when test="$separater = ' ||| '">
 	  	 		<xsl:choose>
-	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">
+	  	 			<xsl:when test="$tagnumber='951' or $tagnumber='995' or $tagnumber='957' or $tagnumber='997' or $tagnumber='954' or $tagnumber='955' or $tagnumber='996' or $tagnumber='993' or $tagnumber='952' or $tagnumber='958' or $tagnumber='953' or $tagnumber='994'">
 	  	 				<xsl:text>holdings_country | </xsl:text>
 	  	 				<xsl:value-of select="$tagnumber"/>
 	  	 				<xsl:value-of select="$separater"/>

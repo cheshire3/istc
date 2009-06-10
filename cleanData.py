@@ -23,7 +23,7 @@ db = serv.get_object(session, 'db_istc')
 
 
 #listFiles = os.listdir("encodingtest/")
-listFiles = os.listdir("oldformdata/")
+listFiles = os.listdir("newData/")
 parser = db.get_object(session, 'LxmlParser')
 marcTxr = db.get_object(session, 'dataTransformer')
 indentingTxr = db.get_object(session, 'indentingTxr')
@@ -37,7 +37,7 @@ errorids = []
 correct = 0;
 for file in listFiles:
     #print file
-    dataFile = open("oldformdata/" + file, 'r')
+    dataFile = open("newData/" + file, 'r')
 #    dataFile = open("encodingtest" + "/" + file, 'r')
     dataString = dataFile.read()
     dataString = forliRE.sub('Forl&#236;', dataString)
@@ -56,7 +56,7 @@ for file in listFiles:
         output = indentingTxr.process_record(session, rec)
         correct += 1
     except:
-        dataFile = open("oldformdata/" + file, 'r')
+        dataFile = open("newData/" + file, 'r')
         dataString = dataFile.readlines() 
         newfile = []
         
@@ -80,8 +80,11 @@ for file in listFiles:
             output = indentingTxr.process_record(session, rec)
             correct += 1
         except:
-            errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
-            print re.findall(istcnoregex, doc.get_raw(session))[0]
+            try:
+                errorids.append(re.findall(istcnoregex, doc.get_raw(session))[0])
+                print re.findall(istcnoregex, doc.get_raw(session))[0]
+            except:
+                print doc.get_raw(session)
             errors += 1   
         
 #        dataWrite = open("encodingtest/all" + file, 'w')

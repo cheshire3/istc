@@ -46,7 +46,7 @@
 	<!-- display transformers -->
  
 	<subConfig type="transformer" id="recordTxr-screen">
-	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -56,7 +56,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-print">
-	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -66,7 +66,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-save">
-	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -76,7 +76,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-email">
-	    <objectType>ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -130,7 +130,7 @@
     </subConfig>
     
    <subConfig type="tokenizer" id="FormatTokenizer">
-    	<objectType>ISTCextensions.FormatTokenizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.FormatTokenizer</objectType>
     </subConfig>
     
     <subConfig type="extractor" id="SplitTokenizer">
@@ -149,15 +149,15 @@
     </subConfig>
     
     <subConfig type="normalizer" id="FormatNormalizer">
-    	<objectType>ISTCextensions.FormatNormalizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.FormatNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="LanguageNormalizer">
-    	<objectType>ISTCextensions.LanguageNormalizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.LanguageNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="LocCountriesNormalizer">
-    	<objectType>ISTCextensions.LocCountriesNormalizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.LocCountriesNormalizer</objectType>
     </subConfig>
 
     <subConfig type="normalizer" id="CountryofPrintNormalizer">
@@ -165,7 +165,7 @@
     </subConfig>
     
     <subConfig type="normalizer" id="BibRefNormalizer">
-    	<objectType>ISTCextensions.BibRefNormalizer</objectType>
+    	<objectType>ISTCextras.ISTCextensions.BibRefNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="BLNormalizer">

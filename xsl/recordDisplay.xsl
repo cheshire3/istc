@@ -1148,6 +1148,43 @@
 				</xsl:choose>
 			</xsl:if>
 			
+			<xsl:if test="//datafield[@tag='993'] and $locations = 'all'">
+				<xsl:variable name="l12">
+					<xsl:text>Austria:</xsl:text>
+				</xsl:variable>
+				<xsl:variable name="v12">
+					<xsl:for-each select="//datafield[@tag='993'][not(subfield[@code='x'])]">
+						<xsl:value-of select="subfield[@code='a']"/>
+						<xsl:choose>
+							<xsl:when test="subfield[@code='b']">
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="subfield[@code='b']"/>
+								<xsl:text>; </xsl:text>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:text>; </xsl:text>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+				</xsl:variable>
+				<xsl:choose>
+					<xsl:when test="$output='xml'">				
+						<tr>
+							<td align="right" class="subheader"><xsl:value-of select="$l12"/></td>					
+						<td>
+							<xsl:value-of select="substring($v12, 0, string-length($v12)-1)"/>
+						</td>
+						</tr>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="textView">
+							<xsl:with-param name="label" select="$l12"/>
+							<xsl:with-param name="value" select="substring($v12, 0, string-length($v12)-1)"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+			
 			<xsl:if test="//datafield[@tag='952'] and $locations = 'all'">
 				<xsl:variable name="l8">
 					<xsl:text>U.S.A:</xsl:text>
