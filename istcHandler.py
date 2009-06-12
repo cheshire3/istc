@@ -660,7 +660,7 @@ class IstcHandler:
                             output.append(self._transform_record(rec, txr, expand, locations))
                                    
         message = MIMEMultipart()
-        message['From'] = 'istc@localhost'
+        message['From'] = 'cjsmith@liv.ac.uk'
         message['To'] = address
         message['Subject'] = 'ISTC Records'
         message.attach(MIMEText('The ISTC records you requested are attached.'))
