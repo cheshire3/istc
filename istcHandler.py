@@ -660,7 +660,7 @@ class IstcHandler:
                             output.append(self._transform_record(rec, txr, expand, locations))
                                    
         message = MIMEMultipart()
-        message['From'] = 'cjsmith@liv.ac.uk'
+        message['From'] = 'cheshire@liv.ac.uk'
         message['To'] = address
         message['Subject'] = 'ISTC Records'
         message.attach(MIMEText('The ISTC records you requested are attached.'))
@@ -673,7 +673,7 @@ class IstcHandler:
         
         smtp = smtplib.SMTP()
         smtp.connect(host='mail1.liv.ac.uk', port=25)
-        smtp.sendmail('cjsmith@liv.ac.uk', address, message.as_string())
+        smtp.sendmail('cheshire@liv.ac.uk', address, message.as_string())
         smtp.close()
         return ('<div id="maincontent"><h1>File emailed successfully</h1></div>')
         
