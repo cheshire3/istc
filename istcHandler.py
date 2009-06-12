@@ -673,7 +673,7 @@ class IstcHandler:
         
         smtp = smtplib.SMTP()
         smtp.connect(host='mail1.liv.ac.uk', port=25)
-        smtp.sendmail('istc@localhost', address, message.as_string())
+        smtp.sendmail('cjsmith@liv.ac.uk', address, message.as_string())
         smtp.close()
         return ('<div id="maincontent"><h1>File emailed successfully</h1></div>')
         
