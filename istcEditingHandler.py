@@ -773,14 +773,14 @@ class IstcEditingHandler:
         email = session.user.email
         marcTextTxr = db.get_object(session, 'toTextTxr')
         message = MIMEMultipart()
-        message['From'] = 'istc@localhost'
+        message['From'] = 'john.goldfinch@bl.uk'
         message['To'] = email
         message['Subject'] = 'ISTC Record'
         message.attach(MIMEText(marcTextTxr.process_record(session, rec).get_raw(session)))
         
         smtp = smtplib.SMTP()
         smtp.connect(host='mail1.liv.ac.uk', port=25)
-        smtp.sendmail('istc@localhost', email, message.as_string())
+        smtp.sendmail('cheshire@liv.ac.uk', email, message.as_string())
         smtp.close()
         return ('<div id="maincontent"><h1>File Emailed</h1><p>The record you requested was emailed to %s</p></div>' % email)
 
