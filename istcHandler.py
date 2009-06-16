@@ -673,9 +673,9 @@ class IstcHandler:
         
         smtp = smtplib.SMTP()
         smtp.connect(host='mail1.liv.ac.uk', port=25)
-        smtp.sendmail('john.goldfinch@bl.uk', address, message.as_string())
+        smtp.sendmail('cheshire@liv.ac.uk', address, message.as_string())
         smtp.close()
-        return ('<div id="maincontent"><h1>File emailed successfully</h1></div>')
+        return ('<div id="maincontent"><h1>File emailed successfully</h1><p>The email has been sent and should arrive shortly.</p><p>To return to the search page click <a href="search.html">here</a></p></div>')
         
     
     def emailRecs(self, form):
