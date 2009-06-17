@@ -29,6 +29,7 @@ class IstcHandler:
     browseNavPath = cheshirePath + "/cheshire3/www/istc/html/browseNav.html"
     contributorsNavPath = cheshirePath + "/cheshire3/www/istc/html/contributorsNav.html"
     aboutNavPath = cheshirePath + "/cheshire3/www/istc/html/aboutNav.html"
+    helpNavPath = cheshirePath + "/cheshire3/www/istc/html/helpNav.html"
     rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
     printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
 
@@ -1000,6 +1001,16 @@ class IstcHandler:
             d = f.read()
             f.close()
 
+        elif path == 'help.html':            
+            f = file(self.helpNavPath)
+            nav = f.read()
+            f.close()
+            nav = nav.replace('\n', '')
+            tmpl = tmpl.replace('%NAVIGATION%', nav)
+            
+            f = file('help.html')
+            d = f.read()
+            f.close()
             
         else:          
             f = file(self.searchNavPath)
