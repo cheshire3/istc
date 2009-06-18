@@ -1,0 +1,141 @@
+
+<div id="maincontent"><!--- CONTENT STARTS HERE -->
+<h1>ISTC Editing Interface</h1>
+
+<p>Welcome to the new ISTC Editing interface. We hope that we have made significant improvements with this new interface
+both in terms of design and functionality. There are a few features we would like to draw to the attention of those who 
+have experience of using the old system as they work slightly differently now.</p>
+
+<ul>
+<li>One of the main new aspects to the system is the presence of a draft store for files in the process of being edited.
+This means that you can save records that are only half created and come back to them later. It also means that once you
+have finished with a record it is important that you submit it so that it can become part of the main database and 
+be deleted from the draft file store. For more details see ***</li>
+
+<li>Another difference is that now you cannot delete a record from the main ISTC database from the editing form. Instead
+there is a separate option on the main menu for deleting existing ISTC records. From the editing form itself you can only
+discard a draft from your draft file store and not from the main database.</li>
+</ul>
+
+
+<h3>Editing Menu</h3>
+<p>There are six options in the main editing menu</p>
+
+<ul>
+<li>Create New ISTC Entry</li>
+<li>Edit Existing ISTC Entry</li>
+<li>Delete Existing ISTC Entry</li>
+<li>Add/Edit Bibliographical Reference Abbreviations</li>
+<li>Add/Edit USA Location Abbreviations</li>
+<li>Edit your User Account</li>
+</ul>
+
+<h3>Create/Edit an ISTC Record</h3>
+
+<h4>Selecting a Record to Edit</h4>
+
+<p>If you are editing an existing record there are several ways of selecting which record. 
+<ul><li>To edit a record from the main 
+database you can either start typing the ISTC number you are interested in in the top box and then select the correct number
+from the list that appears or you can bring up a list of ISTC numbers alphabetically by clicking on the relevant letter 
+and then selecting the appropriate number. You will not be allowed to edit a file which is already in the editing store.</li>
+<li>To edit a record which has copy location data indicated as private select the record from the list in the second section
+of the menu. You will not be allowed to edit a file which is already in the editing store.</li>
+<li>To edit a file saved in your editing store select the file from the list in the third section of the form. You will be 
+able to see the files other users have saved in their editing store but you cannot open them.</li>
+</ul>
+</p>
+
+<h4>The Editing Form</h4>
+
+<p>The process for editing an existing record and creating a new one in the editing form is the same. 
+Some fields such as ISTC number, author and title simply require completion or editing. How to complete 
+fields which can have multiple entries are explained in the section on Multiple Entry Fields.</p>
+
+<h4>File Options</h4>
+
+<ul>
+<li><b>Save</b> - Saves the current file in the draft file store.</li>
+<li><b>Discard Draft</b> - Deletes the current file from the draft file store. </li>
+<li><b>Clear Form</b> - Removes all data from the current form (effectively starting a new record) but does not delete 
+the existing file from the draft file store if it has been saved.</li>
+</ul>
+
+<h4>Preview Options</h4>
+<p>If you are creating a new record these options will only become available once the record has been saved for the 
+first time.</p>
+<li><b>XML</b> - See a preview of your record in MARC21XML the format used internally in Cheshire3.</li>
+<li><b>MARC</b> - See a preview of your record in MARC ALEPH format.</li>
+<li><b>Email Record</b> - Email a preview of your record in MARC ALEPH format to the email address registered to your user name.</li>
+
+<h4>Submit Options</h4>
+<p>If you are creating a new record these options will only become available once the record has been saved for the 
+first time. These options move your files from the draft file store into the main database.</p>
+<li><b>To File</b> - This option adds the record to the database files and deletes it from the draft file store. It 
+does not index the file so it will not be available for searching until the database is rebuilt by John Goldfinch. This
+is the option you should use unless there is very good reason not to as it is the most reliable and quickest method.</li>
+<li><b>Index and File</b> - This option adds the record to the database file and deletes it from the draft file store.
+It also adds the record to the indexes so that it is available for searching immediately. If this is an edited record
+it will replace the existing record in the indexes. This option may take some time especially if you are replacing an 
+existing record and should only be used if it is important that the new data be available immediately.</li>
+
+<h4>Multiple Entry Fields</h4>
+
+<p>To add an entry into a multiple entry field (such as imprints, references and holdings) first complete the text 
+boxes relevant to the field and then click "add". The entry will then move into the grey box at the bottom of the section
+ and add it to the record.
+</p>
+<p>To edit an entry already added to a record click on the text of the entry and it will move into the text boxes. 
+The entry in the grey box is replaced with a small grey arrow indicating that the entry will be added at that point
+in the list when you click the add button.</p>
+<p>If you are adding a new entry and want it to appear at a particular point in the list rather than at the bottom you
+need to first click the insert above image <img src="/istc/images/insert.png"/> next to the record below the point at 
+which you want to insert the new entry. </p>
+<p>An entry can be deleted by clicking on the delete image <img src="/istc/images/remove.png"/> alongside the relevant
+entry. Entries can also be moved up and down the list using the up image <img src="/istc/images/up.png"/> and the
+down image <img src="/istc/images/down.png"/>.</p>
+
+<h4>Special Characters</h4>
+
+<p>Special characters can be added to your description using the character keyboard. The keyboard can be viewed by
+clicking on the "character keyboard" link at the top of the form or the "keyboard" link between sections of the form.
+Once the keyboard is visible it can be minimised, maximised and closed using the buttons on the title bar (just like
+windows in most operating systems). There is a caps lock button on the keyboard which will switch the characters from 
+lower case to upper case and back again.If the character you need is not available on the keyboard you may enter it
+using its numerical encoding <b>&amp;#233;</b> for <b>&#233;</b> but not its named encoding (<b>&amp;eacute;</b>). </p>
+
+
+<h3>Delete an Existing ISTC Record</h3>
+
+<p>Here you can delete a current ISTC Record. You can select a record in one of two ways. Either you can 
+start typing the ISTC number into the top box and you will then get some matching entries to select from 
+or you can bring up a list of ISTC numbers alphabetically by clicking on the relevant letter and then ticking
+the box next to the appropriate number/numbers. Using the latter option you can delete more than one record 
+at a time if they belong under the same letter.</p>
+<p>Whichever selection method you use there are two delete buttons. The button marked "delete" will delete
+the record from the database but will not remove it from the indexes and therefore it will still appear
+in the search and display until the database is next rebuilt (by John Goldfinch). The button marked "delete + unindex"
+will delete the record from the database and from the indexes so it will disappear immediately and will not be searchable. 
+This operation takes a little longer to perform than simply deleting.</p>
+
+<h3>Edit or Add USA Locations or Bibliographical References</h3>
+
+<p>The process for adding or editing a USA Location or a Bibliographical Reference is the same. In the box for the 
+abbreviation you can type in the abbreviation you want to edit or add. If you are editing you can then select the 
+appropriate abbreviation and the full text version will appear in the lower box and can be edited. If you are adding 
+an abbreviation it is important to check that it doesn't already exist by checking the list that appears when you 
+start typing in the abbreviation box. You can then add the full text to the lower box. To submit your changes or
+additions click the submit button.</p>
+
+<h3>Edit your user Account</h3>
+
+<p>Here you can change details relating to your user account. To make any changes you need 
+to enter your password in the box at the bottom. If you wish to change your password then 
+you need to enter the new password in the new password boxes and your old password in the box
+at the bottom. If you do not want to change your current password leave the new password boxes empty.</p>
+
+
+
+<!--- CONTENT ENDS HERE --></div>
+
+
