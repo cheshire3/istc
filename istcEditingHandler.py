@@ -1278,6 +1278,10 @@ class IstcEditingHandler:
                 content = self.show_editMenu('editusa')
             elif path == 'editusermenu.html':
                 content = self.show_editMenu('user')
+            elif path == 'edithelp.html':
+                f= file("edithelp.html")
+                content = f.read()
+                f.close()
             else:
                 content = self.show_editMenu('main')
             
