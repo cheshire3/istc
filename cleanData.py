@@ -31,6 +31,9 @@ istcnoregex = re.compile('<fld001>(\S*)</fld001>')
 preparser = db.get_object(session, 'CharacterEntityPreParser')
 
 forliRE = re.compile('Forl.*grave;')
+LokkosRE = re.compile('LQkk.*s')
+mondoviRE = re.compile('Mondov.*grave;')
+
 
 errors = 0;
 errorids = []
@@ -41,6 +44,12 @@ for file in listFiles:
 #    dataFile = open("encodingtest" + "/" + file, 'r')
     dataString = dataFile.read()
     dataString = forliRE.sub('Forl&#236;', dataString)
+    dataString = mondoviRE.sub('Mondov&#236;', dataString)
+    dataString = LokkosRE.sub('L&#337;kk&#246;s', dataString)
+    dataString = dataString.replace('GdaDsk', 'Gda&#324;sk')
+    dataString = dataString.replace('WrocBaw', 'Wroc&#322;aw')
+    dataString = dataString.replace('WBocBawek', 'W&#322;oc&#322;awek')
+    dataString = dataString.replace('PoznaD', 'Pozna&#324;')
     dataString = dataString.replace('&', '&amp;')
     dataString = dataString.replace('', '&#263;').replace('', '&#281;').replace('', '')
     dataString = dataString.replace('&amp;#', '&#')
@@ -62,6 +71,12 @@ for file in listFiles:
         
         for l in dataString:
             l = forliRE.sub('Forl&#236;', l)
+            l = mondoviRE.sub('Mondov&#236;', l)
+            l = LokkosRE.sub('L&#337;kk&#246;s', l)
+            l = l.replace('GdaDsk', 'Gda&#324;sk')
+            l = l.replace('WrocBaw', 'Wroc&#322;aw')
+            l = l.replace('WBocBawek', 'W&#322;oc&#322;awek')
+            l = l.replace('PoznaD', 'Pozna&#324;')
             l = l.replace('&', '&amp;')
             l = l.replace('', '&#263;').replace('', '&#281;').replace('', '')
             l = l.replace('&amp;#', '&#')

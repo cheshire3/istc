@@ -76,12 +76,12 @@
 			<xsl:value-of select="a/text()"/>
 		</xsl:variable>  	
 		<xsl:choose>	
-		<xsl:when test="contains($string, '(')">
+		<xsl:when test="contains($string, ' (')">
 			<subfield code="a">
-				<xsl:value-of select="substring-before($string, '(')"/>
+				<xsl:value-of select="substring-before($string, ' (')"/>
 			</subfield>
 			<subfield code="b">
-				<xsl:text>(</xsl:text><xsl:value-of select="substring-after($string, '(')"/>
+				<xsl:text>(</xsl:text><xsl:value-of select="substring-after($string, ' (')"/>
 			</subfield>
 		</xsl:when>
 		<xsl:otherwise>
@@ -99,12 +99,12 @@
 			<xsl:value-of select="a/text()"/>
 		</xsl:variable>  	
 		<xsl:choose>	
-		<xsl:when test="contains($string, '(')">
+		<xsl:when test="contains($string, ' (')">
 			<subfield code="a">
-				<xsl:value-of select="substring-before($string, '(')"/>
+				<xsl:value-of select="substring-before($string, ' (')"/>
 			</subfield>
 			<subfield code="b">
-				<xsl:text>(</xsl:text><xsl:value-of select="substring-after($string, '(')"/>
+				<xsl:text>(</xsl:text><xsl:value-of select="substring-after($string, ' (')"/>
 			</subfield>
 		</xsl:when>
 		<xsl:otherwise>

@@ -516,7 +516,7 @@
 		</div>
 		<div class="horizontal">
 			<strong>Language:</strong><br/>
-			<input name="8_lang" type="text" size="7" maxlength="3">
+			<input name="8_lang" id="8_lang" type="text" size="7" maxlength="3">
 				<xsl:attribute name="value">
 					<xsl:value-of select="substring($f008, 36, 3)"/>
 				</xsl:attribute>

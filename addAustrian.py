@@ -40,9 +40,25 @@ for elem in austriaTree.iter('ISTC-Bestand'):
     except:
         print istcNo
     else:
+        #create tree from ISTC record
         targetTree = etree.fromstring(file.read())
         file.close()
         parent = targetTree.xpath('/record')[0]
+        
+        # remove Austrian data from 958 Other Europe field
+        otherEurope = targetTree.xpath('//datafield[@tag="958"]')
+        for entry in otherEurope:
+#            print etree.tostring(entry)
+            if entry.xpath('./subfield[@code="a"]')[0].text.find('Salzburg') != -1:
+                parent.remove(entry)
+            elif entry.xpath('./subfield[@code="a"]')[0].text.find('Graz') != -1:
+                parent.remove(entry)
+            elif entry.xpath('./subfield[@code="a"]')[0].text.find('Innsbruck') != -1:
+                parent.remove(entry)
+            elif entry.xpath('./subfield[@code="a"]')[0].text.find('Wien') != -1:
+                parent.remove(entry)
+                
+        # add new Austrian 993 field
         datafield = etree.Element('datafield', tag='993', ind1='0', ind2='0')
         
         subfieldA = etree.Element('subfield', code='a')   
