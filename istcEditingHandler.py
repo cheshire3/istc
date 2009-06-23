@@ -689,36 +689,36 @@ class IstcEditingHandler:
 # Functions
 #
 
-    def file(self, form):
-        self.logger.log('submitting to file')
-        recid = form.get('1', None)
-        owner = form.get('owner', session.user.username)
-        recid = '%s-%s' % (recid, owner)
-        rec = editStore.fetch_record(session, recid)
-        df = db.get_object(session, 'istcDocumentFactory')
-        sourceDir = df.get_default(session, 'data')
-        filename = '%s.xml' % recid
-        filepath = os.path.join(sourceDir, filename)
-        if os.path.exists(filepath):
-            os.remove(filepath)
-        try :
-            file = open(filepath, 'w')
-        except :
-            pass # put sensible error in 
-        indentTxr = db.get_object(session, 'indentingTxr')
-        file.write(indentTxr.process_record(session, tempRec).get_raw(session))
-        file.flush()
-        file.close()    
-        editStore.delete_record(session, recid)
-        editStore.commit_storing(session)
-        
-        
-    def index(self, form):    
-        self.logger.log('indexing')
-        recid = form.get('1', None)
-        rec = editStore.fetch_record(session, recid)        
-        
-        
+#    def file(self, form):
+#        self.logger.log('submitting to file')
+#        recid = form.get('1', None)
+#        owner = form.get('owner', session.user.username)
+#        recid = '%s-%s' % (recid, owner)
+#        rec = editStore.fetch_record(session, recid)
+#        df = db.get_object(session, 'istcDocumentFactory')
+#        sourceDir = df.get_default(session, 'data')
+#        filename = '%s.xml' % recid
+#        filepath = os.path.join(sourceDir, filename)
+#        if os.path.exists(filepath):
+#            os.remove(filepath)
+#        try :
+#            file = open(filepath, 'w')
+#        except :
+#            pass # put sensible error in 
+#        indentTxr = db.get_object(session, 'indentingTxr')
+#        file.write(indentTxr.process_record(session, tempRec).get_raw(session))
+#        file.flush()
+#        file.close()    
+#        editStore.delete_record(session, recid)
+#        editStore.commit_storing(session)
+#        
+#        
+#    def index(self, form):    
+#        self.logger.log('indexing')
+#        recid = form.get('1', None)
+#        rec = editStore.fetch_record(session, recid)        
+#        
+#        
     def save(self, form):
         self.logger.log('saving form')
         recid = form.get('1', None)

@@ -1194,21 +1194,30 @@ function submitForm(op){
 			}
 		}
 		else if (op == 'file'){
-			var ok = confirmOp('This operation will write this record to the data directory and it will be available for searching the next time the database is rebuilt. \nAre you sure you want to continue?')
-			if (ok){
-				document.getElementById('mainform').submit();
+			if (!recordComplete()){
+				alert('Your record is not valid and therefore cannot be submitted to the database.\nYou need to complete the following fields:\n\n\t- ISTC Number\n\t- Title\n\t- Language (in 008 field)\n\t- at least one Imprint\n\t- at least one Bibliographical Reference');
 			}
 			else {
-				return;
+				var ok = confirmOp('This operation will write this record to the data directory and it will be available for searching the next time the database is rebuilt. \nAre you sure you want to continue?')
+				if (ok){
+					document.getElementById('mainform').submit();
+				}
+				else {
+					return;
+				}
 			}
 		}
 		else if (op == 'index'){
-			var ok = confirmOp('This operation will index this record and make it immediately available for searching. This operation may take some time. \nAre you sure you want to continue?')
-			if (ok){
-				document.getElementById('mainform').submit();
-			}
+			if (!recordComplete()){
+				alert('Your record is not valid and therefore cannot be submitted to the database.\nYou need to complete the following fields:\n\n\t- ISTC Number\n\t- Title\n\t- Language (in 008 field)\n\t- at least one Imprint\n\t- at least one Bibliographical Reference');			}
 			else {
-				return;
+				var ok = confirmOp('This operation will index this record and make it immediately available for searching. This operation may take some time. \nAre you sure you want to continue?')
+				if (ok){
+					document.getElementById('mainform').submit();
+				}
+				else {
+					return;
+				}
 			}
 		}
 		else {
@@ -1216,6 +1225,34 @@ function submitForm(op){
 		}
 	}
 }
+
+function recordComplete(){
+	complete = true;
+	var istcNo = document.getElementById('ISTCNo').value;
+	if (istcNo.strip() == '' || istcNo.strip() == ' '){
+		complete = false;
+	}
+	var language = document.getElementById('8_lang').value;
+	if (language.strip().length != 3){
+		complete = false;
+	}
+	var title = document.getElementById('title').value;
+	if (title.strip() == '' || title.strip() == ' '){
+		complete = false;
+	}
+	var imprints = document.getElementById('addedimprintslist');
+	var list = imprints.getElementsByTagName('li');
+	if (list.length == 0){
+		complete = false;
+	}
+	var references = document.getElementById('addedreferenceslist');
+	var list = references.getElementsByTagName('li');
+	if (list.length == 0){
+		complete = false;
+	}
+	return complete;
+}
+
 
 
 function checkButtons(){
