@@ -299,23 +299,17 @@
 												<xsl:with-param name="typename" select="'951holding'"/>
 												<xsl:with-param name="tagnumber" select="'951'"/>
 											</xsl:call-template> 
-										</xsl:for-each>						
-				 						<xsl:for-each select="//datafield[@tag='995']">
+										</xsl:for-each>		
+										<xsl:for-each select="//datafield[@tag='952']">
 											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'995holding'"/>
-												<xsl:with-param name="tagnumber" select="'995'"/>
+												<xsl:with-param name="typename" select="'952holding'"/>
+												<xsl:with-param name="tagnumber" select="'952'"/>
 											</xsl:call-template> 
-										</xsl:for-each>
-										<xsl:for-each select="//datafield[@tag='957']">
+										</xsl:for-each>														
+										<xsl:for-each select="//datafield[@tag='953']">
 											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'957holding'"/>
-												<xsl:with-param name="tagnumber" select="'957'"/>
-											</xsl:call-template> 
-										</xsl:for-each>
-										<xsl:for-each select="//datafield[@tag='997']">
-											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'997holding'"/>
-												<xsl:with-param name="tagnumber" select="'997'"/>
+												<xsl:with-param name="typename" select="'953holding'"/>
+												<xsl:with-param name="tagnumber" select="'953'"/>
 											</xsl:call-template> 
 										</xsl:for-each>		
 										<xsl:for-each select="//datafield[@tag='954']">
@@ -329,6 +323,36 @@
 												<xsl:with-param name="typename" select="'955holding'"/>
 												<xsl:with-param name="tagnumber" select="'955'"/>
 											</xsl:call-template> 
+										</xsl:for-each>																				
+										<xsl:for-each select="//datafield[@tag='957']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'957holding'"/>
+												<xsl:with-param name="tagnumber" select="'957'"/>
+											</xsl:call-template> 
+										</xsl:for-each>			
+										<xsl:for-each select="//datafield[@tag='958']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'958holding'"/>
+												<xsl:with-param name="tagnumber" select="'958'"/>
+											</xsl:call-template> 
+										</xsl:for-each>		
+										<xsl:for-each select="//datafield[@tag='993']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'993holding'"/>
+												<xsl:with-param name="tagnumber" select="'993'"/>
+											</xsl:call-template> 
+										</xsl:for-each>				
+										<xsl:for-each select="//datafield[@tag='994']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'994holding'"/>
+												<xsl:with-param name="tagnumber" select="'994'"/>
+											</xsl:call-template> 
+										</xsl:for-each>					
+				 						<xsl:for-each select="//datafield[@tag='995']">
+											 <xsl:call-template name="accesspointlist">
+												<xsl:with-param name="typename" select="'995holding'"/>
+												<xsl:with-param name="tagnumber" select="'995'"/>
+											</xsl:call-template> 
 										</xsl:for-each>
 										<xsl:for-each select="//datafield[@tag='996']">
 											 <xsl:call-template name="accesspointlist">
@@ -336,36 +360,12 @@
 												<xsl:with-param name="tagnumber" select="'996'"/>
 											</xsl:call-template> 
 										</xsl:for-each>	
-										<xsl:for-each select="//datafield[@tag='993']">
+										<xsl:for-each select="//datafield[@tag='997']">
 											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'993holding'"/>
-												<xsl:with-param name="tagnumber" select="'993'"/>
-											</xsl:call-template> 
-										</xsl:for-each>						
-										<xsl:for-each select="//datafield[@tag='952']">
-											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'952holding'"/>
-												<xsl:with-param name="tagnumber" select="'952'"/>
+												<xsl:with-param name="typename" select="'997holding'"/>
+												<xsl:with-param name="tagnumber" select="'997'"/>
 											</xsl:call-template> 
 										</xsl:for-each>		
-										<xsl:for-each select="//datafield[@tag='958']">
-											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'958holding'"/>
-												<xsl:with-param name="tagnumber" select="'958'"/>
-											</xsl:call-template> 
-										</xsl:for-each>			
-										<xsl:for-each select="//datafield[@tag='953']">
-											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'953holding'"/>
-												<xsl:with-param name="tagnumber" select="'953'"/>
-											</xsl:call-template> 
-										</xsl:for-each>
-										<xsl:for-each select="//datafield[@tag='994']">
-											 <xsl:call-template name="accesspointlist">
-												<xsl:with-param name="typename" select="'994holding'"/>
-												<xsl:with-param name="tagnumber" select="'994'"/>
-											</xsl:call-template> 
-										</xsl:for-each>
 									</ul>									
 								</div>	 
 							</div>					
@@ -704,16 +704,6 @@
 			  	 			<xsl:text> | </xsl:text>
 			  	 			<xsl:value-of select="."/>
 			  	 			<xsl:value-of select="$separater"/>
-	  	 				</xsl:when>
-	  	 				<xsl:when test="$tagnumber ='852' and @code = 'j'">
-			  	 			<xsl:value-of select="$tagnumber"/>
-			  	 			<xsl:text>_</xsl:text>
-			  	 			<xsl:value-of select="@code"/>
-			  	 			<xsl:text>[</xsl:text>
-			  	 			<xsl:number level="single" count="subfield[@code = 'j']" format="1"/>
-			  	 			<xsl:text>] | </xsl:text>
-			  	 			<xsl:value-of select="."/>
-			  	 			<xsl:value-of select="$separater"/>	  	 					
 	  	 				</xsl:when>
 	  	 				<xsl:otherwise>
 			  	 			<xsl:value-of select="$tagnumber"/>
