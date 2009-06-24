@@ -455,7 +455,7 @@ div#refcontainer, div#fullrefcontainer, div#holdingscontainer, div#usacontainer 
   	border: solid black 1px;
 	position: fixed;
 	bottom: 0px;
-	left: 10px;
+	right: 10px;
 	width: 9cm;
    	background: #006c7d;
 }

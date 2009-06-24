@@ -266,6 +266,16 @@ function addEntry(s){
     				textbox.checked = false;
     			}  			
     		}
+    		else if (s == 'holdings' && i == 2 && textbox.value.strip != ''){
+    			textString += '(' + textbox.value + ') ';  
+    			valueString += textbox.id + ' | ' + '(' +  textbox.value + ') ||| ';
+    			textbox.value = '';	
+    		}
+    		else if (textbox.id.indexOf('[') != -1){
+    			textString += textbox.value + ' ';  
+    			valueString += textbox.id.substring(0, textbox.id.indexOf('[')) + ' | ' + textbox.value + ' ||| ';
+    			textbox.value = '';	     		
+    		}
     		else {    		
     			textString += textbox.value + ' ';  
     			valueString += textbox.id + ' | ' + textbox.value + ' ||| ';
@@ -515,8 +525,9 @@ function editEntry(s, number){
   		for (var i = 0; i< values.length-2; i++){  
 	  		value = values[i].split(' | ');
 	  		if (value[0].match(/852_j\S*/)){
+	  			var pos = i-1;
 	  			try {
-	  				document.getElementById(value[0]).value = value[1];
+	  				document.getElementById(value[0] + '[' + pos + ']').value = value[1];
 	  			}
 	  			catch (err){
 	  				var row = document.createElement('tr');
@@ -531,7 +542,7 @@ function editEntry(s, number){
 					input.setAttribute('type', 'text');
 					input.setAttribute('autocomplete', 'off');
 					input.setAttribute('name', 'blshelfmarks');
-					input.setAttribute('id', value[0]);
+					input.setAttribute('id', value[0] + '[' + pos + ']');
 					input.setAttribute('value', value[1]);
 					cell2.appendChild(input);
 					row.appendChild(cell2);
@@ -541,7 +552,7 @@ function editEntry(s, number){
 					image.setAttribute('src', '/istc/images/remove.png');
 					image.onmouseover = function() {this.src='/istc/images/remove-hover.png';};
 					image.onmouseout = function() {this.src='/istc/images/remove.png';};
-					image.onclick = function() {deleteShelfmark(value[0])}
+					image.onclick = function() {deleteShelfmark(value[0] + '[' + pos + ']')}
 					cell3.appendChild(image);
 					row.appendChild(cell3);
 					
