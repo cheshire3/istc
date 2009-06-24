@@ -1,6 +1,11 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+
+#Used to some global data corrections when moving from C2 to C3 (June 2009)
+
+
+
 import time, sys, os
 from lxml import etree
 from cheshire3.baseObjects import Session

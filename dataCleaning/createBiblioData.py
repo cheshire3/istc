@@ -1,6 +1,9 @@
+
+#Used to clean create new bibliographical refs data when moving from C2 to C3 (June 2009)
+
 from lxml import etree
 
-datafile = "/home/cheshire/cheshire3/dbs/istc/newBiblioData.txt"
+datafile = "/home/cheshire/cheshire3/dbs/istc/dataCleaning/newBiblioData.txt"
 outputfile = "/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml"
 
 

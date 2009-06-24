@@ -1,6 +1,8 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+#Used to change wording of Microfiche data when moving from C2 to C3 (June 2009)
+
 import time, sys, os
 from lxml import etree
 from cheshire3.baseObjects import Session
@@ -46,7 +48,7 @@ for f in os.listdir(dir):
             
             
 #add the new ones from the datafile
-newData = '/home/cheshire/cheshire3/dbs/istc/newMicroficheData.txt'
+newData = '/home/cheshire/cheshire3/dbs/istc/dataCleaning/newMicroficheData.txt'
 
 file = open(newData, 'r')
 lines = file.readlines()

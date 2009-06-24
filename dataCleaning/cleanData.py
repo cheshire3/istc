@@ -1,6 +1,8 @@
 #!/home/cheshire/cheshire3/install/bin/python 
 # -*- coding: utf-8 -*-
 
+#Used to clean up the character encoding problems when moving from C2 to C3 (June 2009)
+
 import time, sys, os, re
 
 sys.path.insert(1,'/home/cheshire/cheshire3/code')

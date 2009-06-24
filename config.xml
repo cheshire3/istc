@@ -61,6 +61,7 @@
 	<subConfig type="authStore" id="istcAuthStore">
 		<objectType>cheshire3.objectStore.BdbObjectStore</objectType>
 		<paths>
+			<path type="defaultPath">authStores</path>
 			<path type="databasePath">istcAuthStore.bdb</path>
 		</paths>
 	</subConfig>
@@ -68,6 +69,7 @@
 	<subConfig type="authStore" id="istcSuperAuthStore">
 		<objectType>cheshire3.objectStore.BdbObjectStore</objectType>
 		<paths>
+			<path type="defaultPath">authStores</path>
 			<path type="databasePath">istcSuperAuthStore.bdb</path>
 		</paths>
 	</subConfig>

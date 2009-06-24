@@ -1,6 +1,10 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+#Used to bulk load Austrian location data into field 993 when moving from C2 to C3 (June 2009)
+
+
+
 import time, sys, os
 from lxml import etree
 from cheshire3.baseObjects import Session
@@ -21,7 +25,7 @@ parser = db.get_object(session, 'LxmlParser')
 
 #put austria.xml into a tree for each element find the istc file which matches put that into a tree and add the stuff
 
-input = open(cheshirePath + '/cheshire3/dbs/istc/austria.xml', 'r')
+input = open(cheshirePath + '/cheshire3/dbs/istc/dataCleaning/austria.xml', 'r')
 
 austriaTree = etree.fromstring(input.read())
 

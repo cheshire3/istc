@@ -1,6 +1,9 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+#creates table of all records containing bsb-ink in 510 field
+
+
 import time, sys, os
 #osp = sys.path
 #sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
@@ -61,29 +64,3 @@ tableFile.write(table)
 
 tableFile.close()
 print table
-##queryList = ['c3.idx-951 all "Cambridge" and c3.idx-951 all "UL"']
-#queryList = ['c3.idx-951 all "JRL"']
-#fileE = codecs.open('Manchester-exchange.txt', 'w', 'utf-8')
-#fileA = codecs.open('Manchester-aleph.txt', 'w', 'utf-8')
-#fileX = codecs.open('Manchester-marcxml.xml', 'w', 'utf-8')
-#for query in queryList :
-#    q = CQLParser.parse(query)
-#    rs = db.search(session, q)
-#    i = 0
-#    for r in rs:
-#        
-#        rec = r.fetch_record(session)
-#        filtered = filter.process_record(session, rec)       
-#        rec2 = parser.process_document(session, filtered)
-#        if len(rec2.process_xpath(session, '//datafield[@tag="951"]')):
-#       # print txtTxr.process_record(session, rec2).get_raw(session)
-#            i += 1
-#            fileE.write(txr.process_record(session, rec2).get_raw(session))
-#            fileE.write('\n')
-#            fileA.write('\n\nMARC\n')
-#            fileA.write(txtTxr.process_record(session, rec2).get_raw(session))
-#            fileX.write(indentTxr.process_record(session, rec2).get_raw(session))
-#            print i
-#fileE.close()
-#fileA.close()
-#fileX.close()

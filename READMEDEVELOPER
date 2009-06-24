@@ -24,3 +24,4 @@ Add locations from a new country
 4 - add to the following javascript files
 		a - searchForm.js - add to locList array
 5 - in ISTCextensions in code directory add to dictionary in LocCountriesNormalizer
+5 - in dataRequest.html add to option list

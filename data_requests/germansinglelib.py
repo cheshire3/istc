@@ -1,6 +1,8 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+#gets all records with a single German library where that is not Munchen
+
 import time, sys, os
 sys.path.insert(1,'/home/cheshire/cheshire3/code')
 

@@ -1,6 +1,10 @@
+
+#Used to clean create new USA location data when moving from C2 to C3 (June 2009)
+
+
 from lxml import etree
 
-datafile = "/home/cheshire/cheshire3/dbs/istc/newUsaData.txt"
+datafile = "/home/cheshire/cheshire3/dbs/istc/dataCleaning/newUsaData.txt"
 outputfile = "/home/cheshire/cheshire3/dbs/istc/usaData/usaCodes.xml"
 
 

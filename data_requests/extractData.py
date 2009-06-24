@@ -1,6 +1,9 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
+#gets data requested in queryList and outputs records in various formats
+
+
 import time, sys, os
 #osp = sys.path
 #sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
@@ -44,6 +47,8 @@ indentTxr = db.get_object(session, 'indentingTxr')
 
 #queryList = ['c3.idx-951 all "Cambridge" and c3.idx-951 all "UL"']
 queryList = ['c3.idx-951 all "JRL"']
+
+
 fileE = codecs.open('Manchester-exchange.txt', 'w', 'utf-8')
 fileA = codecs.open('Manchester-aleph.txt', 'w', 'utf-8')
 fileX = codecs.open('Manchester-marcxml.xml', 'w', 'utf-8')
