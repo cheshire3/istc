@@ -1,3 +1,19 @@
+#
+# Script:    istcEditingHandler.py
+# Version:   0.1
+# Date:      ongoing
+# Copyright: &copy; University of Liverpool 2009
+# Description:
+#           Editing/Creation Interface for ISTC
+#
+# Author(s): CS - Catherine Smith <catherine.smith@liv.ac.uk>
+#
+# Language:  Python
+#
+# Version History: 
+# 0.01 - 25/06/2009 - CS - Everything needed for inital release
+
+
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
 import sys, os, cgitb, time, re, smtplib

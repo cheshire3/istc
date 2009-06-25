@@ -1,25 +1,17 @@
 #
-# Script:    eadEditingHandler.py
+# Script:    istcAdminHandler.py
 # Version:   0.1
 # Date:      ongoing
-# Copyright: &copy; University of Liverpool 2008
+# Copyright: &copy; University of Liverpool 2009
 # Description:
-#            Data creation and editing interface for EAD finding aids
-#            - part of Cheshire for Archives v3
+#           Administration Interface for ISTC
 #
 # Author(s): CS - Catherine Smith <catherine.smith@liv.ac.uk>
 #
 # Language:  Python
-# Required externals:
-#            cheshire3-base, cheshire3-web
-#            Py: 
-#            HTML: 
-#            CSS: 
-#            Javascript: 
-#            Images: 
 #
-# Version History: # left as example
-# 0.01 - 06/12/2005 - JH - Basic administration navigations and menus
+# Version History: 
+# 0.01 - 25/06/2009 - CS - Everything needed for inital release
 
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage

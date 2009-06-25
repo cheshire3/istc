@@ -1,4 +1,17 @@
-
+#
+# Script:    istcHandler.py
+# Version:   0.1
+# Date:      ongoing
+# Copyright: &copy; University of Liverpool 2009
+# Description:
+#           Search Interface for ISTC
+#
+# Author(s): CS - Catherine Smith <catherine.smith@liv.ac.uk>
+#
+# Language:  Python
+#
+# Version History: 
+# 0.01 - 25/06/2009 - CS - Everything needed for inital release
 import sys, os, cgitb, time, re, smtplib, copy
 
 from mod_python import apache, Cookie
