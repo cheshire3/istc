@@ -87,7 +87,7 @@ for l in lines:
             output.flush()
             output.close()
               
-            
+print 'MISSING FROM MICROFICHE'     
 print '\n'.join(missing)
         
         
