@@ -38,7 +38,7 @@
 					<tr>
 					<td>Submit</td>
 					<td><input class="functionbutton" id="filebutton" type="button" onclick="submitForm('file')" value=" To File "/></td>
-					<td><input class="functionbutton" id="indexbutton" type="button" onclick="submitForm('index')" value=" Index and File "/></td>
+					<td><!-- <input class="functionbutton" id="indexbutton" type="button" onclick="submitForm('index')" value=" Index and File "/> --></td>
 					</tr>
 					</table>					
 				</div>
