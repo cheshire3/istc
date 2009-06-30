@@ -338,9 +338,9 @@ function addEntry(s){
     hidden.setAttribute('value', valueString);
 
     item.appendChild(hidden);
-
+	alert('placeholder' + s);
     var ph = document.getElementById('placeholder' + s);
-
+	alert(ph);
     if (ph != null){
     	list.replaceChild(item, ph);
     }
@@ -433,7 +433,9 @@ function insertAbove(s, number){
   	if (type == '') {
   		type = s;
   	}  
-
+	if (type.indexOf('9') != -1){
+		type = type.substring(3);
+	}
  	var ph = document.getElementById('placeholder' + type);
 
 	if (ph != null){
