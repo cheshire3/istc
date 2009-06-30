@@ -123,7 +123,6 @@ class IstcAdminHandler:
         if (form.get('submit', None)):
             userid = form.get('userid', None)
             usertype = form.get('usertype', 'user')
-            
             if not (userid and userid.isalnum()):
                 if not userid:
                     message = 'Unable to add user - you MUST supply a username'
@@ -699,6 +698,7 @@ class IstcAdminHandler:
                     # send the display
                     self.send_html(content, req)
             else :  
+
                 content = self.show_adminMenu()
                 content = tmpl.replace('%CONTENT%', content)
                 # send the display
@@ -731,10 +731,15 @@ class IstcAdminHandler:
                 content = tmpl.replace('%CONTENT%', content)
                 self.send_html(content, req)
         else:
-            content = self.show_adminMenu()
-            content = tmpl.replace('%CONTENT%', content)
-            # send the display
-            self.send_html(content, req)
+            if (operation == 'adduser'):
+                content = self.add_user(form)
+                content = tmpl.replace('%CONTENT%', content)
+                self.send_html(content, req)
+            else:
+                content = self.show_adminMenu()
+                content = tmpl.replace('%CONTENT%', content)
+                # send the display
+                self.send_html(content, req)
     
 rebuild = True
 serv = None
