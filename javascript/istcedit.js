@@ -338,9 +338,9 @@ function addEntry(s){
     hidden.setAttribute('value', valueString);
 
     item.appendChild(hidden);
-	alert('placeholder' + s);
+
     var ph = document.getElementById('placeholder' + s);
-	alert(ph);
+
     if (ph != null){
     	list.replaceChild(item, ph);
     }
