@@ -26,7 +26,7 @@ parser = db.get_object(session, 'LxmlParser')
 
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
 
-dict = {'Selestat': 'S&#232;lestat',
+dict = {'Selestat': 'S&#233;lestat',
         'Wellcome Institute': 'Wellcome Library',
         'Oslo UB' :'Oslo NL',
         'Oslo NB' :'Oslo NL',
