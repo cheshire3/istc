@@ -496,7 +496,7 @@ function editEntry(s, number){
   	var usa = false;
 	if (type == 'holdings'){
 	  	for (var i = 0; i< values.length-2; i++){ 
-	  		value = values[i].split(' | ');
+	  		var value = values[i].split(' | ');
 	  		if (i == 0) {
 	  			var select = document.getElementById('holdings' + value[0].substring(value[0].indexOf('_')));
 	  			for (var j = 0; j< select.length; j++){  
@@ -524,10 +524,14 @@ function editEntry(s, number){
 	  	}
   	} else if (type == 'blshelfmarks'){
   		resetShelfmarks();
+  		var minusFigure = 0;
   		for (var i = 0; i< values.length-2; i++){  
-	  		value = values[i].split(' | ');
+	  		var value = values[i].split(' | ');  		
+	  		if (value[0] == '852_q'){
+	  			minusFigure = 1;
+	  		}
 	  		if (value[0].match(/852_j\S*/)){
-	  			var pos = i-1;
+	  			var pos = i-minusFigure;
 	  			try {
 	  				document.getElementById(value[0] + '[' + pos + ']').value = value[1];
 	  			}
