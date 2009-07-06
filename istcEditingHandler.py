@@ -514,7 +514,7 @@ class IstcEditingHandler:
                 abbrev = bibRefNormalizer.process_string(session, t)
                 other = t[len(abbrev) + 1:]
                 session.database = dbrefs.id
-                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev))
+                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev.replace('*', '\*')))
                 rs = dbrefs.search(session, q)
                 if len(rs):
                     full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
