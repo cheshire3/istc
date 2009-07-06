@@ -424,7 +424,7 @@ class IstcHandler:
         try:
             istc = form['istc'].value
         except:
-            return '<div id="maincontent"><h1>No ISTC Number Supplied</h1><p>You have not supplied an ISTC number so no record can be displayed</p><p>To search the database click <a href="search.html">here</a></p></div>' % istc
+            return '<div id="maincontent"><h1>No ISTC Number Supplied</h1><p>You have not supplied an ISTC number so no record can be displayed</p><p>To search the database click <a href="search.html">here</a></p></div>' 
         else:
             recStore = db.get_object(session, 'recordStore')
             try:
