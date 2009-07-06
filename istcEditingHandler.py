@@ -159,7 +159,7 @@ class IstcEditingHandler:
 
     def build_marc(self, form, date=None):
         self.logger.log('building marc')
-        multipleEntryFields = ['imprints', 'generalnotes', 'references', 'holdings', 'blshelfmarks']
+        multipleEntryFields = ['imprints', 'generalnotes', 'references', 'repnotes', 'holdings', 'blshelfmarks']
         list = form.list
         dict = {}
         marc = {}
