@@ -421,20 +421,24 @@ class IstcHandler:
         session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-screen')
         menuTxr = db.get_object(session, 'menuTxr')
-        istc = form['istc'].value
-        recStore = db.get_object(session, 'recordStore')
         try:
-            rec = recStore.fetch_record(session, istc)
+            istc = form['istc'].value
         except:
-            return '<div id="maincontent"><h1>Record not found</h1><p>There is no record with the id %s in the database.</p><p>To search the database click <a href="search.html">here</a></p></div>' % istc
-        else: 
-            countString = 'Record 1 of 1'
-            rlNav = ''
-            navstring = ''                    
-            #create extra bits for navigation menu            
-            menu = menuTxr.process_record(session, rec)
-            doc = self._transform_record(rec, txr, 'false', 'all')
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
+            return '<div id="maincontent"><h1>No ISTC Number Supplied</h1><p>You have not supplied an ISTC number so no record can be displayed</p><p>To search the database click <a href="search.html">here</a></p></div>' % istc
+        else:
+            recStore = db.get_object(session, 'recordStore')
+            try:
+                rec = recStore.fetch_record(session, istc)
+            except:
+                return '<div id="maincontent"><h1>Record not found</h1><p>There is no record with the ISTC number %s in the database.</p><p>To search the database click <a href="search.html">here</a></p></div>' % istc
+            else: 
+                countString = 'Record 1 of 1'
+                rlNav = ''
+                navstring = ''                    
+                #create extra bits for navigation menu            
+                menu = menuTxr.process_record(session, rec)
+                doc = self._transform_record(rec, txr, 'false', 'all')
+                return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
 
         
         
