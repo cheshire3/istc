@@ -27,13 +27,15 @@ parser = db.get_object(session, 'LxmlParser')
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
 
 dict = {'S&#232;lestat': 'S&#233;lestat',
-        'Wellcome Institute': 'Wellcome Library',
-        'Oslo UB' :'Oslo NL',
-        'Oslo NB' :'Oslo NL',
-        'Kiev Akad' : 'Kiev NL',
-        'Helsinki UL' : 'Helsinki NL',
-        'V&#228;ster&#229;s LB'  : 'V&#228;ster&#229;s StB',
-        'Olomouc UKn' : 'Olomouc VKn'      
+        'Feldkirch,StB': 'Feldkirch, StB',
+        'Kl&#225;ater' : 'Tepl&#225; Kl&#225;&#353;ter'
+#        'Wellcome Institute': 'Wellcome Library',
+#        'Oslo UB' :'Oslo NL',
+#        'Oslo NB' :'Oslo NL',
+#        'Kiev Akad' : 'Kiev NL',
+#        'Helsinki UL' : 'Helsinki NL',
+#        'V&#228;ster&#229;s LB'  : 'V&#228;ster&#229;s StB',
+#        'Olomouc UKn' : 'Olomouc VKn'      
     }
 
 
