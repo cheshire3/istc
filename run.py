@@ -86,7 +86,12 @@ if '-records' in sys.argv or '-load' in sys.argv:
     lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
 
 
-
+if ('-clearEditingStore' in sys.argv):
+    session.database = 'db_istc'
+    db = serv.get_object(session, 'db_istc')
+    editingStore = db.get_object(session, 'editingStore')
+    for i in editingStore:
+        editingStore.delete_record(session, i.id)
 
 
 
