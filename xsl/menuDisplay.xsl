@@ -58,7 +58,8 @@
 					</xsl:variable>
 	            	<a>
 	            		<xsl:attribute name="href">
-							<xsl:text>../edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/>
+	            			<xsl:text>javascript:setSearch(%%%RSID%%%, %%%ID%%%, '</xsl:text><xsl:value-of select="$istc"/><xsl:text>')</xsl:text>
+							<!-- <xsl:text>../edit/edit.html?operation=edit&amp;q=</xsl:text><xsl:value-of select="$istc"/> -->
 						</xsl:attribute>
 						<xsl:text>Edit Record (administrators only)</xsl:text>
 						<br />
