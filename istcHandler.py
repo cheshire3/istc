@@ -470,13 +470,13 @@ class IstcHandler:
             navstring = ''
 
         rlNav = '<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div><div class="menugrp"><div class="menubody" id="backtoresults"><div class="menuitem"><a  href="search.html?operation=search&rsid=%s">Back to Results List<br/><img src="/istc/images/previous.gif" alt=" Back " name="back" border="0" align="middle"/></a></div></div></div><div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>' % rsid
-
+        
         if len(rs):
             rec = rs[id].fetch_record(session)                               
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav).replace('%%%RSID%%%', str(rsid)).replace('%%%ID%%%', str(id)), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
         else:
             raise ValueError(id)
  

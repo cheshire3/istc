@@ -38,6 +38,17 @@ function addLoadEvent(func) {
 }
 
 //================================================================================================
+//cookie setting 
+
+function setSearch(rsid, id, istc){
+
+	document.cookie='searchResults=' + rsid + '-' + id + '; path=/';	
+	location.href="../edit/edit.html?operation=edit&q=" + istc;
+}
+
+
+
+//================================================================================================
 // display record functions
 
 function expandRefs(){

@@ -898,6 +898,7 @@ class IstcEditingHandler:
         operation = form.get('operation', 'index')
         owner = form.get('owner', session.user.username)
         session.database = db.id
+        pagesize = 20
         req.content_type = 'text/html'
         req.send_http_header()
         head = unicode(read_file('header.html'))
@@ -981,7 +982,30 @@ class IstcEditingHandler:
         editStore.begin_storing(session)
         editStore.delete_record(session, '%s-%s' % (recid, owner))
         editStore.commit_storing(session)
-        req.write('<span class="ok">[OK]</span><br/>\n')    
+        req.write('<span class="ok">[OK]</span><br/>\n')
+        
+       #retrieve cookie and set link back to results     
+        cookie = Cookie.get_cookies(req, Cookie.Cookie)
+        if cookie.has_key('searchResults'):
+            values = cookie['searchResults'].value.split('-')
+            rsid = values[0]
+            id = values[1]
+            
+            #calculate start value
+            stringid = str(id)
+            if len(stringid) > 1:
+                lastdigit = stringid[-1]
+                id = int(id) - int(lastdigit)
+                if id % pagesize == 0:
+                    start = id
+                else:
+                    start = id-pagesize/2
+            else:
+                start = 0
+            
+            
+            req.write('<p><a href="../search/search.html?operation=search&rsid=%s&start=%s">Back to Search Results</a></p>' % (rsid, start))
+        
         req.write('<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
         foot = unicode(read_file('footer.html'))
         req.write('</div>')      
