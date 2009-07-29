@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 <config type="database" id="db_istc">
+  
   <objectType>cheshire3.database.SimpleDatabase</objectType>
+  
+  <options>
+    <setting type="srw">1</setting>
+    <setting type="z3950">0</setting>
+    <setting type="oai-pmh">0</setting>
+  </options>
+  
   <paths>
     <path type="defaultPath">dbs/istc</path>
     <path type="metadataPath">stores/metadata.bdb</path>
