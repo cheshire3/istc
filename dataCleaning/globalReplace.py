@@ -26,9 +26,12 @@ parser = db.get_object(session, 'LxmlParser')
 
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
 
-dict = {'S&#232;lestat': 'S&#233;lestat',
-        'Feldkirch,StB': 'Feldkirch, StB',
-        'Kl&#225;ater' : 'Tepl&#225; Kl&#225;&#353;ter'
+dict = {u'Sèlestat': u'S&#233;lestat',
+        u'Selestat': u'S&#233;lestat',
+#        'Feldkirch,StB': 'Feldkirch, StB',
+        u'Kláater' : u'Kl&#225;&#353;ter',
+        u'Kl&#225;ater' : u'Kl&#225;&#353;ter',
+        u'Bucarest' : u'Bucharest'
 #        'Wellcome Institute': 'Wellcome Library',
 #        'Oslo UB' :'Oslo NL',
 #        'Oslo NB' :'Oslo NL',
@@ -46,7 +49,9 @@ for f in os.listdir(dir):
     field9s = tree.xpath('//*[starts-with(@tag, "9")]/subfield[@code="a"]')
     for field in field9s:
         try:
-            field.text = multiReplace(field.text, dict)
+            print field.text
+            field.text = multiReplace(unicode(field.text), dict)
+            print field.text
         except:
             pass
     dataString = etree.tostring(tree)
