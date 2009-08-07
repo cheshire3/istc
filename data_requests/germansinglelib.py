@@ -62,7 +62,7 @@ for r in recordStore:
             for element in oldtree.iterchildren():
                 if element.get('tag') in reqdtags:
                     newtree.append(element)
-            print etree.tostring(newtree)        
+     
             doc = StringDocument(etree.tostring(newtree))
             rec = parser.process_document(session, doc)
             
