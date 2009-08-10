@@ -15,7 +15,7 @@
 
 from mod_python import apache, Cookie
 from mod_python.util import FieldStorage
-import sys, os, cgitb, time, re, smtplib
+import sys, os, cgitb, time, re, smtplib, codecs
 
 sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
@@ -604,7 +604,7 @@ class IstcAdminHandler:
                 qString.append(' or ')
                 qString.append(' or '.join(proxString))
             elif len(proxString):
-                qString.append(' or '.join(proxString))                  
+                qString.append(' or '.join(proxString))                
             q = qf.get_query(session, ' '.join(qString))
             rs = db.search(session, q)
             if len(rs):
@@ -648,7 +648,24 @@ class IstcAdminHandler:
                         return apache.OK
                     return apache.OK
                 elif format == 'exchange':
-                    pass     
+                    txr = db.get_object(session, 'toMarcTxr')
+                    output = [] 
+                    for r in rs :
+                        rec = LxmlRecord(xslt(r.fetch_record(session).get_dom(session), **params))
+                        output.append(txr.process_record(session, rec).get_raw(session))
+                    f = codecs.open(cheshirePath + '/cheshire3/www/istc/output/istc-exchange.txt', 'w', 'utf-8')
+                    f.write(''.join(output))
+                    f.flush()
+                    f.close()
+                    req.headers_out["Content-Disposition"] = "attachment; filename=istc-exchange.txt"
+                    req.content_type = "text/plain"
+                    try:
+                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-exchange.txt')
+                    except IOError, e:
+                        req.content_type = "text/html"
+                        req.write("Raised exception reads:\n<br>%s" % str(e))
+                        return apache.OK
+                    return apache.OK
             else:
                 content = self.show_dataReqForm()
                 content = tmpl.replace('%CONTENT%', content)
