@@ -292,7 +292,8 @@ class IstcEditingHandler:
     def get_fullRefs(self, session, form, recursive=True):
         ref = form.get('q', None)
         ref = ref.replace('*', '\*')
-        ref = ref.replace('?', '\?')        
+        ref = ref.replace('?', '\?')  
+        ref = ref.replace('"', '\\"')      
         r = form.get('r', '') 
         if r != '':
             recursive=False
@@ -512,16 +513,17 @@ class IstcEditingHandler:
             for index, t in enumerate(f510):
                 t = unicode(t)
                 abbrev = bibRefNormalizer.process_string(session, t)
+                self.logger.log('------------------------------------%s------------------------------' % abbrev)
                 other = t[len(abbrev) + 1:]
                 session.database = dbrefs.id
-                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev.replace('*', '\*').replace('?', '\?').replace('"', '\"')))
+                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev.replace('*', '\*').replace('?', '\?').replace('"', '\\"')))
                 rs = dbrefs.search(session, q)
                 if len(rs):
                     full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
                 else:
                     full = abbrev
-                hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev, other)
-                
+                hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev.replace('"', '&quot;'), other)
+
                 output.extend([u'<li style="position: relative;" id="lireferences_formgen%d">' % index ,
                                u'<div id="references_formgen%d">' % index,
                                u'<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
