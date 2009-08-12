@@ -5,9 +5,8 @@
 
 
 import time, sys, os
-#osp = sys.path
-#sys.path = ["/home/cheshire/cheshire3/cheshire3/code"]
-#sys.path.extend(osp)
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
+
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
 from cheshire3.baseObjects import Session
@@ -17,7 +16,7 @@ from PyZ3950 import CQLParser
 import getpass
 from crypt import crypt
 import codecs
-
+from lxml import etree
 #import psyco
 #psyco.cannotcompile(lex.lex)
 #psyco.cannotcompile(yacc.yacc)
@@ -28,7 +27,7 @@ import codecs
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, "/home/cheshire/cheshire3/cheshire3/configs/serverConfig.xml")
+serv = SimpleServer(session, "/home/cheshire/cheshire3/configs/serverConfig.xml")
 
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
@@ -44,16 +43,17 @@ filter = db.get_object(session, 'filterTxr')
 txr = db.get_object(session, 'toMarcTxr')
 txtTxr = db.get_object(session, 'toTextTxr')
 indentTxr = db.get_object(session, 'indentingTxr')
+qf = db.get_object(session, 'defaultQueryFactory')
 
 #queryList = ['c3.idx-951 all "Cambridge" and c3.idx-951 all "UL"']
-queryList = ['c3.idx-951 all "JRL"']
+queryList = ['c3.idx-kwd-location all "Cambridge" prox/unit=element/distance=0 c3.idx-kwd-location all "UL"']
 
 
-fileE = codecs.open('Manchester-exchange.txt', 'w', 'utf-8')
-fileA = codecs.open('Manchester-aleph.txt', 'w', 'utf-8')
-fileX = codecs.open('Manchester-marcxml.xml', 'w', 'utf-8')
+fileE = codecs.open('Cambridge-exchange.txt', 'w', 'utf-8')
+fileA = codecs.open('Cambridge-aleph.txt', 'w', 'utf-8')
+fileX = codecs.open('Cambridge-marcxml.xml', 'w', 'utf-8')
 for query in queryList :
-    q = CQLParser.parse(query)
+    q = qf.get_query(session, query)
     rs = db.search(session, q)
     i = 0
     for r in rs:
@@ -64,11 +64,19 @@ for query in queryList :
         if len(rec2.process_xpath(session, '//datafield[@tag="951"]')):
        # print txtTxr.process_record(session, rec2).get_raw(session)
             i += 1
+            tree = etree.fromstring(rec2.get_xml(session))
+            field951 = tree.xpath('//datafield[@tag="951"]')
+            for f in field951:
+                if f.xpath('./subfield[@code="a"]/text()')[0].find('Cambridge') == -1:
+                    parent = tree.xpath('//record')[0]
+                    parent.remove(f)
+            doc = StringDocument(etree.tostring(tree))
+            rec2 = parser.process_document(session, doc)
             fileE.write(txr.process_record(session, rec2).get_raw(session))
-            fileE.write('\n')
-            fileA.write('\n\nMARC\n')
-            fileA.write(txtTxr.process_record(session, rec2).get_raw(session))
-            fileX.write(indentTxr.process_record(session, rec2).get_raw(session))
+#            fileA.write('\n\nMARC\n')
+#            fileA.write(txtTxr.process_record(session, rec2).get_raw(session))
+            
+#            fileX.write(indentTxr.process_record(session, rec2).get_raw(session))
             print i
 fileE.close()
 fileA.close()
