@@ -17,14 +17,13 @@
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
 
-     <subConfigs>
-        <path type="includeConfigs">configs.d</path>
-    </subConfigs>
+  <subConfigs>
+     <path type="includeConfigs">configs.d</path>
+  </subConfigs>
 
   <subConfigs>
   
 
-  
   	<subConfig type="queryFactory" id="baseQueryFactory">
 	   <objectType>cheshire3.queryFactory.SimpleQueryFactory</objectType>
     </subConfig>
