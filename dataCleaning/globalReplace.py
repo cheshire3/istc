@@ -56,7 +56,7 @@ for f in os.listdir(dir):
         except:
             pass
     for field in field9s:
-        if field.text == '%F300_C%':
+        if field.text == '%F300_C%' or field.text == '%f300_c%':
             parent = tree.xpath('//record')[0]
             parent.remove(tree.xpath('//datafield[@tag="300"]')[0])
             
