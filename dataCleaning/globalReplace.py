@@ -13,6 +13,7 @@ from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
 from cheshire3.web.www_utils import *
 cheshirePath = "/home/cheshire"
+sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 # Build environment...
 session = Session()
@@ -26,12 +27,13 @@ parser = db.get_object(session, 'LxmlParser')
 
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
 
-dict = {u'Sèlestat': u'S&#233;lestat',
-        u'Selestat': u'S&#233;lestat',
+dict = { '~~' : '&#176;'
+#        u'Sèlestat': u'S&#233;lestat',
+#        u'Selestat': u'S&#233;lestat',
 #        'Feldkirch,StB': 'Feldkirch, StB',
-        u'Kláater' : u'Kl&#225;&#353;ter',
-        u'Kl&#225;ater' : u'Kl&#225;&#353;ter',
-        u'Bucarest' : u'Bucharest'
+#        u'Kláater' : u'Kl&#225;&#353;ter',
+#        u'Kl&#225;ater' : u'Kl&#225;&#353;ter',
+#        u'Bucarest' : u'Bucharest'
 #        'Wellcome Institute': 'Wellcome Library',
 #        'Oslo UB' :'Oslo NL',
 #        'Oslo NB' :'Oslo NL',
@@ -46,14 +48,18 @@ for f in os.listdir(dir):
     file = open(dir + f, 'r')
     tree = etree.fromstring(file.read())
     file.close()
-    field9s = tree.xpath('//*[starts-with(@tag, "9")]/subfield[@code="a"]')
+    field9s = tree.xpath('//datafield[@tag="300"]/subfield|//datafield[@tag="500"]/subfield')
+#    field9s = tree.xpath('//*[starts-with(@tag, "9")]/subfield[@code="a"]')
     for field in field9s:
         try:
-            print field.text
             field.text = multiReplace(unicode(field.text), dict)
-            print field.text
         except:
             pass
+    for field in field9s:
+        if field.text == '%F300_C%':
+            parent = tree.xpath('//record')[0]
+            parent.remove(tree.xpath('//datafield[@tag="300"]')[0])
+            
     dataString = etree.tostring(tree)
     dataString = dataString.replace('&amp;#', '&#')
     dataString = dataString.replace('&amp;amp;', '&amp;')
