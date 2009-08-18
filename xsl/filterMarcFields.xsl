@@ -27,7 +27,6 @@
   		<xsl:copy-of select="."/>
   	</xsl:template>
   
- 
   	<xsl:template match="controlfield[@tag='008']">
   		<xsl:copy-of select="."/>
   	</xsl:template>
@@ -71,8 +70,11 @@
      			</xsl:when>
      			<xsl:otherwise/>
      		</xsl:choose>     		
-     	</xsl:if>
-     		  		
+     	</xsl:if>   		  		
+  	</xsl:template>
+  	
+  <xsl:template match="datafield[@tag='852']">
+  		<xsl:copy-of select="."/>
   	</xsl:template>
 
 	<xsl:template match="*"/>

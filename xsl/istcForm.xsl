@@ -65,7 +65,7 @@
 				
 				<div class="field">
 				<p><strong>Author(s): </strong>
-					<input name="author_ind" id="author_ind" type="hidden" value="0-0"/><br />
+					<input name="author_ind" id="author_ind" type="hidden" value="0-b"/><br />
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='100']">
 							<xsl:apply-templates select="//datafield[@tag='100']"/>
@@ -84,7 +84,7 @@
 			
 				<div class="field">
 				<p><strong>Title:</strong><br/>
-					<input name="245_ind" id="245_ind" type="hidden" value="1-0"/>
+					<input name="245_ind" id="245_ind" type="hidden" value="1-b"/>
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='245']/subfield[@code='a']">
 							<xsl:apply-templates select="//datafield[@tag='245']/subfield[@code='a']"/>
@@ -126,7 +126,7 @@
 					
 				<div class="field">
 				<p><strong>Format: </strong>
-					<input name="300_ind" id="300_ind" type="hidden" value="0-0"/>
+					<input name="300_ind" id="300_ind" type="hidden" value="b-b"/>
 					<xsl:choose>
 						<xsl:when test="//datafield[@tag='300']">
 							<xsl:apply-templates select="//datafield[@tag='300']"/>
@@ -203,7 +203,7 @@
 						<div id="referencestable" class="tablecontainer">
 							<table id="table_references"><tbody>
 								<tr><td class="melabel">Reference:</td><td> <input type="text" onfocus="setCurrent(this);" onkeyup="suggest(this.id, event);" autocomplete="off" name="references" id="510_a" class="halfwidth"></input><br/></td></tr>
-						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_other" autocomplete="off" class="halfwidth"/></td></tr>
+						   		<tr><td class="melabel">Other Details:</td><td> <input type="text" onfocus="setCurrent(this);" name="refpages" id="510_c" autocomplete="off" class="halfwidth"/></td></tr>
 						    	<tr></tr>
 						    </tbody></table>
 						</div>
@@ -224,7 +224,11 @@
 					<div class="addedcontainer">
 						<xsl:choose>
 							<xsl:when test="//datafield[@tag='510']">
-								<xsl:text>%RFRNC%</xsl:text>
+								<xsl:call-template name="accesspoint">
+									<xsl:with-param name="typename" select="'reference'"/>
+									<xsl:with-param name="tagnumber" select="'510'"/>
+								</xsl:call-template>
+								<!-- <xsl:text>%RFRNC%</xsl:text> -->
 							</xsl:when>
 							<xsl:otherwise>
 								<div id="addedreferences" style="display:none" class="added"><ul id="addedreferenceslist"></ul></div>
@@ -716,19 +720,19 @@
 		  	 		</xsl:choose>
 	  	 		</xsl:for-each>
 	  	 		<xsl:choose>
-	  	 			<xsl:when test="$tagnumber='100' or $tagnumber='245' or $tagnumber='959'">
+	  	 			<xsl:when test="$tagnumber='100' or $tagnumber='245'">
 	  	 				<xsl:value-of select="$tagnumber"/>
-	  	 				<xsl:text>_ind | 1-0</xsl:text>
+	  	 				<xsl:text>_ind | 1-b</xsl:text>
 	  	 				<xsl:value-of select="$separater"/>
 	  	 			</xsl:when>
 	  	 			<xsl:when test="$tagnumber='510'">
 	  	 				<xsl:value-of select="$tagnumber"/>
-	  	 				<xsl:text>_ind | 4-0</xsl:text>
+	  	 				<xsl:text>_ind | 4-b</xsl:text>
 	  	 				<xsl:value-of select="$separater"/>
 	  	 			</xsl:when>
 	  	 			<xsl:otherwise>
 	  	 				<xsl:value-of select="$tagnumber"/>
-	  	 				<xsl:text>_ind | 0-0</xsl:text>
+	  	 				<xsl:text>_ind | b-b</xsl:text>
 	  	 				<xsl:value-of select="$separater"/> 				
 	  	 			</xsl:otherwise>
 	  	 		</xsl:choose>
