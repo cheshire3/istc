@@ -1,3 +1,7 @@
+#!/home/cheshire/install/bin/python -i
+# -*- coding: utf-8 -*-
+
+
 from cheshire3.transformer import LxmlXsltTransformer
 from lxml import etree
 from cheshire3.baseObjects import Session
@@ -12,9 +16,9 @@ import cheshire3.cqlParser as cql
 import re
 
 
-def encodeFormat(self, elements):
-    string = ' '.join(elements)
-    return string.replace('4~~', '4<sup>to</sup>').replace('8~~', '8<sup>vo</sup>').replace('f~~', 'f<sup>o</sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '<sup>mo</sup>')
+#def encodeFormat(self, elements):
+#    string = ' '.join(elements)
+#    return string.replace('4~~', '4<sup>to</sup>').replace('8~~', '8<sup>vo</sup>').replace('f~~', 'f<sup>o</sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '<sup>mo</sup>')
     
 
 class ISTCPassThroughIndex(PassThroughIndex):
@@ -46,7 +50,7 @@ class ISTCPassThroughIndex(PassThroughIndex):
 class FormatTokenizer(SimpleTokenizer):
     
     def __init__(self, session, config, parent):
-        self.regexp = re.compile(' or |(?<=[\w]),| and | \(|&')
+        self.regexp = re.compile(' or | \(or |(?<=[\w]),| and | \(|&')
         
     def process_string(self, session, data): 
         output = []
@@ -65,13 +69,13 @@ class FormatTokenizer(SimpleTokenizer):
              
             
 
-class ISTCTransfomer(LxmlXsltTransformer):
+#class ISTCTransfomer(LxmlXsltTransformer):
     
-    def __init__(self, session, config, parent):
-        LxmlXsltTransformer.__init__(self, session, config, parent)
-        ns = etree.FunctionNamespace('http://www.cheshire3.org/ns/xsl/')
-        ns['format'] = encodeFormat
-        self.functionNamespace = ns
+#    def __init__(self, session, config, parent):
+#        LxmlXsltTransformer.__init__(self, session, config, parent)
+#        ns = etree.FunctionNamespace('http://www.cheshire3.org/ns/xsl/')
+#        ns['format'] = encodeFormat
+#        self.functionNamespace = ns
 
  
 class BibRefNormalizer(SimpleNormalizer):
@@ -128,7 +132,7 @@ class LocCountriesNormalizer(SimpleNormalizer):
 class FormatNormalizer(SimpleNormalizer):
    
     def process_string(self, session, data):
-        string = data.replace('4~~', '4to').replace('8~~', '8vo').replace('f~~', 'fo').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', 'mo')
+        string = data.replace(u'°', '').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside')
         return string
     
     
