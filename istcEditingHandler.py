@@ -172,57 +172,57 @@ class IstcEditingHandler:
                     try:
                         marc[0] = [''.join([l.value[5:9], l.value[17:20]])]
                     except:
-                        marc[0] = [' am    ']
+                        marc[0] = ['nam a  ']
                 elif l.name in multipleEntryFields or l.name[3:] in multipleEntryFields:
-                    if l.name == 'references':
-                        if l.value.find('|||') != -1:
-                            meList = l.value.split('|||')
-                            ind = '0-0'
-                            codelist = []
-                            a = ''
-                            other = ''
-                            for me in meList:
-                                if me.strip() != '': 
-                                    temp = me.split('|')
-                                    code = temp[0].split('_')[1].strip()
-                                    if code == 'ind':
+#                    if l.name == 'referencestest':
+#                        if l.value.find('|||') != -1:
+#                            meList = l.value.split('|||')
+#                            ind = '0-0'
+#                            codelist = []
+#                            a = ''
+#                            other = ''
+#                            for me in meList:
+#                                if me.strip() != '': 
+#                                    temp = me.split('|')
+#                                    code = temp[0].split('_')[1].strip()
+#                                    if code == 'ind':
+#                                        n = int(temp[0].split('_')[0])
+#                                        ind = temp[1]
+#                                    elif code == 'a':
+#                                        a = temp[1].strip()
+#                                    elif code == 'other':
+#                                        other = temp[1].strip()
+#                            tuple = ((ind.split('-')[0].strip(), ind.split('-')[1].strip(), [('a', '%s %s' % (a, other)) ]))
+#                            try:
+#                                marc[n].append(tuple)
+#                            except:
+#                                marc[n] = [tuple]
+#                    else:
+                    if l.value.find('|||') != -1:
+                        meList = l.value.split('|||')
+                        ind = 'b-b'
+                        codelist = []
+                        for me in meList:  
+                            self.logger.log(me)
+                            if me.strip() != '': 
+                                temp = me.split('|')
+                                code = temp[0].split('_')[1].strip()
+                                if code == 'ind':
+                                    try:
                                         n = int(temp[0].split('_')[0])
-                                        ind = temp[1]
-                                    elif code == 'a':
-                                        a = temp[1].strip()
-                                    elif code == 'other':
-                                        other = temp[1].strip()
-                            tuple = ((ind.split('-')[0].strip(), ind.split('-')[1].strip(), [('a', '%s %s' % (a, other)) ]))
-                            try:
-                                marc[n].append(tuple)
-                            except:
-                                marc[n] = [tuple]
-                    else:
-                        if l.value.find('|||') != -1:
-                            meList = l.value.split('|||')
-                            ind = '0-0'
-                            codelist = []
-                            for me in meList:  
-                                self.logger.log(me)
-                                if me.strip() != '': 
-                                    temp = me.split('|')
-                                    code = temp[0].split('_')[1].strip()
-                                    if code == 'ind':
-                                        try:
-                                            n = int(temp[0].split('_')[0])
-                                        except:
-                                            pass
-                                        ind = temp[1]
-                                    elif code == 'country':
-                                        n = int(temp[1])
-                                    else:
-                                        codelist.append((code, temp[1].strip()))
-                                        self.logger.log(codelist)
-                            tuple = ((ind.split('-')[0].strip(), ind.split('-')[1].strip(), codelist))
-                            try:
-                                marc[n].append(tuple)
-                            except:
-                                marc[n] = [tuple]
+                                    except:
+                                        pass
+                                    ind = temp[1]
+                                elif code == 'country':
+                                    n = int(temp[1])
+                                else:
+                                    codelist.append((code, temp[1].strip()))
+                                    self.logger.log(codelist)
+                        tuple = ((ind.split('-')[0].strip().replace('b', ' '), ind.split('-')[1].strip().replace('b', ' '), codelist))
+                        try:
+                            marc[n].append(tuple)
+                        except:
+                            marc[n] = [tuple]
                 else:
                     name = l.name.split('_')
                     if len(name) > 1:
@@ -237,7 +237,7 @@ class IstcEditingHandler:
         try:
             marc[0]
         except:
-            marc[0] = [' am    '] 
+            marc[0] = ['nam a  '] 
         
         authorTag = dict['author']['sel']
         if not authorTag == 'null':
@@ -272,7 +272,7 @@ class IstcEditingHandler:
                 marc[8] = [string]
 
             elif len(dict[k]) > 1:
-                inds = ['0', '0']
+                inds = [' ', ' ']
                 list = []
                 marc[k] = []
                 for y in dict[k].keys():              
@@ -280,12 +280,12 @@ class IstcEditingHandler:
                         inds = dict[k]['ind'].split('-')
                     else :
                         list.append((y, dict[k][y]))                    
-                marc[k].append((inds[0], inds[1], list)) 
+                marc[k].append((inds[0].replace('b', ' '), inds[1].replace('b', ' '), list)) 
         if date != None:
-            marc[959] = [('0', '0', [('a', '%s-%s' % (time.strftime('%Y%m%d'), session.user.username))])]
+            marc[959] = [(' ', ' ', [('a', '%s-%s' % (time.strftime('%Y%m%d'), session.user.username))])]
         marcObject = MARC()
         self.logger.log(marc)
-        marcObject.fields = marc           
+        marcObject.fields = marc       
         return marcObject.toMARCXML()
 
  
@@ -447,7 +447,7 @@ class IstcEditingHandler:
         page = unicode(read_file('editExtras.html'))
         content = unicode(formTxr.process_record(session, rec).get_raw(session))
         
-        content = content.replace('%RFRNC%', self._get_refxml(session, rec))
+#        content = content.replace('%RFRNC%', self._get_refxml(session, rec))
         content = content.replace('%OWNER%', owner)
         content = content.replace('%%INTERNALNOTES%%', notes)      
         page = page.replace('%CONTENT%', content)
@@ -492,7 +492,7 @@ class IstcEditingHandler:
         page = unicode(read_file('editExtras.html'))
         content = unicode(formTxr.process_record(session, rec).get_raw(session))
         
-        content = content.replace('%RFRNC%', self._get_refxml(session, rec))
+#        content = content.replace('%RFRNC%', self._get_refxml(session, rec))
         content = content.replace('%OWNER%', session.user.username)
         content = content.replace('%%INTERNALNOTES%%', notes)      
         page = page.replace('%CONTENT%', content)
@@ -502,46 +502,45 @@ class IstcEditingHandler:
 ####################################################################################################
 
 
-
-    def _get_refxml(self, session, rec):
-        bibRefNormalizer = db.get_object(session, 'BibRefNormalizer')
-        f510 = rec.process_xpath(session, '//datafield[@tag ="510"]/subfield/text()')
-        if not len(f510):
-            return '<div id="addedreferences" style="display:none" class="added" onmouseout="getFormRef()"><ul id="addedreferenceslist"></ul></div>'
-        else:
-            output = []
-            for index, t in enumerate(f510):
-                t = unicode(t)
-                abbrev = bibRefNormalizer.process_string(session, t)
-                self.logger.log('------------------------------------%s------------------------------' % abbrev)
-                other = t[len(abbrev) + 1:]
-                session.database = dbrefs.id
-                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev.replace('*', '\*').replace('?', '\?').replace('"', '\\"')))
-                rs = dbrefs.search(session, q)
-                if len(rs):
-                    full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
-                else:
-                    full = abbrev
-                hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev.replace('"', '&quot;'), other)
-
-                output.extend([u'<li style="position: relative;" id="lireferences_formgen%d">' % index ,
-                               u'<div id="references_formgen%d">' % index,
-                               u'<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
-                               u'<img class="addedimage" src = "/istc/images/remove.png" onmouseover="this.src=\'/istc/images/remove-hover.png\';" onmouseout="this.src=\'/istc/images/remove.png\';" id="delete_formgen%d" /></a>' % index,
-                               u'<a onclick="entryUp(\'references_formgen%d\');" title="move up">' % index,
-                               u'<img class="addedimage" src = "/istc/images/up.png" onmouseover="this.src=\'/istc/images/up-hover.png\';" onmouseout="this.src=\'/istc/images/up.png\';" id="up_formgen%d"/></a>' % index,
-                               u'<a onclick="entryDown(\'references_formgen%d\');" title="move down">' % index,
-                               u'<img class="addedimage" src = "/istc/images/down.png" onmouseover="this.src=\'/istc/images/down-hover.png\';" onmouseout="this.src=\'/istc/images/down.png\';" id="down_formgen%d"/></a>' % index,                                               
-                               u'<a onclick="insertAbove(\'references_formgen\', %d);" title="insert above">' % index,
-                               u'<img class="addedimage" src = "/istc/images/insert.png" onmouseover="this.src=\'/istc/images/insert-hover.png\';" onmouseout="this.src=\'/istc/images/insert.png\';" id="insert_formgen%d"/></a>' % index,                                               
-                               u'</div>',
-                               u'<div class="multipleEntry">',
-                               u'<p class="addedString" title="%s"><a onclick="editEntry(\'references_formgen\', %d);">' % (full, index), 
-                               u'%s %s' % (abbrev, other),
-                               u'</a></p></div></div>',
-                               u'<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
-                               u'</li>'])
-            return u'<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ''.join(output)
+#
+#    def _get_refxml(self, session, rec):
+#        bibRefNormalizer = db.get_object(session, 'BibRefNormalizer')
+#        f510 = rec.process_xpath(session, '//datafield[@tag ="510"]/subfield/text()')
+#        if not len(f510):
+#            return '<div id="addedreferences" style="display:none" class="added" onmouseout="getFormRef()"><ul id="addedreferenceslist"></ul></div>'
+#        else:
+#            output = []
+#            for index, t in enumerate(f510):
+#                t = unicode(t)
+#                abbrev = bibRefNormalizer.process_string(session, t)
+#                other = t[len(abbrev) + 1:]
+#                session.database = dbrefs.id
+#                q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (abbrev.replace('*', '\*').replace('?', '\?').replace('"', '\\"')))
+#                rs = dbrefs.search(session, q)
+#                if len(rs):
+#                    full =  rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]
+#                else:
+#                    full = abbrev
+#                hidden = '510_a | %s ||| 510_other | %s ||| 510_ind | 4-0 ||| ' % (abbrev.replace('"', '&quot;'), other)
+#
+#                output.extend([u'<li style="position: relative;" id="lireferences_formgen%d">' % index ,
+#                               u'<div id="references_formgen%d">' % index,
+#                               u'<div class="icons"><a onclick="deleteEntry(\'references_formgen%d\');" title="delete entry">' % index,
+#                               u'<img class="addedimage" src = "/istc/images/remove.png" onmouseover="this.src=\'/istc/images/remove-hover.png\';" onmouseout="this.src=\'/istc/images/remove.png\';" id="delete_formgen%d" /></a>' % index,
+#                               u'<a onclick="entryUp(\'references_formgen%d\');" title="move up">' % index,
+#                               u'<img class="addedimage" src = "/istc/images/up.png" onmouseover="this.src=\'/istc/images/up-hover.png\';" onmouseout="this.src=\'/istc/images/up.png\';" id="up_formgen%d"/></a>' % index,
+#                               u'<a onclick="entryDown(\'references_formgen%d\');" title="move down">' % index,
+#                               u'<img class="addedimage" src = "/istc/images/down.png" onmouseover="this.src=\'/istc/images/down-hover.png\';" onmouseout="this.src=\'/istc/images/down.png\';" id="down_formgen%d"/></a>' % index,                                               
+#                               u'<a onclick="insertAbove(\'references_formgen\', %d);" title="insert above">' % index,
+#                               u'<img class="addedimage" src = "/istc/images/insert.png" onmouseover="this.src=\'/istc/images/insert-hover.png\';" onmouseout="this.src=\'/istc/images/insert.png\';" id="insert_formgen%d"/></a>' % index,                                               
+#                               u'</div>',
+#                               u'<div class="multipleEntry">',
+#                               u'<p class="addedString" title="%s"><a onclick="editEntry(\'references_formgen\', %d);">' % (full, index), 
+#                               u'%s %s' % (abbrev, other),
+#                               u'</a></p></div></div>',
+#                               u'<input id="references_formgen%dxml" name="references" value="%s" type="hidden" />' % (index, hidden),
+#                               u'</li>'])
+#            return u'<div style="display: block;" class="added" id="addedreferences"><ul id="addedreferenceslist">%s</ul></div>' % ''.join(output)
           
            
     def show_editMenu(self, type):

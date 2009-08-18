@@ -31,7 +31,7 @@ var proxRelationList = new Array('=|||as a phrase', 'exact|||exactly');
 var dateRelationList = new Array('%3C|||before this year', '%3E|||after this year', 'exact|||exactly');
 var indexList = new Array('cql.anywhere|||General Keywords', 'dc.creator|||Author', 'dc.title|||Title', 'bib.originPlace|||Place of Printing', 'istc.countryOfPrint|||Country of Printing',  'dc.publisher|||Printer', 'istc.referencedBy|||Bibliographical References', 'dc.identifier|||ISTC Number', 'dc.format|||Format', 'norzig.posessingInstitution|||Location of Copy', 'istc.countryOfCopy|||Country of Copy', 'c3.idx-year|||Start or exact Year (008)','dc.date|||Publication Date', 'dc.language|||Language', 'istc.BLshelfmark|||BL Shelfmark');
 
-var formatList = new Array ('4to|||4to', '8vo|||8vo', '16mo|||16mo', 'fo|||fo', 'broadside|||Broadside');
+var formatList = new Array ('4|||4', '8|||8', '16|||16', 'f|||f', 'broadside|||Broadside');
 var langList = new Array('Breton|||Breton', 'Catalan|||Catalan', 'Church Slavonic|||Church Slavonic', 'Croatian|||Croatian', 'Czech|||Czech', 'Danish|||Danish', 'Dutch|||Dutch', 'English|||English', 'Frisian|||Frisian', 'French|||French', 'German|||German', 'Greek|||Greek', 'Hebrew|||Hebrew', 'Italian|||Italian', 'Latin|||Latin', 'Portuguese|||Portuguese', 'Provencal / Occitan|||Proven\u00E7al / Occitan', 'Sardinian|||Sardinian', 'Spanish|||Spanish', 'Swedish|||Swedish');
 var countryList = new Array('Balkans|||Balkans', 'Bohemia and Moravia|||Bohemia and Moravia', 'England|||England', 'France|||France (includes French-speaking Switzerland)', 'Germany|||Germany (includes German-speaking Switzerland, Austria & Alsace)', 'Hungary|||Hungary', 'Italy|||Italy', 'Low Countries|||Low Countries (includes towns under Burgundian rule)', 'Poland|||Poland', 'Portugal|||Portugal', 'Scandinavia|||Scandinavia', 'Spain|||Spain');
 var locList = new Array('British Isles|||British Isles', 'Belgium|||Belgium', 'France|||France', 'Germany|||Germany', 'Italy|||Italy', 'Spain/Portugal|||Spain/Portugal', 'Netherlands|||Netherlands', 'Austria|||Austria', 'U.S.A.|||U.S.A.', 'Other European|||Other European', 'Other|||Other', 'Doubtful|||Doubtful');
@@ -193,9 +193,8 @@ function createClause(current, clauseState){
 	var pElem = document.createElement('p')
 	pElem.setAttribute('id', 'searchClause' + current);
 	pElem.setAttribute('class', 'searchClause')
-
 	// relation select
-	var rSelIdx = parts.shift();
+	var iSelIdx = parts.shift();
 	// complex conditional to decide available relations
 	var relationList = new Array()
 	if (iSelIdx != 7 && iSelIdx != 8 && iSelIdx != 13 && iSelIdx != 14) { var relationList = kwRelationList; }
@@ -214,7 +213,6 @@ function createClause(current, clauseState){
 	inputElem.id = 'fieldcont' + current;
 	
 	// index select
-	var iSelIdx = parts.shift();
 	var idxSelect = createSelect('fieldidx' + current, indexList, iSelIdx)
 	idxSelect.onchange = new Function('updateSelects(' + current + ');')
 	pElem.appendChild(document.createTextNode(' '))
@@ -222,7 +220,7 @@ function createClause(current, clauseState){
         pElem.appendChild(document.createTextNode(' '  ))
         
 	pElem.appendChild(document.createTextNode(' for: '))
-
+	var rSelIdx = parts.shift();
 	// last entered value
 	inputElem.value = parts.join(',');
 	pElem.appendChild(inputElem);
@@ -246,7 +244,6 @@ function createSelect(name, optionList, selIdx){
 		var optionElem = document.createElement('option');
 		optionElem.value = optionData[0];
 		optionElem.innerHTML = optionData[1];
-		
 		if (i == selIdx) {optionElem.selected = 'selected'}
 		selectElem.appendChild(optionElem);
 	}
@@ -271,7 +268,7 @@ function resetForm() {
 	}
 	addSearchClause(0);
 	document.getElementById('addClauseLink').href = 'javascript:addSearchClause(1);';
-	setCookie('eadsearchform', '');
+	setSearchForm('');
 }
 
 function formToString() {
@@ -305,7 +302,6 @@ function formFromString(s) {
 	} else {
 		var parts = new Array()
 	}
-	
 	if (parts.length == 2) {
 		var clauseList = parts[0].split('||');
 		var boolList = parts[1].split('||');

@@ -349,7 +349,16 @@ class IstcHandler:
             
             menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
                              '<div class="menugrp">',
-                             '<div class="menubody" id="topmenu">',
+                             '<div class="menubody"  id="modifysearch">',
+                             '<div class="menuitem"><a href="search.html">Modify Search<img class="menu" src="/istc/images/previous.gif" alt=""  border="0" align="middle"/></a></div><br />',
+                             '</div><br />',
+                            '</div>',
+                            '<div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>'])
+            
+            
+            menubits.extend(['<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div>',
+                             '<div class="menugrp">',
+                             '<div class="menubody"  id="topmenu">',
                             '<div class="menuitem"><a href="#" onclick="submitForm(\'print\')">Print Selected<img class="menu" src="/istc/images/print.gif" alt=""  border="0" align="middle"/></a></div><br />',
                             '<div class="menuitem"><a href="#" onclick="submitForm(\'email\')">Email Selected<img class="menu" src="/istc/images/email.gif" alt=""  border="0" align="middle"/></a></div><br />',
                             '<div class="menuitem"><a href="#"  onclick="submitForm(\'save\')">Save Selected<img class="menu" src="/istc/images/download.gif" alt=""  border="0" align="middle"/></a></div><br />',
@@ -417,6 +426,36 @@ class IstcHandler:
         else:
             raise ValueError(what)
 
+
+    def _toCookieString(self, what):
+        text = []
+        if isinstance(what, Triple):
+            text.append(self._interpret(what.leftOperand))
+            try:
+                bl = boolNames[what.boolean.value]
+            except:
+                bl = what.boolean.value
+            text.append(' %s ' % bl)        
+            if isinstance(what.rightOperand, Triple):
+                text.append('(')
+                text.append(self._interpret(what.rightOperand))
+                text.append(')')
+            else:
+                text.append(self._interpret(what.rightOperand))            
+            return ''.join(text)
+        elif isinstance(what, SearchClause):
+            try:
+                idx = idxNames[what.index.value]
+            except:
+                idx = what.index.value
+            text.append(idx)
+            text.append(what.relation.value)
+            text.append('"%s"' % what.term.value)
+            return ' '.join(text)
+        else:
+            raise ValueError(what)
+
+
     def get_record(self, session, form):
         session.database = 'db_istc'
         txr = db.get_object(session, 'recordTxr-screen')
@@ -434,11 +473,26 @@ class IstcHandler:
             else: 
                 countString = 'Record 1 of 1'
                 rlNav = ''
-                navstring = ''                    
+                navstring = ''  
+                field510 = rec.process_xpath(session, '//datafield[@tag="510"]/subfield[@code="a"]')
+                BSBno = '';
+                for f in field510:
+                    if f.text.find('BSB-Ink') != -1:
+                        BSBno = f.text[f.text.find(' ')+1:]
+               
+                bsburl = None
+                field530 = rec.process_xpath(session, '//datafield[@tag="530"]/subfield[@code="u"]')
+                for f in field530:
+                    if f.text.find('mdzx.bib-bvb.de') != -1:
+                        bsburl = f.text
+                if bsburl == None:
+                    bsburl = 'http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno
+               
+                                  
                 #create extra bits for navigation menu            
                 menu = menuTxr.process_record(session, rec)
                 doc = self._transform_record(rec, txr, 'false', 'all')
-                return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
+                return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>').replace('%bsburl%', bsburl)))
 
         
         
@@ -470,22 +524,38 @@ class IstcHandler:
             navstring = ''
 
         rlNav = '<div class="curveadjustmenttop"><img src="/istc/images/topmenucurve.gif" width="133" height="8" border="0" alt="" /></div><div class="menugrp"><div class="menubody" id="backtoresults"><div class="menuitem"><a  href="search.html?operation=search&rsid=%s">Back to Results List<br/><img src="/istc/images/previous.gif" alt=" Back " name="back" border="0" align="middle"/></a></div></div></div><div class="curveadjustmentbottom"><img src="/istc/images/bottommenucurve.gif" width="133" height="8" border="0" alt="" /></div>' % rsid
-        
+              
         if len(rs):
-            rec = rs[id].fetch_record(session)                               
+            rec = rs[id].fetch_record(session)           
+            #find the BSBInk number in the references
+    
+            field510 = rec.process_xpath(session, '//datafield[@tag="510"]/subfield[@code="a"]')
+            BSBno = '';
+            for f in field510:
+                if f.text.find('BSB-Ink') != -1:
+                    BSBno = f.text[f.text.find(' ')+1:]
+           
+            bsburl = None
+            field530 = rec.process_xpath(session, '//datafield[@tag="530"]/subfield[@code="u"]')
+            for f in field530:
+                if f.text.find('mdzx.bib-bvb.de') != -1:
+                    bsburl = f.text
+            if bsburl == None:
+                bsburl = 'http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno
+               
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
             doc = self._transform_record(rec, txr, 'false', locations)
-            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav).replace('%%%RSID%%%', str(rsid)).replace('%%%ID%%%', str(id)), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>')))
+            return ('<div id="maincontent" class="withmenu"><div id="menu">%s</div><div id="content"><h1>Record Details</h1>%s</div></div>' % (menu.get_raw(session).replace('%BACKTORESULTS%', rlNav).replace('%%%RSID%%%', str(rsid)).replace('%%%ID%%%', str(id)), doc.replace('%nav%', navstring).replace('%counter%', countString).replace('&lt;/', '</').replace('&lt;a', '<a').replace('&gt;', '>').replace('%bsburl%', bsburl)))
         else:
             raise ValueError(id)
  
  
-        
     def get_usaRefs(self, session, rec):
         session.database = db2.id
-        q = qf.get_query(session, 'c3.idx-key-usa exact "foo"')
         usaRefs = []
+        otherDict = {}
+        qstring = []
         for node in rec.process_xpath(session, '//datafield[@tag="952"]'):
             ref = node.xpath('subfield[@code="a"]/text()')[0]
             other = node.xpath('subfield[@code="b"]/text()')
@@ -493,21 +563,47 @@ class IstcHandler:
                 other = ' %s' % ' '.join(other)
             else:
                 other = ''
-            q.term.value = ref
+            otherDict[ref] = other
+            qstring.append('c3.idx-key-usa exact "%s"' % ref)
+        if len(qstring) > 0:
+            q = qf.get_query(session, ' or '.join(qstring))
             rs = db2.search(session, q)
-            if len(rs):
-                usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other)) 
-            else :
-                while ref.rfind(' ') != -1 and not len(rs):
-                    ref = ref[:ref.rfind(' ')].strip()
-                    q.term.value = ref
-                    rs = db2.search(session, q)
-                if len(rs):
-                    usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other))
-                else:
-                    usaRefs.append('%s%s' % (ref, other))
+            idx = db2.get_object(session, 'idx-location_usa')
+            rs.order(session, idx)
+            for r in rs:
+                rec = r.fetch_record(session)
+                usaRefs.append('%s%s' % (rec.process_xpath(session, '//full/text()')[0].strip(), otherDict[rec.process_xpath(session, '//code/text()')[0].strip()]))
+            return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
+        else:
+            return ''
+            
         
-        return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
+#    def get_usaRefs(self, session, rec):
+#        session.database = db2.id
+#        q = qf.get_query(session, 'c3.idx-key-usa exact "foo"')
+#        usaRefs = []
+#        for node in rec.process_xpath(session, '//datafield[@tag="952"]'):
+#            ref = node.xpath('subfield[@code="a"]/text()')[0]
+#            other = node.xpath('subfield[@code="b"]/text()')
+#            if len(other):
+#                other = ' %s' % ' '.join(other)
+#            else:
+#                other = ''
+#            q.term.value = ref
+#            rs = db2.search(session, q)
+#            if len(rs):
+#                usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other)) 
+#            else :
+#                while ref.rfind(' ') != -1 and not len(rs):
+#                    ref = ref[:ref.rfind(' ')].strip()
+#                    q.term.value = ref
+#                    rs = db2.search(session, q)
+#                if len(rs):
+#                    usaRefs.append('%s%s' % (rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0].strip(), other))
+#                else:
+#                    usaRefs.append('%s%s' % (ref, other))
+#        
+#        return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
     
 
 
@@ -523,65 +619,21 @@ class IstcHandler:
             rs = db3.search(session, q)
             if len(rs):               
                 recRefs.append('<strong>%s:</strong> %s' % (origRef, rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]))
-            else :
-                while ref.rfind(' ') != -1 and not len(rs):
-                    ref = ref[:ref.rfind(' ')].strip()
-                    ref = ref.replace('*', '\*')
-                    ref = ref.replace('?', '\?')
-                    q.term.value = ref
-                    rs = db3.search(session, q)
-                if len(rs):
-                    recRefs.append('<strong>%s:</strong> %s' % (origRef, rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]))
-                else:
-                    recRefs.append('<strong>%s</strong>' % origRef)
+#            else :
+#                while ref.rfind(' ') != -1 and not len(rs):
+#                    ref = ref[:ref.rfind(' ')].strip()
+#                    ref = ref.replace('*', '\*')
+#                    ref = ref.replace('?', '\?')
+#                    q.term.value = ref
+#                    rs = db3.search(session, q)
+#                if len(rs):
+#                    recRefs.append('<strong>%s:</strong> %s' % (origRef, rs[0].fetch_record(session).process_xpath(session, '//full/text()')[0]))
+            else:
+                recRefs.append('<strong>%s</strong>' % origRef)
         output = []
         for line in recRefs:
             output.append(externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % line.encode('utf-8').replace('&', '&amp;')))).get_raw(session))
         return '<br />'.join(output)
-        #raise ValueError(externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '<br />'.join(recRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session))
-        #return externalDataTxr.process_record(session, docParser.process_document(session, StringDocument('<string>%s</string>' % '<br></br>'.join(recRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
-    
-            
-            
-            
-#    def get_fullRefs(self, session, form):
-#        ref = form.get('q', None)
-#        ref = ref.replace('*', '\*')
-#        ref = ref.replace('?', '\?')
-#        session.database = db3.id
-#        q = qf.get_query(session, 'c3.idx-key-refs exact "%s"' % (ref))
-#        rs = db3.search(session, q)
-#        if len(rs):
-#            recRefs = rs[0].fetch_record(session).get_xml(session)
-#        else :
-#            while ref.rfind(' ') != -1 and not len(rs):
-#                ref = ref[:ref.rfind(' ')].strip()
-#                q.term.value = ref.decode('utf-8')
-#                rs = db3.search(session, q)
-#            if len(rs):
-#                recRefs = rs[0].fetch_record(session).get_xml(session)
-#            else:
-#                recRefs = '<record></record>' 
-#        return recRefs
-        
-        
-#    def get_usaRefs(self, session, form):
-#        ref = form.get('q', None)
-#        session.database = db2.id
-#        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % (ref.split(' ')[0].strip()))
-#        rs = db2.search(session, q)
-#        if len(rs):
-#            recRefs = rs[0].fetch_record(session).get_xml(session)
-#        else :
-#            while ref.rfind(' ') != -1 and not len(rs):
-#                ref = ref[:ref.rfind(' ')].strip()
-#                q.term.value = ref.decode('utf-8')
-#                rs = db2.search(session, q)
-#            if len(rs):
-#                recRefs = rs[0].fetch_record(session).get_xml(session)
-#            else:
-#                recRefs = '<record></record>'
-#        return recRefs     
 
     
     def printRecs(self, form):

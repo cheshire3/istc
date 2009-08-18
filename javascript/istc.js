@@ -40,12 +40,28 @@ function addLoadEvent(func) {
 //================================================================================================
 //cookie setting 
 
-function setSearch(rsid, id, istc){
+function setResults(rsid, id, istc){
 
 	document.cookie='searchResults=' + rsid + '-' + id + '; path=/';	
 	location.href="../edit/edit.html?operation=edit&q=" + istc;
 }
 
+function setSearchForm(value){
+	document.cookie='searchForm=' + value + '; path=/';
+}
+
+function getSearchForm(name) {
+  var cookieList = document.cookie.split(';');
+  for (var x = 0; x < cookieList.length; x++) {
+    var cookie = cookieList[x]
+    while(cookie.charAt(0) == ' '){cookie = cookie.substr(1, cookie.length)}
+    cookie = cookie.split('=');
+    if( cookie[0] == escape(name) || cookie[0] == name) { 
+      return unescape(cookie[1]); 
+    }
+  }
+  return '';
+}
 
 
 //================================================================================================

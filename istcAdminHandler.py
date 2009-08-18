@@ -574,6 +574,7 @@ class IstcAdminHandler:
 
     def get_libraryData(self, form, req):
         wstring = form.get('q', None)
+        libraryfilter = form.get('libraryfilter', 'off')
         format = form.get('format', 'xml')
         outputfilter = form.get('filter', 'none').value
         xslt = etree.XSLT(etree.parse(os.path.join(dbPath, 'xsl', 'filterMarcFields.xsl')))
@@ -610,13 +611,16 @@ class IstcAdminHandler:
             if len(rs):
                 if format == 'xml':
                     indentTxr = db.get_object(session, 'indentingTxr')
-                    output = [] 
+                    output = ['<?xml version="1.0" encoding="UTF-8"?>\n<collection>\n'] 
                     for r in rs :
                         newdoc = StringDocument(etree.tostring(xslt(r.fetch_record(session).get_dom(session), **params)))
                         newrec = xmlp.process_document(session, newdoc)
+                        if libraryfilter == 'on':
+                            newrec = self._filter_lib(newrec, wstring)
                         output.append(indentTxr.process_record(session, newrec).get_raw(session))
+                    output.append('</collection>')
                     f = open(cheshirePath + '/cheshire3/www/istc/output/istc-marc21xml.xml', 'w')
-                    f.write('\n\n'.join(output))
+                    f.write(''.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-marc21xml.xml"
@@ -633,6 +637,8 @@ class IstcAdminHandler:
                     output = [] 
                     for r in rs :
                         rec = LxmlRecord(xslt(r.fetch_record(session).get_dom(session), **params))
+                        if libraryfilter == 'on':
+                            rec = self._filter_lib(rec, wstring)                        
                         output.append(marcAlephTxr.process_record(session, rec).get_raw(session))
                     f = open(cheshirePath + '/cheshire3/www/istc/output/istc-aleph.txt', 'w')
                     f.write('\n\n'.join(output))
@@ -652,6 +658,8 @@ class IstcAdminHandler:
                     output = [] 
                     for r in rs :
                         rec = LxmlRecord(xslt(r.fetch_record(session).get_dom(session), **params))
+                        if libraryfilter == 'on':
+                            rec = self._filter_lib(rec, wstring)   
                         output.append(txr.process_record(session, rec).get_raw(session))
                     f = codecs.open(cheshirePath + '/cheshire3/www/istc/output/istc-exchange.txt', 'w', 'utf-8')
                     f.write(''.join(output))
@@ -675,7 +683,39 @@ class IstcAdminHandler:
             content = tmpl.replace('%CONTENT%', content)
             self.send_html(content, req)
         
-                       
+    def _filter_lib(self, rec, wstring):
+        words = wstring.split(';')
+        tree = etree.fromstring(rec.get_xml(session))
+        field9s = tree.xpath('//*[starts-with(@tag, "9")]/subfield[@code="a"]')
+        parent = tree.xpath('//record')[0]
+        for f in field9s:
+            match = False
+            for w in words:
+                wordset = w.split()
+                if len(wordset) == 1:
+                    if f.text.find(wordset[0].strip()) != -1:
+                        match = True
+                elif len(wordset) == 0:
+                    pass                
+                else:
+                    multiplematch = False
+                    for word in wordset:
+                        if f.text.find(word.strip()) != -1:
+                            multiplematch = True
+                        else:
+                            multiplematch = False
+                            break
+                    if multiplematch == True:
+                        match = True
+            if match == False:
+                parent.remove(f.xpath('parent::datafield')[0])
+            
+        doc = StringDocument(etree.tostring(tree))
+        rec = xmlp.process_document(session, doc)
+            
+        return rec
+
+                  
     def handle(self, req):
         form = FieldStorage(req, True)  
                 
