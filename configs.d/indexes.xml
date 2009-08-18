@@ -266,7 +266,7 @@
     </subConfig>
    
    
-       <subConfig type="index" id="idx-printer-exact">
+    <subConfig type="index" id="idx-printer-exact">
     	<objectType>cheshire3.index.SimpleIndex</objectType>
     	<paths>
     		<object type="indexStore" ref="indexStore" />
@@ -296,7 +296,7 @@
 	        <object type="recordStore" ref="recordStore"/>		
 		</paths>		
 		<source>
-		<xpath>datafield[@tag='510']</xpath>
+		<xpath>datafield[@tag='510']/subfield[@code='a']</xpath>
 			<process>
           		<object type="workflow" ref="ProxExtractorWorkflow"/>
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />	
@@ -317,7 +317,7 @@
 	        <object type="recordStore" ref="recordStore"/>		
 		</paths>		
 		<source>
-		<xpath>datafield[@tag='510']</xpath>
+		<xpath>datafield[@tag='510']/subfield[@code='a']</xpath>
 			<process>
           		<object type="extractor" ref="SimpleExtractor"/>
     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />	
@@ -332,10 +332,10 @@
 	        <object type="recordStore" ref="recordStore"/>    		
     	</paths>
     	<source>
-    		<xpath>datafield[@tag='510']</xpath>
+    		<xpath>datafield[@tag='510']/subfield[@code='a']</xpath>
     		<process>
 	          <object type="extractor" ref="SimpleExtractor"/>
-			  <object type="normalizer" ref="BibRefNormalizer"/>
+			  <!--<object type="normalizer" ref="BibRefNormalizer"/>-->
     		  <object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
 	        </process>
     	</source>
@@ -395,7 +395,6 @@
 	  		<setting type="sortStore">1</setting>
 	  </options>
       </subConfig>
-
 
     <subConfig type="index" id="idx-format">
     	<objectType>cheshire3.index.SimpleIndex</objectType>

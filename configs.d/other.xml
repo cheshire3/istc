@@ -46,7 +46,7 @@
 	<!-- display transformers -->
  
 	<subConfig type="transformer" id="recordTxr-screen">
-	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -56,7 +56,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-print">
-	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -66,7 +66,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-save">
-	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
@@ -76,7 +76,7 @@
 	</subConfig>
 	
 	<subConfig type="transformer" id="recordTxr-email">
-	    <objectType>ISTCextras.ISTCextensions.ISTCTransfomer</objectType>
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/recordDisplay.xsl</path>
 	    </paths>
