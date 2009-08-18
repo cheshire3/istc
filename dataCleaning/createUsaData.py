@@ -4,7 +4,7 @@
 
 from lxml import etree
 
-datafile = "/home/cheshire/cheshire3/dbs/istc/dataCleaning/newUsaData.txt"
+datafile = "/home/cheshire/cheshire3/dbs/istc/dataCleaning/newusadata.csv"
 outputfile = "/home/cheshire/cheshire3/dbs/istc/usaData/usaCodes.xml"
 
 
@@ -15,7 +15,7 @@ output = []
 
 for l in lines:
     toks = l.split('\t')
-    output.append('<record><code>%s</code><full>%s</full></record>' % (toks[0], toks[1].replace('&', '&amp;').strip()))
+    output.append('<record><code>%s</code><full>%s, %s</full></record>' % (toks[0], toks[2].replace('&', '&amp;').strip(), toks[1].replace('&', '&amp;').strip()))
 
 tree = etree.fromstring('<usa>%s</usa>' % ''.join(output))           
 parsedXslt = etree.parse("/home/cheshire/cheshire3/dbs/istc/xsl/reindent.xsl")
