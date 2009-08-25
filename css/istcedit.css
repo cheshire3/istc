@@ -117,6 +117,10 @@ div#gotodiv {
 	width: 655px;
 	}
 	
+.tablewidthwithlabel {
+	width: 630px;
+	}
+	
 .halfwidth {
 	width: 225px;
 	}
@@ -407,8 +411,8 @@ div#refcontainer .tablecontainer, div#holdingscontainer .tablecontainer {
 
 
 #fullrefcontainer, #usacontainer {	
-	width: 370px; 
-	margin-left: 15px;
+	width: 700px; 
+	margin-left: 5px;
 }
 
 
@@ -432,9 +436,9 @@ div#refcontainer .tablecontainer, div#holdingscontainer .tablecontainer {
 
 #refdisplay p, #usadisplay p{
 	font-size: 10pt;
-	max-width: 450px;
+	max-width: 700px;
 	float: left;
-	min-height: 100px;
+	min-height: 80px;
 	margin-top: 0px;	
 }
 
