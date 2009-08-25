@@ -353,9 +353,10 @@ function addEntry(s){
     nameCount++;   	 
 	clearRef();
 	clearUsa();
-	if (s == 'holdings'){
+	checkUSA();
+/*	if (s == 'holdings'){
 		document.getElementById('holdings_country').selectedIndex = 0;
-	}
+	}*/
 	if (s == 'blshelfmarks'){
 		resetShelfmarks();
 	}
