@@ -54,9 +54,9 @@
 	 
 	 <xsl:variable name="ilc">
 			<xsl:if test="//datafield[@tag='510']/subfield[@code='a']">
-				<xsl:for-each select="//datafield[@tag='510']/subfield[@code='a']">
-					<xsl:if test="starts-with(., 'ILC')">
-						<xsl:value-of select="substring-after(., ' ')"/>
+				<xsl:for-each select="//datafield[@tag='510']">
+					<xsl:if test="starts-with(./subfield[@code='a'], 'ILC')">
+						<xsl:value-of select="./subfield[@code='c']/text()"/> 
 					</xsl:if>
 				</xsl:for-each>
 			</xsl:if>
@@ -686,6 +686,12 @@
 												<xsl:attribute name="href">
 													<xsl:text>http://watermark.kb.nl/findWM.asp?biblio=ILC </xsl:text>
 													<xsl:choose>
+														<xsl:when test="string-length($ilc) &lt; 2">
+															<xsl:text>000</xsl:text><xsl:value-of select="$ilc"/>
+														</xsl:when>
+														<xsl:when test="string-length($ilc) &lt; 3">
+															<xsl:text>00</xsl:text><xsl:value-of select="$ilc"/>
+														</xsl:when>
 														<xsl:when test="string-length($ilc) &lt; 4">
 															<xsl:text>0</xsl:text><xsl:value-of select="$ilc"/>
 														</xsl:when>
