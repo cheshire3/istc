@@ -529,11 +529,11 @@ class IstcHandler:
             rec = rs[id].fetch_record(session)           
             #find the BSBInk number in the references
     
-            field510 = rec.process_xpath(session, '//datafield[@tag="510"]/subfield[@code="a"]')
+            field510 = rec.process_xpath(session, '//datafield[@tag="510"]')
             BSBno = '';
             for f in field510:
-                if f.text.find('BSB-Ink') != -1:
-                    BSBno = f.text[f.text.find(' ')+1:]
+                if f.xpath('./subfield[@code="a"]')[0].text.find('BSB-Ink') != -1:
+                    BSBno = f.xpath('./subfield[@code="c"]')[0].text
            
             bsburl = None
             field530 = rec.process_xpath(session, '//datafield[@tag="530"]/subfield[@code="u"]')
