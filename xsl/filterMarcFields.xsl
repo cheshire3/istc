@@ -26,6 +26,10 @@
   	<xsl:template match="controlfield[@tag='001']">
   		<xsl:copy-of select="."/>
   	</xsl:template>
+  	
+  	<xsl:template match="controlfield[@tag='003']">
+  		<xsl:copy-of select="."/>
+  	</xsl:template>
   
   	<xsl:template match="controlfield[@tag='008']">
   		<xsl:copy-of select="."/>
