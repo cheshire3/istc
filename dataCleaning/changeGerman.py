@@ -20,29 +20,12 @@ indentingTxr = db.get_object(session, 'indentingTxr')
 parser = db.get_object(session, 'LxmlParser')
 
 
-#remove all 997 tags 
+#remove all 997 tags or all 997 tags except those with private data (depends on the data being provided)
+keepPrivate = True 
+
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
 
-for f in os.listdir(dir):
-    file = open(dir + f, 'r')
-    targetTree = etree.fromstring(file.read())
-    file.close()
-    
-    parent = targetTree.xpath('/record')[0]
-    
-    
-    germanlocs = targetTree.xpath('//datafield[@tag="997"]')
-    for entry in germanlocs:
-        parent.remove(entry)
-        
-    doc = StringDocument(etree.tostring(targetTree))
-    rec = parser.process_document(session, doc)
-    doc2 = indentingTxr.process_record(session, rec)     
-    output = open(cheshirePath + '/cheshire3/dbs/istc/data/' + f, 'w')
-    output.write(doc2.get_raw(session))
-    output.flush()
-    output.close()
-            
+          
             
 #add the new ones from the datafile
 newData = '/home/cheshire/cheshire3/dbs/istc/dataCleaning/newGermanData.txt'
@@ -55,9 +38,9 @@ missing = []
 print 'changing German data'
 for i, l in enumerate(lines):
 
-    if (len(l.strip()) > 0 and l.strip()[0] == 'i'):
-        number = l.strip()
-        data = lines[i+1].strip()[10:].strip()
+    if (len(l.strip()) > 0 and l.strip().find('#RA#') == 0):
+        number = l.strip()[l.find('i')-1:].replace('#', '')
+        data = lines[i+1].strip()[10:].strip().replace('#', '')
         dataList = data.split(';')
         try:
             targetFile = open(dir + number + '.xml', 'r')
@@ -68,6 +51,17 @@ for i, l in enumerate(lines):
             targetFile.close()
             
             parent = targetTree.xpath('/record')[0]        
+            
+            #remove current 997 fields in record (including or not the private data depending on flag)
+            germanlocs = targetTree.xpath('//datafield[@tag="997"]')
+            
+            if keepPrivate == True:
+                for entry in germanlocs:
+                    if not entry.xpath('./subfield[@code="x"]'):
+                        parent.remove(entry)
+            else:
+                for entry in germanlocs:
+                    parent.remove(entry)
             
             
             for d in dataList:
@@ -102,36 +96,7 @@ for i, l in enumerate(lines):
                 output.flush()
                 output.close()
     
-#    if len(l.strip()) > 0:
-#        number = l[:l.find('.')]
-#        text = l[l.find('$a')+2:].strip()
-#        try:
-#            targetFile = open(dir + number + '.xml', 'r')
-#        except:
-#            missing.append(number)
-#        else:
-#            targetTree = etree.fromstring(targetFile.read())
-#            targetFile.close()
-#            
-#            parent = targetTree.xpath('/record')[0]
-#            
-#            #create new 530 node
-#            datafield = etree.Element('datafield', tag='530', ind1='0', ind2='0')
-#            
-#            subfieldA = etree.Element('subfield', code='a')   
-#            subfieldA.text = text
-#            datafield.append(subfieldA)
-#            
-#            #find last 510 node
-#            last510 = targetTree.xpath('//datafield[@tag="510"]')[-1]
-#            parent.insert(targetTree.index(last510) + 1, datafield)
-#            doc = StringDocument(etree.tostring(targetTree))
-#            rec = parser.process_document(session, doc)
-#            doc2 = indentingTxr.process_record(session, rec)     
-#            output = open(cheshirePath + '/cheshire3/dbs/istc/data/' + number + '.xml', 'w')
-#            output.write(doc2.get_raw(session))
-#            output.flush()
-#            output.close()
+
               
 print 'MISSING FROM GERMAN'   
 print '\n'.join(missing)
