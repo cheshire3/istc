@@ -20,7 +20,7 @@ indentingTxr = db.get_object(session, 'indentingTxr')
 parser = db.get_object(session, 'LxmlParser')
 
 
-#remove all 997 tags or all 997 tags except those with private data (depends on the data being provided)
+#Set this to true if you want to keep private data associated with the record false if you want to replace all the data
 keepPrivate = True 
 
 dir = '/home/cheshire/cheshire3/dbs/istc/data/'
