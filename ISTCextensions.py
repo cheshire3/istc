@@ -5,7 +5,9 @@
 from cheshire3.transformer import LxmlXsltTransformer
 from lxml import etree
 from cheshire3.baseObjects import Session
+from cheshire3.baseObjects import Transformer
 from cheshire3.server import SimpleServer
+from cheshire3.document import StringDocument
 from cheshire3.normalizer import SimpleNormalizer
 from cheshire3.tokenizer import SimpleTokenizer
 from cheshire3.index import PassThroughIndex
@@ -67,6 +69,13 @@ class FormatTokenizer(SimpleTokenizer):
             output.extend(self.regexp.split(data2))
         return output
              
+
+
+class CreatedDateTokenizer(SimpleTokenizer):
+    
+    def process_string(self, session, data):
+        return [data[0:6]]
+            
             
 
 #class ISTCTransfomer(LxmlXsltTransformer):
@@ -219,3 +228,7 @@ class LanguageNormalizer(SimpleNormalizer):
     
     def process_string(self, session, data):       
         return multiReplace(data, self.dict).replace("heb",'Hebrew').replace("fre", 'French')
+    
+
+                
+            
