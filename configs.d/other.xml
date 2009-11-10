@@ -43,6 +43,14 @@
 	    <objectType>cheshire3.transformer.MarcTransformer</objectType>
 	</subConfig>
 	
+	<subConfig type="transformer" id="printAllTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	        <path type="xsltPath">xsl/printAll.xsl</path>
+	    </paths>
+	</subConfig>
+	
+	
 	<!-- display transformers -->
  
 	<subConfig type="transformer" id="recordTxr-screen">
@@ -106,6 +114,16 @@
 	        <path type="xsltPath">xsl/externalData.xsl</path>
 	    </paths>
 	</subConfig>	
+	
+	
+	<!-- SRU Transformers -->
+   
+    <subConfig type="transformer" id="sruOutgoingTxr">
+	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+	    <paths>
+	       <path type="xsltPath">xsl/sruOut.xsl</path>
+	    </paths>
+	</subConfig>
 	
 	
  	<!-- pre-parsers -->
@@ -174,6 +192,8 @@
           <setting type="regexp">(^British Library[ ]+)</setting>
         </options>
     </subConfig>
+    
+
     
     </subConfigs>
 </config>
