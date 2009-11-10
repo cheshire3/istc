@@ -1,11 +1,11 @@
 
-<explain id="138.253.81.72/services/istc" authoritative="true" 
+<explain id="138.253.50.151/services/istc" authoritative="true" 
   xmlns="http://explain.z3950.org/dtd/2.0/"
   xmlns:c3="http://www.cheshire3.org/schemas/explain/">
     
   
   <serverInfo protocol="srw/u" version="1.1" transport="http">
-     <host>138.253.81.72</host>
+     <host>138.253.50.151</host>
      <port>80</port>
      <database>services/istc</database>
   </serverInfo>
@@ -239,7 +239,8 @@
 
  <schemaInfo>
     <schema identifier="http://www.loc.gov/MARC21/slim"
-                sort="true" retrieve="true" name="marcxml">
+                sort="true" retrieve="true" name="marcxml"
+                c3:transformer="sruOutgoingTxr">
         <title>Marc 21 XML Schema</title>
 	</schema>
   </schemaInfo>
