@@ -7,7 +7,7 @@
 			<object type="indexStore" ref="indexStore" />
 			<object type="recordStore" ref="recordStore" />
 		</paths>
-		<source>
+		<source mode="data">
 			<xpath>controlfield[@tag='001']</xpath>
 			<xpath>datafield</xpath>
 			<process>
@@ -15,7 +15,16 @@
 				<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
 			</process>
 		</source>
-     	<source mode="any|all|=">
+		<source mode="data">
+			<xpath>controlfield[@tag='008']</xpath>
+			<process>
+    			<object type="extractor" ref="ProxExtractor"/>
+    			<object type="tokenizer" ref="createdDateTokenizer"/>
+    			<object type="tokenMerger" ref="ProxTokenMerger"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+			</process>
+		</source>
+     	<source mode="any|all|=|exact">
      		<process>
      			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
      			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
@@ -740,6 +749,11 @@
     	<paths>
     		<object type="transformer" ref="locCountriesTxr" />
     	</paths>
+    </subConfig>
+   
+    
+    <subConfig type="tokenizer" id="createdDateTokenizer">
+    	<objectType>ISTCextras.ISTCextensions.CreatedDateTokenizer</objectType>
     </subConfig>
 
 
