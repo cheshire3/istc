@@ -56,7 +56,7 @@ for r in recordStore:
             reqdtags = ['001', '100', '130', '260', '300', '510', '997']
             
             oldtree = etree.fromstring(r.get_xml(session))
-            #write filter!
+
             newtree = etree.Element('record')
             
             for element in oldtree.iterchildren():
@@ -82,11 +82,3 @@ f.flush()
 f.close()
     
             
-            #create a dictionary with the key being German loc and istcno. Sort keys and then extract full records.
-            
-            
-            
-            #print txr.process_record(session, r).get_raw(session)
-            #print r.process_xpath(session, '//controlfield[@tag="001"]')[0].text
-            
-#print 'total = %d' % count
