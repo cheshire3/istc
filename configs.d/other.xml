@@ -32,7 +32,7 @@
 	    </paths>
 	</subConfig>
 	
-	<subConfig type="transformer" id="toAleph">
+	<subConfig type="transformer" id="toAlephTxr">
 	    <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
 	    <paths>
 	        <path type="xsltPath">xsl/toAleph.xsl</path>
