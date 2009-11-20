@@ -84,4 +84,3 @@ for elem in austriaTree.iter('ISTC-Bestand'):
         output.close()
     
     
-#    print 'istcno: %s - lib: %s' % (istcNo, data)

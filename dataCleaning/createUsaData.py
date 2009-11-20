@@ -1,5 +1,5 @@
 
-#Used to clean create new USA location data when moving from C2 to C3 (June 2009)
+#Used to create new USA location data when moving from C2 to C3 (June 2009)
 
 
 from lxml import etree
