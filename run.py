@@ -1,7 +1,7 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
-import time, sys, os
+import time, sys, os, traceback
 sys.path.insert(1,'/home/cheshire/cheshire3/code')
 
 import cheshire3
@@ -11,6 +11,7 @@ from cheshire3.web.www_utils import *
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
+from cheshire3.formats.reportLab import NumberedCanvas
 
 import getpass
 from crypt import crypt
@@ -84,6 +85,7 @@ if '-records' in sys.argv or '-load' in sys.argv:
     (mins, secs) = divmod(time.time() - start, 60)
     (hours, mins) = divmod(mins, 60)
     lgr.log_info(session, 'Loading, Indexing complete (%dh %dm %ds)' % (hours, mins, secs))
+
 
 
 if ('-clearEditingStore' in sys.argv):
@@ -162,10 +164,19 @@ if ('-addsuperuser' in sys.argv):
         print 'OK: Username and passwords set for this user'
     #print user
     sys.exit()  
-       
+  
+def testGenerator():     
+    yield StringDocument('this is my string document')
 
-
-
+#if ('-test' in sys.argv):
+#    recStore = db.get_object(session, 'recordStore')  
+#    txr = db.get_object(session, 'sruOutgoingTxr')
+#    rec = recStore.fetch_record(session, 'ia00009200')
+#    df = db.get_object(session, 'reportLabDocumentFactory')
+#    df.load(session, rec)
+#    rec2 = recStore.fetch_record(session, 'ip00321750')
+#    df.load(session, rec2)
+#    df.loadMany(session, [rec, rec2])
 
 
 
