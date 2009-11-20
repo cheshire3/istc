@@ -22,7 +22,7 @@
   </subConfigs>
 
   <subConfigs>
-  
+
 
   	<subConfig type="queryFactory" id="baseQueryFactory">
 	   <objectType>cheshire3.queryFactory.SimpleQueryFactory</objectType>
@@ -36,7 +36,24 @@
 	      <default type="cache">0</default>
 	      <default type="codec">utf-8</default>
 	   </options>
-    </subConfig>    
+    </subConfig> 
+    
+    <subConfig type="documentFactory" id="reportLabDocumentFactory">
+    	<objectType>cheshire3.formats.documentFactory.ReportLabDocumentFactory</objectType>
+    	<paths>
+    		<object type="accumulatingTransformer" ref="printAllTxr"/>
+    	</paths>
+    	<options>
+    		<default type="format">reportlab</default>   	
+    	  	<setting type="header">ISTC Records</setting>	 
+    	  	<setting type="footer">ISTC [date] © The British Library - [pages]</setting>
+            <setting type="ttfontNormal">/usr/share/fonts/msttcorefonts/times.ttf</setting>
+    	    <setting type="ttfontBold">/usr/share/fonts/msttcorefonts/timesbd.ttf</setting>
+    	    <setting type="ttfontItalic">/usr/share/fonts/msttcorefonts/timesi.ttf</setting>
+    	    <setting type="ttfontBoldItalic">/usr/share/fonts/msttcorefonts/timesbi.ttf</setting> 
+    	    <setting type="columns">1</setting>
+    	</options>
+    </subConfig>   
   
   
     <subConfig type="recordStore" id="recordStore">
