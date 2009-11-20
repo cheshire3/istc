@@ -82,7 +82,7 @@ class IstcHandler:
         req.write(data)
         req.flush()       
     #- end send_xml()
-
+    
 
     def generate_query(self, form):
         self.logger.log('generating query')
@@ -528,13 +528,17 @@ class IstcHandler:
         if len(rs):
             rec = rs[id].fetch_record(session)           
             #find the BSBInk number in the references
-    
             field510 = rec.process_xpath(session, '//datafield[@tag="510"]')
-            BSBno = '';
+            BSBno = ''
+
             for f in field510:
                 if f.xpath('./subfield[@code="a"]')[0].text.find('BSB-Ink') != -1:
-                    BSBno = f.xpath('./subfield[@code="c"]')[0].text
-           
+                    try:
+                        BSBno = f.xpath('./subfield[@code="c"]')[0].text
+                    except:
+                        pass
+
+            
             bsburl = None
             field530 = rec.process_xpath(session, '//datafield[@tag="530"]/subfield[@code="u"]')
             for f in field530:
@@ -542,6 +546,7 @@ class IstcHandler:
                     bsburl = f.text
             if bsburl == None:
                 bsburl = 'http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno
+
                
             #create extra bits for navigation menu            
             menu = menuTxr.process_record(session, rec)
@@ -577,7 +582,17 @@ class IstcHandler:
         else:
             return ''
             
-        
+    
+    def displayUsaRefs(self, session, form):
+        session.database = db2.id
+        abbr = form.get('q', None)
+        q = qf.get_query(session, 'c3.idx-key-usa exact "%s"' % abbr)
+        rs = db2.search(session, q)
+        if len(rs):
+            return '%s ' % rs[0].fetch_record(session).get_xml(session)
+        else:
+            return '<record><code>%s</code><full>%s</full></record> ' % (abbr, abbr)
+    
 #    def get_usaRefs(self, session, rec):
 #        session.database = db2.id
 #        q = qf.get_query(session, 'c3.idx-key-usa exact "foo"')
@@ -1040,6 +1055,10 @@ class IstcHandler:
                     content = self.get_format(session, form)
                     self.send_xml(content, req)
                     return
+                elif (operation == 'usareferences'):
+                    content = self.displayUsaRefs(session, form)
+                    self.send_xml(content, req)
+                    return                                      
                 else:
                     content = 'An invalid operation was attempted.'
                     self.send_html(content, req)

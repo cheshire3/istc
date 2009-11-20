@@ -774,7 +774,7 @@ class IstcEditingHandler:
 
     
     def preview_marc(self, form):
-        marcAlephTxr = db.get_object(session, 'toAleph')
+        marcAlephTxr = db.get_object(session, 'toAlephTxr')
         recid = form.get('1', None)
         owner = form.get('owner', session.user.username)
         recid = '%s-%s' % (recid, owner)

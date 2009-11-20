@@ -1,0 +1,81 @@
+<script type="text/javascript" src="/istc/javascript/searchForm.js"></script>
+<script type="text/javascript">
+ <!-- hide
+olf = function() { formFromString(getSearchForm('searchForm')) ; document.getElementsByName('searchform')[0].fieldcont1.focus()};
+if (addLoadEvent) {
+    addLoadEvent(olf);
+} else {
+    window.onload = olf;
+}
+--></script>
+
+<div id="maincontent">
+	
+	<h1>PDF Output Menu</h1>
+	
+    <h3 class="editheader">All records</h3>
+    	    <form action="pdf.html">
+    <p>Print all records to a pdf (takes a while to do)</p>
+    <input type="hidden" name="operation" value="allrecords"/>
+    <input type="submit" value=" Output All Records " />
+    </form>
+		
+	
+	<h3 class="editheader">Records alphabetically</h3>
+	
+		<p>Print records with ISTC number i[your choice of letter] to a pdf (takes a while to do)</p>
+		<form action="pdf.html">
+		<input type="hidden" name="operation" value="alpha"/>
+		<select name="alphabetchoice">
+			<option value="ia">a</option>
+			<option value="ib">b</option>
+			<option value="ic">c</option>
+			<option value="id">d</option>
+			<option value="ie">e</option>
+			<option value="if">f</option>
+			<option value="ig">g</option>
+			<option value="ih">h</option>
+			<option value="ii">i</option>
+			<option value="ij">j</option>
+			<option value="ik">k</option>
+			<option value="il">l</option>
+			<option value="im">m</option>
+			<option value="in">n</option>
+			<option value="io">o</option>
+			<option value="ip">p</option>
+			<option value="iq">q</option>
+			<option value="ir">r</option>
+			<option value="is">s</option>
+			<option value="it">t</option>
+			<option value="iu">u</option>
+			<option value="iv">v</option>
+			<option value="iw">w</option>
+			<option value="ix">x</option>
+			<option value="iy">y</option>
+			<option value="iz">z</option>
+		</select>
+		<br/>
+		<br/>
+		<input type="submit" value=" Output Records " />
+		</form>
+		
+	<h3 class="editheader">Results of Query</h3>
+		
+		<form action="pdf.html" name="searchform" method="post">
+
+		<p id="addClauseP">
+    		<script type="text/javascript">
+	 
+				document.write('<a href="javascript:addSearchClause(1)" id="addClauseLink" title="Add another search clause, like the one above [requires JavaScript]">...Add another search term</a>');
+				
+			</script>		
+		</p>
+		
+		<input type="hidden" name="operation" value="query"/>
+		<input type="submit" value=" Output Records " />
+		<input type="reset" value="Reset Form" onclick="resetForm('searchform');"/>
+	</form>
+		
+		
+	
+</div>

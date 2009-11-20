@@ -37,7 +37,7 @@ import datetime
 #from wwwSearch import *
 from crypt import crypt
 from istcLocalConfig import *
-
+import urllib
 
 class IstcAdminHandler:
     baseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/baseTemplate.html"
@@ -57,9 +57,16 @@ class IstcAdminHandler:
             data = data.encode('utf-8')
         req.write(data)
         req.flush()      
-        
-       
     
+        
+    def send_pdf(self, data, req, code=200):
+        req.content_type = 'application/pdf'
+        req.content_length = len(data)
+        req.send_http_header()
+        req.write(data)
+        req.flush()
+        
+        
     def show_adminMenu(self):
         page = read_file('adminmenu.html')
         page = page.replace('%USERS%', self.list_users())
@@ -715,6 +722,140 @@ class IstcAdminHandler:
             
         return rec
 
+
+    def print_searchResults(self, form):
+        cql = self.generate_query(form)
+        df = db.get_object(session, 'reportLabDocumentFactory')
+        q = qf.get_query(session, cql.encode('utf-8'))
+        rs = db.search(session, q)
+        idx = db.get_object(session, 'idx-ISTCnumber')
+        rs.order(session, idx, ascending=1, missing=[-1,1][1])
+        if len(rs):
+            for r in rs:
+                df.load(session, r.fetch_record(session))
+            doc = df.get_document(session)
+            return doc.get_raw(session)
+        else:
+            return self.show_adminMenu
+
+
+    def print_alphaSelection(self, form):
+        letters = form.get('alphabetchoice', None)
+        output = []
+        df = db.get_object(session, 'reportLabDocumentFactory')
+        q = qf.get_query(session, 'c3.idx-ISTCnumber any %s*' % letters)
+        rs = db.search(session, q)
+        if len(rs):
+            for r in rs:
+                df.load(session, r.fetch_record(session))
+            doc = df.get_document(session)
+            return doc.get_raw(session)
+        else:
+            return self.show_adminMenu
+        
+
+    def print_all(self, form):
+        global recordStore
+        output = []
+        df = db.get_object(session, 'reportLabDocumentFactory')
+        for rec in recordStore:            
+            df.load(session, rec)
+        doc = df.get_document(session)
+        return doc.get_raw(session)
+
+
+
+    def generate_query(self, form):
+        self.logger.log('generating query')
+        phraseRe = re.compile('".+?"')
+        qClauses = []
+        bools = []
+        frombrowse = form.get('frombrowse', None)
+        i = 1
+        while (form.has_key('fieldcont%d' % i)):
+            bools.append(form.getfirst('fieldbool%d' % (i-1), 'and'))
+            i += 1
+        i = 1
+
+        while (form.has_key('fieldcont%d' % i)):
+            cont = urllib.unquote(form.getfirst('fieldcont%d' % i)).decode('utf-8')
+            idx = urllib.unquote(form.getfirst('fieldidx%d' % i, 'cql.anywhere')).decode('utf-8')
+            rel = urllib.unquote(form.getfirst('fieldrel%d'  % i, 'all')).decode('utf-8')
+
+            subClauses = []
+            if (rel[:3] == 'all'): subBool = ' and '
+            else: subBool = ' or '
+
+            # in case they're trying to do phrase searching
+            if (rel.find('exact') != -1 or rel.find('=') != -1 or rel.find('/string') != -1):
+                # don't allow phrase searching for exact or /string searches
+                cont = cont.replace('"', '\\"')
+            else:
+                phrases = phraseRe.findall(cont)
+                for ph in phrases:
+                    subClauses.append('(%s = %s)' % (idx, ph))
+
+                cont = phraseRe.sub('', cont)
+            if (idx and rel and cont):
+                if idx == 'norzig.posessingInstitution' and not frombrowse:
+                    subClauses.append(u'(%s %s "%s" or %s %s/usa "%s")' % (idx, rel, cont.strip(), idx, rel, cont.strip()))
+                elif idx == 'istc.referencedBy' and not frombrowse:
+                    subClauses.append(u'(%s %s "%s" or %s %s/full "%s")' % (idx, rel, cont.strip(), idx, rel, cont.strip()))
+                else:
+                    subClauses.append(u'%s %s "%s"' % (idx, rel, cont.strip()))
+
+            if (len(subClauses)):
+                qClauses.append('(%s)' % (subBool.join(subClauses)))
+
+            # if there's another clause and a corresponding boolean
+            try: qClauses.append(bools[i])
+            except: break
+
+            i += 1
+            sys.stderr.write(repr(cont))
+            sys.stderr.flush()
+
+        qString = ' '.join(qClauses)
+        self.logger.log('QUERY:' + qString)
+        return qString
+
+
+    def get_usaRefs(self, session, rec):
+        session.database = dbusa.id
+        usaRefs = []
+        otherDict = {}
+        qstring = []
+        for node in rec.process_xpath(session, '//datafield[@tag="952"]'):
+            ref = node.xpath('subfield[@code="a"]/text()')[0]
+            other = node.xpath('subfield[@code="b"]/text()')
+            if len(other):
+                other = ' %s' % ' '.join(other)
+            else:
+                other = ''
+            otherDict[ref] = other
+            qstring.append('c3.idx-key-usa exact "%s"' % ref)
+        if len(qstring) > 0:
+            q = qf.get_query(session, ' or '.join(qstring))
+            rs = dbusa.search(session, q)
+            idx = dbusa.get_object(session, 'idx-location_usa')
+            rs.order(session, idx)
+            for r in rs:
+                rec = r.fetch_record(session)
+                usaRefs.append('%s%s' % (rec.process_xpath(session, '//full/text()')[0].strip(), otherDict[rec.process_xpath(session, '//code/text()')[0].strip()]))
+            return externalDataTxr.process_record(session, xmlp.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
+        else:
+            return ''
+        
+        
+# PDF Output functions ####################################################################
+
+
+
+###########################################################################################
+
+
+
+
                   
     def handle(self, req):
         form = FieldStorage(req, True)  
@@ -735,6 +876,29 @@ class IstcAdminHandler:
                 else:
                     content = self.show_adminMenu()
                     content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+        elif path == 'pdf.html':
+            if (operation):
+                if (operation == 'allrecords'):
+                    data = self.print_all(form)
+                    self.send_pdf(data, req)
+                    return
+                elif (operation == 'alpha'):
+                    data = self.print_alphaSelection(form)
+                    self.send_pdf(data, req)
+                    return    
+                elif (operation == 'query'):
+                    data = self.print_searchResults(form)
+                    self.send_pdf(data, req)
+                    return
+                else:
+                    content = unicode(read_file('pdfoutput.html'))
+                    content = tmpl.replace('%CONTENT%', content)
+                    self.send_html(content, req)
+            else:
+                content = unicode(read_file('pdfoutput.html'))
+                content = tmpl.replace('%CONTENT%', content)
+                self.send_html(content, req)
         elif path == 'users.html':
             if (operation) :              
                 if (operation == 'adduser'):
@@ -764,7 +928,9 @@ class IstcAdminHandler:
             if (operation) :
                 if (operation == 'library'):
                     self.get_libraryData(form, req)
-
+                elif (operation == 'printall'):
+                    content = self.printAll()
+                    self.send_html(content, req)
                 else:
                     content = self.show_dataReqForm()
                     content = tmpl.replace('%CONTENT%', content)
@@ -814,13 +980,15 @@ authStore = None
 xmlp = None
 formTxr = None
 indentingTxr = None
+printAllTxr = None
+externalDataTxr = None
 
 
 def build_architecture(data=None):
     global rebuild, session, serv, db, dbPath, dbusa, dbrefs, qf, editStore, recordStore, usaRecordStore, \
     refsRecordStore, noteStore, authStore, userStore, xmlp, sourceDir, lockfilepath, reflockfilepath, usalockfilepath, \
     baseDocFac, usaDocFac, refsDocFac, buildSingleFlow, refsBuildSingleFlow, usaBuildSingleFlow, statspath, searchlogfilepath, \
-    idxNames, relationsMap
+    idxNames, relationsMap, printAllTxr, externalDataTxr
     
     if editStore:
         editStore.commit_storing(session)
@@ -857,6 +1025,8 @@ def build_architecture(data=None):
     refsBuildSingleFlow = dbrefs.get_object(session, 'refsBuildIndexSingleWorkflow'); refsBuildSingleFlow.load_cache(session, dbrefs)
     usaBuildSingleFlow = dbusa.get_object(session, 'usaBuildIndexSingleWorkflow'); usaBuildSingleFlow.load_cache(session, dbusa)
     
+    printAllTxr = db.get_object(session, 'printAllTxr')
+    externalDataTxr = db.get_object(session, 'externalDataTxr')
     
     rebuild = False
     
