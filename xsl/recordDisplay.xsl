@@ -29,16 +29,6 @@
 		</xsl:choose>
 	</xsl:param>
 	
-	<xsl:param name="encoding">
-		<xsl:choose>
-			<xsl:when test="$format='screen' or $format='print'">
-				<xsl:text>UTF-8</xsl:text>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>ascii</xsl:text>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:param>
 	
 	<xsl:variable name="newline">
 		<xsl:text>
@@ -69,7 +59,7 @@
 		<xsl:text>Reproductions of the watermarks found in the paper used in this edition are provided by the Koninklijke Bibliotheek, National Library of the Netherlands</xsl:text>
 	</xsl:variable>
 
-	 
+	 <!-- not used at the moment but kept in along with the language template in case they change their minds -->
 	 <lang:name abbr="eng">English</lang:name>
 	 <lang:name abbr="heb">Hebrew</lang:name>
 	 <lang:name abbr="bre">Breton</lang:name>
@@ -142,7 +132,6 @@
 		<xsl:call-template name="imprint"/>
 		<xsl:call-template name="imprint_extra"/>
 		<xsl:call-template name="format"/>		
-	<!--	<xsl:call-template name="language"/> 		-->
 		<xsl:call-template name="istcNumber"/>
 		<xsl:call-template name="references"/>
 		<xsl:call-template name="reproductions"/> 
@@ -378,22 +367,10 @@
 						<td class="label"><xsl:value-of select="$label"/></td>
 						<td>
 							<xsl:value-of select="$value"/>
-							<!-- <xsl:call-template name="formatReplace">
-								<xsl:with-param name="string">
-									<xsl:value-of select="normalize-space($value)"/>
-								</xsl:with-param>
-							</xsl:call-template> -->
 						</td>
 					</tr>
 				</xsl:when>
 				<xsl:otherwise>
-					<!-- <xsl:variable name="stringFormat">
-							<xsl:call-template name="formatReplace">
-								<xsl:with-param name="string">
-									<xsl:value-of select="normalize-space($value)"/>
-								</xsl:with-param>
-							</xsl:call-template>
-					</xsl:variable> -->
 					<xsl:call-template name="textView">
 						<xsl:with-param name="label" select="$label"/>
 						<xsl:with-param name="value" select="$value"/>
@@ -403,52 +380,8 @@
 		</xsl:if>
 	</xsl:template>
 	
-	<!-- <xsl:template name="formatReplace">
-		<xsl:param name="string"/>
-		<xsl:choose>
-			<xsl:when test="$output='xml'">
-				<xsl:choose>
-					<xsl:when test="substring-before($string, '&lt;sup&gt;')">
-						<text><xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/></text>
-						<sup>
-							<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
-						</sup>
-						<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
-						 	<xsl:call-template name="formatReplace">
-								<xsl:with-param name="string">
-									<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
-								</xsl:with-param>
-							</xsl:call-template>
-						</xsl:if>
-					</xsl:when>
-					<xsl:otherwise>
-						<text><xsl:value-of select="$string"/></text>
-					</xsl:otherwise>			
-				</xsl:choose>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:choose>
-					<xsl:when test="substring-before($string, '&lt;sup&gt;')">
-						<text>
-							<xsl:value-of select="substring-before($string, '&lt;sup&gt;')"/>
-							<xsl:value-of select="substring-before(substring-after($string, '&lt;sup&gt;'), '&lt;/sup&gt;')"/>
-						</text>
-						<xsl:if test="substring-after($string, '&lt;/sup&gt;')">
-						 	<xsl:call-template name="formatReplace">
-								<xsl:with-param name="string">
-									<xsl:value-of select="substring-after($string, '&lt;/sup&gt;')"/>
-								</xsl:with-param>
-							</xsl:call-template>
-						</xsl:if>
-					</xsl:when>
-					<xsl:otherwise>
-						<text><xsl:value-of select="$string"/></text>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:otherwise>
-		</xsl:choose>	
-	</xsl:template>-->
 
+	<!-- not used at the moment but kept in in case they change their minds -->
 	<xsl:template name="language">
 		<xsl:variable name="label">
 			<xsl:text>Language:</xsl:text>
@@ -538,6 +471,56 @@
 														<xsl:text>&lt;/a>; </xsl:text>
 													</xsl:otherwise>
 												</xsl:choose>																															
+										</xsl:when>
+										<xsl:when test="./subfield[@code='a']='GW'">
+											<xsl:variable name="temp">			
+												<xsl:choose>
+													<xsl:when test="contains(./subfield[@code='c'], ' ')">
+														<xsl:value-of select="substring-before(./subfield[@code='c'], ' ')"/>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:value-of select="./subfield[@code='c']"/>
+													</xsl:otherwise>
+												</xsl:choose>							
+											</xsl:variable>
+											<xsl:variable name="GWnumber">
+												<xsl:choose>
+													<xsl:when test="contains($temp, '/')">
+														<xsl:value-of select="substring-before($temp, '/')"/>
+														<xsl:value-of select="substring-after($temp, '/')"/>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:value-of select="$temp"/>
+													</xsl:otherwise>
+												</xsl:choose>
+											</xsl:variable>
+											<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/GW</xsl:text>
+												<xsl:choose>
+													<xsl:when test="string-length($GWnumber) = 4">
+														<xsl:text>0</xsl:text><xsl:value-of select="$GWnumber"/>
+													</xsl:when>
+													<xsl:when test="string-length($GWnumber) = 3">
+														<xsl:text>00</xsl:text><xsl:value-of select="$GWnumber"/>
+													</xsl:when>
+													<xsl:when test="string-length($GWnumber) = 2">
+														<xsl:text>000</xsl:text><xsl:value-of select="$GWnumber"/>
+													</xsl:when>
+													<xsl:when test="string-length($GWnumber) = 1">
+														<xsl:text>0000</xsl:text><xsl:value-of select="$GWnumber"/>
+													</xsl:when>		
+													<xsl:otherwise>
+														<xsl:value-of select="$GWnumber"/>
+													</xsl:otherwise>																								
+												</xsl:choose>
+											<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>		
+												<xsl:choose>
+													<xsl:when test="./subfield[@code='c']">
+														<xsl:text> </xsl:text><xsl:value-of select="./subfield[@code='c']"/><xsl:text>&lt;/a>; </xsl:text>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:text>&lt;/a>; </xsl:text>
+													</xsl:otherwise>
+												</xsl:choose>
 										</xsl:when>
 										<xsl:otherwise>
 											<xsl:value-of select="./subfield[@code='a']"/>
@@ -736,40 +719,10 @@
 			</xsl:choose>
 		</xsl:if>
 	</xsl:template>
-
-
-<!-- 	<xsl:template name="shelfmark">
-		<xsl:if test="//datafield[@tag='852']">
-			<xsl:variable name="label">
-				<xsl:text>British Library Shelfmark:</xsl:text>
-			</xsl:variable>
-			<xsl:variable name="value">
-				<xsl:for-each select="//datafield[@tag='852']/subfield">
-					<xsl:value-of select="."/><xsl:text> </xsl:text>
-				</xsl:for-each>
-			</xsl:variable>
-			<xsl:choose>
-				<xsl:when test="$output='xml'">
-					<tr>
-						<td class="label"><xsl:value-of select="$label"/></td>
-						<td>
-							<xsl:value-of select="$value"/>
-						</td>
-					</tr>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="textView">
-						<xsl:with-param name="label" select="$label"/>
-						<xsl:with-param name="value" select="$value"/>
-					</xsl:call-template>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:if>
-	</xsl:template> -->
 	
 	
 	<xsl:template name="locations">
-		<xsl:if test="((//datafield[@tag='852']|//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']) and $locations = 'all') or ($locations = 'germany' and //datafield[@tag='997'])">
+		<xsl:if test="((//datafield[@tag='852']|//datafield[@tag='951']|//datafield[@tag='995']|//datafield[@tag='957']|//datafield[@tag='997']|//datafield[@tag='954']|//datafield[@tag='955']|//datafield[@tag='996']|//datafield[@tag='952']|//datafield[@tag='958']|//datafield[@tag='953']|//datafield[@tag='994']|//datafield[@tag='993']) and $locations = 'all') or ($locations = 'germany' and //datafield[@tag='997'])">
 			<xsl:variable name="label">
 				<xsl:text>Locations:</xsl:text>
 			</xsl:variable>
@@ -789,24 +742,7 @@
 			<xsl:if test="(//datafield[@tag='951'] or //datafield[@tag='852']) and $locations = 'all'">
 				<xsl:variable name="l1">
 					<xsl:text>British Isles:</xsl:text>
-				</xsl:variable>
-			<!--  	<xsl:if test="//datafield[@tag='852']">
-					<xsl:variable name="j">
-						<xsl:for-each select="//datafield[@tag='852']">
-							<xsl:for-each select="subfield[@code='j']">
-								<xsl:value-of select="."/><xsl:text>, </xsl:text>
-							</xsl:for-each>
-						</xsl:for-each>
-					</xsl:variable>
-					<xsl:variable name="q">
-						<xsl:for-each select="//datafield[@tag='852']">
-							<xsl:for-each select="subfield[@code='q']">
-								<xsl:text> </xsl:text><xsl:value-of select="."/>
-							</xsl:for-each>
-						</xsl:for-each>
-					</xsl:variable>
-				</xsl:if> -->
-				
+				</xsl:variable>			
 				<xsl:variable name="v1">
 					<xsl:if test="//datafield[@tag='852']">
 						<xsl:text>London, British Library  (</xsl:text>
@@ -1148,41 +1084,6 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:if>
-			
-<!--			<xsl:if test="//datafield[@tag='952'] and $locations = 'all'">
-				<xsl:variable name="l8">
-					<xsl:text>U.S.A:</xsl:text>
-				</xsl:variable>
-				<xsl:variable name="v8">
-					<xsl:for-each select="//datafield[@tag='952']">						
-						<xsl:variable name="usaref">
-							<xsl:value-of select="subfield[@code='a']/text()"/>
-						</xsl:variable>
-						<xsl:value-of select="document(concat('http://localhost/istc/search/search.html?operation=usareferences&amp;q=', $usaref))/record//full"/>
-						<xsl:if test="subfield[@code='b']">
-						<xsl:text> </xsl:text>
-						<xsl:value-of select="subfield[@code='b']"/>
-						</xsl:if>
-						<xsl:text>; </xsl:text>
-					</xsl:for-each>
-				</xsl:variable>
-				<xsl:choose>
-					<xsl:when test="$output='xml'">				
-						<tr>
-							<td align="right" class="subheader"><xsl:value-of select="$l8"/></td>					
-						<td>
-							<xsl:value-of select="substring($v8, 0, string-length($v8)-1)"/>			
-						</td>
-						</tr>				
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:call-template name="textView">
-							<xsl:with-param name="label" select="$l8"/>
-							<xsl:with-param name="value" select="substring($v8, 0, string-length($v8)-1)"/>
-						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:if>-->
 			
 			<xsl:if test="//datafield[@tag='958'] and $locations = 'all'">
 				<xsl:variable name="l9">

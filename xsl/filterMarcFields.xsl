@@ -64,7 +64,7 @@
   	</xsl:template>
   
     <xsl:template match="datafield">  	
-     	<xsl:if test="starts-with(@tag, '9')">
+     	<xsl:if test="starts-with(@tag, '9') and not(subfield[@code='x'])">
      		<xsl:choose>
      			<xsl:when test="$locfilter=@tag">
      				<xsl:copy-of select="."/>
