@@ -494,33 +494,42 @@
 													</xsl:otherwise>
 												</xsl:choose>
 											</xsl:variable>
-											<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/GW</xsl:text>
-												<xsl:choose>
-													<xsl:when test="string-length($GWnumber) = 4">
-														<xsl:text>0</xsl:text><xsl:value-of select="$GWnumber"/>
-													</xsl:when>
-													<xsl:when test="string-length($GWnumber) = 3">
-														<xsl:text>00</xsl:text><xsl:value-of select="$GWnumber"/>
-													</xsl:when>
-													<xsl:when test="string-length($GWnumber) = 2">
-														<xsl:text>000</xsl:text><xsl:value-of select="$GWnumber"/>
-													</xsl:when>
-													<xsl:when test="string-length($GWnumber) = 1">
-														<xsl:text>0000</xsl:text><xsl:value-of select="$GWnumber"/>
-													</xsl:when>		
-													<xsl:otherwise>
-														<xsl:value-of select="$GWnumber"/>
-													</xsl:otherwise>																								
-												</xsl:choose>
-											<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>		
-												<xsl:choose>
-													<xsl:when test="./subfield[@code='c']">
-														<xsl:text> </xsl:text><xsl:value-of select="./subfield[@code='c']"/><xsl:text>&lt;/a>; </xsl:text>
-													</xsl:when>
-													<xsl:otherwise>
-														<xsl:text>&lt;/a>; </xsl:text>
-													</xsl:otherwise>
-												</xsl:choose>
+											<xsl:choose>
+												<xsl:when test="starts-with($GWnumber, 'm') or starts-with($GWnumber, 'M') or starts-with($GWnumber, 'n') or starts-with($GWnumber, 'N')">
+													<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/</xsl:text>
+													<xsl:value-of select="$GWnumber"/>
+													<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>	
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/GW</xsl:text>
+														<xsl:choose>
+															<xsl:when test="string-length($GWnumber) = 4">
+																<xsl:text>0</xsl:text><xsl:value-of select="$GWnumber"/>
+															</xsl:when>
+															<xsl:when test="string-length($GWnumber) = 3">
+																<xsl:text>00</xsl:text><xsl:value-of select="$GWnumber"/>
+															</xsl:when>
+															<xsl:when test="string-length($GWnumber) = 2">
+																<xsl:text>000</xsl:text><xsl:value-of select="$GWnumber"/>
+															</xsl:when>
+															<xsl:when test="string-length($GWnumber) = 1">
+																<xsl:text>0000</xsl:text><xsl:value-of select="$GWnumber"/>
+															</xsl:when>		
+															<xsl:otherwise>
+																<xsl:value-of select="$GWnumber"/>
+															</xsl:otherwise>																								
+														</xsl:choose>
+													<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>	
+												</xsl:otherwise>	
+											</xsl:choose>
+											<xsl:choose>
+												<xsl:when test="./subfield[@code='c']">
+													<xsl:text> </xsl:text><xsl:value-of select="./subfield[@code='c']"/><xsl:text>&lt;/a>; </xsl:text>
+												</xsl:when>
+												<xsl:otherwise>
+													<xsl:text>&lt;/a>; </xsl:text>
+												</xsl:otherwise>
+											</xsl:choose>
 										</xsl:when>
 										<xsl:otherwise>
 											<xsl:value-of select="./subfield[@code='a']"/>
