@@ -165,7 +165,7 @@ for f in os.listdir(dir):
         doc = StringDocument(etree.tostring(targetTree))
         rec = parser.process_document(session, doc)
         doc2 = indentingTxr.process_record(session, rec) 
-        output = open(cheshirePath + '/cheshire3/dbs/istc/data/' + f + '.xml', 'w')
+        output = open(cheshirePath + '/cheshire3/dbs/istc/data/' + f, 'w')
         output.write(doc2.get_raw(session))
         output.flush()
         output.close()
