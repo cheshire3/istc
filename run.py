@@ -11,7 +11,7 @@ from cheshire3.web.www_utils import *
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
-from cheshire3.formats.reportLab import NumberedCanvas
+
 
 import getpass
 from crypt import crypt
