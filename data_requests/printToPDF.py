@@ -36,7 +36,8 @@ df = db.get_object(session, 'reportLabDocumentFactory')
 
 
 if all == True:
-    for rec in recordStore:            
+    for rec in recordStore:    
+        print rec.id        
         df.load(session, rec)
     doc = df.get_document(session)
     
