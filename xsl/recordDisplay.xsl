@@ -475,6 +475,9 @@
 										<xsl:when test="./subfield[@code='a']='GW'">
 											<xsl:variable name="temp">			
 												<xsl:choose>
+													<xsl:when test="contains(./subfield[@code='c'], 'Sp.')">
+														 <xsl:value-of select="./subfield[@code='c']"/>
+													</xsl:when>
 													<xsl:when test="contains(./subfield[@code='c'], ' ')">
 														<xsl:value-of select="substring-before(./subfield[@code='c'], ' ')"/>
 													</xsl:when>
@@ -499,6 +502,26 @@
 													<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/</xsl:text>
 													<xsl:value-of select="$GWnumber"/>
 													<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>	
+												</xsl:when>
+											 	<xsl:when test="contains($GWnumber, 'Sp.')">
+													<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/GW</xsl:text>
+													<xsl:value-of select="substring-before($GWnumber, ' Sp.')"/>	
+													<xsl:variable name="spno">
+														<xsl:value-of select="substring-after($GWnumber, 'Sp.')"/>
+													</xsl:variable>						
+													<xsl:choose>
+														<xsl:when test="contains('abcdefghijklmnopqrstuvwxyz', substring($spno, 2, 1))">
+															<xsl:text>00</xsl:text><xsl:value-of select="$spno"/>
+														</xsl:when>
+														<xsl:when test="contains('abcdefghijklmnopqrstuvwxyz', substring($spno, 3, 1))">
+															<xsl:text>0</xsl:text><xsl:value-of select="$spno"/>
+														</xsl:when>
+														<xsl:otherwise>
+															<xsl:value-of select="$spno"/>
+														</xsl:otherwise>
+													</xsl:choose>
+													
+													<xsl:text>.htm" target="_new"></xsl:text><xsl:value-of select="./subfield[@code='a']"/>
 												</xsl:when>
 												<xsl:otherwise>
 													<xsl:text>&lt;a href="http://www.gesamtkatalogderwiegendrucke.de/docs/GW</xsl:text>
