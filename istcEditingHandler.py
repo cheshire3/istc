@@ -174,36 +174,11 @@ class IstcEditingHandler:
                     except:
                         marc[0] = ['nam a  ']
                 elif l.name in multipleEntryFields or l.name[3:] in multipleEntryFields:
-#                    if l.name == 'referencestest':
-#                        if l.value.find('|||') != -1:
-#                            meList = l.value.split('|||')
-#                            ind = '0-0'
-#                            codelist = []
-#                            a = ''
-#                            other = ''
-#                            for me in meList:
-#                                if me.strip() != '': 
-#                                    temp = me.split('|')
-#                                    code = temp[0].split('_')[1].strip()
-#                                    if code == 'ind':
-#                                        n = int(temp[0].split('_')[0])
-#                                        ind = temp[1]
-#                                    elif code == 'a':
-#                                        a = temp[1].strip()
-#                                    elif code == 'other':
-#                                        other = temp[1].strip()
-#                            tuple = ((ind.split('-')[0].strip(), ind.split('-')[1].strip(), [('a', '%s %s' % (a, other)) ]))
-#                            try:
-#                                marc[n].append(tuple)
-#                            except:
-#                                marc[n] = [tuple]
-#                    else:
                     if l.value.find('|||') != -1:
                         meList = l.value.split('|||')
                         ind = 'b-b'
                         codelist = []
                         for me in meList:  
-                            self.logger.log(me)
                             if me.strip() != '': 
                                 temp = me.split('|')
                                 code = temp[0].split('_')[1].strip()
@@ -217,7 +192,6 @@ class IstcEditingHandler:
                                     n = int(temp[1])
                                 else:
                                     codelist.append((code, temp[1].strip()))
-                                    self.logger.log(codelist)
                         tuple = ((ind.split('-')[0].strip().replace('b', ' '), ind.split('-')[1].strip().replace('b', ' '), codelist))
                         try:
                             marc[n].append(tuple)
@@ -284,7 +258,6 @@ class IstcEditingHandler:
         if date != None:
             marc[959] = [(' ', ' ', [('a', '%s-%s' % (time.strftime('%Y%m%d'), session.user.username))])]
         marcObject = MARC()
-        self.logger.log(marc)
         marcObject.fields = marc       
         return marcObject.toMARCXML()
 
