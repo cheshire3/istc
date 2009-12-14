@@ -18,10 +18,7 @@ import cheshire3.cqlParser as cql
 import re
 
 
-#def encodeFormat(self, elements):
-#    string = ' '.join(elements)
-#    return string.replace('4~~', '4<sup>to</sup>').replace('8~~', '8<sup>vo</sup>').replace('f~~', 'f<sup>o</sup>').replace('bdsde', 'Broadside').replace('Bdsde', 'Broadside').replace('~~', '<sup>mo</sup>')
-    
+
 
 class ISTCPassThroughIndex(PassThroughIndex):
 
