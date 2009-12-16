@@ -726,13 +726,21 @@ class IstcAdminHandler:
     def print_searchResults(self, form):
         cql = self.generate_query(form)
         df = db.get_object(session, 'reportLabDocumentFactory')
+        txr = db.get_object(session, 'printAllTxr')
         q = qf.get_query(session, cql.encode('utf-8'))
         rs = db.search(session, q)
         idx = db.get_object(session, 'idx-ISTCnumber')
         rs.order(session, idx, ascending=1, missing=[-1,1][1])
         if len(rs):
             for r in rs:
-                df.load(session, r.fetch_record(session))
+                record = r.fetch_record(session)
+                doc = txr.process_record(session, record)
+                string = doc.get_raw(session)               
+                string = string.replace('%usalocs%', self.get_usaRefs(session, record))
+                session.database = 'db_istc'
+                doc = StringDocument(string)
+                rec = xmlp.process_document(session, doc)
+                df.load(session, rec)
             doc = df.get_document(session)
             return doc.get_raw(session)
         else:
@@ -743,11 +751,19 @@ class IstcAdminHandler:
         letters = form.get('alphabetchoice', None)
         output = []
         df = db.get_object(session, 'reportLabDocumentFactory')
+        txr = db.get_object(session, 'printAllTxr')
         q = qf.get_query(session, 'c3.idx-ISTCnumber any %s*' % letters)
         rs = db.search(session, q)
         if len(rs):
             for r in rs:
-                df.load(session, r.fetch_record(session))
+                record = r.fetch_record(session)
+                doc = txr.process_record(session, record)
+                string = doc.get_raw(session)               
+                string = string.replace('%usalocs%', self.get_usaRefs(session, record))
+                session.database = 'db_istc'
+                doc = StringDocument(string)
+                rec = xmlp.process_document(session, doc)
+                df.load(session, rec)
             doc = df.get_document(session)
             return doc.get_raw(session)
         else:
@@ -757,9 +773,16 @@ class IstcAdminHandler:
     def print_all(self, form):
         global recordStore
         output = []
+        txr = db.get_object(session, 'printAllTxr')
         df = db.get_object(session, 'reportLabDocumentFactory')
-        for rec in recordStore:            
-            df.load(session, rec)
+        for record in recordStore:   
+            doc = txr.process_record(session, record)
+            string = doc.get_raw(session)               
+            string = string.replace('%usalocs%', self.get_usaRefs(session, record))
+            session.database = 'db_istc'
+            doc = StringDocument(string)
+            rec = xmlp.process_document(session, doc)
+            df.load(session, rec)         
         doc = df.get_document(session)
         return doc.get_raw(session)
 
