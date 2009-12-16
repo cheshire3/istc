@@ -865,7 +865,7 @@ class IstcAdminHandler:
             for r in rs:
                 rec = r.fetch_record(session)
                 usaRefs.append('%s%s' % (rec.process_xpath(session, '//full/text()')[0].strip(), otherDict[rec.process_xpath(session, '//code/text()')[0].strip()]))
-            return externalDataTxr.process_record(session, xmlp.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session)
+            return externalDataTxr.process_record(session, xmlp.process_document(session, StringDocument('<string>%s</string>' % '; '.join(usaRefs).encode('utf-8').replace('&', '&amp;')))).get_raw(session).replace('&', '&amp;')
         else:
             return ''
         
