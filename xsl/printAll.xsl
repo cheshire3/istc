@@ -425,6 +425,9 @@
 		<xsl:if test="//datafield[@tag='952']">		
 			<b><xsl:text>U.S.A: </xsl:text></b>
 			<xsl:variable name="v8">
+				<xsl:text>%usalocs%</xsl:text>
+			</xsl:variable>
+			<!-- <xsl:variable name="v8">
 				<xsl:for-each select="//datafield[@tag='952'][not(subfield[@code='x'])]">						
 					<xsl:variable name="usaref">
 						<xsl:value-of select="subfield[@code='a']/text()"/>
@@ -437,10 +440,7 @@
 					</xsl:if>
 					<xsl:text>; </xsl:text>
 				</xsl:for-each>
-			</xsl:variable>
-			
-			
-			
+			</xsl:variable> -->
 <!-- 			<xsl:variable name="v8">
 				<xsl:for-each select="//datafield[@tag='952'][not(subfield[@code='x'])]">
 					<xsl:value-of select="document('http://istc.bl.uk?)"/>
