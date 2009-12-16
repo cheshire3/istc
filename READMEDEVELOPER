@@ -124,11 +124,11 @@ istc.referencedBy (bibliographical references) searches both the abbreviations a
 The Monthly Cron Job on the server
 ==================================
 
-have now set this up to run using crontab so hopefully won't crash server this time - to be completed once I know!!!
+The cron job is programmed to run using crontab to run once a month and the script itself is here:
 
-***Complete***
+/home/cheshire/copyISTClogs.sh
 
-
+This copies the log files for the previous month to the BritLib user for the BL webteam to download and also backs up the data to scabucks.
 
 
 INSTRUCTIONS FOR TASKS YOU MIGHT BE ASKED TO DO
@@ -180,6 +180,13 @@ so the data is taken from the 530 u field if there is data there and if not foll
 Other links (GW) are done in the recordDisplay xslt.
 
 The links from the Koninklijke Bibliotheek notes are also done in the recordDisplay xslt.
+
+
+Print the full ISTC to pdf
+==========================
+
+This takes a very long time during which you must not restart apache on the machine it is running on as the XSLT needs to 
+access the server to pull in the US data. The script is data_requests/printToPDF.py
 
 
 Recreate USA data from files
