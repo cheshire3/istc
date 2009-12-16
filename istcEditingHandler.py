@@ -401,7 +401,7 @@ class IstcEditingHandler:
      
     #from editing store 
     def load_file(self, form):   
-        recid = form.get('recid', None)
+        recid = form.get('recid', None).value
         if recid == None:
             return 'no recid'
         
@@ -729,7 +729,7 @@ class IstcEditingHandler:
     def delete(self, form):
         recid = form.get('1', None)
         if (recid == None):
-            recid = form.get('recid', None)
+            recid = form.get('recid', None).value
         if (recid.find('-') == -1):
             owner = form.get('owner', session.user.username)
             recid = '%s-%s' % (recid, owner)   
