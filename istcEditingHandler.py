@@ -421,10 +421,10 @@ class IstcEditingHandler:
         content = unicode(formTxr.process_record(session, rec).get_raw(session))
         
 #        content = content.replace('%RFRNC%', self._get_refxml(session, rec))
-        content = content.replace('%OWNER%', owner)
-        content = content.replace('%%INTERNALNOTES%%', notes)      
-        page = page.replace('%CONTENT%', content)
-        page = page.replace('%%timestamp%%', unicode(self._get_timeStamp()))
+        content = content.replace(u'%OWNER%', unicode(owner, 'utf-8'))
+        content = content.replace(u'%%INTERNALNOTES%%', unicode(notes, 'utf-8'))
+        page = page.replace(u'%CONTENT%', content)
+        page = page.replace(u'%%timestamp%%', unicode(self._get_timeStamp()))
         return page
 
   
@@ -440,8 +440,10 @@ class IstcEditingHandler:
                 return '<p>No files selected</p>'           
         if (f.find('.xml') == -1):
             f = '%s.xml' % f
-        
-        xml = read_file('%s/%s' % (sourceDir, f))
+        try:        
+            xml = read_file('%s/%s' % (sourceDir, f))
+        except IOError:
+            return '<div id="maincontent"><p class="error">Requested file could not be found</p></div>'
 
         doc = StringDocument(xml)  
         rec = xmlp.process_document(session, doc)
@@ -840,7 +842,7 @@ class IstcEditingHandler:
             for r in editStore:
                 if r.id == fullid:
                     exists = 'true'
-                    break;              
+                    break
             if exists == 'false':                                  
                 for r in editStore:
                     if r.id[:r.id.rfind('-')] == id :
