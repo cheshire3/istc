@@ -1,0 +1,59 @@
+<div id="maincontent">
+	<h1>Delete Existing ISTC Description</h1>
+	
+    <h3 class="editheader">Delete ISTC Description for Main Database</h3>
+    <h4>Type in ISTC Number</h4><div id="typediv">
+    <form action="delete.html" name="fileops" method="post"  onsubmit="return confirmDelete('text');">
+    <input id="ISTCNo"  name="filename" type="text" onkeyup="suggest(this.id, event);" onkeydown="if (event.keyCode == 13){return false;}" onblur="clearSuggests()" autocomplete="off"/> <br/>
+    <input class="deletebutton" type="submit" value=" Delete " name="operation" onmousedown="op='delete';"/>
+	<input class="deletebutton" type="submit" value=" Delete + Unindex " name="operation" onmousedown="op='unindex';"/>
+    
+    </form>
+    <br/><br/></div>
+    <h4>Look up ISTC Number Alphabetically</h4>
+    <div id="alphabet">
+    <form action="delete.html" name="fileops" method="post" onsubmit="return confirmDelete('checkbox');">
+	
+	<div id="alphalinks">
+	<a class="alpha" href="javascript: getAll('ia', 'checkbox');">A</a>
+	<a class="alpha" href="javascript: getAll('ib', 'checkbox');">B</a>
+	<a class="alpha" href="javascript: getAll('ic', 'checkbox');">C</a>
+	<a class="alpha" href="javascript: getAll('id', 'checkbox');">D</a>
+	<a class="alpha" href="javascript: getAll('ie', 'checkbox');">E</a>
+	<a class="alpha" href="javascript: getAll('if', 'checkbox');">F</a>
+	<a class="alpha" href="javascript: getAll('ig', 'checkbox');">G</a>
+	<a class="alpha" href="javascript: getAll('ih', 'checkbox');">H</a>
+	<a class="alpha" href="javascript: getAll('ii', 'checkbox');">I</a>
+	<a class="alpha" href="javascript: getAll('ij', 'checkbox');">J</a>
+	<a class="alpha" href="javascript: getAll('ik', 'checkbox');">K</a>
+	<a class="alpha" href="javascript: getAll('il', 'checkbox');">L</a>
+	<a class="alpha" href="javascript: getAll('im', 'checkbox');">M</a>
+	<a class="alpha" href="javascript: getAll('in', 'checkbox');">N</a>
+	<a class="alpha" href="javascript: getAll('io', 'checkbox');">O</a>
+	<a class="alpha" href="javascript: getAll('ip', 'checkbox');">P</a>
+	<a class="alpha" href="javascript: getAll('iq', 'checkbox');">Q</a>
+	<a class="alpha" href="javascript: getAll('ir', 'checkbox');">R</a>
+	<a class="alpha" href="javascript: getAll('is', 'checkbox');">S</a>
+	<a class="alpha" href="javascript: getAll('it', 'checkbox');">T</a>
+	<a class="alpha" href="javascript: getAll('iu', 'checkbox');">U</a>
+	<a class="alpha" href="javascript: getAll('iv', 'checkbox');">V</a>
+	<a class="alpha" href="javascript: getAll('iw', 'checkbox');">W</a>
+	<a class="alpha" href="javascript: getAll('ix', 'checkbox');">X</a>
+	<a class="alpha" href="javascript: getAll('iy', 'checkbox');">Y</a>
+	<a class="alpha" href="javascript: getAll('iz', 'checkbox');">Z</a>
+	<a class="alpha" href="javascript: getAll('', 'checkbox');">Clear</a>
+	</div>
+	<input class="deletebutton" type="submit" value=" Delete " name="operation" onmousedown="op='delete';"/>
+	<input class="deletebutton" type="submit" value=" Delete + Unindex " name="operation" onmousedown="op='unindex';"/>
+	
+	
+	<br/>
+	
+	
+	<div id="colcontainer"></div>
+	</form>
+	</div>
+
+
+    
+</div>

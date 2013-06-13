@@ -1,0 +1,12 @@
+body {
+	font-size: 10pt;
+	}
+
+
+.istcno, .label{
+	font-weight: bold;
+}
+
+.title {
+	font-style: italic;
+}

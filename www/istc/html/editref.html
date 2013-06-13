@@ -1,0 +1,15 @@
+<div id="maincontent" onclick="clearSuggests()">
+	<h1>Add/Edit Bibliographical Reference Abbreviations</h1>
+	
+    
+    <h3 class="editheader">Add or Edit a Bibliographical Reference</h3>
+
+		<form id="mainform" name="mainform" action="edit.html" method="post" enctype="multipart/form-data">
+ 		<table><tbody>
+ 		<tr><td>Abbreviated Reference: </td><td><input onkeyup="suggest(this.id, event);" autocomplete="off" name="abbrev" id="refs_a" type="text" size="68" value="" onkeydown="if (event.keyCode == 13){return false;}"/><br/></td></tr>
+ 		<tr><td>Full Reference: </td><td><textarea  name="full" id="refs_full" cols="66" rows="4" onkeydown="if (event.keyCode == 13){return false;}"> </textarea></td></tr>
+ 		</tbody></table>
+ 		<input type="hidden" name="operation" value="submitref"/>
+ 		<input id="subrefsubmit" type="submit" value="submit"/>
+ 		</form>
+</div>

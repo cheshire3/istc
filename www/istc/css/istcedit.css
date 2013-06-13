@@ -1,0 +1,595 @@
+
+/*======================================================================================================= */
+/* general form stuff */
+
+
+div#fullmaincontent {
+	width: 752px;
+	padding: 0 0 10px 52px;
+	margin: 0 0 0 0;
+	position:relative; 
+	float:left;
+}
+
+.functionbutton {
+	width: 100px;	
+}
+
+div#fullmaincontent h1 {
+	font-family:  arial; 
+	font-size: 14pt; 
+/*	color: #990; */
+	color: #006c7d;
+}
+
+
+div#fullcontent {
+	float:left;
+	width: 743px;
+	padding-left: 5px;
+}
+
+
+.field {
+	border: 2px solid #006c7d;
+	background: #E7ECED;
+	padding-left: 12px;
+	padding-right: 12px;
+	float: left;
+	font-size: 11pt;
+	min-width: 715px;	
+}
+
+
+.field p {
+	margin-top: 10px;
+	margin-bottom: 10px;		
+}
+
+.functions {
+	border: 2px solid #006c7d;
+	background: #E7ECED;
+	padding: 12px;		
+}
+
+textarea, input {
+	font-family: arial, helvetica, gill, sans-serif;
+	font-size: 11pt; 
+}
+
+#formDiv {
+	overflow: visible;	
+}
+
+.horizontal {
+	float: left;
+	padding-right: 20px;
+	padding-bottom: 5px;
+}
+
+div#gotodiv {
+	float: right;
+	padding-right: 5px;
+	padding-bottom: 10px;	
+}
+
+.toplink {
+	float:right;	
+	padding-right: 5px;
+	padding-bottom: 3px;
+	padding-top: 2px;
+	color: #006c7d;
+}
+
+.keyboardlink {
+	float: left;
+	color: #006c7d;	
+	padding-bottom: 3px;
+	padding-top: 2px;
+}
+
+.error {
+	color: red;
+}
+	
+	
+.ok {
+	color: green;
+}
+
+
+/*======================================================================================================= */
+/* Width settings for input boxes */
+
+#author {
+	width: 710px;
+	}
+	
+#title{
+	width: 710px;
+	}
+	
+.fullwidth{
+	width: 710px;
+	}
+
+.tablewidth {
+	width: 655px;
+	}
+	
+.tablewidthwithlabel {
+	width: 630px;
+	}
+	
+.halfwidth {
+	width: 225px;
+	}
+
+/*======================================================================================================= */
+/* Statistics page stuff */
+
+table.stats {
+	float: left;
+	padding-right: 50px;
+	}
+	
+table.stats td {
+	padding: 5px;
+	font-size: 10pt;
+	}
+	
+table.stats td.label {
+	background-color: #98ced9;
+	font-weight: bold;
+	}
+	
+table.stats td.content {
+	background-color: #eeeeee;
+	width: 30px;
+	text-align: right;
+	}
+	
+div.statsdiv {
+	border-top: solid 1px #98ced9;
+	padding-bottom: 20px;
+	}	
+
+
+
+/*======================================================================================================= */
+/* Menu pages stuff */
+h3.editheader {
+	background: #98ced9;	
+	padding-left: 5px;
+	padding-top: 5px;
+	padding-bottom: 7px;
+}
+
+h3 a {
+	color: black;
+	text-decoration: none;	
+}
+
+h3 a:hover {
+	text-decoration: underline;
+	}
+
+table#usertable {
+	padding-bottom: 10px;	
+}
+
+td.usertable {
+	font-size: 10pt;
+}
+
+.passwdconfirm {
+	border-top: solid 1px #98ced9;
+}
+	
+div.column {
+	float: left;
+	padding-right: 50px;
+	margin-top: 15px;	
+}
+
+div.lastcolumn {
+	float: left;
+	margin-top: 15px;	
+}
+
+div#alphabet {
+	padding-bottom: 15px;
+}
+
+.deletebutton {
+	float: right;
+	margin: 5px;	
+}
+
+.editbutton {
+	float: right;
+	margin: 5px;	
+}
+
+
+div#alphalinks {
+	float: left;	
+}
+
+div#colcontainer {
+	border-top: solid 1px #98ced9;
+	margin-top: 15px;
+}
+
+div#typediv {
+	border-bottom: solid 3px #98ced9;
+}
+
+.userediterror {
+	color: red;
+	font-weight: bold;
+	margin-left: 52px;	
+}
+
+ul.unmarked {
+  margin-bottom: 1em;
+}
+
+li.unmarked {
+	list-style: none;
+}
+
+li.unmarked a img {
+	border: 1px solid white;
+
+	}
+	
+table.currentusers {
+	font-size: 10pt;
+		
+}
+
+table.currentusers td {
+	padding: 3px;
+	}
+
+table.currentusers tr.headrow {
+	font-weight: bold;
+	background: #98ced9;	
+}
+
+tr.odd { 
+  color: black;
+}
+
+tr.even {
+  color: black;
+  background-color: #eeeeee;
+}
+
+div#adduser table {
+	font-size: 10pt;
+	}
+	
+.label {
+	font-size: 10pt;
+	}
+
+/*======================================================================================================= */
+/* Relating to multiple entry fields */
+
+.melabel, .reflabel {
+	font-size: 10pt;
+}
+
+.mebuttons {
+	float: left;
+	padding-left: 50px;
+	padding-right: 50px;
+}
+	
+.meadded {
+	padding-left: 45px;
+	padding-bottom: 10px;
+	float: left;
+}
+
+.addedcontainer {
+	border-top: 2px solid #006c7d;		
+}
+
+.added, .smalladded {
+	width: 710px;
+	background: #F2F2F2;
+	border: inset 2px #000000;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-left: 0px;	
+	margin-top: 10px;	
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.added {
+		max-height: 200px;
+		min-height: 200px;
+	}
+	
+.smalladded {
+		max-height: 100px;
+		min-height: 100px;
+	}
+
+.added ul, .smalladded ul {
+	list-style-type: none;
+	margin-top: 5px;
+  	padding: 0px;
+}
+	
+.added li, .smalladded li {
+	padding: 0px;
+	margin: -5px;
+}
+	
+.added li p, .smalladded li p{
+	padding-top: 0px;
+	font-size: 9pt;
+}
+	
+.addedimage {
+	padding-left: 3px;
+	padding-right: 3px
+}	
+
+.icons {
+	float: left;
+	padding-right: 5px;
+	padding-left: 3px;
+	margin-left: 10px;
+}
+
+
+.tablecontainer {
+	float: left;
+	margin-top: -10px;
+	max-width: 450px;
+}
+
+.tablecontainer table{
+	padding-bottom: 5px;
+}
+
+.tablecontainer .label {
+	width: 75px;
+}
+
+
+.mebutton {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 50px;
+	float: left;
+}
+
+#addshelfmarkbutton {
+	float:right;
+	margin-top: 5px;
+	}
+
+td .mebutton {
+	margin-left: 0px;	
+}
+
+.multipleEntry {
+	margin-left: 80px;
+}
+
+.suggest {
+	z-index: 3;	
+}
+
+.addedString {
+	cursor: pointer;
+}
+
+.addedString a {
+	color: black;
+	text-decoration: none;	
+}
+
+.addedString a:hover {
+	text-decoration: underline;	
+}
+
+
+/*======================================================================================================= */
+/* reference/usa location specific stuff*/
+
+div#refcontainer .tablecontainer, div#holdingscontainer .tablecontainer {
+	margin-top: 3px;
+}
+
+
+#fullrefcontainer, #usacontainer {	
+	width: 700px; 
+	margin-left: 5px;
+}
+
+
+.referencebuttonsdiv,  .holdingbuttonsdiv{
+	padding-bottom: 15px;	
+}
+
+.editfullref{
+	float: left;
+	margin-top: 70px;
+}
+
+
+#refdisplay{
+	margin-top: 5px;
+}
+
+#usadisplay {
+	margin-top: 20px;	
+}
+
+#refdisplay p, #usadisplay p{
+	font-size: 10pt;
+	max-width: 700px;
+	float: left;
+	min-height: 80px;
+	margin-top: 0px;	
+}
+
+
+div#refcontainer, div#fullrefcontainer, div#holdingscontainer, div#usacontainer {
+	float:left;	
+}
+
+#usabutton{
+	float: right;	
+}
+
+/*======================================================================================================= */
+/* relating to char entity keyboard */
+
+
+#keyboard {
+  	border: solid black 1px;
+	position: fixed;
+	bottom: 0px;
+	right: 10px;
+	width: 9cm;
+   	background: #006c7d;
+}
+
+#keyboardtitle {
+	font-weight: normal; 
+	font-size: 11pt; 
+	padding-left: 2px; 
+	width: 63%; 
+	text-align: right;
+	float: left;
+	}
+
+.capslock {
+	float: left;
+	margin-left: 5px;
+	height: 15px;
+	
+	}
+
+#charlink, 
+#charlinkpressed {
+	font-size: 9pt;
+	float: left;
+	width: 100px;
+	padding: 4px;
+	margin-left: 3px;
+	margin-bottom: 4px;
+	}
+	
+#charlinkpressed {
+	border-top: 2px solid gray;
+	border-left: 2px solid gray;
+	border-bottom: 2px solid white;
+	border-right: 2px solid white;
+	}
+	
+#charlink {
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	border-bottom: 2px solid gray;
+	border-right: 2px solid gray;
+	}
+
+#whichlink {
+	font-size: 10pt;
+	float: right;
+	}
+
+td button {
+	width: 0.8cm;
+	height: 0.7cm;
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	border-bottom: 2px solid gray;
+	border-right: 2px solid gray;
+	}
+
+#keyboardcontrolbar {
+
+	color: white;
+	}
+	
+
+#chartableupper,
+#chartablelower {
+	padding: 7px;
+	background: #e5e5e5;
+	position: relative;
+	
+
+	}
+
+/*max, min, close etc. */
+#kbfunctions{
+	float: right;
+	padding-right: 2px;
+	background: #006c7d;
+	}
+	
+#kbfunctions a img {
+	background: #006c7d;
+	border: 1px solid #006c7d;
+
+	}
+
+/*======================================================================================================= */
+/* SubForm */
+
+.popup {
+	width: 700;
+	height: 300;
+	position: fixed; 
+	background: #E7ECED;
+	border: solid #006c7d 3px;
+	left: 130;	
+	}
+
+.subForm {
+	background: #EDEDDC;
+}
+
+.subformtitle {
+	font-size: 11pt;
+	margin-left: 20px;
+	float: left;
+	}
+	
+#subclose {
+	float:right;
+	margin-top: 15px;
+	margin-right: 30px;
+	}
+	
+#subformsubmit {
+	float:right;
+	margin-top: 15px;
+	margin-right: 30px;
+	}
+
+.sublabel {
+	vertical-align: top;
+	font-size: 10pt;
+	width: 90px;
+	}
+
+#subtable {
+	padding: 20px;
+}
+
+.readonly {
+	background: #F2F2F2;
+}

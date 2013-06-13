@@ -1,0 +1,110 @@
+/* Search Page */
+
+.termbox {
+	width: 220px;
+	margin-right: 4px;
+	}
+	
+.termboxtop {
+	width: 220px;
+	margin-right: 0px;
+	}
+
+.relationbox {
+	width: 160px;
+	}
+
+/* Browse */
+
+tr.odd { 
+  	color: black;
+  	background-color: white;
+}
+
+tr.even {
+  	color: black;
+  	background-color: #eeeeee;
+}
+
+td.hit,
+td.comphit {
+	border: 1px solid black;
+}
+
+/* End of Browse */
+
+/* Contributors */
+
+div.contributor {
+	margin-top: 25px;	
+	margin-bottom: 40px;
+}
+
+/* End of Contributors */
+
+/* Hits List Display */
+
+td.checkbox, td.recnumber {
+	vertical-align: top;
+	}
+
+td.hiddenlink a {
+	text-decoration:none;
+	color: #000;
+	}
+	
+#pagejumpspan {
+	float:left;
+	margin-top: 15px;
+	}
+
+/* End of Hits List Display */
+
+
+/* Record Display */
+
+
+div#maincontent table, div.counter {
+	font-family: verdana;
+	font-size: 10pt;
+	}
+	
+div#maincontent table {
+	clear: left;
+	}
+
+div#maincontent table tr td {
+	padding: 2px;
+
+	}
+
+td.label {
+	font-weight: bold;
+	vertical-align: top;
+	width: 110px;
+	}
+	
+.subheader {
+	vertical-align: top;
+	}
+	
+
+.sortedBy {
+	font-weight: bold;
+	}
+
+.recordnav {
+	float: right;	
+	color: #5a6665;
+	 
+}
+
+.counter {
+	float: left;
+	font-size: 10pt;
+	}
+
+/* End of Record Display*/
+
+
+
