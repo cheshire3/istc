@@ -1,0 +1,264 @@
+
+<explain id="138.253.81.72/services/istc" authoritative="true" 
+  xmlns="http://explain.z3950.org/dtd/2.0/"
+  xmlns:c3="http://www.cheshire3.org/schemas/explain/">
+    
+  
+  <serverInfo protocol="srw/u" version="1.1" transport="http">
+     <host>138.253.81.72</host>
+     <port>80</port>
+     <database>services/istc</database>
+  </serverInfo>
+
+  <databaseInfo>
+     <title lang="en" primary="true">ISTC Bibliographic Database</title>
+     <description lang="en" primary="true">
+		A database containing bibliographic records for the ISTC catalogue for the British Library.        
+     </description>
+  </databaseInfo>
+
+  <metaInfo>
+     <dateModified>2008-09-16 13:13:00</dateModified>
+  </metaInfo>
+
+  <indexInfo>
+     <set identifier="info:srw/cql-context-set/1/dc-v1.1" name="dc"/>
+     <set identifier="info:srw/cql-context-set/1/cql-v1.2" name="cql"/>
+     <set identifier="info:srw/cql-context-set/15/norzig-1.0" name="norzig"/>
+     <set identifier="info:srw/cql-context-set/2/relevance-1.0" name="rel"/>
+     <set identifier="info:srw/cql-context-set/2/rec-1.1" name="rec"/>
+     <set identifier="info:sru/context-sets/1/bib-1.0" name="bib"/>
+     <set identifier="info:sru/context-sets/1/istc-1.0" name="istc"/>
+ 
+	 <index c3:index="idx-kwd-all">
+		<title>General Keywords</title>
+	   <map>
+	     <name set="cql">anywhere</name>
+	   </map>
+	  	<configInfo>
+	     <supports type="relation">any</supports>
+	     <supports type="relation">all</supports>
+	     <supports type="relation">=</supports>
+	     <supports type="relationModifier">word</supports>
+	     <supports type="relationModifier">stem</supports>
+	   </configInfo>
+	 </index> 
+	   
+	 <index c3:index="idx-author">
+		<title>Author</title>
+	   <map>
+	     <name set="dc">creator</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-author">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-author">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-author">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-author">word</supports>
+	   </configInfo>
+	 </index>    
+	    
+	 <index c3:index="idx-title">
+	   <title>Title</title>
+	   <map>
+	     <name set="dc">title</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-title">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-title">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-title">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-title">word</supports>
+	   </configInfo>
+	 </index>
+  
+	 <index c3:index="idx-publoc">
+	   <title>Place of Printing</title>
+	   <map>
+	     <name set="bib">originPlace</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-publoc">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-publoc">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-publoc">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-publoc">word</supports>
+	   </configInfo>
+	 </index> 	
+	 
+	 <index c3:index="idx-countryOfPrint">
+	   <title>Country of Printing</title>
+	   <map>
+	     <name set="istc">countryOfPrint</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	   </configInfo>
+	 </index> 	
+	 
+	 <index c3:index="idx-printer">
+	   <title>Printer</title>
+	   <map>
+	     <name set="dc">publisher</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-printer">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-printer">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-printer">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-printer">word</supports>
+	   </configInfo>
+	 </index>
+	 
+	 <index c3:index="idx-bibref">
+	   <title>Bibliographical References</title>
+	   <map>
+	     <name set="istc">referencedBy</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-bibref">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-bibref">word</supports>
+	     <supports type="relationModifier" c3:index="idx-pass-kwd-bibref">full</supports>
+	   </configInfo>
+	 </index>	 
+	 
+	 <index c3:index="idx-ISTCnumber">
+	   <title>ISTC Number</title>
+	   <map>
+	     <name set="dc">identifier</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation">=</supports>
+	     <supports type="relationModifier">string</supports>
+	   </configInfo>
+	 </index>
+	 
+	 <index c3:index="idx-kwd-format">
+	   <title>Format</title>
+	   <map>
+	     <name set="dc">format</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation">all</supports>
+	     <supports type="relation">any</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier">word</supports>
+	   </configInfo>
+	 </index>
+  
+	 <index c3:index="idx-location">
+	   <title>Location of Copy</title>
+	   <map>
+	     <name set="norzig">posessingInstitution</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-location">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-location">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-location">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-location">word</supports>
+	     <supports type="relationModifier" c3:index="idx-pass-kwd-location_usa">usa</supports>
+	   </configInfo>
+	 </index>
+	 
+	 <index c3:index="idx-locCountries">
+	   <title>Country of Copy</title>
+	   <map>
+	     <name set="istc">countryOfCopy</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	   </configInfo>
+	 </index> 
+	 
+	 <index c3:index="idx-pubdate">
+	   <title>Publication Date</title>
+	   <map>
+	     <name set="dc">date</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation" c3:index="idx-kwd-pubdate">all</supports>
+	     <supports type="relation" c3:index="idx-kwd-pubdate">any</supports>
+	     <supports type="relation" c3:index="idx-kwd-pubdate">=</supports>
+	     <supports type="relationModifier">string</supports>
+	     <supports type="relationModifier" c3:index="idx-kwd-pubdate">word</supports>
+	   </configInfo>
+	 </index>
+	 
+	 <index c3:index="idx-year">
+	    <title>Year (Start or Exact)</title>
+	    <map>
+	      <name set="istc">year</name>
+	    </map>
+	    <configInfo>
+	      <supports type="relation">&lt;</supports>
+	      <supports type="relation">&lt;=</supports>
+	      <supports type="relation">&gt;</supports>
+	      <supports type="relation">&gt;=</supports>
+	      <supports type="relation">exact</supports>
+	    </configInfo>
+	  </index> 
+	  
+	 <index c3:index="idx-language">
+	   <title>Language Code</title>
+	   <map>
+	     <name set="dc">language</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation">=</supports>
+	     <supports type="relationModifier">string</supports>
+	   </configInfo>
+	 </index>	  
+	  
+	 <index c3:index="idx-BLshelfmark">
+	   <title>British Library Shelfmark</title>
+	   <map>
+	     <name set="istc">BLshelfmark</name>
+	   </map>
+	   <configInfo>
+	     <supports type="relation">exact</supports>
+	     <supports type="relation">=</supports>
+	     <supports type="relationModifier">string</supports>
+	   </configInfo>
+	 </index>	
+     
+  </indexInfo>
+
+ <schemaInfo>
+    <schema identifier="http://www.loc.gov/MARC21/slim"
+                sort="true" retrieve="true" name="marcxml"
+                c3:transformer="sruOutgoingTxr">
+        <title>Marc 21 XML Schema</title>
+	</schema>
+  </schemaInfo>
+
+  <configInfo>
+     <default type="numberOfRecords">1</default>
+     <default type="contextSet">cql</default>
+     <default type="index">cql.anywhere</default>
+     <default type="relation">all</default>
+     <default type="sortSchema">marcxml</default>
+     <default type="retrieveSchema">marcxml</default>
+     <default type="sortCaseSensitive">false</default>
+     <default type="sortAscending">true</default>
+     <default type="sortMissingValue">HighValue</default>
+     <setting type="maximumRecords">50</setting>
+
+     <supports type="proximity"/>
+     <supports type="resultSets"/>
+     <supports type="sort"/>
+  </configInfo>
+</explain>

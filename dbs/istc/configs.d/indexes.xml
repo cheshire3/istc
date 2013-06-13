@@ -1,0 +1,782 @@
+<config>
+	<!-- indexes -->
+<subConfigs>
+	<subConfig type="index" id="idx-kwd-all">
+		<objectType>cheshire3.index.ProximityIndex</objectType>
+		<paths>
+			<object type="indexStore" ref="indexStore" />
+			<object type="recordStore" ref="recordStore" />
+		</paths>
+		<source mode="data">
+			<xpath>controlfield[@tag='001']</xpath>
+			<xpath>datafield</xpath>
+			<process>
+				<object type="workflow" ref="ProxExtractorWorkflow" />
+				<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+			</process>
+		</source>
+		<source mode="data">
+			<xpath>controlfield[@tag='008']</xpath>
+			<process>
+    			<object type="extractor" ref="ProxExtractor"/>
+    			<object type="tokenizer" ref="createdDateTokenizer"/>
+    			<object type="tokenMerger" ref="ProxTokenMerger"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+			</process>
+		</source>
+     	<source mode="any|all|=|exact">
+     		<process>
+     			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+     		</process>
+     	</source>
+	</subConfig>
+
+
+	<subConfig type="index" id="idx-kwd-author">
+     	<objectType>cheshire3.index.ProximityIndex</objectType>
+     	<paths>
+     		<object type="indexStore" ref="indexStore" />
+     		<object type="recordStore" ref="recordStore" />
+     	</paths>
+     	<source>
+     		<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
+     		<process>
+     			<object type="workflow" ref="ProxExtractorWorkflow" />
+     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+     		</process>
+     	</source>
+     	<source mode="any|all|=">
+     		<process>
+     			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+     			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+     		</process>
+     	</source>
+     </subConfig>
+
+     <subConfig type="index" id="idx-author-exact">
+ 		<objectType>cheshire3.index.SimpleIndex</objectType>
+ 		<paths>
+ 			<object type="indexStore" ref="indexStore" />
+ 			<object type="recordStore" ref="recordStore" />
+ 		</paths>
+ 		<source>
+ 			<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
+ 			<process>
+ 				<object type="extractor" ref="SimpleExtractor" />
+ 				<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+ 			</process>
+ 		</source>
+ 	</subConfig>
+
+     <subConfig type="index" id="idx-author">
+ 		<objectType>cheshire3.index.SimpleIndex</objectType>
+ 		<paths>
+ 			<object type="indexStore" ref="indexStore" />
+ 			<object type="recordStore" ref="recordStore" />
+ 		</paths>
+ 		<source>
+ 			<xpath>datafield[@tag='100']/subfield[@code='a']</xpath>
+ 			<process>
+ 				<object type="extractor" ref="SimpleExtractor" />
+ 				<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+ 			</process>
+ 		</source>
+ 	</subConfig>
+
+
+ 	<subConfig type="index" id="idx-kwd-title">
+ 		<objectType>cheshire3.index.ProximityIndex</objectType>
+ 		<paths>
+ 			<object type="indexStore" ref="indexStore" />
+ 			<object type="recordStore" ref="recordStore" />
+ 		</paths>
+ 		<source>
+ 			<xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+ 			<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
+ 			<process>
+ 				<object type="workflow" ref="ProxExtractorWorkflow" />
+ 				<object type="workflow" ref="Space-Diacritic-Case-Possessive-NormalizerWorkflow" />
+ 			</process>
+ 		</source>
+ 		<source mode="any|all|=">
+ 			<process>
+ 				<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+ 				<object type="workflow" ref="Space-Diacritic-Case-Possessive-NormalizerWorkflow" />
+ 			</process>
+ 		</source>
+ 	</subConfig>
+
+
+ 	<subConfig type="index" id="idx-title">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='245']/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='130']/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<options>
+	  		<setting type="sortStore">1</setting>
+	  	</options>
+    </subConfig>
+
+
+
+    <subConfig type="index" id = "idx-kwd-publoc">
+      <objectType>cheshire3.index.ProximityIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+        <process>
+ 		  <object type="workflow" ref="ProxExtractorWorkflow" />
+          <object type="normalizer" ref="PunctNormalizer"/>
+    	  <object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+        </process>
+      </source>
+      <source mode="any|all|=">
+      	  <process>
+ 			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" /> 
+    	    <object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+      	  </process>
+      </source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-publoc">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="PublocTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<options>
+	  		<setting type="sortStore">1</setting>
+	  	</options>
+    </subConfig>
+
+    <subConfig type="index" id="idx-publoc-exact">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="PublocTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-countryOfPrint">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="PublocTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    			<object type="normalizer" ref="CountryofPrintNormalizer" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="CaseNormalizer" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-kwd-printer">
+    	<objectType>cheshire3.index.ProximityIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+    		<process>
+    			<object type="workflow" ref="ProxExtractorWorkflow" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+      
+    
+    <subConfig type="index" id="idx-printer">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+   
+   
+    <subConfig type="index" id="idx-printer-exact">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='b']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Diacritic-Space-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+     
+    
+    <subConfig type="index" id="idx-kwd-bibref">
+		<objectType>cheshire3.index.ProximityIndex</objectType>
+		<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>		
+		</paths>		
+		<source>
+		<xpath>datafield[@tag='510']</xpath>
+			<process>
+          		<object type="workflow" ref="ProxExtractorWorkflow"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />	
+        	</process>
+		</source>
+		<source mode="any|all|=">
+      	  <process>
+    			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+	      </process>
+       </source>
+	</subConfig>
+
+	<subConfig type="index" id="idx-bibref">
+		<objectType>cheshire3.index.SimpleIndex</objectType>
+		<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>		
+		</paths>		
+		<source>
+		<xpath>datafield[@tag='510']</xpath>
+			<process>
+          		<object type="extractor" ref="SimpleExtractor"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />	
+        	</process>
+		</source>
+	</subConfig>
+	
+ 	<subConfig type="index" id="idx-key-bibref">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>    		
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='510']/subfield[@code='a']</xpath>
+    		<process>
+	          <object type="extractor" ref="SimpleExtractor"/>
+			  <!--<object type="normalizer" ref="BibRefNormalizer"/>-->
+    		  <object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+	        </process>
+    	</source>
+    	<source mode="exact">
+			<process>
+				<object type="extractor" ref="SimpleExtractor"/>
+				<object type="tokenizer" ref="SplitTokenizer"/>
+				<object type="tokenMerger" ref="SimpleTokenMerger"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+			</process>
+		</source>
+		<source mode="any|all|=">
+      	  <process>
+				<object type="extractor" ref="SimpleExtractor"/>
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+	      </process>
+       </source>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-pass-kwd-bibref">
+        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
+        <paths>        
+          <path type="database">db_refs</path>
+          <path type="remoteIndex">idx-kwd-refs</path>
+          <path type="remoteKeyIndex">idx-key-refs</path>
+          <object type="localIndex" ref="idx-key-bibref" />
+        </paths>
+        <xpath>/record/code/text()</xpath>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-pass-bibref">
+        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
+        <paths>        
+          <path type="database">db_refs</path>
+          <path type="remoteIndex">idx-refs</path>
+          <path type="remoteKeyIndex">idx-key-refs</path>
+          <object type="localIndex" ref="idx-key-bibref" />
+        </paths>
+        <xpath>/record/code/text()</xpath>
+    </subConfig>
+
+
+    <subConfig type="index" id = "idx-ISTCnumber">
+      <objectType>cheshire3.index.SimpleIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+	  <xpath>controlfield[@tag='001']</xpath>
+        <process>
+          <object type="extractor" ref="SimpleExtractor"/>
+	  	  <object type="normalizer" ref="SpaceNormalizer"/> 
+        </process>
+      </source>
+      <options>
+	  		<setting type="sortStore">1</setting>
+	  </options>
+      </subConfig>
+
+    <subConfig type="index" id="idx-format">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='300']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="FormatNormalizer" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+    <subConfig type="index" id="idx-kwd-format">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='300']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="FormatNormalizer" />
+    			<object type="tokenizer" ref="FormatTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-kwd-location">
+    	<objectType>cheshire3.index.ProximityIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='993'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="workflow" ref="ProxExtractorWorkflow" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-location">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='852']/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='951'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='995'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='957'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='997'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='954'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='955'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='996'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='958'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='953'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='994'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<xpath>datafield[@tag='993'][not(subfield[@code='x'])]/subfield[@code='a']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+    
+    <subConfig type="index" id="idx-location-private">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='951']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='995']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='957']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='997']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='954']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='955']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='996']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='958']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='953']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='994']/subfield[@code='x']</xpath>
+    		<xpath>datafield[@tag='993']/subfield[@code='x']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="SpaceNormalizer" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-year">
+	  <objectType>cheshire3.index.SimpleIndex</objectType>
+	  <paths>
+	    <object type="indexStore" ref="indexStore"/>
+	    <object type="recordStore" ref="recordStore"/>
+	  </paths>
+	  <source>
+	    <xpath ref="year008"/>
+	   	<process>
+	      <object type="extractor" ref="SimpleExtractor"/>	      
+    	  <object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+	   	</process>
+	  </source>
+	  <options>
+	  	<setting type="sortStore">1</setting>
+	  </options>
+    </subConfig>
+    
+    <subConfig type="transformer" id="year008Txr">
+      <objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+      <paths>
+        <path type="xsltPath">xsl/year008.xsl</path>
+      </paths>
+    </subConfig>
+    
+    <subConfig type="xpathProcessor" id="year008">
+      <objectType>cheshire3.xpathProcessor.TransformerXPathProcessor</objectType>
+      <paths>
+        <object type="transformer" ref="year008Txr"/>
+      </paths>
+    </subConfig>
+
+
+
+    <subConfig type="index" id="idx-kwd-pubdate">
+    	<objectType>cheshire3.index.ProximityIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='c']</xpath>
+    		<process>
+    			<object type="workflow" ref="ProxExtractorWorkflow" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=">
+    		<process>
+    			<object type="workflow" ref="PreserveMaskingProxExtractorWorkflow" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-pubdate">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='260']/subfield[@code='c']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="PunctNormalizer" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Diacritic-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-language">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath ref="language" />
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="normalizer" ref="LanguageNormalizer" />
+    	  		<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    	  		<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+    <subConfig type="transformer" id="languageTxr">
+    	<objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+    	<paths>
+    		<path type="xsltPath">xsl/langcode.xsl</path>
+    	</paths>
+    </subConfig>
+
+
+    <subConfig type="xpathProcessor" id="language">
+    	<objectType>cheshire3.xpathProcessor.TransformerXPathProcessor</objectType>
+    	<paths>
+    		<object type="transformer" ref="languageTxr" />
+    	</paths>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-BLshelfmark">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='852']/subfield[@code='j']</xpath>
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-key-location_usa">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+	        <object type="indexStore" ref="indexStore"/>
+	        <object type="recordStore" ref="recordStore"/>    		
+    	</paths>
+    	<source>
+    		<xpath>datafield[@tag='952']/subfield[@code='a']</xpath>
+    		<process>
+	          <object type="extractor" ref="SimpleExtractor"/>
+			  <object type="tokenizer" ref="SimpleTokenizer"/>
+			  <object type="tokenMerger" ref="SimpleTokenMerger"/>
+	          <object type="normalizer" ref="SpaceNormalizer"/>
+	        </process>
+    	</source>
+    </subConfig>
+
+
+    <subConfig type="index" id="idx-pass-kwd-location_usa">
+    	<objectType>cheshire3.index.PassThroughIndex</objectType>
+    	<paths>
+    		<path type="database">db_usa</path>
+    		<path type="remoteIndex">idx-kwd-location_usa</path>
+    		<path type="remoteKeyIndex">idx-key-usa</path>
+    		<object type="localIndex" ref="idx-key-location_usa" />
+    	</paths>
+    	<xpath>/record/code/text()</xpath>
+    </subConfig>
+
+    <subConfig type="index" id="idx-pass-location_usa">
+    	<objectType>cheshire3.index.PassThroughIndex</objectType>
+    	<paths>
+    		<path type="database">db_usa</path>
+    		<path type="remoteIndex">idx-location_usa</path>
+    		<path type="remoteKeyIndex">idx-key-usa</path>
+    		<object type="localIndex" ref="idx-key-location_usa" />
+    	</paths>
+    	<xpath>/record/code/text()</xpath>
+    </subConfig>
+
+    <subConfig type="index" id="idx-locCountries">
+    	<objectType>cheshire3.index.SimpleIndex</objectType>
+    	<paths>
+    		<object type="indexStore" ref="indexStore" />
+    		<object type="recordStore" ref="recordStore" />
+    	</paths>
+    	<source>
+    		<xpath ref="locCountries" />
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="tokenizer" ref="SimpleTokenizer" />
+    			<object type="tokenMerger" ref="SimpleTokenMerger" />
+    			<object type="normalizer" ref="LocCountriesNormalizer" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    	<source mode="any|all|=|exact">
+    		<process>
+    			<object type="extractor" ref="SimpleExtractor" />
+    			<object type="workflow" ref="Space-Case-NormalizerWorkflow" />
+    		</process>
+    	</source>
+    </subConfig>
+
+    <subConfig type="transformer" id="locCountriesTxr">
+    	<objectType>cheshire3.transformer.LxmlXsltTransformer</objectType>
+    	<paths>
+    		<path type="xsltPath">xsl/locCountries.xsl</path>
+    	</paths>
+    </subConfig>
+
+    <subConfig type="xpathProcessor" id="locCountries">
+    	<objectType>cheshire3.xpathProcessor.TransformerXPathProcessor</objectType>
+    	<paths>
+    		<object type="transformer" ref="locCountriesTxr" />
+    	</paths>
+    </subConfig>
+   
+    
+    <subConfig type="tokenizer" id="createdDateTokenizer">
+    	<objectType>ISTCextras.ISTCextensions.CreatedDateTokenizer</objectType>
+    </subConfig>
+
+
+
+    <!-- ONLY needed for extracting 951 data - quicker to build without it while testing    
+ <subConfig type="index" id="idx-951">
+      <objectType>cheshire3.index.ProximityIndex</objectType>
+      <paths>
+        <object type="indexStore" ref="indexStore"/>
+        <object type="recordStore" ref="recordStore"/>
+      </paths> 
+      <source>
+        <xpath>datafield[@tag='951']</xpath>
+        <process>
+		  <object type="extractor" ref="SimpleExtractor"/>
+		  <object type="tokenizer" ref="RegexpFindOffsetTokenizer"/>
+		  <object type="tokenMerger" ref="OffsetProxTokenMerger"/>
+          <object type="normalizer" ref="CaseNormalizer"/>
+        </process>
+      </source>
+      <options>
+		<setting type="nProxInts">3</setting>
+	  </options>
+    </subConfig> -->
+    </subConfigs>
+</config>
