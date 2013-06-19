@@ -19,13 +19,12 @@
   	<subConfig type="documentFactory" id="usaDocumentFactory">
 	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
-	   	  <default type="format">xml</default>
+	      <default type="format">xml</default>
 	      <default type="data">/home/cheshire/cheshire3/dbs/istc/usaData/usaCodes.xml</default>
 	      <default type="tagName">record</default>
 	      <default type="codec">utf-8</default>
 	   </options>
     </subConfig>        
-    
     
     <subConfig type="recordStore" id="usaRecordStore">
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
@@ -35,6 +34,9 @@
        <object type="inTransformer" ref="XmlTransformer"/>
         <object type="outParser" ref="LxmlParser"/>
       </paths>
+      <options>
+        <setting type="digest">md5</setting>
+      </options>
     </subConfig>
 
     <subConfig type="indexStore" id="usaIndexStore">
@@ -42,8 +44,8 @@
       <paths>
          <path type="defaultPath">indexes</path>
          <path type="tempPath">temp</path>
-         <path type="recordStoreHash">usaRecordStore</path>  
-      </paths> 
+         <path type="recordStoreHash">usaRecordStore</path>
+      </paths>
     </subConfig>
 
     <subConfig type="protocolMap" id="CQLProtocolMap">
@@ -53,8 +55,7 @@
       </paths>
     </subConfig>
 
-
- <!-- pre-parsers -->
+    <!-- pre-parsers -->
             <subConfig type="preParser" id="emptyEmphTagStripPreParser">
                 <objectType>cheshire3.preParser.RegexpSmashPreParser</objectType>
                 <options>
@@ -66,8 +67,6 @@
             <subConfig type="preParser" id="AmpPreParser">
               <objectType>cheshire3.preParser.AmpPreParser</objectType>
             </subConfig>
-         
-
 
     <subConfig type="index" id = "idx-key-usa">
       <objectType>cheshire3.index.SimpleIndex</objectType>
@@ -170,21 +169,25 @@
       	<object type="workflow" ref="usaIndexRecordWorkflow"/> 
       </workflow>
     </subConfig>
-
     
     <subConfig type="workflow" id="usaIndexRecordWorkflow">
 	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
 	  <workflow>
 	    <!-- input type:  record -->
-		<object type="recordStore" ref="usaRecordStore" function="create_record"/>
-		<object type="database" ref="db_usa" function="add_record"/>
-		<try>
-		  <object type="database" ref="db_usa" function="index_record"/>	
+	    <try>
+		    <object type="recordStore" ref="usaRecordStore" function="create_record"/>
+    		<object type="database" ref="db_usa" function="add_record"/>
+			<try>
+			  <object type="database" ref="db_usa" function="index_record"/>
+			</try>
+			<except>
+			   <log level="warning">"*** Some indexes incomplete"</log>
+			</except>
 		</try>
 		<except>
-		   <log level="warning">"*** Some indexes incomplete"</log>
+			<log level="warning">"*** Duplicate record"</log>
 		</except>
-	  </workflow>
+		  </workflow>
 	</subConfig>
 	
 	<subConfig type="workflow" id="usaIndexExistingRecordWorkflow">
@@ -194,15 +197,13 @@
 		<object type="recordStore" ref="usaRecordStore" function="create_record"/>
 		<object type="database" ref="db_usa" function="add_record"/>
 		<try>
-		  <object type="database" ref="db_usa" function="index_record"/>	
+		  <object type="database" ref="db_usa" function="index_record"/>
 		</try>
 		<except>
 		   <log level="warning">"*** Some indexes incomplete"</log>
 		</except>
 	  </workflow>
 	</subConfig>
-
-
 
   </subConfigs>
 
