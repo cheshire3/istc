@@ -1,11 +1,13 @@
 #!/home/cheshire/cheshire3/install/bin/python 
 # -*- coding: utf-8 -*-
+"""Clean up the character encoding problems when moving from C2 to C3 (June 2009)"""
 
-#Used to clean up the character encoding problems when moving from C2 to C3 (June 2009)
+import sys
+import os
+import re
+import time
 
-import time, sys, os, re
-
-sys.path.insert(1,'/home/cheshire/cheshire3/code')
+sys.path.insert(1, '/home/cheshire/cheshire3/code')
 
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
