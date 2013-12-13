@@ -45,6 +45,11 @@ setup(
     extras_require={
           'docs': ["sphinx"],
     },
+    entry_points={
+        'console_scripts': [
+            'istc-serve = istc.deploy.serve:main'
+        ],
+    },
     author = 'John Harrison',
     author_email = u'john.harrison@liv.ac.uk',
     maintainer = 'John Harrison',
