@@ -21,14 +21,14 @@
 #
 #
 
+from pkg_resources import Requirement, resource_filename
+
 from istcHtmlFragments import *
 
 # Path to Cheshire Root - i.e. where Cheshire3 was installed
-cheshirePath = "/home/cheshire"
-
-
-
-
-
-
-
+try:
+    cheshirePath = resource_filename(Requirement.parse('istc'), '')
+except:
+    # Cheshire3 not yet installed; maybe in a source distro/repo checkout
+    # Assume local directory
+    cheshirePath = os.path.expanduser('~/istc')

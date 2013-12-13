@@ -12,47 +12,54 @@
 #
 # Version History: 
 # 0.01 - 25/06/2009 - CS - Everything needed for inital release
-import sys, os, cgitb, time, re, smtplib, copy
 
-from mod_python import apache, Cookie
-from mod_python.util import FieldStorage
+import cgitb
+import os
+import re
+import smtplib
+import sys
+import time
+import urllib
 
-sys.path.insert(1,'/home/cheshire/cheshire3/code')
+from lxml import etree
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-from cheshire3.server import SimpleServer
+
 from cheshire3.baseObjects import Session
-from cheshire3.utils import flattenTexts
+from cheshire3.cqlParser import parse, SearchClause, Triple
 from cheshire3.document import StringDocument
+from cheshire3.internal import cheshire3Root
+from cheshire3.server import SimpleServer
+from cheshire3.utils import flattenTexts
+
 from cheshire3.web import www_utils
 from cheshire3.web.www_utils import *
-from istcLocalConfig import *
-from lxml import etree
-from cheshire3.cqlParser import parse, SearchClause, Triple
 
-import urllib
+from mod_python import apache, Cookie
+from mod_python.util import FieldStorage
+
+from istcLocalConfig import *
+
 
 class IstcHandler:
-    baseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/baseTemplate.html"
-    searchNavPath = cheshirePath + "/cheshire3/www/istc/html/searchNav.html"
-    browseNavPath = cheshirePath + "/cheshire3/www/istc/html/browseNav.html"
-    contributorsNavPath = cheshirePath + "/cheshire3/www/istc/html/contributorsNav.html"
-    aboutNavPath = cheshirePath + "/cheshire3/www/istc/html/aboutNav.html"
-    helpNavPath = cheshirePath + "/cheshire3/www/istc/html/helpNav.html"
-    rtfPath = cheshirePath + "/cheshire3/www/istc/outputTemplate.txt"
-    printPath = cheshirePath + "/cheshire3/www/istc/html/printTemplate.html"
+    baseTemplatePath = cheshirePath + "/www/istc/html/baseTemplate.html"
+    searchNavPath = cheshirePath + "/www/istc/html/searchNav.html"
+    browseNavPath = cheshirePath + "/www/istc/html/browseNav.html"
+    contributorsNavPath = cheshirePath + "/www/istc/html/contributorsNav.html"
+    aboutNavPath = cheshirePath + "/www/istc/html/aboutNav.html"
+    helpNavPath = cheshirePath + "/www/istc/html/helpNav.html"
+    rtfPath = cheshirePath + "/www/istc/outputTemplate.txt"
+    printPath = cheshirePath + "/www/istc/html/printTemplate.html"
 
     def __init__(self, lgr):
         global rebuild
         if (rebuild):
             build_architecture()
         self.logger = lgr
-
-
 
     def send_html(self, data, req, code=200):
         req.content_type = 'text/html; charset=utf-8'
@@ -62,8 +69,7 @@ class IstcHandler:
             data = data.encode('utf-8')
         req.write(data)
         req.flush()
-        
-        
+
     def send_txt(self, data, req, code=200):
         #req.content_type = 'application/msword; charset=utf-8'
         req.content_type = 'application/msword'
@@ -72,7 +78,6 @@ class IstcHandler:
         req.write(data)
         req.flush()
 
-
     def send_xml(self, data, req, code=200):
         req.content_type = 'text/xml'
         req.content_length = len(data)
@@ -80,9 +85,8 @@ class IstcHandler:
         if (type(data) == unicode):
             data = data.encode('utf-8')
         req.write(data)
-        req.flush()       
+        req.flush()
     #- end send_xml()
-    
 
     def generate_query(self, form):
         self.logger.log('generating query')
@@ -138,7 +142,6 @@ class IstcHandler:
         self.logger.log('QUERY:' + qString)
         return qString
 
-
     def _cleverTitleCase(self, txt):
         global stopwords
         words = txt.split()
@@ -146,11 +149,10 @@ class IstcHandler:
             if (x == 0 and not words[x][0].isdigit()) or (words[x][0].isalpha()) and (words[x]):
                 words[x] = words[x].title()
         return ' '.join(words)
-    
 
     def sort_resultSet(self, session, rs, sort):
         session.database = db.id
-                    
+
         indexes = sort.split(',')
         for idxstr in indexes:
             bits = idxstr.split('|')
@@ -172,17 +174,17 @@ class IstcHandler:
         sort = False
         sortIndex = None
         q = None
-        
+
         session.database = db.id
-        
+
         locations = form.get('locations', 'all')
         if not locations == 'all':
             locString = '&locations=%s' % locations
         else:
             locString = ''
-      
+
         html = []
-        
+
         if not (form.has_key('rsid')): 
             self.logger.log('STATS:search')         
             cql = self.generate_query(form)
@@ -1012,27 +1014,25 @@ class IstcHandler:
         session = Session()
         session.environment = "apache"
         session.server = serv
-                
+
         form = FieldStorage(req)
 
-        #get the template 
+        # Get the template 
         f = file(self.baseTemplatePath)
         tmpl = f.read()
         f.close()
         tmpl = tmpl.replace('\n', '')
-               
-        path = req.uri[1:] 
+        path = req.uri[1:]
         path = path[path.rfind('/')+1:]
-          
         operation = form.get('operation', None)
         rss.begin_storing(session)
-        if path == 'search.html':           
+        if path == 'search.html':
             f = file(self.searchNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             if operation:
                 if (operation == 'record'):
                     d = self.display_rec(session, form)
@@ -1064,10 +1064,10 @@ class IstcHandler:
                     self.send_html(content, req)
                     return
             else:
-                f= file("index.html")
+                f = open("index.html", 'r')
                 d = f.read()
                 f.close()
-        
+
         elif path == 'record.html':
             f = file(self.searchNavPath)
             nav = f.read()
@@ -1075,14 +1075,14 @@ class IstcHandler:
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
             d = self.get_record(session, form)
-                
-        elif path == 'browse.html':            
+
+        elif path == 'browse.html':
             f = file(self.browseNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             if operation:
                 if operation == 'scan':
                     self.logger.log('STATS:browse')
@@ -1095,56 +1095,57 @@ class IstcHandler:
                 f = file('browse.html')
                 d = f.read()
                 f.close()
-                
-        elif path == 'about.html':            
+
+        elif path == 'about.html':
             f = file(self.aboutNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             f = file('about.html')
             d = f.read()
             f.close()
 
-        elif path == 'contributors.html':            
+        elif path == 'contributors.html':
             f = file(self.contributorsNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             f = file('contributors.html')
             d = f.read()
             f.close()
 
-        elif path == 'help.html':            
+        elif path == 'help.html':
             f = file(self.helpNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             f = file('help.html')
             d = f.read()
             f.close()
-            
-        else:          
+
+        else:
             f = file(self.searchNavPath)
             nav = f.read()
             f.close()
             nav = nav.replace('\n', '')
             tmpl = tmpl.replace('%NAVIGATION%', nav)
-            
+
             f= file("index.html")
             d = f.read()
-            f.close()    
-        extra = '' #TODO check if this is needed - not sure %EXTRA% ever exists
+            f.close()
+
+        # TODO check if this is needed - not sure %EXTRA% ever exists
+        extra = '' 
 
         tmpl = tmpl.replace("%CONTENT%", d)
         rss.commit_storing(session)
-
-	self.send_html(tmpl, req)
+        self.send_html(tmpl, req)
 
 #- Some stuff to do on initialisation
 session = None
@@ -1175,8 +1176,9 @@ def build_architecture(data=None):
 
 
     session = Session()
-    serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
-        
+    serv = SimpleServer(session, os.path.join(cheshire3Root,
+                                          'configs',
+                                          'serverConfig.xml'))
     db = serv.get_object(session, 'db_istc')
     db2 = serv.get_object(session, 'db_usa')
     db3 = serv.get_object(session, 'db_refs')
@@ -1231,24 +1233,32 @@ def handler(req):
 #        else:
         try:
             fp = recStore.get_path(session, 'databasePath')    # attempt to find filepath for recordStore
-            assert (os.path.exists(fp) and time.time() - os.stat(fp).st_mtime > 60*60)
         except:
             # architecture not built
             build_architecture()
-        os.chdir(cheshirePath + "/cheshire3/www/istc/html/")
+        else:
+            if not (os.path.exists(fp) and
+                    time.time() - os.stat(fp).st_mtime > 60 * 60
+            ):
+                build_architecture()
+
+        os.chdir(cheshirePath + "/www/istc/html/")
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
         lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
-        istchandler = IstcHandler(lgr)        
+        istchandler = IstcHandler(lgr)
         try:
             istchandler.handle(req)
         finally:
-            try: lgr.flush()                                                        # flush all logged strings to disk
-            except: pass
-            del lgr, istchandler  
+            try:
+                lgr.flush()                                                        # flush all logged strings to disk
+            except:
+                pass
+            del lgr, istchandler
 
     except:
+        raise
         req.content_type = "text/html; charset=utf-8"
-        cgitb.Hook(file = req).handle()
+        cgitb.Hook(file=req).handle()
     else:
         return apache.OK
 
