@@ -148,7 +148,7 @@
     </subConfig>
     
    <subConfig type="tokenizer" id="FormatTokenizer">
-    	<objectType>ISTCextras.ISTCextensions.FormatTokenizer</objectType>
+    	<objectType>istc.ISTCextensions.FormatTokenizer</objectType>
     </subConfig>
     
     <subConfig type="extractor" id="SplitTokenizer">
@@ -167,23 +167,23 @@
     </subConfig>
     
     <subConfig type="normalizer" id="FormatNormalizer">
-    	<objectType>ISTCextras.ISTCextensions.FormatNormalizer</objectType>
+    	<objectType>istc.ISTCextensions.FormatNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="LanguageNormalizer">
-    	<objectType>ISTCextras.ISTCextensions.LanguageNormalizer</objectType>
+    	<objectType>istc.ISTCextensions.LanguageNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="LocCountriesNormalizer">
-    	<objectType>ISTCextras.ISTCextensions.LocCountriesNormalizer</objectType>
+    	<objectType>istc.ISTCextensions.LocCountriesNormalizer</objectType>
     </subConfig>
 
     <subConfig type="normalizer" id="CountryofPrintNormalizer">
-    	<objectType>ISTCextras.ISTCextensions.CountryofPrintNormalizer</objectType>
+    	<objectType>istc.ISTCextensions.CountryofPrintNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="BibRefNormalizer">
-    	<objectType>ISTCextras.ISTCextensions.BibRefNormalizer</objectType>
+    	<objectType>istc.ISTCextensions.BibRefNormalizer</objectType>
     </subConfig>
     
     <subConfig type="normalizer" id="BLNormalizer">

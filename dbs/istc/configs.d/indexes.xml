@@ -365,7 +365,7 @@
     </subConfig>
     
     <subConfig type="index" id="idx-pass-kwd-bibref">
-        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
+        <objectType>istc.ISTCextensions.ISTCPassThroughIndex</objectType>
         <paths>        
           <path type="database">db_refs</path>
           <path type="remoteIndex">idx-kwd-refs</path>
@@ -376,7 +376,7 @@
     </subConfig>
     
     <subConfig type="index" id="idx-pass-bibref">
-        <objectType>ISTCextras.ISTCextensions.ISTCPassThroughIndex</objectType>
+        <objectType>istc.ISTCextensions.ISTCPassThroughIndex</objectType>
         <paths>        
           <path type="database">db_refs</path>
           <path type="remoteIndex">idx-refs</path>
@@ -753,7 +753,7 @@
    
     
     <subConfig type="tokenizer" id="createdDateTokenizer">
-    	<objectType>ISTCextras.ISTCextensions.CreatedDateTokenizer</objectType>
+    	<objectType>istc.ISTCextensions.CreatedDateTokenizer</objectType>
     </subConfig>
 
 

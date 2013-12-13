@@ -1,9 +1,15 @@
 #!/home/cheshire/install/bin/python -i
 # -*- coding: iso-8859-1 -*-
 
-import time, sys, os, traceback
-sys.path.insert(1,'/home/cheshire/cheshire3/code')
+import getpass
+import os
+import sys
+import time
+import traceback
 
+from crypt import crypt
+
+# Site-packages
 import cheshire3
 
 from cheshire3.web import www_utils
@@ -11,17 +17,18 @@ from cheshire3.web.www_utils import *
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
+from cheshire3.internal import cheshire3Home
 
-
-import getpass
-from crypt import crypt
-
-
-cheshirePath = "/home/cheshire"
+cheshirePath = cheshire3Home
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, cheshirePath + "/cheshire3/configs/serverConfig.xml")
+serv = SimpleServer(session, os.path.join(cheshirePath,
+                                          "cheshire3",
+                                          "configs",
+                                          "serverConfig.xml"
+                                          )
+                    )
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
 lgr = db.get_path(session, 'defaultLogger')

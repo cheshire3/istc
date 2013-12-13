@@ -2,7 +2,7 @@
 <config type="database" id="db_refs">
   <objectType>cheshire3.database.SimpleDatabase</objectType>
   <paths>
-    <path type="defaultPath">dbs/istc</path>
+    <path type="defaultPath">~/istc/dbs/istc</path>
     <path type="metadataPath">stores/refsmetadata.bdb</path>
     <object type="recordStore" ref="refsRecordStore"/>
     <object type="indexStore" ref="refsIndexStore"/>
@@ -19,7 +19,7 @@
 	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
 	   <options>
 	   	  <default type="format">xml</default>
-	      <default type="data">/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml</default>
+	      <default type="data">~/istc/dbs/istc/refsData/refs.xml</default>
 	      <default type="tagName">record</default>
 	      <default type="codec">utf-8</default>
 	   </options>
