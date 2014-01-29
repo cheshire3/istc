@@ -3,8 +3,8 @@
 
 from lxml import etree
 
-datafile = "/home/cheshire/cheshire3/dbs/istc/dataCleaning/newBiblioData.txt"
-outputfile = "/home/cheshire/cheshire3/dbs/istc/refsData/refs.xml"
+datafile = "newBiblioData.txt"
+outputfile = "../refsData/refs.xml"
 
 
 file = open(datafile, 'r')
@@ -17,7 +17,7 @@ for l in lines:
     output.append('<record><code>%s</code><full>%s</full></record>' % (toks[0].replace('&', '&amp;').strip(), toks[1].replace('&', '&amp;').strip()))
     test = etree.fromstring('<refs>%s</refs>' % ''.join(output))
 tree = etree.fromstring('<refs>%s</refs>' % ''.join(output))           
-parsedXslt = etree.parse("/home/cheshire/cheshire3/dbs/istc/xsl/reindent.xsl")
+parsedXslt = etree.parse("../xsl/reindent.xsl")
 txr = etree.XSLT(parsedXslt)
 
 result = txr(tree)
