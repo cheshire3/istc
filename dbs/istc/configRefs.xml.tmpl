@@ -8,28 +8,27 @@
     <object type="indexStore" ref="refsIndexStore"/>
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
-  
-     <subConfigs>
-        <path type="includeConfigs">configs.d</path>
-    </subConfigs>
 
   <subConfigs>
-  	<subConfig type="documentFactory" id="refsDocumentFactory">
-	   <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
-	   <options>
-	   	  <default type="format">xml</default>
-	      <default type="data">~/istc/dbs/istc/refsData/refs.xml</default>
-	      <default type="tagName">record</default>
-	      <default type="codec">utf-8</default>
-	   </options>
-    </subConfig>    
+      <path type="includeConfigs">configs.d</path>
+  </subConfigs>
 
-  
+  <subConfigs>
+      <subConfig type="documentFactory" id="refsDocumentFactory">
+       <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
+       <options>
+             <default type="format">xml</default>
+          <default type="data">refsData/refs.xml</default>
+          <default type="tagName">record</default>
+          <default type="codec">utf-8</default>
+       </options>
+    </subConfig>
+
     <subConfig type="recordStore" id="refsRecordStore">
       <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
       <paths>
        <path type="defaultPath">stores</path>
-       <object type="idNormalizer" ref = "StringIntNormalizer"/> 
+       <object type="idNormalizer" ref="StringIntNormalizer"/> 
        <object type="inTransformer" ref="XmlTransformer"/>
         <object type="outParser" ref="LxmlParser"/>
       </paths>
@@ -51,8 +50,7 @@
       </paths>
     </subConfig>
 
-
- <!-- pre-parsers -->
+    <!-- pre-parsers -->
     <subConfig type="preParser" id="emptyEmphTagStripPreParser">
         <objectType>cheshire3.preParser.RegexpSmashPreParser</objectType>
         <options>
@@ -60,12 +58,11 @@
         </options>
     </subConfig>
 
-
     <subConfig type="preParser" id="AmpPreParser">
       <objectType>cheshire3.preParser.AmpPreParser</objectType>
     </subConfig>
 
-    <subConfig type="index" id = "idx-key-refs-exact">
+    <subConfig type="index" id="idx-key-refs-exact">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -77,9 +74,9 @@
            <object type="extractor" ref="SimpleExtractor"/>
         </process>
       </source>
-    </subConfig>        
+    </subConfig>
 
-    <subConfig type="index" id = "idx-key-refs">
+    <subConfig type="index" id="idx-key-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -99,7 +96,7 @@
       </options>
     </subConfig>
 
- <subConfig type="index" id = "idx-refs">
+    <subConfig type="index" id="idx-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -111,7 +108,7 @@
           <object type="extractor" ref="SimpleExtractor"/>
           <object type="normalizer" ref="CaseNormalizer"/>
           <object type="normalizer" ref="SpaceNormalizer"/>
-	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
+            <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
       <options>
@@ -119,7 +116,7 @@
         </options>
     </subConfig>
 
-    <subConfig type="index" id = "idx-kwd-refs">
+    <subConfig type="index" id="idx-kwd-refs">
       <objectType>cheshire3.index.ProximityIndex</objectType>
       <paths>
         <object type="indexStore" ref="refsIndexStore"/>
@@ -135,26 +132,25 @@
         </process>
       </source>
       <options>
-            <setting type="longSize">4</setting>
-        </options>
-      </subConfig>
+        <setting type="longSize">4</setting>
+      </options>
+    </subConfig>
 
-	<!-- Building Workflows -->
+    <!-- Building Workflows -->
 
-	  <subConfig type="workflow" id="refsPreParserWorkflow">
+    <subConfig type="workflow" id="refsPreParserWorkflow">
       <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
-        <!-- input type:  document -->       
-        <object type="preParser" ref="CharacterEntityPreParser"/>        
+        <!-- input type:  document -->
+        <object type="preParser" ref="CharacterEntityPreParser"/>
         <object type="preParser" ref="AmpPreParser"/>
       </workflow>
     </subConfig>
-    
-    
+
     <subConfig type="workflow" id="refsBuildIndexWorkflow">
       <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
-        <!-- input type:  documentFactory -->        
+        <!-- input type:  documentFactory -->
         <object type="recordStore" ref="refsRecordStore" function="begin_storing"/>
         <object type="database" ref="db_refs" function="begin_indexing"/>
         <for-each>
@@ -162,60 +158,58 @@
           <log level="info">"  " + input.filename</log>
           <object type="workflow" ref="refsBuildIndexSingleWorkflow"/>
         </for-each>
-        <object type="recordStore" ref="refsRecordStore" function="commit_storing"/>             
-        <object type="database" ref="db_refs" function="commit_indexing"/> 
-        <object type="database" ref="db_refs" function="commit_metadata"/>        
+        <object type="recordStore" ref="refsRecordStore" function="commit_storing"/>
+        <object type="database" ref="db_refs" function="commit_indexing"/>
+        <object type="database" ref="db_refs" function="commit_metadata"/>
       </workflow>
     </subConfig>
 
     <subConfig type="workflow" id="refsBuildIndexSingleWorkflow">
       <objectType>cheshire3.workflow.CachingWorkflow</objectType>
       <workflow>
-		<!-- input type:  document -->
-		<object type="workflow" ref="refsPreParserWorkflow"/>
-		<try>
-		  <object type="parser" ref="LxmlParser"/>
-		</try>
-		<except>
-		  <assign from="'unparsable: ' + str(err)" to="input"/>
-		</except>
-		<!-- type: record -->
-      	<object type="workflow" ref="refsIndexRecordWorkflow"/> 
+        <!-- input type:  document -->
+        <object type="workflow" ref="refsPreParserWorkflow"/>
+        <try>
+          <object type="parser" ref="LxmlParser"/>
+        </try>
+        <except>
+          <assign from="'unparsable: ' + str(err)" to="input"/>
+        </except>
+        <!-- type: record -->
+          <object type="workflow" ref="refsIndexRecordWorkflow"/> 
       </workflow>
     </subConfig>
 
-    
     <subConfig type="workflow" id="refsIndexRecordWorkflow">
-	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
-	  <workflow>
-	    <!-- input type:  record -->
-		<object type="recordStore" ref="refsRecordStore" function="create_record"/>
-		<object type="database" ref="db_refs" function="add_record"/>
-		<try>
-		  <object type="database" ref="db_refs" function="index_record"/>	
-		</try>
-		<except>
-		   <log level="warning">"*** Some indexes incomplete"</log>
-		</except>
-	  </workflow>
-	</subConfig>
-	
-	<subConfig type="workflow" id="refsIndexExistingRecordWorkflow">
-	  <objectType>cheshire3.workflow.CachingWorkflow</objectType>
-	  <workflow>
-	    <!-- input type:  record -->
-		<object type="recordStore" ref="refsRecordStore" function="create_record"/>
-		<object type="database" ref="db_refs" function="add_record"/>
-		<try>
-		  <object type="database" ref="db_refs" function="index_record"/>	
-		</try>
-		<except>
-		   <log level="warning">"*** Some indexes incomplete"</log>
-		</except>
-	  </workflow>
-	</subConfig>
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  record -->
+        <object type="recordStore" ref="refsRecordStore" function="create_record"/>
+        <object type="database" ref="db_refs" function="add_record"/>
+        <try>
+          <object type="database" ref="db_refs" function="index_record"/>    
+        </try>
+        <except>
+           <log level="warning">"*** Some indexes incomplete"</log>
+        </except>
+      </workflow>
+    </subConfig>
+
+    <subConfig type="workflow" id="refsIndexExistingRecordWorkflow">
+      <objectType>cheshire3.workflow.CachingWorkflow</objectType>
+      <workflow>
+        <!-- input type:  record -->
+        <object type="recordStore" ref="refsRecordStore" function="create_record"/>
+        <object type="database" ref="db_refs" function="add_record"/>
+        <try>
+          <object type="database" ref="db_refs" function="index_record"/>    
+        </try>
+        <except>
+           <log level="warning">"*** Some indexes incomplete"</log>
+        </except>
+      </workflow>
+    </subConfig>
 
   </subConfigs>
 
 </config>
-
