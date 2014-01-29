@@ -1,0 +1,3218 @@
+<usa>
+  <record>
+    <code>AASL</code>
+    <full>Worcester MA, American Antiquarian Society</full>
+  </record>
+  <record>
+    <code>AB(NY)L</code>
+    <full>New York NY, Association of the Bar of the City of New York</full>
+  </record>
+  <record>
+    <code>ABSL</code>
+    <full>New York NY, Museum of Biblical Art, American Bible Society Collection</full>
+  </record>
+  <record>
+    <code>AICL</code>
+    <full>Chicago IL, Art Institute of Chicago</full>
+  </record>
+  <record>
+    <code>AlCL</code>
+    <full>Albion MI, Albion College</full>
+  </record>
+  <record>
+    <code>AllCLL</code>
+    <full>Pittsburgh PA, Allegheny County Law Library</full>
+  </record>
+  <record>
+    <code>AlvCL</code>
+    <full>Milwaukee WI, Alverno College</full>
+  </record>
+  <record>
+    <code>AmBML</code>
+    <full>Providence RI, Brown Univ., Annmary Brown Memorial Collection</full>
+  </record>
+  <record>
+    <code>AmCL</code>
+    <full>Amherst MA, Amherst College</full>
+  </record>
+  <record>
+    <code>ANTSL</code>
+    <full>Newton Centre MA, Andover Newton Theological School</full>
+  </record>
+  <record>
+    <code>APSL</code>
+    <full>Philadelphia PA, American Philosophical Society</full>
+  </record>
+  <record>
+    <code>ArizUL</code>
+    <full>Tucson AZ, Univ. of Arizona Library</full>
+  </record>
+  <record>
+    <code>ASCL</code>
+    <full>Tempe AZ, Arizona State Univ., Matthews Library</full>
+  </record>
+  <record>
+    <code>AthOhL</code>
+    <full>Cincinnati OH, Athenaeum of Ohio, Mt St Mary's Seminary</full>
+  </record>
+  <record>
+    <code>AubUL</code>
+    <full>Auburn AL, Auburn Univ. Library</full>
+  </record>
+  <record>
+    <code>AugCL</code>
+    <full>Rock Island IL, Augustana College, Denkmann Memorial Library</full>
+  </record>
+  <record>
+    <code>AUnL</code>
+    <full>Washington DC, American Univ.</full>
+  </record>
+  <record>
+    <code>AusCL</code>
+    <full>Sherman TX, Austin College</full>
+  </record>
+  <record>
+    <code>BACL</code>
+    <full>Belmont NC, Belmont Abbey College Library</full>
+  </record>
+  <record>
+    <code>BakL</code>
+    <full>Minneapolis MN, Bakken Library of Electricity in Life</full>
+  </record>
+  <record>
+    <code>BanPL</code>
+    <full>Bangor ME, Bangor Public Library</full>
+  </record>
+  <record>
+    <code>BAthL</code>
+    <full>Boston MA, Boston Athenaeum</full>
+  </record>
+  <record>
+    <code>BaUL</code>
+    <full>Baldwin KS, Baker Univ. Library</full>
+  </record>
+  <record>
+    <code>BaSUL</code>
+    <full>Muncie IN, Ball State Univ., Alexander M. Bracken Library</full>
+  </record>
+  <record>
+    <code>BayUL</code>
+    <full>Waco TX, Baylor Univ., Moody Library</full>
+  </record>
+  <record>
+    <code>BCCL</code>
+    <full>San Francisco CA, Book Club of California Library</full>
+  </record>
+  <record>
+    <code>BColL</code>
+    <full>Chestnut Hill MA, Boston College Library</full>
+  </record>
+  <record>
+    <code>BCol(L)L</code>
+    <full>Newton Center MA, Boston College Law Library</full>
+  </record>
+  <record>
+    <code>BECPL</code>
+    <full>Buffalo NY, Buffalo and Erie County Public Library</full>
+  </record>
+  <record>
+    <code>BerCL</code>
+    <full>Berea KY, Berea College Library</full>
+  </record>
+  <record>
+    <code>BexCML</code>
+    <full>San Antonio TX, Univ. of Texas Health Sciences Center, Briscoe Library</full>
+  </record>
+  <record>
+    <code>BMawrCL</code>
+    <full>Bryn Mawr PA, Bryn Mawr College, Goodhart Medieval Library</full>
+  </record>
+  <record>
+    <code>BMSL</code>
+    <full>Buffalo NY, Buffalo Museum of Science (Buffalo Society of Natural Sciences)</full>
+  </record>
+  <record>
+    <code>BostUL</code>
+    <full>Boston MA, Boston Univ., Mugar Memorial Library</full>
+  </record>
+  <record>
+    <code>BowCL</code>
+    <full>Brunswick ME, Bowdoin College</full>
+  </record>
+  <record>
+    <code>BPubL</code>
+    <full>Boston MA, Boston Public Library</full>
+  </record>
+  <record>
+    <code>BrandUL</code>
+    <full>Waltham MA, Brandeis Univ. Library</full>
+  </record>
+  <record>
+    <code>BrAthCL</code>
+    <full>Bryn Athyn PA, Bryn Athyn College Library</full>
+  </record>
+  <record>
+    <code>BrCL</code>
+    <full>Brooklyn NY, Brooklyn College Library</full>
+  </record>
+  <record>
+    <code>BrUL</code>
+    <full>Providence RI, Brown Univ., John Hay Library</full>
+  </record>
+  <record>
+    <code>BSUL</code>
+    <full>Boise ID, Boise State Univ. Library</full>
+  </record>
+  <record>
+    <code>BuCHSL</code>
+    <full>Doylestown PA, Bucks County Historical Society</full>
+  </record>
+  <record>
+    <code>BUMCL</code>
+    <full>Dallas TX, Baylor Univ. Medical Center (R. &amp; L. Sellers Coll.)</full>
+  </record>
+  <record>
+    <code>ButUL</code>
+    <full>Indianapolis IN, Butler Univ.</full>
+  </record>
+  <record>
+    <code>BYUL</code>
+    <full>Provo UT, Brigham Young Univ.</full>
+  </record>
+  <record>
+    <code>CAbL</code>
+    <full>Conception MO, Conception Abbey Library</full>
+  </record>
+  <record>
+    <code>CalSUNL</code>
+    <full>Northridge CA, California State Univ., Northridge, Library</full>
+  </record>
+  <record>
+    <code>CAML</code>
+    <full>Cincinnati OH, Cincinnati Art Museum Library</full>
+  </record>
+  <record>
+    <code>CanCL</code>
+    <full>Buffalo NY, Canisius College</full>
+  </record>
+  <record>
+    <code>CapCL</code>
+    <full>Washington DC, Capuchin College</full>
+  </record>
+  <record>
+    <code>CarFL</code>
+    <full>Arlington VT, Carthusian Foundation</full>
+  </record>
+  <record>
+    <code>CarL</code>
+    <full>Pittsburgh PA, Carnegie Library of Pittsburgh</full>
+  </record>
+  <record>
+    <code>CBGTU</code>
+    <full>Berkeley CA, Graduate Theological Union</full>
+  </record>
+  <record>
+    <code>CBPac</code>
+    <full>Berkeley CA, Pacific School of Religion, Howell Bible Collection</full>
+  </record>
+  <record>
+    <code>CC(NY)L</code>
+    <full>New York NY, The City College</full>
+  </record>
+  <record>
+    <code>CCL</code>
+    <full>New London CT, Connecticut College</full>
+  </record>
+  <record>
+    <code>CdelCL</code>
+    <full>San Juan PR, La Casa del Libro</full>
+  </record>
+  <record>
+    <code>ChapUL</code>
+    <full>Orange CA, Chapman Univ.</full>
+  </record>
+  <record>
+    <code>ChiBGL</code>
+    <full>Glencoe IL, Chicago Botanic Garden</full>
+  </record>
+  <record>
+    <code>ChiPL</code>
+    <full>Chicago IL, Chicago Public Library</full>
+  </record>
+  <record>
+    <code>ChiTSL</code>
+    <full>Chicago IL, Chicago Theological Seminary</full>
+  </record>
+  <record>
+    <code>ChL</code>
+    <full>Williamstown MA, Williams College, Chapin Library</full>
+  </record>
+  <record>
+    <code>CHPL</code>
+    <full>New York NY, Carl H. Pforzheimer Library, The Carl and Lily Pforzheimer Foundation, Inc.</full>
+  </record>
+  <record>
+    <code>ChSHL</code>
+    <full>Yonkers NY, Church of the Sacred Heart, Province of St Joseph of the Capuchin Order of New York</full>
+  </record>
+  <record>
+    <code>CIAL</code>
+    <full>Williamstown MA, Clark Institute of Art Library</full>
+  </record>
+  <record>
+    <code>CinPL</code>
+    <full>Cincinnati OH, The Public Library of Cincinnati and Hamilton County</full>
+  </record>
+  <record>
+    <code>CleMedL</code>
+    <full>Cleveland OH, Case Western Reserve Univ., Dittrick Medical History Center, Cleveland Medical Library Association</full>
+  </record>
+  <record>
+    <code>CleML</code>
+    <full>Cleveland OH, Cleveland Museum of Art</full>
+  </record>
+  <record>
+    <code>ClePL</code>
+    <full>Cleveland OH, Cleveland Public Library</full>
+  </record>
+  <record>
+    <code>ClUL</code>
+    <full>Worcester MA, Clark Univ. Library</full>
+  </record>
+  <record>
+    <code>CMU(H)L</code>
+    <full>Pittsburgh PA, Carnegie Mellon Univ., Hunt (Botanical) Collection</full>
+  </record>
+  <record>
+    <code>CMU(P)L</code>
+    <full>Pittsburgh PA, Carnegie Mellon Univ., Posner Memorial Collection</full>
+  </record>
+  <record>
+    <code>CMUL</code>
+    <full>Pittsburgh PA, Carnegie Mellon Univ.</full>
+  </record>
+  <record>
+    <code>ColCL</code>
+    <full>Waterville ME, Colby College</full>
+  </record>
+  <record>
+    <code>ColgUL</code>
+    <full>Hamilton NY, Colgate Univ. Library</full>
+  </record>
+  <record>
+    <code>ColoCL</code>
+    <full>Colorado Springs CO, Colorado College, Coburn Library</full>
+  </record>
+  <record>
+    <code>ColoSL</code>
+    <full>Fort Collins CO, Colorado State University Libraries, Special Collections</full>
+  </record>
+  <record>
+    <code>ColSL</code>
+    <full>Steubenville OH, Franciscan Univ. of Steubenville</full>
+  </record>
+  <record>
+    <code>ColUL</code>
+    <full>New York NY, Columbia Univ., Butler Library</full>
+  </record>
+  <record>
+    <code>ColU(A)L</code>
+    <full>New York NY, Columbia Univ., Avery Library</full>
+  </record>
+  <record>
+    <code>ColU(L)L</code>
+    <full>New York NY, Columbia Univ., Law Library</full>
+  </record>
+  <record>
+    <code>ColU(M)L</code>
+    <full>New York NY, Columbia Univ., Health Sciences Library</full>
+  </record>
+  <record>
+    <code>ColU(P)L</code>
+    <full>New York NY, Columbia Univ., Plimpton Library</full>
+  </record>
+  <record>
+    <code>ColU(T)L</code>
+    <full>New York NY, Columbia Univ., Teachers College</full>
+  </record>
+  <record>
+    <code>ColWL</code>
+    <full>Wooster OH, College of Wooster</full>
+  </record>
+  <record>
+    <code>ConCL</code>
+    <full>Mequon WI, Concordia Univ. Wisconsin</full>
+  </record>
+  <record>
+    <code>ConHSL</code>
+    <full>St Louis MO, Concordia Historical Institute</full>
+  </record>
+  <record>
+    <code>ConSL</code>
+    <full>St Louis MO, Concordia Seminary, Pritzlaff Memorial Library</full>
+  </record>
+  <record>
+    <code>ConStL</code>
+    <full>Hartford CT, Connecticut State Library</full>
+  </record>
+  <record>
+    <code>CorMGL</code>
+    <full>Corning NY, Corning Museum of Glass</full>
+  </record>
+  <record>
+    <code>CornUL</code>
+    <full>Ithaca NY, Cornell Univ. Libraries</full>
+  </record>
+  <record>
+    <code>COSA</code>
+    <full>Oakland CA, St Albert's Priory</full>
+  </record>
+  <record>
+    <code>CPhL</code>
+    <full>Philadelphia PA, College of Physicians of Philadelphia</full>
+  </record>
+  <record>
+    <code>CrPL</code>
+    <full>Glens Falls NY, Crandall Public Library</full>
+  </record>
+  <record>
+    <code>CreigUL</code>
+    <full>Omaha NE, Creighton Univ. Library</full>
+  </record>
+  <record>
+    <code>CS(Su)L</code>
+    <full>San Francisco CA, California State Library, Sutro Branch</full>
+  </record>
+  <record>
+    <code>CSat</code>
+    <full>San Anselmo CA, San Francisco Theological Seminary</full>
+  </record>
+  <record>
+    <code>CSL</code>
+    <full>Sacramento CA, California State Library</full>
+  </record>
+  <record>
+    <code>CStCL</code>
+    <full>St Paul MN, College of St Catherine</full>
+  </record>
+  <record>
+    <code>CStTL</code>
+    <full>St Paul MN, Univ. of St Thomas</full>
+  </record>
+  <record>
+    <code>CTSL</code>
+    <full>Fort Wayne IN, Concordia Theological Seminary</full>
+  </record>
+  <record>
+    <code>CUAL</code>
+    <full>Washington DC, Catholic Univ. of America</full>
+  </record>
+  <record>
+    <code>DalPL</code>
+    <full>Dallas TX, Dallas Public Library</full>
+  </record>
+  <record>
+    <code>DarCL</code>
+    <full>Hanover NH, Dartmouth College, Rauner Special Collections Library</full>
+  </record>
+  <record>
+    <code>DayUL</code>
+    <full>Dayton OH, Univ. of Dayton</full>
+  </record>
+  <record>
+    <code>DenPL</code>
+    <full>Denver CO, Denver Public Library</full>
+  </record>
+  <record>
+    <code>DenUL</code>
+    <full>Granville OH, Denison Univ.</full>
+  </record>
+  <record>
+    <code>DePUL</code>
+    <full>Chicago IL, DePaul Univ. Libraries</full>
+  </record>
+  <record>
+    <code>DetPL</code>
+    <full>Detroit MI, Detroit Public Library</full>
+  </record>
+  <record>
+    <code>DHS(W)L</code>
+    <full>Washington, DC, Dominican House of Studies, Dominican College Library</full>
+  </record>
+  <record>
+    <code>DIAL</code>
+    <full>Detroit MI, Detroit Institute of Arts</full>
+  </record>
+  <record>
+    <code>DickCL</code>
+    <full>Carlisle PA, Dickinson College Library</full>
+  </record>
+  <record>
+    <code>DrexIL</code>
+    <full>Philadelphia PA, Drexel Univ.</full>
+  </record>
+  <record>
+    <code>DrUL</code>
+    <full>Madison NJ, Drew Univ., Rose Memorial Library</full>
+  </record>
+  <record>
+    <code>DruryUL</code>
+    <full>Springfield MO, Drury Univ.</full>
+  </record>
+  <record>
+    <code>DTSL</code>
+    <full>Dallas TX, Dallas Theological Seminary, Mosher Library</full>
+  </record>
+  <record>
+    <code>DuqUL</code>
+    <full>Pittsburgh PA, Duquesne Univ. Library</full>
+  </record>
+  <record>
+    <code>DuU(M)L</code>
+    <full>Durham NC, Duke Univ. Medical Center Library</full>
+  </record>
+  <record>
+    <code>DuUL</code>
+    <full>Durham NC, Duke Univ. Library</full>
+  </record>
+  <record>
+    <code>ECl(NY)L</code>
+    <full>New York NY, The Explorers Club</full>
+  </record>
+  <record>
+    <code>EDSL</code>
+    <full>Cambridge MA, Episcopal Divinity School</full>
+  </record>
+  <record>
+    <code>EHFL</code>
+    <full>East Hampton NY, East Hampton Free Library</full>
+  </record>
+  <record>
+    <code>ElmCL</code>
+    <full>Elmira NY, Elmira College Library</full>
+  </record>
+  <record>
+    <code>EMHL</code>
+    <full>Wilmington DE, Eleutherian Mills Historical Library, Hagley Museum</full>
+  </record>
+  <record>
+    <code>EMichUL</code>
+    <full>Ypsilanti MI, Eastern Michigan Univ. Library</full>
+  </record>
+  <record>
+    <code>EPFL</code>
+    <full>Baltimore MD, Enoch Pratt Free Library</full>
+  </record>
+  <record>
+    <code>EUL</code>
+    <full>Atlanta GA, Emory Univ. Library</full>
+  </record>
+  <record>
+    <code>FandMCL</code>
+    <full>Lancaster PA, Franklin and Marshall College, Fackenthal Library</full>
+  </record>
+  <record>
+    <code>FDRL</code>
+    <full>Hyde Park NY, Franklin D. Roosevelt Library</full>
+  </record>
+  <record>
+    <code>FDUL</code>
+    <full>Madison NJ, Fairleigh Dickinson Univ. Library</full>
+  </record>
+  <record>
+    <code>FF(SB)L</code>
+    <full>Santa Barbara CA, Franciscan Fathers</full>
+  </record>
+  <record>
+    <code>FIL</code>
+    <full>St Bonaventure NY, St Bonaventure Univ., Franciscan Institute</full>
+  </record>
+  <record>
+    <code>FMC(R)L</code>
+    <full>Rensselaer NY, Friars Minor Conventuals</full>
+  </record>
+  <record>
+    <code>FML</code>
+    <full>Washington DC, Franciscan Monastery Library</full>
+  </record>
+  <record>
+    <code>FolgSL</code>
+    <full>Washington DC, Folger Shakespeare Library</full>
+  </record>
+  <record>
+    <code>FordUL</code>
+    <full>New York NY, Fordham Univ. Library</full>
+  </record>
+  <record>
+    <code>FrankIL</code>
+    <full>Philadelphia PA, Franklin Institute</full>
+  </record>
+  <record>
+    <code>FSCL</code>
+    <full>Fresno CA, California State Univ.</full>
+  </record>
+  <record>
+    <code>FSUL</code>
+    <full>Tallahassee FL, Florida State Univ. Library</full>
+  </record>
+  <record>
+    <code>GanUL</code>
+    <full>Erie PA, Gannon Univ. Library</full>
+  </record>
+  <record>
+    <code>GCL</code>
+    <full>Los Angeles CA, Getty Research Institute, Getty Centre</full>
+  </record>
+  <record>
+    <code>GeM</code>
+    <full>Los Angeles CA, Getty Museum, Dept. of Manuscripts</full>
+  </record>
+  <record>
+    <code>GetCL</code>
+    <full>Gettysburg PA, Gettysburg College Library</full>
+  </record>
+  <record>
+    <code>GethAL</code>
+    <full>Trappist KY, Our Lady of Gethsemani Abbey</full>
+  </record>
+  <record>
+    <code>GeUL</code>
+    <full>Washington DC, Georgetown Univ.</full>
+  </record>
+  <record>
+    <code>GEvTSL</code>
+    <full>Evanston IL, Garrett-Evangelical Theological Seminary Library</full>
+  </record>
+  <record>
+    <code>GHSL</code>
+    <full>Savannah GA, Georgia Historical Society</full>
+  </record>
+  <record>
+    <code>GoCL</code>
+    <full>Baltimore MD, Goucher College, Julia Rogers Library</full>
+  </record>
+  <record>
+    <code>GonzUL</code>
+    <full>Spokane WA, Gonzaga Univ. Library</full>
+  </record>
+  <record>
+    <code>GriCL</code>
+    <full>Grinnell IA, Grinnell College, Burling Library</full>
+  </record>
+  <record>
+    <code>GroClL</code>
+    <full>New York NY, The Grolier Club</full>
+  </record>
+  <record>
+    <code>GrPL</code>
+    <full>Greenville MS, Greenville Public Library</full>
+  </record>
+  <record>
+    <code>GSUL</code>
+    <full>Atlanta GA, Georgia State Univ. Library</full>
+  </record>
+  <record>
+    <code>GTSL</code>
+    <full>New York NY, General Theological Seminary</full>
+  </record>
+  <record>
+    <code>GVSUL</code>
+    <full>Allendale MI, Grand Valley State Univ., Seidman Library</full>
+  </record>
+  <record>
+    <code>GWUL</code>
+    <full>Washington DC, George Washington Univ. Library</full>
+  </record>
+  <record>
+    <code>GWU(L)L</code>
+    <full>Washington DC, George Washington Univ. Law School, Jacob Burns Library</full>
+  </record>
+  <record>
+    <code>HaColL</code>
+    <full>Haverford PA, Haverford College Library</full>
+  </record>
+  <record>
+    <code>HamCL</code>
+    <full>Clinton NY, Hamilton College Library</full>
+  </record>
+  <record>
+    <code>HaPL</code>
+    <full>Muskegon MI, Hackley Public Library</full>
+  </record>
+  <record>
+    <code>Harv(AA)L</code>
+    <full>Jamaica Plain MA, Harvard Univ., Arnold Arboretum</full>
+  </record>
+  <record>
+    <code>Harv(BA)L</code>
+    <full>Boston MA, Harvard Univ., Kress Library of Business and Economics</full>
+  </record>
+  <record>
+    <code>Harv(Div)L</code>
+    <full>Cambridge MA, Harvard Univ., Divinity School, Andover-Harvard Theological Library</full>
+  </record>
+  <record>
+    <code>Harv(DO)L</code>
+    <full>Washington DC, Harvard Univ., Dumbarton Oaks Library</full>
+  </record>
+  <record>
+    <code>Harv(EB)L</code>
+    <full>Cambridge MA, Harvard Univ., Economic Botany Library of Oakes Ames</full>
+  </record>
+  <record>
+    <code>Harv(F)L</code>
+    <full>Cambridge MA, Harvard Univ., Fogg Art Museum</full>
+  </record>
+  <record>
+    <code>Harv(L)L</code>
+    <full>Cambridge MA, Harvard Univ., Law School Library</full>
+  </record>
+  <record>
+    <code>Harv(M)L</code>
+    <full>Boston MA, Harvard Univ., Francis A. Countway Library of Medicine</full>
+  </record>
+  <record>
+    <code>Harv(R)L</code>
+    <full>Cambridge MA, Harvard Univ., Radcliffe College Library</full>
+  </record>
+  <record>
+    <code>Harv(T)L</code>
+    <full>Florence, Harvard Univ., Berenson Library, I Tatti</full>
+  </record>
+  <record>
+    <code>Harv(Zoo)L</code>
+    <full>Cambridge MA, Harvard Univ., Museum of Comparative Zoology</full>
+  </record>
+  <record>
+    <code>HarvCL</code>
+    <full>Cambridge MA, Harvard College Library, Houghton Library</full>
+  </record>
+  <record>
+    <code>HAML</code>
+    <full>Houston TX, Houston Academy of Medicine - Texas Medical Center Library</full>
+  </record>
+  <record>
+    <code>HASL</code>
+    <full>Houston TX, Houston Academy of Science</full>
+  </record>
+  <record>
+    <code>HavPL</code>
+    <full>Haverhill MA, Haverhill Public Library</full>
+  </record>
+  <record>
+    <code>HEHL</code>
+    <full>San Marino CA, The Huntington Library</full>
+  </record>
+  <record>
+    <code>HFPRCL</code>
+    <full>Montreat NC, Historical Foundation of the Presbyterian &amp; Reformed Churches</full>
+  </record>
+  <record>
+    <code>HL(B)</code>
+    <full>Claremont CA, Claremont Colleges, Honnold Library (Bodman Coll.)</full>
+  </record>
+  <record>
+    <code>HL(H)</code>
+    <full>Claremont CA, Claremont Colleges, Honnold Library (Hoover Coll.)</full>
+  </record>
+  <record>
+    <code>HL</code>
+    <full>Claremont CA, Claremont Colleges, Honnold Library</full>
+  </record>
+  <record>
+    <code>HNCL</code>
+    <full>Washington DC, Holy Name College</full>
+  </record>
+  <record>
+    <code>HolCL</code>
+    <full>Roanoke VA, Hollins Univ. Library</full>
+  </record>
+  <record>
+    <code>HPL</code>
+    <full>Houston TX, Houston Public Library</full>
+  </record>
+  <record>
+    <code>HSAL</code>
+    <full>New York NY, Hispanic Society of America</full>
+  </record>
+  <record>
+    <code>HSERCL</code>
+    <full>Lancaster PA, Historical Society of the Evangelical and Reformed Church</full>
+  </record>
+  <record>
+    <code>HSPaL</code>
+    <full>Philadelphia PA, Historical Society of Pennsylvania</full>
+  </record>
+  <record>
+    <code>HSTL</code>
+    <full>Independence MO, Harry S. Truman Library</full>
+  </record>
+  <record>
+    <code>HTML</code>
+    <full>New Orleans LA, Howard Tilton Memorial Library, Tulane Univ.</full>
+  </record>
+  <record>
+    <code>HUCL</code>
+    <full>Cincinnati OH, Hebrew Union College Library</full>
+  </record>
+  <record>
+    <code>HUL</code>
+    <full>Hempstead NY, Hofstra Univ. Library</full>
+  </record>
+  <record>
+    <code>HyCAML</code>
+    <full>Glens Falls NY, Hyde Collection Art Museum</full>
+  </record>
+  <record>
+    <code>IllCL</code>
+    <full>Jacksonville IL, Illinois College Library</full>
+  </record>
+  <record>
+    <code>InPL</code>
+    <full>Indianapolis IN, Indianapolis Public Library</full>
+  </record>
+  <record>
+    <code>InSUL</code>
+    <full>Terre Haute IN, Indiana State Univ.</full>
+  </record>
+  <record>
+    <code>InUL</code>
+    <full>Bloomington IN, Indiana Univ., The Lilly Library</full>
+  </record>
+  <record>
+    <code>IoSUL</code>
+    <full>Ames IA, Iowa State Univ.</full>
+  </record>
+  <record>
+    <code>ISGML</code>
+    <full>Boston MA, Isabella Stewart Gardner Museum</full>
+  </record>
+  <record>
+    <code>ISTCL</code>
+    <full>Cedar Falls IA, Univ. of Northern Iowa</full>
+  </record>
+  <record>
+    <code>JCBL</code>
+    <full>Providence RI, Brown Univ., John Carter Brown Library</full>
+  </record>
+  <record>
+    <code>JCLor</code>
+    <full>Buffalo NY, Buffalo &amp; Erie County Historical Society, John C. Lord Collection</full>
+  </record>
+  <record>
+    <code>JCUL</code>
+    <full>University Heights OH, John Carroll Univ., Grasselli Library Library</full>
+  </record>
+  <record>
+    <code>JFKL</code>
+    <full>Vallejo CA, John F. Kennedy Library, McCune Collection</full>
+  </record>
+  <record>
+    <code>JHSch</code>
+    <full>Princeton NJ, Scheide Library, Princeton Univ.</full>
+  </record>
+  <record>
+    <code>JHU(F)L</code>
+    <full>Baltimore MD, Johns Hopkins Univ., The Laurence Hall Fowler Collection</full>
+  </record>
+  <record>
+    <code>JHU(W)L</code>
+    <full>Baltimore MD, Johns Hopkins Univ., William H. Welch Medical Library</full>
+  </record>
+  <record>
+    <code>JHUL</code>
+    <full>Baltimore MD, Johns Hopkins Univ. Library</full>
+  </record>
+  <record>
+    <code>JIRL</code>
+    <full>New York NY, Hebrew Union College, Jewish Institute of Religion</full>
+  </record>
+  <record>
+    <code>JMCL</code>
+    <full>Philadelphia PA, Thomas Jefferson Univ. Library</full>
+  </record>
+  <record>
+    <code>JTSL</code>
+    <full>New York NY, Jewish Theological Seminary of America</full>
+  </record>
+  <record>
+    <code>JunCL</code>
+    <full>Huntingdon PA, Juniata College Library</full>
+  </record>
+  <record>
+    <code>JWGL</code>
+    <full>Baltimore MD, Johns Hopkins Univ., John Work Garrett Library</full>
+  </record>
+  <record>
+    <code>KalCL</code>
+    <full>Kalamazoo MI, Kalamazoo College</full>
+  </record>
+  <record>
+    <code>KenCL</code>
+    <full>Gambier OH, Kenyon College Library</full>
+  </record>
+  <record>
+    <code>KenSL</code>
+    <full>St Louis MO, Kenrick-Glennon Seminary Library</full>
+  </record>
+  <record>
+    <code>KenSUL</code>
+    <full>Kent OH, Kent State Univ. Library</full>
+  </record>
+  <record>
+    <code>KnCL</code>
+    <full>Galesburg IL, Knox College Library</full>
+  </record>
+  <record>
+    <code>KSUL</code>
+    <full>Manhattan KS, Kansas State Univ. Library</full>
+  </record>
+  <record>
+    <code>LaCL</code>
+    <full>Easton PA, Lafayette College, Van Wickle Library</full>
+  </record>
+  <record>
+    <code>LACLL</code>
+    <full>Los Angeles CA, Los Angeles County Law Library</full>
+  </record>
+  <record>
+    <code>LakePL</code>
+    <full>Chicago IL, Lakeside Press</full>
+  </record>
+  <record>
+    <code>LanTSL</code>
+    <full>Lancaster PA, Lancaster Theological Seminary</full>
+  </record>
+  <record>
+    <code>LAPL</code>
+    <full>Los Angeles CA, Los Angeles Public Library</full>
+  </record>
+  <record>
+    <code>LaSUL</code>
+    <full>Baton Rouge LA, Louisiana State Univ. Library</full>
+  </record>
+  <record>
+    <code>LaSUSL</code>
+    <full>Shreveport LA, Louisiana State Univ., James Smith Noel Library</full>
+  </record>
+  <record>
+    <code>LC</code>
+    <full>Washington DC, Library of Congress, Rare Book Division</full>
+  </record>
+  <record>
+    <code>LC(B)</code>
+    <full>Washington DC, Library of Congress, John Davis Batchelder Collection</full>
+  </record>
+  <record>
+    <code>LC(L)</code>
+    <full>Washington DC, Library of Congress, Law Library</full>
+  </record>
+  <record>
+    <code>LC(M)</code>
+    <full>Washington DC, Library of Congress, Music Division</full>
+  </record>
+  <record>
+    <code>LC(R)</code>
+    <full>Washington DC, Library of Congress, Lessing J. Rosenwald Collection</full>
+  </record>
+  <record>
+    <code>LC(T)</code>
+    <full>Washington DC, Library of Congress, John Boyd Thacher Collection</full>
+  </record>
+  <record>
+    <code>LCPhL</code>
+    <full>Philadelphia PA, Library Company of Philadelphia</full>
+  </record>
+  <record>
+    <code>LeUL</code>
+    <full>Bethlehem PA, Lehigh Univ. Library</full>
+  </record>
+  <record>
+    <code>LIHSL</code>
+    <full>Brooklyn NY, Brooklyn Historical Society</full>
+  </record>
+  <record>
+    <code>LindHL</code>
+    <full>Kansas City MO, Linda Hall Library</full>
+  </record>
+  <record>
+    <code>LinUL</code>
+    <full>Lincoln Univ. PA, Lincoln Univ., Vail Memorial Library</full>
+  </record>
+  <record>
+    <code>LLandML</code>
+    <full>Cincinnati OH, Lloyd Library &amp; Museum</full>
+  </record>
+  <record>
+    <code>LorCL</code>
+    <full>Dubuque IA, Loras College Library</full>
+  </record>
+  <record>
+    <code>LoyMUL</code>
+    <full>Los Angeles CA, Loyola Marymount Univ. Library</full>
+  </record>
+  <record>
+    <code>LoyU(NO)L</code>
+    <full>New Orleans LA, Loyola Univ. Library</full>
+  </record>
+  <record>
+    <code>LoyUL</code>
+    <full>Chicago IL, Loyola Univ., E.M. Cudahy Memorial Library</full>
+  </record>
+  <record>
+    <code>LTL</code>
+    <full>Lancaster MA, Lancaster Town Library</full>
+  </record>
+  <record>
+    <code>LTS(G)L</code>
+    <full>Gettysburg PA, Lutheran Theological Seminary</full>
+  </record>
+  <record>
+    <code>LTSL</code>
+    <full>Philadelphia PA, Lutheran Theological Seminary, Krauth Memorial Library</full>
+  </record>
+  <record>
+    <code>LuCL</code>
+    <full>Decorah IA, Luther College Library</full>
+  </record>
+  <record>
+    <code>LuSL</code>
+    <full>St Paul MN, Luther Seminary Library</full>
+  </record>
+  <record>
+    <code>LyPL</code>
+    <full>Lynn MA, Lynn Public Library</full>
+  </record>
+  <record>
+    <code>ManCL</code>
+    <full>New York NY, Manhattan College</full>
+  </record>
+  <record>
+    <code>MarCL</code>
+    <full>Marietta OH, Marietta College</full>
+  </record>
+  <record>
+    <code>MarqUL</code>
+    <full>Milwaukee WI, Marquette Univ., Raynor Library</full>
+  </record>
+  <record>
+    <code>MBGL</code>
+    <full>St Louis MO, Missouri Botanical Garden</full>
+  </record>
+  <record>
+    <code>MCFMdL</code>
+    <full>Baltimore MD, Medical and Chirurgical Faculty of the State of Maryland</full>
+  </record>
+  <record>
+    <code>MCL</code>
+    <full>St Paul MN, Macalester College Library</full>
+  </record>
+  <record>
+    <code>MCSHL</code>
+    <full>Purchase NY, Manhattanville College Library</full>
+  </record>
+  <record>
+    <code>McTSL</code>
+    <full>Chicago IL, Jesuit-Krauss-McCormick Library</full>
+  </record>
+  <record>
+    <code>MedCWL</code>
+    <full>Milwaukee WI, Medical College of Wisconsin Library</full>
+  </record>
+  <record>
+    <code>MEEIL</code>
+    <full>Boston MA, Massachusetts Eye &amp; Ear Infirmary</full>
+  </record>
+  <record>
+    <code>MenFL</code>
+    <full>Topeka KS, Menninger Foundation</full>
+  </record>
+  <record>
+    <code>MerL</code>
+    <full>Philadelphia PA, Mercantile Library</full>
+  </record>
+  <record>
+    <code>MFArtL</code>
+    <full>Boston MA, Museum of Fine Arts, Dept. of Prints, Drawings, and Photographs</full>
+  </record>
+  <record>
+    <code>MHSL</code>
+    <full>Boston MA, Massachusetts Historical Society</full>
+  </record>
+  <record>
+    <code>MiCL</code>
+    <full>Middlebury VT, Middlebury College</full>
+  </record>
+  <record>
+    <code>MiL</code>
+    <full>Lansing MI, Library of Michigan</full>
+  </record>
+  <record>
+    <code>MilCL</code>
+    <full>Oakland CA, Mills College</full>
+  </record>
+  <record>
+    <code>MilPL</code>
+    <full>Milwaukee WI, Milwaukee Public Library</full>
+  </record>
+  <record>
+    <code>MiPL</code>
+    <full>Minneapolis MN, Minneapolis Public Library</full>
+  </record>
+  <record>
+    <code>MiSUL</code>
+    <full>East Lansing MI, Michigan State Univ.</full>
+  </record>
+  <record>
+    <code>MITL</code>
+    <full>Cambridge MA, Massachusetts Institute of Technology,</full>
+  </record>
+  <record>
+    <code>MiUL</code>
+    <full>Oxford OH, Miami Univ. Library</full>
+  </record>
+  <record>
+    <code>MLuColL</code>
+    <full>New Ulm MN, Martin Luther College Library</full>
+  </record>
+  <record>
+    <code>MMu(P)L</code>
+    <full>New York NY, Metropolitan Museum of Art, Department of Prints</full>
+  </record>
+  <record>
+    <code>MMuL</code>
+    <full>New York NY, Metropolitan Museum of Art Library</full>
+  </record>
+  <record>
+    <code>MorAL</code>
+    <full>Lisle IL, Morton Arboretum Library</full>
+  </record>
+  <record>
+    <code>MorArch</code>
+    <full>Bethlehem PA, Moravian Archives</full>
+  </record>
+  <record>
+    <code>MSML</code>
+    <full>Pine City NY, Mt. Saviour Monastery</full>
+  </record>
+  <record>
+    <code>MtAL</code>
+    <full>St Benedict OR, Mt. Angel Abbey</full>
+  </record>
+  <record>
+    <code>MtHCL</code>
+    <full>South Hadley MA, Mt. Holyoke College</full>
+  </record>
+  <record>
+    <code>MtSAL</code>
+    <full>Esopus NY, Mt. St Alphonsus Seminary</full>
+  </record>
+  <record>
+    <code>MtSML</code>
+    <full>Emmitsburg MD, Mt. St Mary's Univ.</full>
+  </record>
+  <record>
+    <code>MuhlCL</code>
+    <full>Allentown PA, Muhlenberg College</full>
+  </record>
+  <record>
+    <code>MulCoCL</code>
+    <full>Portland OR, Multnomah County Central Library</full>
+  </record>
+  <record>
+    <code>NavAcL</code>
+    <full>Annapolis MD, U.S. Naval Academy</full>
+  </record>
+  <record>
+    <code>NavObL</code>
+    <full>Washington DC, U.S. Naval Observatory</full>
+  </record>
+  <record>
+    <code>NBPL</code>
+    <full>New Bedford MA, New Bedford Free Public Library</full>
+  </record>
+  <record>
+    <code>NBWM</code>
+    <full>New Bedford MA, New Bedford Whaling Museum</full>
+  </record>
+  <record>
+    <code>NewaPL</code>
+    <full>Newark NJ, Newark Public Library</full>
+  </record>
+  <record>
+    <code>NewL</code>
+    <full>Chicago IL, The Newberry Library</full>
+  </record>
+  <record>
+    <code>NGA(R)</code>
+    <full>Washington DC, National Gallery of Art, Lessing J. Rosenwald Coll.</full>
+  </record>
+  <record>
+    <code>NGA(W)</code>
+    <full>Washington DC, National Gallery of Art, Ian G. Woodner Collection</full>
+  </record>
+  <record>
+    <code>NGSL</code>
+    <full>Washington DC, National Geographic Society</full>
+  </record>
+  <record>
+    <code>NHStL</code>
+    <full>Concord NH, New Hampshire State Library</full>
+  </record>
+  <record>
+    <code>NiUL</code>
+    <full>Niagara NY, Niagara Univ. Library</full>
+  </record>
+  <record>
+    <code>NLM</code>
+    <full>Bethesda MD, National Library of Medicine</full>
+  </record>
+  <record>
+    <code>NOBTSL</code>
+    <full>New Orleans LA, New Orleans Baptist Theological Seminary, John T. Christian Library</full>
+  </record>
+  <record>
+    <code>N(SCh)L</code>
+    <full>Nazareth KY, Sisters of Charity of Nazareth Library</full>
+  </record>
+  <record>
+    <code>NwUL</code>
+    <full>Evanston IL, Northwestern Univ. Library</full>
+  </record>
+  <record>
+    <code>NwU(L)L</code>
+    <full>Chicago IL, Northwestern Univ., School of Law, Elbert H. Gary Library</full>
+  </record>
+  <record>
+    <code>NwU(M)L</code>
+    <full>Chicago IL, Northwestern Univ., Galter Health Sciences Library</full>
+  </record>
+  <record>
+    <code>NYAcMedL</code>
+    <full>New York NY, New York Academy of Medicine</full>
+  </record>
+  <record>
+    <code>NYBoGL</code>
+    <full>New York NY, New York Botanical Garden</full>
+  </record>
+  <record>
+    <code>NYHisSL</code>
+    <full>New York NY, New York Historical Society</full>
+  </record>
+  <record>
+    <code>NYLawIL</code>
+    <full>New York NY, New York Law Institute</full>
+  </record>
+  <record>
+    <code>NYPIL</code>
+    <full>New York NY, New York State Psychiatric Institute Library, Columbia Presbyterian Medical Center</full>
+  </record>
+  <record>
+    <code>NYPL</code>
+    <full>New York NY, New York Public Library, Rare Book Division</full>
+  </record>
+  <record>
+    <code>NYPL(B)</code>
+    <full>New York NY, New York Public Library, Berg Collection</full>
+  </record>
+  <record>
+    <code>NYPL(D)</code>
+    <full>New York NY, New York Public Library, Drexel Collection</full>
+  </record>
+  <record>
+    <code>NYPL(J)</code>
+    <full>New York NY, New York Public Library, Jewish Division</full>
+  </record>
+  <record>
+    <code>NYPL(P)</code>
+    <full>New York NY, New York Public Library, Parsons Collection</full>
+  </record>
+  <record>
+    <code>NYPL(S)</code>
+    <full>New York NY, New York Public Library, Spencer Collection</full>
+  </record>
+  <record>
+    <code>NYPL(St)</code>
+    <full>New York NY, New York Public Library, Stuart Collection</full>
+  </record>
+  <record>
+    <code>NYSL</code>
+    <full>New York NY, New York Society Library</full>
+  </record>
+  <record>
+    <code>NYStL</code>
+    <full>Albany NY, New York State Library</full>
+  </record>
+  <record>
+    <code>NYT(Ex)L</code>
+    <full>New York NY, New York Times, Exhibit of the Recorded Word</full>
+  </record>
+  <record>
+    <code>NYU(H)L</code>
+    <full>New York NY, New York Univ., Univ. Heights Library</full>
+  </record>
+  <record>
+    <code>NYU(W)L</code>
+    <full>New York NY, New York Univ., Washington Square</full>
+  </record>
+  <record>
+    <code>ObCL</code>
+    <full>Oberlin OH, Oberlin College Library</full>
+  </record>
+  <record>
+    <code>OcCL</code>
+    <full>Los Angeles CA, Occidental College</full>
+  </record>
+  <record>
+    <code>OClGC</code>
+    <full>Cleveland OH, Garden Center</full>
+  </record>
+  <record>
+    <code>OCPL</code>
+    <full>Syracuse NY, Onondaga County Public Library</full>
+  </record>
+  <record>
+    <code>ODL</code>
+    <full>New York NY, Oscar Diethelm Library</full>
+  </record>
+  <record>
+    <code>OhStUL</code>
+    <full>Columbus OH, Ohio State Univ. Libraries</full>
+  </record>
+  <record>
+    <code>OhWUL</code>
+    <full>Delaware OH, Ohio Wesleyan Univ. Library</full>
+  </record>
+  <record>
+    <code>OkStUL</code>
+    <full>Stillwater OK, Oklahoma State Univ. Library</full>
+  </record>
+  <record>
+    <code>OMeH</code>
+    <full>Mentor OH, Holden Arboretum</full>
+  </record>
+  <record>
+    <code>OSGL</code>
+    <full>Upperville VA, Oak Spring Garden Library</full>
+  </record>
+  <record>
+    <code>OSUL</code>
+    <full>Corvallis OR, Oregon State Univ.</full>
+  </record>
+  <record>
+    <code>PacUL</code>
+    <full>Forest Grove OR, Pacific Univ. Library</full>
+  </record>
+  <record>
+    <code>PaHL</code>
+    <full>Philadelphia PA, Pennsylvania Hospital Library</full>
+  </record>
+  <record>
+    <code>PCL</code>
+    <full>Providence RI, Providence College Library</full>
+  </record>
+  <record>
+    <code>PedSL</code>
+    <full>Highstown NJ, The Peddie School</full>
+  </record>
+  <record>
+    <code>PeqL</code>
+    <full>New Haven CT, Pequot Library, Yale Univ. Library</full>
+  </record>
+  <record>
+    <code>PExAcL</code>
+    <full>Exeter NH, Phillips Exeter Academy</full>
+  </record>
+  <record>
+    <code>PhAcL</code>
+    <full>Andover MA, Phillips Academy, Oliver Wendell Holmes Library</full>
+  </record>
+  <record>
+    <code>PhFL</code>
+    <full>Philadelphia PA, Free Library of Philadelphia</full>
+  </record>
+  <record>
+    <code>PhF(W)L</code>
+    <full>Philadelphia PA, Free Library of Philadelphia, Copinger-Widener Collection</full>
+  </record>
+  <record>
+    <code>PittTSL</code>
+    <full>Pittsburgh PA, Pittsburgh Theological Seminary Library</full>
+  </record>
+  <record>
+    <code>PML</code>
+    <full>New York NY, Pierpont Morgan Library</full>
+  </record>
+  <record>
+    <code>PonCJL</code>
+    <full>Worthington OH, Pontifical College Josephinum</full>
+  </record>
+  <record>
+    <code>PPTJL</code>
+    <full>Philadelphia PA, T.F. Jenkins Memorial Law Library</full>
+  </record>
+  <record>
+    <code>PrAthL</code>
+    <full>Providence RI, Providence Athenaeum</full>
+  </record>
+  <record>
+    <code>PratIL</code>
+    <full>Brooklyn NY, Pratt Institute Library</full>
+  </record>
+  <record>
+    <code>PrinTSL</code>
+    <full>Princeton NJ, Princeton Theological Seminary, Speer Library</full>
+  </record>
+  <record>
+    <code>PrinUL</code>
+    <full>Princeton NJ, Princeton Univ., Firestone Library</full>
+  </record>
+  <record>
+    <code>PrinU(A)L</code>
+    <full>Princeton NJ, Princeton Univ., Art Museum</full>
+  </record>
+  <record>
+    <code>ProvPL</code>
+    <full>Providence RI, Providence Public Library</full>
+  </record>
+  <record>
+    <code>PStL</code>
+    <full>Harrisburg PA, State Library of Pennsylvania</full>
+  </record>
+  <record>
+    <code>PStUL</code>
+    <full>University Park PA, Pennsylvania State Univ.</full>
+  </record>
+  <record>
+    <code>QCL</code>
+    <full>Quincy IL, Quincy Univ.</full>
+  </record>
+  <record>
+    <code>RbergL</code>
+    <full>Galveston TX, Rosenberg Library</full>
+  </record>
+  <record>
+    <code>RCL</code>
+    <full>Cleveland OH, Rowfant Club</full>
+  </record>
+  <record>
+    <code>RedwL</code>
+    <full>Newport RI, Redwood Library and Athenaeum</full>
+  </record>
+  <record>
+    <code>RISDL</code>
+    <full>Providence RI, Rhode Island School of Design</full>
+  </record>
+  <record>
+    <code>RITL</code>
+    <full>Rochester NY, Rochester Institute of Technology</full>
+  </record>
+  <record>
+    <code>RivPL</code>
+    <full>Riverside CA, Riverside Public Library</full>
+  </record>
+  <record>
+    <code>R-MCL</code>
+    <full>Lynchburg VA, Randolph-Macon Woman's College</full>
+  </record>
+  <record>
+    <code>RosML</code>
+    <full>Philadelphia PA, Rosenbach Museum &amp; Library</full>
+  </record>
+  <record>
+    <code>RossHSL</code>
+    <full>Chillicothe OH, Ross County Historical Society</full>
+  </record>
+  <record>
+    <code>RUL</code>
+    <full>Houston TX, Rice Univ.</full>
+  </record>
+  <record>
+    <code>RutgUL</code>
+    <full>New Brunswick NJ, Rutgers Univ. Library</full>
+  </record>
+  <record>
+    <code>SanAPL</code>
+    <full>San Antonio TX, San Antonio Public Library</full>
+  </record>
+  <record>
+    <code>SBCL</code>
+    <full>Stamford CT, St Basil College</full>
+  </record>
+  <record>
+    <code>SchwHL</code>
+    <full>Pennsburg PA, Schwenkfelder Historical Library</full>
+  </record>
+  <record>
+    <code>SCJL</code>
+    <full>Chicago IL, Spertus Institute of Jewish Studies</full>
+  </record>
+  <record>
+    <code>SCML</code>
+    <full>Jefferson City MO, Supreme Court of Missouri, Library</full>
+  </record>
+  <record>
+    <code>ScrCL</code>
+    <full>Claremont CA, Scripps College, Denison Library</full>
+  </record>
+  <record>
+    <code>SDPL</code>
+    <full>San Diego CA, San Diego Public Library, Wangenheim Collection</full>
+  </record>
+  <record>
+    <code>SDSUL</code>
+    <full>San Diego CA, San Diego State Univ., Malcolm A. Love Library</full>
+  </record>
+  <record>
+    <code>SeHCL</code>
+    <full>Greensburg PA, Seton Hill College</full>
+  </record>
+  <record>
+    <code>SFPL</code>
+    <full>San Francisco CA, San Francisco Public Library</full>
+  </record>
+  <record>
+    <code>SFSUL</code>
+    <full>San Francisco CA, San Francisco State Univ. Library</full>
+  </record>
+  <record>
+    <code>SHFL</code>
+    <full>Des Moines IA, Salisbury House Foundation Library</full>
+  </record>
+  <record>
+    <code>SHSTL</code>
+    <full>Hales Corners WI, Sacred Heart School of Theology</full>
+  </record>
+  <record>
+    <code>SiLCL</code>
+    <full>Manitowoc WI, Silver Lake College Library</full>
+  </record>
+  <record>
+    <code>SkCL</code>
+    <full>Saratoga Springs NY, Skidmore College, Lucy Scribner Library</full>
+  </record>
+  <record>
+    <code>SLL</code>
+    <full>Boston MA, Social Law Library</full>
+  </record>
+  <record>
+    <code>SLPL</code>
+    <full>St Louis MO, St Louis Public Library</full>
+  </record>
+  <record>
+    <code>Sm(CH)L</code>
+    <full>New York NY, Smithsonian Institution, Cooper-Hewitt, National Design Museum</full>
+  </record>
+  <record>
+    <code>Sm(D)L</code>
+    <full>Washington DC, Smithsonian Institution, Dibner Library of the History of Science &amp; Technology</full>
+  </record>
+  <record>
+    <code>SmCL</code>
+    <full>Northampton MA, Smith College</full>
+  </record>
+  <record>
+    <code>SmI(GA)L</code>
+    <full>Washington DC, Smithsonian Institution, National Museum of American History</full>
+  </record>
+  <record>
+    <code>SoIllUL</code>
+    <full>Carbondale IL, Southern Illinois Univ.</full>
+  </record>
+  <record>
+    <code>SoMeth(B)UL</code>
+    <full>Dallas TX, Southern Methodist Univ., Bridwell Library</full>
+  </record>
+  <record>
+    <code>SoMeth(G)UL</code>
+    <full>Dallas TX, Southern Methodist Univ., de Golyer Library</full>
+  </record>
+  <record>
+    <code>SpPL</code>
+    <full>Spokane WA, Spokane Public Library</full>
+  </record>
+  <record>
+    <code>SprCL</code>
+    <full>Springfield MA, Springfield Library</full>
+  </record>
+  <record>
+    <code>StAlL</code>
+    <full>Washington DC, St Albans National Cathedral School for Boys</full>
+  </record>
+  <record>
+    <code>StanU(M)L</code>
+    <full>Stanford CA, Stanford Univ. Medical Center, Lane Medical Library</full>
+  </record>
+  <record>
+    <code>StanUL</code>
+    <full>Stanford CA, Stanford Univ. Library</full>
+  </record>
+  <record>
+    <code>StAPL</code>
+    <full>Washington DC, St Anselm's Abbey</full>
+  </record>
+  <record>
+    <code>StBenCL</code>
+    <full>Atchison KS, Benedictine College</full>
+  </record>
+  <record>
+    <code>StBerCL</code>
+    <full>St Bernard AL, St Bernard Junior College</full>
+  </record>
+  <record>
+    <code>StBonUL</code>
+    <full>St Bonaventure NY, St Bonaventure Univ., Friedsam Memorial Library</full>
+  </record>
+  <record>
+    <code>StChS(C)L</code>
+    <full>Carthagena OH, St Charles Seminary Library</full>
+  </record>
+  <record>
+    <code>StChSL</code>
+    <full>Wynnewood PA, St Charles Borromeo Seminary Library</full>
+  </record>
+  <record>
+    <code>StFC(L)L</code>
+    <full>Loretto PA, St Francis College</full>
+  </record>
+  <record>
+    <code>StFSL</code>
+    <full>St Francis WI, St Francis Seminary</full>
+  </record>
+  <record>
+    <code>StHSL</code>
+    <full>Granby MA, St Hyacinth College and Seminary</full>
+  </record>
+  <record>
+    <code>StJCL</code>
+    <full>Annapolis MD, St John's College</full>
+  </record>
+  <record>
+    <code>StJnSL</code>
+    <full>Brighton MA, St John's Seminary, Creagh Research Library</full>
+  </record>
+  <record>
+    <code>StJ(NY)UL</code>
+    <full>Queens NY, St John's Univ. Library</full>
+  </record>
+  <record>
+    <code>StJSL</code>
+    <full>Yonkers NY, St Joseph's Seminary</full>
+  </record>
+  <record>
+    <code>StJUL</code>
+    <full>Collegeville MN, St John's Univ. Library, Hill Museum &amp; Manuscript Library</full>
+  </record>
+  <record>
+    <code>StLML</code>
+    <full>St Louis MO, St Louis Mercantile Library</full>
+  </record>
+  <record>
+    <code>StLouUL</code>
+    <full>St Louis MO, St Louis Univ., Pius XII Memorial Library</full>
+  </record>
+  <record>
+    <code>StLouU(L)L</code>
+    <full>St Louis MO, St Louis Univ., Law Library</full>
+  </record>
+  <record>
+    <code>StLUL</code>
+    <full>Canton NY, St Lawrence Univ. Library</full>
+  </record>
+  <record>
+    <code>StM(B)L</code>
+    <full>Baltimore MD, St Mary's Seminary &amp; Univ.</full>
+  </record>
+  <record>
+    <code>StM(P)L</code>
+    <full>Perryville MO, St Mary's Seminary</full>
+  </record>
+  <record>
+    <code>StMC(X)L</code>
+    <full>Leavenworth KS, University of St Mary, De Paul Library</full>
+  </record>
+  <record>
+    <code>StMeinAL</code>
+    <full>St Meinrad IN, St Meinrad Archabbey, Library</full>
+  </record>
+  <record>
+    <code>StMiCL</code>
+    <full>Colchester VT, St Michael's College</full>
+  </record>
+  <record>
+    <code>StMLSL</code>
+    <full>Mundelein IL, Univ. of St Mary of the Lake, Mundelein Seminary, Feehan Memorial Library</full>
+  </record>
+  <record>
+    <code>StOCL</code>
+    <full>Northfield MN, St Olaf College</full>
+  </record>
+  <record>
+    <code>StPatSL</code>
+    <full>Menlo Park CA, St Patrick's Seminary</full>
+  </record>
+  <record>
+    <code>StPML</code>
+    <full>Pittsburgh PA, St Paul of the Cross Monastery</full>
+  </record>
+  <record>
+    <code>StPSL</code>
+    <full>Concord NH, St Paul's School</full>
+  </record>
+  <record>
+    <code>StVAL</code>
+    <full>Latrobe PA, St Vincent College &amp; Archabbey Library</full>
+  </record>
+  <record>
+    <code>SUNY(B)L</code>
+    <full>Binghamton NY, State Univ. of New York at Binghamton</full>
+  </record>
+  <record>
+    <code>SusUL</code>
+    <full>Selinsgrove PA, Susquehanna Univ. Library</full>
+  </record>
+  <record>
+    <code>S-WeTSL</code>
+    <full>Evanston IL, Seabury-Western Theological Seminary</full>
+  </record>
+  <record>
+    <code>SwML</code>
+    <full>Los Angeles CA, Southwest Museum</full>
+  </record>
+  <record>
+    <code>SyrUL</code>
+    <full>Syracuse NY, Syracuse Univ. Library</full>
+  </record>
+  <record>
+    <code>TBML</code>
+    <full>Mobile AL, Spring Hill College, Thomas Byrne Memorial Library</full>
+  </record>
+  <record>
+    <code>TCL</code>
+    <full>Greenville PA, Thiel College Library</full>
+  </record>
+  <record>
+    <code>TemUL</code>
+    <full>Philadelphia PA, Temple Univ. Library</full>
+  </record>
+  <record>
+    <code>TexAMUL</code>
+    <full>College Station TX, Texas A&amp;M Univ., Cushing Memorial Library</full>
+  </record>
+  <record>
+    <code>TexCUL</code>
+    <full>Fort Worth TX, Texas Christian Univ., Mary Couts Burnett Library</full>
+  </record>
+  <record>
+    <code>ThSL</code>
+    <full>New Brunswick NJ, New Brunswick Theological Seminary</full>
+  </record>
+  <record>
+    <code>TolMAL</code>
+    <full>Toledo OH, Toledo Museum of Art</full>
+  </record>
+  <record>
+    <code>TransUL</code>
+    <full>Lexington KY, Transylvania Univ. Library</full>
+  </record>
+  <record>
+    <code>TrinC(W)L</code>
+    <full>Washington DC, Trinity College Library</full>
+  </record>
+  <record>
+    <code>TrinUL</code>
+    <full>San Antonio TX, Trinity Univ. Library</full>
+  </record>
+  <record>
+    <code>TTUL</code>
+    <full>Lubbock TX, Texas Tech Univ. Library</full>
+  </record>
+  <record>
+    <code>TuUL</code>
+    <full>Medford MA, Tufts Univ. Library</full>
+  </record>
+  <record>
+    <code>UAlaBL</code>
+    <full>Birmingham AL, Univ. of Alabama Medical Center, Reynolds Historical Library</full>
+  </record>
+  <record>
+    <code>UAlaL</code>
+    <full>Tuscaloosa AL, Univ. of Alabama</full>
+  </record>
+  <record>
+    <code>UArkL</code>
+    <full>Fayetteville AR, Univ. of Arkansas</full>
+  </record>
+  <record>
+    <code>UBufL</code>
+    <full>Buffalo NY, State Univ. of New York at Buffalo</full>
+  </record>
+  <record>
+    <code>UCalB(L)L</code>
+    <full>Berkeley CA, Univ. of California, Law Library</full>
+  </record>
+  <record>
+    <code>UCalB(M)L</code>
+    <full>Berkeley CA, Univ. of California, Music Library</full>
+  </record>
+  <record>
+    <code>UCalBL</code>
+    <full>Berkeley CA, Univ. of California, Bancroft Library</full>
+  </record>
+  <record>
+    <code>UCalDL</code>
+    <full>Davis CA, Univ. of California, Shields Library</full>
+  </record>
+  <record>
+    <code>UCalIL</code>
+    <full>Irvine CA, Univ. of California</full>
+  </record>
+  <record>
+    <code>UCalLAL</code>
+    <full>Los Angeles CA, Univ. of California at Los Angeles</full>
+  </record>
+  <record>
+    <code>UCalLA(B)L</code>
+    <full>Los Angeles CA, Univ. of California at Los Angeles, Belt Library of Vinciana</full>
+  </record>
+  <record>
+    <code>UCalLA(M)L</code>
+    <full>Los Angeles CA, Univ. of California at Los Angeles, Biomedical Library</full>
+  </record>
+  <record>
+    <code>UCalRL</code>
+    <full>Riverside CA, Univ. of California</full>
+  </record>
+  <record>
+    <code>UCalS(M)L</code>
+    <full>San Francisco CA, Univ. of California, Medical Center</full>
+  </record>
+  <record>
+    <code>UCalSBL</code>
+    <full>Santa Barbara CA, Univ. of California</full>
+  </record>
+  <record>
+    <code>UCalSDL</code>
+    <full>San Diego CA, Univ. of California</full>
+  </record>
+  <record>
+    <code>UChiL</code>
+    <full>Chicago IL, Univ. of Chicago Libraries</full>
+  </record>
+  <record>
+    <code>UCinL</code>
+    <full>Cincinnati OH, Univ. of Cincinnati</full>
+  </record>
+  <record>
+    <code>UCin(M)L</code>
+    <full>Cincinnati OH, Univ. of Cincinnati, Cincinnati Medical Heritage Library</full>
+  </record>
+  <record>
+    <code>UColoL</code>
+    <full>Boulder CO, Univ. of Colorado Libraries</full>
+  </record>
+  <record>
+    <code>UDelL</code>
+    <full>Newark DE, Univ. of Delaware</full>
+  </record>
+  <record>
+    <code>UDenL</code>
+    <full>Denver CO, Univ. of Denver Libraries</full>
+  </record>
+  <record>
+    <code>UFlaL</code>
+    <full>Gainesville FL, Univ. of Florida Libraries</full>
+  </record>
+  <record>
+    <code>UGeoL</code>
+    <full>Athens GA, Univ. of Georgia, Hargrett Library</full>
+  </record>
+  <record>
+    <code>UHouL</code>
+    <full>Houston TX, Univ. of Houston</full>
+  </record>
+  <record>
+    <code>UIdL</code>
+    <full>Moscow ID, Univ. of Idaho</full>
+  </record>
+  <record>
+    <code>UIllCL</code>
+    <full>Chicago IL, Univ. of Illinois at Chicago, Main Library</full>
+  </record>
+  <record>
+    <code>UIll(E)L</code>
+    <full>Urbana IL, Univ. of Illinois, Museum of European Culture</full>
+  </record>
+  <record>
+    <code>UIllL</code>
+    <full>Urbana IL, Univ. of Illinois at Urbana-Champaign Library</full>
+  </record>
+  <record>
+    <code>UIoL</code>
+    <full>Iowa City IA, Univ. of Iowa, The Univ. Libraries</full>
+  </record>
+  <record>
+    <code>UKan(M)L</code>
+    <full>Kansas City KS, Univ. of Kansas Medical Center, Clendining Library</full>
+  </record>
+  <record>
+    <code>UKanL</code>
+    <full>Lawrence KS, Univ. of Kansas, Spencer Library</full>
+  </record>
+  <record>
+    <code>UKyL</code>
+    <full>Lexington KY, Univ. of Kentucky, Margaret I. King Library</full>
+  </record>
+  <record>
+    <code>ULouL</code>
+    <full>Louisville KY, Univ. of Louisville, Ekstrom Library</full>
+  </record>
+  <record>
+    <code>UMaryBL</code>
+    <full>Baltimore MD, Univ. of Maryland, Health Sciences &amp; Human Services Library</full>
+  </record>
+  <record>
+    <code>UMiamL</code>
+    <full>Coral Gables FL, Univ. of Miami Library</full>
+  </record>
+  <record>
+    <code>UMiam(M)L</code>
+    <full>Miami FL, Univ. of Miami School of Medicine, Bascom Palmer Eye Institute Library</full>
+  </record>
+  <record>
+    <code>UMich(L)L</code>
+    <full>Ann Arbor MI, Univ. of Michigan, The Law Library</full>
+  </record>
+  <record>
+    <code>UMich(S)L</code>
+    <full>Ann Arbor MI, Univ. of Michigan, Stephen Spaulding Collection</full>
+  </record>
+  <record>
+    <code>UMichL</code>
+    <full>Ann Arbor MI, Univ. of Michigan, Univ. Library</full>
+  </record>
+  <record>
+    <code>UMinL</code>
+    <full>Minneapolis MN, Univ. of Minnesota, The Univ. Library</full>
+  </record>
+  <record>
+    <code>UMin(B)L</code>
+    <full>Minneapolis MN, Univ. of Minnesota, James Ford Bell Library</full>
+  </record>
+  <record>
+    <code>UMinDL</code>
+    <full>Duluth MN, Univ. of Minnesota, Ramseyer-Northern Bible Society Coll.</full>
+  </record>
+  <record>
+    <code>UMin(L)L</code>
+    <full>Minneapolis MN, Univ. of Minnesota Law Library</full>
+  </record>
+  <record>
+    <code>UMin(W)L</code>
+    <full>Minneapolis MN, Univ. of Minnesota, Wangensteen Library</full>
+  </record>
+  <record>
+    <code>UMisL</code>
+    <full>Columbia MO, Univ. of Missouri</full>
+  </record>
+  <record>
+    <code>UMisKCL</code>
+    <full>Kansas City MO, Univ. of Missouri</full>
+  </record>
+  <record>
+    <code>UMissL</code>
+    <full>University MS, Univ. of Mississippi</full>
+  </record>
+  <record>
+    <code>UNCaCL</code>
+    <full>Charlotte NC, Univ. of North Carolina Library</full>
+  </record>
+  <record>
+    <code>UNCaL</code>
+    <full>Chapel Hill NC, Univ. of North Carolina Library</full>
+  </record>
+  <record>
+    <code>UnCL</code>
+    <full>Schenectady NY, Union College</full>
+  </record>
+  <record>
+    <code>UNDamL</code>
+    <full>Notre Dame IN, Univ. of Notre Dame, The Univ. Library</full>
+  </record>
+  <record>
+    <code>UNebL</code>
+    <full>Lincoln NE, Univ. of Nebraska, The Univ. Libraries</full>
+  </record>
+  <record>
+    <code>UNeb(M)L</code>
+    <full>Omaha NE, Univ. of Nebraska Medical Center, McGoogan Library</full>
+  </record>
+  <record>
+    <code>UNevL</code>
+    <full>Reno NV, Univ. of Nevada</full>
+  </record>
+  <record>
+    <code>UNHL</code>
+    <full>Durham NH, Univ. of New Hampshire</full>
+  </record>
+  <record>
+    <code>UNoFlaL</code>
+    <full>Jacksonville FL, Univ. of North Florida</full>
+  </record>
+  <record>
+    <code>UNTexL</code>
+    <full>Denton TX, Univ. of North Texas, Willis Library</full>
+  </record>
+  <record>
+    <code>UnTS(V)L</code>
+    <full>Richmond VA, Union Theological Seminary Library</full>
+  </record>
+  <record>
+    <code>UnTSL</code>
+    <full>New York NY, Union Theological Seminary, Burke Library</full>
+  </record>
+  <record>
+    <code>UOkL</code>
+    <full>Norman OK, Univ. of Oklahoma Libraries</full>
+  </record>
+  <record>
+    <code>UOreL</code>
+    <full>Eugene OR, Univ. of Oregon Library</full>
+  </record>
+  <record>
+    <code>UPaL</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Van Pelt Library</full>
+  </record>
+  <record>
+    <code>UPa(B)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Botany Library</full>
+  </record>
+  <record>
+    <code>UPa(F)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Furness Library</full>
+  </record>
+  <record>
+    <code>UPa(J)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Center for Advanced Judaic Studies</full>
+  </record>
+  <record>
+    <code>UPa(L)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Biddle Law Library</full>
+  </record>
+  <record>
+    <code>UPa(Lea)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Lea Library</full>
+  </record>
+  <record>
+    <code>UPa(S)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Edgar Fahs Smith Collection</full>
+  </record>
+  <record>
+    <code>UPa(Y)L</code>
+    <full>Philadelphia PA, Univ. of Pennsylvania, Yarnall Collection, Van Pelt Library</full>
+  </record>
+  <record>
+    <code>UPittL</code>
+    <full>Pittsburgh PA, Univ. of Pittsburgh Library</full>
+  </record>
+  <record>
+    <code>UPitt(F)L</code>
+    <full>Pittsburgh PA, Univ. of Pittsburgh, Maurice and Laura Falk Library of the Health Professions</full>
+  </record>
+  <record>
+    <code>UPRicoL</code>
+    <full>Rio Piedras PR, Univ. of Puerto Rico</full>
+  </record>
+  <record>
+    <code>URo(M)L</code>
+    <full>Rochester NY, Univ. of Rochester Medical Center, Edward G. Miner Library</full>
+  </record>
+  <record>
+    <code>URo(S)L</code>
+    <full>Rochester NY, Univ. of Rochester, Sibley Music Library, Eastman School of Music</full>
+  </record>
+  <record>
+    <code>URoL</code>
+    <full>Rochester NY, Univ. of Rochester, Rush Rhees Library</full>
+  </record>
+  <record>
+    <code>USA(C)L</code>
+    <full>Carlisle PA, U.S. Army War College, Military History Institute, Carlisle Barracks</full>
+  </record>
+  <record>
+    <code>USAFAL</code>
+    <full>USAF Academy CO, U.S. Air Force Academy Library</full>
+  </record>
+  <record>
+    <code>UScranL</code>
+    <full>Scranton PA, Univ. of Scranton</full>
+  </record>
+  <record>
+    <code>USFL</code>
+    <full>San Francisco CA, Univ. of San Francisco, Gleeson Library</full>
+  </record>
+  <record>
+    <code>USIUL</code>
+    <full>San Diego CA, U.S. International Univ.</full>
+  </record>
+  <record>
+    <code>USoCalL</code>
+    <full>Los Angeles CA, Univ. of Southern California, Univ. Library</full>
+  </record>
+  <record>
+    <code>USoCarL</code>
+    <full>Columbia SC, Univ. of South Carolina, Thomas Cooper Library</full>
+  </record>
+  <record>
+    <code>USoFlaL</code>
+    <full>Tampa FL, Univ. of South Florida</full>
+  </record>
+  <record>
+    <code>USoL</code>
+    <full>Sewanee TN, The Univ. of the South Library</full>
+  </record>
+  <record>
+    <code>USoMaiL</code>
+    <full>Portland ME, Univ. of Southern Maine, Osher Map Library</full>
+  </record>
+  <record>
+    <code>USSCL</code>
+    <full>Washington DC, U.S. Supreme Court Library</full>
+  </record>
+  <record>
+    <code>UStTL</code>
+    <full>Houston TX, Univ. of St Thomas</full>
+  </record>
+  <record>
+    <code>UTenL</code>
+    <full>Knoxville TN, Univ. of Tennessee</full>
+  </record>
+  <record>
+    <code>UTex(M)L</code>
+    <full>Galveston TX, Univ. of Texas Medical Branch, Moody Medical Library</full>
+  </record>
+  <record>
+    <code>UTexL</code>
+    <full>Austin TX, Univ. of Texas at Austin, Harry Ransom Humanities Research Center</full>
+  </record>
+  <record>
+    <code>UTex(L)L</code>
+    <full>Austin TX, Univ. of Texas School of Law, Tarlton Law Library</full>
+  </record>
+  <record>
+    <code>UUtL</code>
+    <full>Salt Lake City UT, Univ. of Utah, J. Willard Marriott Library</full>
+  </record>
+  <record>
+    <code>UVa(M)L</code>
+    <full>Charlottesville VA, Univ. of Virginia, Health Sciences Library</full>
+  </record>
+  <record>
+    <code>UVa(Mc)L</code>
+    <full>Charlottesville VA, Univ. of Virginia, McGregor Library</full>
+  </record>
+  <record>
+    <code>UVaL</code>
+    <full>Charlottesville VA, Univ. of Virginia, Alderman Library</full>
+  </record>
+  <record>
+    <code>UVerL</code>
+    <full>Burlington VT, Univ. of Vermont, The Univ. Library</full>
+  </record>
+  <record>
+    <code>UWashL</code>
+    <full>Seattle WA, Univ. of Washington Library</full>
+  </record>
+  <record>
+    <code>UWash(H)L</code>
+    <full>Seattle WA, Univ. of Washington, Health Sciences Library</full>
+  </record>
+  <record>
+    <code>UWash(L)L</code>
+    <full>Seattle WA, Univ. of Washington, Law Library`</full>
+  </record>
+  <record>
+    <code>UWis(AGS)L</code>
+    <full>Milwaukee WI, Univ. of Wisconsin-Milwaukee, American Geographical Society Library</full>
+  </record>
+  <record>
+    <code>UWis(M)L</code>
+    <full>Madison WI, Univ. of Wisconsin, Middleton Medical Library</full>
+  </record>
+  <record>
+    <code>UWis(Mil)L</code>
+    <full>Milwaukee WI, Univ. of Wisconsin-Milwaukee</full>
+  </record>
+  <record>
+    <code>UWisL</code>
+    <full>Madison WI, Univ. of Wisconsin</full>
+  </record>
+  <record>
+    <code>UWyoL</code>
+    <full>Laramie WY, Univ. of Wyoming, Toppan Rare Books Library</full>
+  </record>
+  <record>
+    <code>VanUL</code>
+    <full>Nashville TN, Vanderbilt Univ.</full>
+  </record>
+  <record>
+    <code>VasCL</code>
+    <full>Poughkeepsie NY, Vassar College</full>
+  </record>
+  <record>
+    <code>VaSL</code>
+    <full>Richmond VA, Library of Virginia</full>
+  </record>
+  <record>
+    <code>VilUL</code>
+    <full>Villanova PA, Villanova Univ. Library</full>
+  </record>
+  <record>
+    <code>VinOCathL</code>
+    <full>Vincennes IN, Vincennes Old Cathedral</full>
+  </record>
+  <record>
+    <code>WACML</code>
+    <full>Los Angeles CA, Univ. of California, William Andrews Clark Memorial Library</full>
+  </record>
+  <record>
+    <code>WandJCL</code>
+    <full>Washington PA, Washington &amp; Jefferson College</full>
+  </record>
+  <record>
+    <code>WandLUL</code>
+    <full>Lexington KY, Washington and Lee Univ.</full>
+  </record>
+  <record>
+    <code>WandMCL</code>
+    <full>Williamsburg VA, William and Mary College, Swem Library</full>
+  </record>
+  <record>
+    <code>WArtGL</code>
+    <full>Baltimore MD, Walters Art Gallery</full>
+  </record>
+  <record>
+    <code>WarTSL</code>
+    <full>Dubuque IA, Wartburg Theological Seminary</full>
+  </record>
+  <record>
+    <code>WaSUL</code>
+    <full>Detroit MI, Wayne State Univ., Univ. Libraries</full>
+  </record>
+  <record>
+    <code>WatkL</code>
+    <full>Hartford CT, Trinity College, Watkinson Library</full>
+  </record>
+  <record>
+    <code>WaUL</code>
+    <full>St Louis MO, Washington Univ. Libraries</full>
+  </record>
+  <record>
+    <code>WaU(L)L</code>
+    <full>St Louis MO, Washington Univ., School of Law</full>
+  </record>
+  <record>
+    <code>WaU(M)L</code>
+    <full>St Louis MO, Washington Univ., School of Medicine</full>
+  </record>
+  <record>
+    <code>WCaL</code>
+    <full>Washington DC, Washington Cathedral Library</full>
+  </record>
+  <record>
+    <code>WdCL</code>
+    <full>Washington DC, Georgetown Univ., Woodstock Theological Center Library</full>
+  </record>
+  <record>
+    <code>WeBL</code>
+    <full>Silver Spring MD, National Oceanic &amp; Atmospheric Administration Central Library</full>
+  </record>
+  <record>
+    <code>WellCL</code>
+    <full>Wellesley MA, Wellesley College Library</full>
+  </record>
+  <record>
+    <code>WellsCL</code>
+    <full>Aurora NY, Wells College Library</full>
+  </record>
+  <record>
+    <code>WesUL</code>
+    <full>Middletown CT, Wesleyan Univ. Library</full>
+  </record>
+  <record>
+    <code>WillCL</code>
+    <full>Williamstown MA, Williams College Library</full>
+  </record>
+  <record>
+    <code>WillUL</code>
+    <full>Salem OR, Willamette Univ. Library</full>
+  </record>
+  <record>
+    <code>WiSUL</code>
+    <full>Wichita KS, Wichita State Univ. Library</full>
+  </record>
+  <record>
+    <code>WittUL</code>
+    <full>Cincinnati OH, Univ. of Cincinnati</full>
+  </record>
+  <record>
+    <code>WJeCL</code>
+    <full>Cincinnati OH, Univ. of Cincinnati, Cincinnati Medical Heritage Library</full>
+  </record>
+  <record>
+    <code>WLCleL</code>
+    <full>Ann Arbor MI, Univ. of Michigan, William L. Clements Library</full>
+  </record>
+  <record>
+    <code>WMU(C)L</code>
+    <full>Kalamazoo MI, Western Michigan Univ., Inst. of Cistercian Studies</full>
+  </record>
+  <record>
+    <code>WobPL</code>
+    <full>Woburn MA, Woburn Public Library</full>
+  </record>
+  <record>
+    <code>WorFPL</code>
+    <full>Worcester MA, Free Public Library</full>
+  </record>
+  <record>
+    <code>WorHSL</code>
+    <full>Worcester MA, Worcester Historical Society</full>
+  </record>
+  <record>
+    <code>WPtL</code>
+    <full>West Point NY, U.S. Military Academy</full>
+  </record>
+  <record>
+    <code>WResHSL</code>
+    <full>Cleveland OH, Western Reserve Historical Society</full>
+  </record>
+  <record>
+    <code>WResUL</code>
+    <full>Cleveland OH, Case Western Reserve Univ. Libraries</full>
+  </record>
+  <record>
+    <code>WStCL</code>
+    <full>Pullman WA, Washington State Univ.</full>
+  </record>
+  <record>
+    <code>WVUL</code>
+    <full>Morgantown WV, West Virginia Univ.</full>
+  </record>
+  <record>
+    <code>XavUL</code>
+    <full>Cincinnati OH, Xavier Univ. Library</full>
+  </record>
+  <record>
+    <code>YesUL</code>
+    <full>New York NY, Yeshiva Univ. Library</full>
+  </record>
+  <record>
+    <code>YU(A)L</code>
+    <full>New Haven CT, Yale Univ., School of the Fine Arts</full>
+  </record>
+  <record>
+    <code>YU(B)L</code>
+    <full>New Haven CT, Yale Univ., Centre for British Art</full>
+  </record>
+  <record>
+    <code>YUL</code>
+    <full>New Haven CT, Yale Univ., Beinecke Library</full>
+  </record>
+  <record>
+    <code>YU(L)L </code>
+    <full>New Haven CT, Yale Univ., Law School Library</full>
+  </record>
+  <record>
+    <code>YU(M)L</code>
+    <full>New Haven CT, Yale Univ., Historical Library of the Medical School</full>
+  </record>
+  <record>
+    <code>YU(Mus)L</code>
+    <full>New Haven CT, Yale Univ., Music School</full>
+  </record>
+  <record>
+    <code>YU(T)L</code>
+    <full>New Haven CT, Yale Univ., Beinecke Library, Henry C. Taylor Collection</full>
+  </record>
+  <record>
+    <code>ZReL</code>
+    <full>Brookline MA, Zion Research Library</full>
+  </record>
+  <record>
+    <code>AAHj</code>
+    <full>Queenstown MD, Arthur A. Houghton Jr.</full>
+  </record>
+  <record>
+    <code>ACH</code>
+    <full>Brookline MA, Anna C. Hoyt</full>
+  </record>
+  <record>
+    <code>AD</code>
+    <full>Grand Rapids MI, Albert Doezema</full>
+  </record>
+  <record>
+    <code>AES</code>
+    <full>Austin TX, A.E. Skinner</full>
+  </record>
+  <record>
+    <code>AEV</code>
+    <full>Newton Centre MA, Arthur E. Vershbow</full>
+  </record>
+  <record>
+    <code>AH</code>
+    <full>Fort Worth TX, Arthur Haddaway</full>
+  </record>
+  <record>
+    <code>AHR</code>
+    <full>New York NY, Arthur H. Raynolds, M.D.</full>
+  </record>
+  <record>
+    <code>AJB</code>
+    <full>Omaha NE, Alfred J. Brown, M.D.</full>
+  </record>
+  <record>
+    <code>ALCas</code>
+    <full>Honolulu HI, Mrs Alfred L. Castle</full>
+  </record>
+  <record>
+    <code>ALdR</code>
+    <full>Silver Spring MD, A. Luini del Russo, M.D.</full>
+  </record>
+  <record>
+    <code>ALG</code>
+    <full>New York NY, Arthur L. Gale</full>
+  </record>
+  <record>
+    <code>ALGab</code>
+    <full>Notre Dame IN, Astrik L. Gabriel</full>
+  </record>
+  <record>
+    <code>AMG</code>
+    <full>Larchmont PA, Albert M. Grier</full>
+  </record>
+  <record>
+    <code>AMH</code>
+    <full>New York NY, Alfred M. Hellmann, M.D.</full>
+  </record>
+  <record>
+    <code>AMTu</code>
+    <full>Orono ME, Albert Morton Turner</full>
+  </record>
+  <record>
+    <code>AP</code>
+    <full>Tuckahoe NY, Arne Pettersen</full>
+  </record>
+  <record>
+    <code>APR</code>
+    <full>New York NY, Mrs. Alexander P. Rosenberg</full>
+  </record>
+  <record>
+    <code>APS</code>
+    <full>Miami FL, A.P. Smith</full>
+  </record>
+  <record>
+    <code>APSy</code>
+    <full>Buffalo NY, Albert Philip Sy</full>
+  </record>
+  <record>
+    <code>ASKB</code>
+    <full>Providence RI, Anne S.K. Brown</full>
+  </record>
+  <record>
+    <code>BG</code>
+    <full>New York NY, Ben Grauer</full>
+  </record>
+  <record>
+    <code>BGO</code>
+    <full>, B.G. Odescalchi</full>
+  </record>
+  <record>
+    <code>BLU</code>
+    <full>Chapel Hill NC, Berthold L. Ullman</full>
+  </record>
+  <record>
+    <code>BMar</code>
+    <full>Detroit MI, Benedict Markowski</full>
+  </record>
+  <record>
+    <code>BPen</code>
+    <full>Devon PA, Boies Penrose</full>
+  </record>
+  <record>
+    <code>BRD</code>
+    <full>Detroit MI, Ben R. Donaldson</full>
+  </record>
+  <record>
+    <code>CAF</code>
+    <full>Washington DC, Charles A. Foster</full>
+  </record>
+  <record>
+    <code>CAM</code>
+    <full>Washington DC, Cyril A. Mango</full>
+  </record>
+  <record>
+    <code>CCR</code>
+    <full>Dallas TX, Charles C. Ryrie</full>
+  </record>
+  <record>
+    <code>CDH</code>
+    <full>Barnard MO, Charles D. Humberd, M.D.</full>
+  </record>
+  <record>
+    <code>CDHP</code>
+    <full>New York NY, C. Doris Hellman Pepper (Mrs. Morton Pepper)</full>
+  </record>
+  <record>
+    <code>CERj</code>
+    <full>Cleveland Heights OH, Charles E. Roseman, Jr.</full>
+  </record>
+  <record>
+    <code>CGA</code>
+    <full>Washington DC, C.G. Anthon</full>
+  </record>
+  <record>
+    <code>CHMcM</code>
+    <full>Bloomington IN, C.H. McMullen</full>
+  </record>
+  <record>
+    <code>CJ</code>
+    <full>Washington DC, Campbell Jones</full>
+  </record>
+  <record>
+    <code>CJR</code>
+    <full>Pittsburgh PA, Charles J. Rosenbloom</full>
+  </record>
+  <record>
+    <code>CLea</code>
+    <full>Columbus OH, Chauncy D. Leake</full>
+  </record>
+  <record>
+    <code>CSS</code>
+    <full>White Plains NY, Clara S. Strassburger (Mrs. Irwin Strassburger)</full>
+  </record>
+  <record>
+    <code>CTC</code>
+    <full>San Francisco CA, C. Templeton Crocker, Estate of</full>
+  </record>
+  <record>
+    <code>CWA</code>
+    <full>Syracuse NY, Charles W. Andrews</full>
+  </record>
+  <record>
+    <code>CWH</code>
+    <full>Flushing NY, C. Wesley Hallett</full>
+  </record>
+  <record>
+    <code>DB</code>
+    <full>Boston MA, Davenport Brown</full>
+  </record>
+  <record>
+    <code>DBor</code>
+    <full>Chicago IL, David Borowitz</full>
+  </record>
+  <record>
+    <code>DDW</code>
+    <full>Baltimore OH, Rev. D.D. Wagner</full>
+  </record>
+  <record>
+    <code>DHHF</code>
+    <full>Philadelphia PA, David H.H. Felix</full>
+  </record>
+  <record>
+    <code>DHW</code>
+    <full>Kensington MD, Donald H. Williams</full>
+  </record>
+  <record>
+    <code>DJMcW</code>
+    <full>San Juan PR, David Jackson McWilliams</full>
+  </record>
+  <record>
+    <code>DK</code>
+    <full>St Louis MO, David Kaiser</full>
+  </record>
+  <record>
+    <code>DRo</code>
+    <full>Seattle WA, D. Rome</full>
+  </record>
+  <record>
+    <code>EandLB</code>
+    <full>Northampton MA, Esther &amp; Leonard Baskin</full>
+  </record>
+  <record>
+    <code>EB</code>
+    <full>New York NY, Edwin Bachmann</full>
+  </record>
+  <record>
+    <code>EBK</code>
+    <full>Philadelphia PA, Edward B. Krumbhaar, M.D.</full>
+  </record>
+  <record>
+    <code>EBS</code>
+    <full>Ann Arbor MI, Elizabeth B. Steere</full>
+  </record>
+  <record>
+    <code>EC</code>
+    <full>Greenwich CT, Eleanor Carey (Mrs W. Gibson Carey)</full>
+  </record>
+  <record>
+    <code>EFH</code>
+    <full>Brooks KY, Estate of Emmet Field Horine, M.D.</full>
+  </record>
+  <record>
+    <code>EHC</code>
+    <full>Washington DC, E.H. Cushing, M.D.</full>
+  </record>
+  <record>
+    <code>EHLS</code>
+    <full>Rockport ME, Eric H.L. Sexton</full>
+  </record>
+  <record>
+    <code>EHWi</code>
+    <full>Newton Centre MA, Ernest H. Wilkins</full>
+  </record>
+  <record>
+    <code>EHZ</code>
+    <full>Cincinnati OH, Edwin H. Zeydel</full>
+  </record>
+  <record>
+    <code>EJM</code>
+    <full>Minneapolis MN, Rev. E.J. Mahnke</full>
+  </record>
+  <record>
+    <code>ELMjandGM</code>
+    <full>New York NY, Edward L. McAdam, Jr. &amp; George Milne</full>
+  </record>
+  <record>
+    <code>EOG</code>
+    <full>Winter Park FL, Edwin Osgood Grover</full>
+  </record>
+  <record>
+    <code>ESO</code>
+    <full>New York NY, Edgar S. Oppenheimer</full>
+  </record>
+  <record>
+    <code>EWd</code>
+    <full>Ann Arbor MI, Eunice Wead</full>
+  </record>
+  <record>
+    <code>FCBj</code>
+    <full>Philadelphia PA, F.C. Benson, Jr., M.D.</full>
+  </record>
+  <record>
+    <code>FDC</code>
+    <full>Madison WI, Frank D. Crane</full>
+  </record>
+  <record>
+    <code>FEW</code>
+    <full>New York NY, Florence E. Wall</full>
+  </record>
+  <record>
+    <code>FFR</code>
+    <full>New York NY, Francis F. Randolph</full>
+  </record>
+  <record>
+    <code>FJj</code>
+    <full>Portland OR, Brian Johnson</full>
+  </record>
+  <record>
+    <code>FJS</code>
+    <full>New York NY, Francis J., Cardinal Spellman</full>
+  </record>
+  <record>
+    <code>FK</code>
+    <full>New York NY, Francis Kettaneh</full>
+  </record>
+  <record>
+    <code>FM</code>
+    <full>Arlington VA, Foster Mohrhardt</full>
+  </record>
+  <record>
+    <code>FMcG</code>
+    <full>Overland Park KS, F. McGraw</full>
+  </record>
+  <record>
+    <code>FMR</code>
+    <full>Toledo OH, Frances M. Rogge</full>
+  </record>
+  <record>
+    <code>FPj</code>
+    <full>Fairfield CT, Frederick Pope, Jr</full>
+  </record>
+  <record>
+    <code>FPJon</code>
+    <full>Bennington VT, Franklin P. Jones</full>
+  </record>
+  <record>
+    <code>FPL</code>
+    <full>Minneapolis, MN, Frank P. Leslie</full>
+  </record>
+  <record>
+    <code>FRG</code>
+    <full>Washington DC, Frederick R. Goff</full>
+  </record>
+  <record>
+    <code>FVdeB</code>
+    <full>San Francisco CA, Frank V. de Bellis</full>
+  </record>
+  <record>
+    <code>FWA</code>
+    <full>Little Rock AR, Frederick W. Allsopp</full>
+  </record>
+  <record>
+    <code>GB</code>
+    <full>Chevy Chase MD, G. Bechtel</full>
+  </record>
+  <record>
+    <code>GH</code>
+    <full>New York NY, Gilbert Highet</full>
+  </record>
+  <record>
+    <code>GLHo</code>
+    <full>Fulton MD, George L. Howe</full>
+  </record>
+  <record>
+    <code>GU</code>
+    <full>New York NY, Giogio Uzielli</full>
+  </record>
+  <record>
+    <code>GWJ</code>
+    <full>Falmouth VA, Gordon W. Jones, M.D.</full>
+  </record>
+  <record>
+    <code>HAWj</code>
+    <full>Covington VA, Harry A. Walton, Jr</full>
+  </record>
+  <record>
+    <code>HBF</code>
+    <full>Upper Montclair NJ, Henry B. Fernald</full>
+  </record>
+  <record>
+    <code>HBLin</code>
+    <full>Worcester MA, Harriet B. Lincoln</full>
+  </record>
+  <record>
+    <code>HBM</code>
+    <full>New York NY, H. Bradley Martin</full>
+  </record>
+  <record>
+    <code>HC</code>
+    <full>New York NY, H. Cahoon</full>
+  </record>
+  <record>
+    <code>HDC</code>
+    <full>San Marino CA, Homer D. Crotty</full>
+  </record>
+  <record>
+    <code>HDCo</code>
+    <full>Washington DC, Harris Dunscombe Colt</full>
+  </record>
+  <record>
+    <code>HDH</code>
+    <full>New York NY, Harrison D. Horblit</full>
+  </record>
+  <record>
+    <code>HG</code>
+    <full>Williamsburg VA, H. Grunder</full>
+  </record>
+  <record>
+    <code>HH</code>
+    <full>Madison WI, Herbert Howe</full>
+  </record>
+  <record>
+    <code>HHu</code>
+    <full>Meriden CT, Harold Hugo</full>
+  </record>
+  <record>
+    <code>HLam</code>
+    <full>Beverly Hills CA, Harold Lamb</full>
+  </record>
+  <record>
+    <code>HLR</code>
+    <full>Roselle Park NJ, Harold L. Ruland, Estate of</full>
+  </record>
+  <record>
+    <code>HN</code>
+    <full>Grand Island NE, Harold Null</full>
+  </record>
+  <record>
+    <code>HRA</code>
+    <full>Williamstown MA, H.R. Archer</full>
+  </record>
+  <record>
+    <code>HS</code>
+    <full>Washington DC, Lt Col. Helmuth Sorinz</full>
+  </record>
+  <record>
+    <code>HSB</code>
+    <full>Philadelphia PA, Helen Safford Bonnell</full>
+  </record>
+  <record>
+    <code>HWe</code>
+    <full>Lexington MA, Hollis Webster</full>
+  </record>
+  <record>
+    <code>IR</code>
+    <full>New York NY, Isaac Rivkind M.D.</full>
+  </record>
+  <record>
+    <code>IS</code>
+    <full>Portland ME, Irving Sporn M.D.</full>
+  </record>
+  <record>
+    <code>JBD</code>
+    <full>Kalamazoo MI, J.B. Doukas</full>
+  </record>
+  <record>
+    <code>JBP</code>
+    <full>Oak Park IL, Rev. J. Bradford Pengelly</full>
+  </record>
+  <record>
+    <code>JCH</code>
+    <full>Washington DC, John C. Hirsch</full>
+  </record>
+  <record>
+    <code>JDS</code>
+    <full>University Heights OH, J.D. Stantz, M.D.</full>
+  </record>
+  <record>
+    <code>JG</code>
+    <full>Brooklyn NY, Rev. James Griffith</full>
+  </record>
+  <record>
+    <code>JGB</code>
+    <full>Greenfield NH, J.G. Brodie</full>
+  </record>
+  <record>
+    <code>JGT</code>
+    <full>Los Angeles CA, Justin G. Turner</full>
+  </record>
+  <record>
+    <code>JGVD</code>
+    <full>New York NY, James Grote VanDerpool</full>
+  </record>
+  <record>
+    <code>JHN</code>
+    <full>Niagara Falls NY, John H. Northup</full>
+  </record>
+  <record>
+    <code>JHPer</code>
+    <full>Denver CO, James H. Pershing</full>
+  </record>
+  <record>
+    <code>JIE</code>
+    <full>St Louis MO, J.I. Edison</full>
+  </record>
+  <record>
+    <code>JJBL</code>
+    <full>Lebanon PA, John J.B. Light, M.D.</full>
+  </record>
+  <record>
+    <code>JJF</code>
+    <full>Chicago IL, Jean J. Fox</full>
+  </record>
+  <record>
+    <code>JLH</code>
+    <full>Philadelphia PA, John Louis Haney</full>
+  </record>
+  <record>
+    <code>JLW</code>
+    <full>Nappanee IN, James L. Weygand</full>
+  </record>
+  <record>
+    <code>JMCj</code>
+    <full>New York NY, John M. Crawford, Jr.</full>
+  </record>
+  <record>
+    <code>JO</code>
+    <full>New York NY, J. Onderwyzer</full>
+  </record>
+  <record>
+    <code>JPB</code>
+    <full>Savannah GA, Rev. Joseph P. Bartak</full>
+  </record>
+  <record>
+    <code>JRS</code>
+    <full>Rochester NY, John Rothwell Slater</full>
+  </record>
+  <record>
+    <code>JS</code>
+    <full>Newport RI, John Slocum</full>
+  </record>
+  <record>
+    <code>JSF</code>
+    <full>New York NY, J.S. Fuchs</full>
+  </record>
+  <record>
+    <code>JTB</code>
+    <full>Sandy Spring MD, John T. Bancroft</full>
+  </record>
+  <record>
+    <code>JWDH</code>
+    <full>Andalusia PA, Josephine W. Drexel Henry</full>
+  </record>
+  <record>
+    <code>JWo</code>
+    <full>New York NY, Julian Wolff, M.D.</full>
+  </record>
+  <record>
+    <code>JWP</code>
+    <full>New Orleans LA, Mrs J. Wallace Paletou</full>
+  </record>
+  <record>
+    <code>KS</code>
+    <full>New Haven CT, Kenneth Schott</full>
+  </record>
+  <record>
+    <code>LEG</code>
+    <full>Washington DC, Lee Edmonds Grove</full>
+  </record>
+  <record>
+    <code>LLM</code>
+    <full>Washington DC, L.L. Marton</full>
+  </record>
+  <record>
+    <code>MCW</code>
+    <full>Baltimore MD, M.C. Wahl</full>
+  </record>
+  <record>
+    <code>MD</code>
+    <full>Lorton VA, Myron Davey</full>
+  </record>
+  <record>
+    <code>MDB</code>
+    <full>New York NY, Maryone D. Barlow</full>
+  </record>
+  <record>
+    <code>MDV</code>
+    <full>Reading PA, Marie D. Vernon</full>
+  </record>
+  <record>
+    <code>MEC</code>
+    <full>Los Angeles CA, M.E. Crahan, M.D.</full>
+  </record>
+  <record>
+    <code>MFR</code>
+    <full>Fairfield CT, Margaret F. Rudkin</full>
+  </record>
+  <record>
+    <code>MFRu</code>
+    <full>Santurce PR, Milton F. R&#250;a</full>
+  </record>
+  <record>
+    <code>MHS</code>
+    <full>Passaic NJ, Morris H. Saffron, M.D.</full>
+  </record>
+  <record>
+    <code>MMZ</code>
+    <full>New York NY, Michael M. Zagayski</full>
+  </record>
+  <record>
+    <code>MNB</code>
+    <full>Los Angeles CA, M.N. Beigelman</full>
+  </record>
+  <record>
+    <code>MP</code>
+    <full>Dallas TX, M. Pollak</full>
+  </record>
+  <record>
+    <code>MSC</code>
+    <full>Wyncote PA, Mary S. Collins, Estate of</full>
+  </record>
+  <record>
+    <code>MSdeG</code>
+    <full>Yeadon PA, Mercedes S. de Gomez</full>
+  </record>
+  <record>
+    <code>MSG</code>
+    <full>Urbana IL, M.S. Goldman</full>
+  </record>
+  <record>
+    <code>NC</code>
+    <full>Watertown MA, Nelson Coon</full>
+  </record>
+  <record>
+    <code>NCS</code>
+    <full>New York NY, N.C. Starr</full>
+  </record>
+  <record>
+    <code>NHS</code>
+    <full>New York NY, Norman H. Strouse</full>
+  </record>
+  <record>
+    <code>NJN</code>
+    <full>Latrobe PA, N.J. Nakles</full>
+  </record>
+  <record>
+    <code>NPH</code>
+    <full>Heath MA, Norman P. Henderson</full>
+  </record>
+  <record>
+    <code>OFE</code>
+    <full>Cleveland OH, Mrs Otto F. Ege</full>
+  </record>
+  <record>
+    <code>OLW</code>
+    <full>Indianapolis IN, Oscar L. Watkins</full>
+  </record>
+  <record>
+    <code>OOF</code>
+    <full>Detroit MI, O.O. Fischer, M.D., Estate of</full>
+  </record>
+  <record>
+    <code>OWF</code>
+    <full>Elmhurst NY, Otto W. Fuhrmann</full>
+  </record>
+  <record>
+    <code>PandJG</code>
+    <full>New York NY, Collection of the late Phyllis and John Gordan</full>
+  </record>
+  <record>
+    <code>PFG</code>
+    <full>Chapel Hill NC, P.F. Grendler</full>
+  </record>
+  <record>
+    <code>PH</code>
+    <full>Cambridge MA, Philip Hofer</full>
+  </record>
+  <record>
+    <code>PM</code>
+    <full>Upperville VA, Paul Mellon</full>
+  </record>
+  <record>
+    <code>PO</code>
+    <full>Mount Kisco NY, P. Oliver, Estate of</full>
+  </record>
+  <record>
+    <code>PWH</code>
+    <full>Stanford CA, Philip W. Harsh</full>
+  </record>
+  <record>
+    <code>PWS</code>
+    <full>Silver Spring MD, Philip W. Schulte</full>
+  </record>
+  <record>
+    <code>RAB</code>
+    <full>Chicago IL, Redmond A. Burke, C.S.V.</full>
+  </record>
+  <record>
+    <code>RBB</code>
+    <full>Ann Arbor MI, Robert B. Brown</full>
+  </record>
+  <record>
+    <code>RBL</code>
+    <full>Orono ME, Ronald B. Levinson</full>
+  </record>
+  <record>
+    <code>RBvKS</code>
+    <full>Los Angeles CA, Rufus B. von Klein-Smid, Estate of</full>
+  </record>
+  <record>
+    <code>RD</code>
+    <full>King of Prussia PA, R. Dechert</full>
+  </record>
+  <record>
+    <code>RE</code>
+    <full>New York NY, Raphael Esmerian</full>
+  </record>
+  <record>
+    <code>REH</code>
+    <full>Madison NJ, Raymond E. Hartz</full>
+  </record>
+  <record>
+    <code>RF</code>
+    <full>New York NY, Roland Folter</full>
+  </record>
+  <record>
+    <code>RFL</code>
+    <full>Copiague NY, R.F. Lane</full>
+  </record>
+  <record>
+    <code>RHB</code>
+    <full>Bethesda MD, Mr &amp; Mrs R.H. Behrens</full>
+  </record>
+  <record>
+    <code>RJD</code>
+    <full>South Hadley MA, Ruth J. Dean</full>
+  </record>
+  <record>
+    <code>RLBT</code>
+    <full>San Antonio TX, Robert L.B. Tobin</full>
+  </record>
+  <record>
+    <code>RM</code>
+    <full>Los Angeles CA, Robert Moes M.D.</full>
+  </record>
+  <record>
+    <code>RMF</code>
+    <full>Meadowbrook PA, Richard M. Fichel</full>
+  </record>
+  <record>
+    <code>RMR</code>
+    <full>Cleveland OH, Rodney M. Rudd</full>
+  </record>
+  <record>
+    <code>RP</code>
+    <full>New York NY, Richard Priest</full>
+  </record>
+  <record>
+    <code>RQK</code>
+    <full>Chicago IL, Robert Q. Kelly</full>
+  </record>
+  <record>
+    <code>RS</code>
+    <full>Villanova PA, Robin Satinsky</full>
+  </record>
+  <record>
+    <code>RTM</code>
+    <full>Gaithersburg MD, Robert T. Meyer</full>
+  </record>
+  <record>
+    <code>RVS</code>
+    <full>Long Island NY, Mrs Rose Victor Stroly, Woodmere</full>
+  </record>
+  <record>
+    <code>RWB</code>
+    <full>Buffalo NY, Robert Warwick Bingham</full>
+  </record>
+  <record>
+    <code>RWM</code>
+    <full>New Rochelle NY, Robert Walsingham Martin, Estate of</full>
+  </record>
+  <record>
+    <code>SBH</code>
+    <full>New Haven CT, Mrs Samuel B. Hemingway</full>
+  </record>
+  <record>
+    <code>SBS</code>
+    <full>New York NY, S.B. Schimmel</full>
+  </record>
+  <record>
+    <code>SH</code>
+    <full>New York NY, Sinclair Hamilton</full>
+  </record>
+  <record>
+    <code>SHT</code>
+    <full>Boulder CO, Samuel Harrison Thomson</full>
+  </record>
+  <record>
+    <code>SI</code>
+    <full>Cambridge MA, S. Ives</full>
+  </record>
+  <record>
+    <code>STMj</code>
+    <full>Grosse Pointe Farms MI, Mrs S.T. Miller, Jr</full>
+  </record>
+  <record>
+    <code>SXR</code>
+    <full>Philadelphia PA, Samuel X. Radbill</full>
+  </record>
+  <record>
+    <code>TAK</code>
+    <full>Baton Rouge LA, Thomas A. Kirby</full>
+  </record>
+  <record>
+    <code>TEM</code>
+    <full>New Haven CT, Thomas E. Marston</full>
+  </record>
+  <record>
+    <code>TGH</code>
+    <full>Pasadena CA, Tyrus G. Harmsen</full>
+  </record>
+  <record>
+    <code>TKB</code>
+    <full>New York NY, T. Kimball Brooker</full>
+  </record>
+  <record>
+    <code>TOM</code>
+    <full>New York NY, Thomas O. Mabbott</full>
+  </record>
+  <record>
+    <code>TRA</code>
+    <full>Providence RI, Thomas R. Adams</full>
+  </record>
+  <record>
+    <code>TS</code>
+    <full>Taylor MI, T. Smithey</full>
+  </record>
+  <record>
+    <code>VBG</code>
+    <full>Chicago IL, Mrs Virginia Boyd Goult</full>
+  </record>
+  <record>
+    <code>VdeG</code>
+    <full>New York NY, Victor de Guinzbourg</full>
+  </record>
+  <record>
+    <code>VK</code>
+    <full>Orlando FL, Van Kampen Collection</full>
+  </record>
+  <record>
+    <code>WAD</code>
+    <full>Fort Wayne IN, William A. Didier</full>
+  </record>
+  <record>
+    <code>WBB</code>
+    <full>Olympia WA, Mrs. Walter B. Beals</full>
+  </record>
+  <record>
+    <code>WBE</code>
+    <full>Fairfax VA, Capt. William B. Edelman</full>
+  </record>
+  <record>
+    <code>WBS</code>
+    <full>Denver CO, Walter B. Sheppard</full>
+  </record>
+  <record>
+    <code>WCB</code>
+    <full>Waverly NY, William C. Beck, M.D.</full>
+  </record>
+  <record>
+    <code>WCW</code>
+    <full>Gates Mills OH, Wesley C. Williams</full>
+  </record>
+  <record>
+    <code>WDM</code>
+    <full>St Paul MN, William D. Morgan</full>
+  </record>
+  <record>
+    <code>WDMer</code>
+    <full>Clarence Center NY, Walter D. Merwin</full>
+  </record>
+  <record>
+    <code>WELo</code>
+    <full>Providence RI, W. Easton Louttit, Jr.</full>
+  </record>
+  <record>
+    <code>WGL</code>
+    <full>Boston MA, William G. Lennox, M.D.</full>
+  </record>
+  <record>
+    <code>WMIj</code>
+    <full>Woodbury CT, William M. Ivins, Jr., Estate of</full>
+  </record>
+  <record>
+    <code>WR</code>
+    <full>Los Angeles CA, Ward Ritchie</full>
+  </record>
+  <record>
+    <code>WS</code>
+    <full>Notre Dame IN, Wladimir Seidel</full>
+  </record>
+  <record>
+    <code>WSG</code>
+    <full>New York NY, William S. Glazier, Estate of</full>
+  </record>
+  <record>
+    <code>WV</code>
+    <full>Upperville VA, Willis Van Devanter</full>
+  </record>
+  <record>
+    <code>WW</code>
+    <full>Tucson AR, Webb Woodward</full>
+  </record>
+  <record>
+    <code>WY</code>
+    <full>Chicago IL, Winona Young</full>
+  </record>
+</usa>
