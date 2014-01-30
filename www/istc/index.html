@@ -1,15 +1,13 @@
 <?xml version="1.0" ?>
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	    <meta http-equiv="Content-Language" content="en-GB">
-	 	<meta name="keywords" content="">
+		<meta http-equiv="Content-Language" content="en-GB">
+		<meta name="keywords" content="">
 		<meta name="Description" content="">
 		<meta name="DC.Creator" content="The British Library">
 		<meta name="DC.Publisher" content="The British Library">
 		<meta name="DC.Contributor" content="The British Library">
-	
 		<meta name="DC.Type" content="Text">
 		<meta name="DC.Format" scheme="IMT" content="text/html">
 		<meta name="DC.Identifier" scheme="URI" content="http://www.bl.uk/">
@@ -19,46 +17,212 @@
 		<meta name="DC.Title" content="The British Library">
 		<meta name="DC.Date.Created" scheme="W3CDTF" content="2005-10-27">
 		<meta name="DC.Date.Modified" scheme="W3CDTF" content="2005-10-27">
-	
-	
-        <title>British Library - Incunabula Short Title Catalogue</title>
-        <meta name="copyright" content="&copy; University of Liverpool" />
-		
-		<link rel="stylesheet" href="/istc/css/structure.css" type="text/css" />      
-        <script type="text/javascript" src="/istc/javascript/istc.js"></script>
-	
+		<title>British Library - Incunabula Short Title Catalogue</title>
+		<meta name="copyright" content="&copy; University of Liverpool" />
+		<link rel="stylesheet" href="/istc/css/structure.css" type="text/css" />
+		<script type="text/javascript" src="/istc/javascript/istc.js"></script>
 	</head>
- 
- 	<body rightmargin="0" class="backgroundwhite">
+	<body rightmargin="0" class="backgroundwhite">
 		<div id="container">
 			<div id="topgraphic">
-				<img src="/istc/images/banneristc.jpg" alt="British Library - Incunabla Short Title Catalogue" name="banner"  border="0" usemap="#bannerMap" id="banner" />
+				<img src="/istc/images/banneristc.jpg"
+					alt="British Library - Incunabla Short Title Catalogue"
+					name="banner" border="0" usemap="#bannerMap" id="banner" />
 				<map name="bannerMap" id="bannerMap">
-				  <area shape="rect" coords="2,2,51,99" href="http://www.bl.uk" alt="The British Library" />
-				  <area shape="rect" coords="53,2,601,99" href="http://www.bl.uk/catalogues/istc/index.html" alt="Incunabla Short Title Catalogue" />
+					<area shape="rect" coords="2,2,51,99" href="http://www.bl.uk"
+						alt="The British Library" />
+					<area shape="rect" coords="53,2,601,99"
+						href="http://www.bl.uk/catalogues/istc/index.html"
+						alt="Incunabla Short Title Catalogue" />
 				</map>
 			</div>
-		
-		<!--%NAVIGATION%-->
-		
-		<!-- Must be wrapped in div id="maincontent" or div id="maincontent" class="withmenu" + div id="menu" and div id="content" -->
-
-                <div id="maincontent">The ISTC is being rebuilt following a hardware failure. Please check back soon. We apologixe for any inconvenience.
-                </div>
+			<link rel="stylesheet" href="/istc/css/istc.css" type="text/css" />
+			<div id="topnav">
+				<ul>
+					<li><a href="http://www.bl.uk/catalogues/istc/index.html">Home</a></li>
+					<li class="active"><a href="index.html">Search</a></li>
+					<li><a href="browse.html">Browse</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="contributors.html">Contributors</a></li>
+					<li><a href="help.html">Help</a></li>
+				</ul>
+			</div>
+			<div id="breadcrumb">
+				<ul>
+					<li><a href="http://www.bl.uk">bl.uk</a> &nbsp;&gt;&nbsp;</li>
+					<li><a
+						href="http://www.bl.uk/reshelp/findhelprestype/catblhold/all/allcat.html">Catalogues</a>
+						&nbsp;&gt;&nbsp;</li>
+					<li><a href="http://www.bl.uk/catalogues/istc/index.html">ISTC</a>
+						&nbsp;&gt;&nbsp;</li>
+					<li class="active"><a href="">Search</a></li>
+				</ul>
+			</div>
+			<script type="text/javascript" src="/istc/javascript/searchForm.js"></script>
+			<script type="text/javascript">
+			<!-- hide
+				olf = function() {
+					formFromString(getSearchForm('searchForm'));
+					document.getElementsByName('searchform')[0].fieldcont1.focus()
+				};
+				if (addLoadEvent) {
+					addLoadEvent(olf);
+				} else {
+					window.onload = olf;
+				}
+				-->
+			</script>
 	
-		</div> <!-- End of container -->
-		
-	    <div id="footernav">
-	   		<table width="100%" border="0" cellpadding="10">   
-	       		<tr>
-	         		<td><ul>
-	           			<li><a href="http://www.bl.uk/copyrightstatement.html">Copyright &copy; The British Library Board</a></li>
+			<div id="maincontent">
 	
-	         		</ul></td>
-	       		</tr>
-	    	</table>
+				<h1>Search</h1>
+	
+				<form action="/search/search.html" name="searchform" method="post"
+					onsubmit="setSearchForm(formToString(this));">
+	
+					<!-- No script version -->
+					<noscript>
+	
+						<p class="searchClause">
+							<select name="fieldidx0" id="fieldidx0"
+								onchange="updateSelects(0);">
+								<option value="cql.anywhere">General Keywords</option>
+								<option value="dc.creator">Author</option>
+								<option value="dc.title">Title</option>
+								<option value="bib.originPlace">Place of Printing</option>
+								<option value="istc.countryOfPrint">Country of Printing</option>
+								<option value="dc.publisher">Printer</option>
+								<option value="istc.referencedBy">Bibliographical
+									References</option>
+								<option value="dc.identifier">ISTC Number</option>
+								<option value="dc.format">Format</option>
+								<option value="norzig.posessingInstitution">Location of
+									Copy</option>
+								<option value="istc.countryOfCopy">Country of Copy</option>
+								<option value="istc.year">Start or exact Year (008)</option>
+								<option value="dc.date">Publication Date</option>
+								<option value="dc.language">Language</option>
+								<option value="istc.BLshelfmark">BL Shelfmark</option>
+							</select> for: <input type="text" name="fieldcont0" id="fieldcont0"
+								class="termboxtop" /> <select name="fieldrel0" id="fieldrel0"
+								class="relationbox">
+								<option value="all" selected="selected">all of these
+									words</option>
+								<option value="any">any of these words</option>
+								<option value="=">as a phrase</option>
+							</select>
+						</p>
+	
+	
+	
+						<p class="boolOp">
+							<input type="radio" name="fieldbool0" value="and"
+								checked="checked" id="fieldbool0-and" /><label
+								for="fieldbool0-and">AND&nbsp;&nbsp;</label> <input type="radio"
+								name="fieldbool0" value="or" id="fieldbool0-or" /><label
+								for="fieldbool0-or">OR&nbsp;&nbsp;</label> <input type="radio"
+								name="fieldbool0" value="not" id="fieldbool0-not" /><label
+								for="fieldbool0-not">NOT&nbsp;&nbsp;</label>
+						</p>
+	
+						<p class="searchClause">
+							<select name="fieldidx1" id="fieldidx1">
+								<option value="cql.anywhere">General Keywords</option>
+								<option value="dc.creator">Author</option>
+								<option value="dc.title">Title</option>
+								<option value="bib.originPlace">Place of Printing</option>
+								<option value="istc.countryOfPrint">Country of Printing</option>
+								<option value="dc.publisher">Printer</option>
+								<option value="istc.referencedBy">Bibliographical
+									References</option>
+								<option value="dc.identifier">ISTC Number</option>
+								<option value="dc.format">Format</option>
+								<option value="norzig.posessingInstitution">Location of
+									Copy</option>
+								<option value="istc.countryOfCopy">Country of Copy</option>
+								<option value="istc.year">Start or exact Year (008)</option>
+								<option value="dc.date">Publication Date</option>
+								<option value="dc.language">Language</option>
+								<option value="istc.BLshelfmark">BL Shelfmark</option>
+							</select> for: <input type="text" name="fieldcont1" id="fieldcont1"
+								class="termboxtop" /> <select name="fieldrel1" id="fieldrel1"
+								class="relationbox">
+								<option value="all" selected="selected">all of these
+									words</option>
+								<option value="any">any of these words</option>
+								<option value="=">as a phrase</option>
+							</select>
+						</p>
+	
+						<p class="boolOp">
+							<input type="radio" name="fieldbool1" value="and"
+								checked="checked" id="fieldbool2-and" /><label
+								for="fieldbool2-and">AND&nbsp;&nbsp;</label> <input type="radio"
+								name="fieldbool1" value="or" id="fieldbool2-or" /><label
+								for="fieldbool2-or">OR&nbsp;&nbsp;</label> <input type="radio"
+								name="fieldbool1" value="not" id="fieldbool2-not" /><label
+								for="fieldbool2-not">NOT&nbsp;&nbsp;</label>
+						</p>
+	
+						<p class="searchClause">
+							<select name="fieldidx2" id="fieldidx2">
+								<option value="cql.anywhere">General Keywords</option>
+								<option value="dc.creator">Author</option>
+								<option value="dc.title">Title</option>
+								<option value="bib.originPlace">Place of Printing</option>
+								<option value="istc.countryOfPrint">Country of Printing</option>
+								<option value="dc.publisher">Printer</option>
+								<option value="istc.referencedBy">Bibliographical
+									References</option>
+								<option value="dc.identifier">ISTC Number</option>
+								<option value="dc.format">Format</option>
+								<option value="norzig.posessingInstitution">Location of
+									Copy</option>
+								<option value="istc.countryOfCopy">Country of Copy</option>
+								<option value="istc.year">Start or exact Year (008)</option>
+								<option value="dc.date">Publication Date</option>
+								<option value="dc.language">Language</option>
+								<option value="istc.BLshelfmark">BL Shelfmark</option>
+							</select> for: <input type="text" name="fieldcont2" id="fieldcont2"
+								class="termboxtop" /> <select name="fieldrel2" id="fieldrel2"
+								class="relationbox">
+								<option value="all" selected="selected">all of these
+									words</option>
+								<option value="any">any of these words</option>
+								<option value="=">as a phrase</option>
+							</select>
+						</p>
+	
+					</noscript>
+					<!-- End no script version -->
+	
+					<p id="addClauseP">
+						<script type="text/javascript">
+							document
+									.write('<a href="javascript:addSearchClause(1)" id="addClauseLink" title="Add another search clause, like the one above [requires JavaScript]">...Add another search term</a>');
+						</script>
+					</p>
+	
+					Only show German locations <input type="checkbox" name="locations"
+						value="germany" /> <br /> <br /> <input type="hidden"
+						name="operation" value="search" /> <input type="submit"
+						value="Start Search" /> <input type="reset" value="Reset Form"
+						onclick="resetForm('searchform');" />
+				</form>
+	
+			</div>
+			<!-- Must be wrapped in div id="maincontent" or div id="maincontent" class="withmenu" + div id="menu" and div id="content" -->
 		</div>
-  		
- 	
- 	</body>
+		<!-- End of container -->
+		<div id="footernav">
+			<table width="100%" border="0" cellpadding="10">
+				<tr>
+					<td><ul>
+							<li><a href="http://www.bl.uk/copyrightstatement.html">Copyright
+									&copy; The British Library Board</a></li>
+						</ul></td>
+				</tr>
+			</table>
+		</div>
+	</body>
 </html>
