@@ -9,7 +9,6 @@
     <object type="functionLogger" ref="defaultLogger"/>
   </paths>
   
-  
      <subConfigs>
         <path type="includeConfigs">configs.d</path>
     </subConfigs>
@@ -80,7 +79,6 @@
       </source>
     </subConfig>        
 
-
     <subConfig type="index" id = "idx-key-refs">
       <objectType>cheshire3.index.SimpleIndex</objectType>
       <paths>
@@ -96,6 +94,9 @@
            <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
+      <options>
+          <setting type="longSize">4</setting>
+      </options>
     </subConfig>
 
  <subConfig type="index" id = "idx-refs">
@@ -113,6 +114,9 @@
 	  	  <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
+      <options>
+            <setting type="longSize">4</setting>
+        </options>
     </subConfig>
 
     <subConfig type="index" id = "idx-kwd-refs">
@@ -130,6 +134,9 @@
           <object type="normalizer" ref="DiacriticNormalizer"/>
         </process>
       </source>
+      <options>
+            <setting type="longSize">4</setting>
+        </options>
       </subConfig>
 
 	<!-- Building Workflows -->
@@ -207,9 +214,6 @@
 		</except>
 	  </workflow>
 	</subConfig>
-	
-	
-	
 
   </subConfigs>
 

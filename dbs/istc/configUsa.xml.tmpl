@@ -13,7 +13,6 @@
         <path type="includeConfigs">configs.d</path>
     </subConfigs>
 
-
   <subConfigs>
     
   	<subConfig type="documentFactory" id="usaDocumentFactory">
@@ -83,6 +82,9 @@
           <object type="normalizer" ref="SpaceNormalizer"/>
         </process>
       </source>
+      <options>
+            <setting type="longSize">4</setting>
+        </options>
     </subConfig>
 
   <subConfig type="index" id = "idx-location_usa">
@@ -102,6 +104,7 @@
       </source>
       <options>
 	<setting type="sortStore">1</setting>
+            <setting type="longSize">4</setting>
       </options>
     </subConfig> 
 
@@ -122,6 +125,7 @@
       </source>
       <options>
 	<setting type="sortStore">1</setting>
+            <setting type="longSize">4</setting>
       </options>
     </subConfig>
 
@@ -208,4 +212,3 @@
   </subConfigs>
 
 </config>
-
