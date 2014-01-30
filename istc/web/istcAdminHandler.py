@@ -13,35 +13,46 @@
 # Version History: 
 # 0.01 - 25/06/2009 - CS - Everything needed for inital release
 
-from mod_python import apache, Cookie
-from mod_python.util import FieldStorage
-import sys, os, cgitb, time, re, smtplib, codecs
-
-sys.path.insert(1,'/home/cheshire/cheshire3/code')
-
-from cheshire3.baseObjects import Session
-from cheshire3.server import SimpleServer
-from cheshire3.baseObjects import Session
-from cheshire3.utils import flattenTexts
-from cheshire3.document import StringDocument
-from cheshire3.record import Record
-from cheshire3.record import LxmlRecord
-from cheshire3.web import www_utils
-from cheshire3.web.www_utils import *
-from cheshire3.marc_utils import MARC
-from cheshire3 import exceptions as c3errors
-from cheshire3.cqlParser import parse, SearchClause, Triple
-from lxml import etree
-from copy import deepcopy
+import cgitb
+import codecs
 import datetime
-#from wwwSearch import *
-from crypt import crypt
-from istcLocalConfig import *
+import os
+import re
+import smtplib
+import sys
+import time
 import urllib
 
+from copy import deepcopy
+from crypt import crypt
+
+# Site-packages
+from lxml import etree
+
+from mod_python import apache, Cookie
+from mod_python.util import FieldStorage
+
+
+from cheshire3.baseObjects import Session
+from cheshire3.cqlParser import parse, SearchClause, Triple
+from cheshire3 import exceptions as c3errors
+from cheshire3.internal import cheshire3Root
+from cheshire3.document import StringDocument
+from cheshire3.marc_utils import MARC
+from cheshire3.record import Record, LxmlRecord
+from cheshire3.server import SimpleServer
+from cheshire3.utils import flattenTexts
+from cheshire3.web import www_utils
+from cheshire3.web.www_utils import *
+
+#from wwwSearch import *
+
+from istcLocalConfig import *
+
+
 class IstcAdminHandler:
-    baseTemplatePath = cheshirePath + "/cheshire3/www/istc/html/baseTemplate.html"
-    editNavPath = cheshirePath + "/cheshire3/www/istc/html/editNav.html"
+    baseTemplatePath = cheshirePath + "/www/istc/html/baseTemplate.html"
+    editNavPath = cheshirePath + "/www/istc/html/editNav.html"
     
     
     
@@ -626,14 +637,14 @@ class IstcAdminHandler:
                             newrec = self._filter_lib(newrec, wstring)
                         output.append(indentTxr.process_record(session, newrec).get_raw(session))
                     output.append('</collection>')
-                    f = open(cheshirePath + '/cheshire3/www/istc/output/istc-marc21xml.xml', 'w')
+                    f = open(cheshirePath + '/www/istc/output/istc-marc21xml.xml', 'w')
                     f.write(''.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-marc21xml.xml"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-marc21xml.xml')
+                        req.sendfile(cheshirePath + '/www/istc/output/istc-marc21xml.xml')
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -647,14 +658,14 @@ class IstcAdminHandler:
                         if libraryfilter == 'on':
                             rec = self._filter_lib(rec, wstring)                        
                         output.append(marcAlephTxr.process_record(session, rec).get_raw(session))
-                    f = open(cheshirePath + '/cheshire3/www/istc/output/istc-aleph.txt', 'w')
+                    f = open(cheshirePath + '/www/istc/output/istc-aleph.txt', 'w')
                     f.write('\n\n'.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-aleph.txt"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-aleph.txt')
+                        req.sendfile(cheshirePath + '/www/istc/output/istc-aleph.txt')
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -668,14 +679,14 @@ class IstcAdminHandler:
                         if libraryfilter == 'on':
                             rec = self._filter_lib(rec, wstring)   
                         output.append(txr.process_record(session, rec).get_raw(session))
-                    f = codecs.open(cheshirePath + '/cheshire3/www/istc/output/istc-exchange.txt', 'w', 'utf-8')
+                    f = codecs.open(cheshirePath + '/www/istc/output/istc-exchange.txt', 'w', 'utf-8')
                     f.write(''.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-exchange.txt"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile('/home/cheshire/cheshire3/www/istc/output/istc-exchange.txt')
+                        req.sendfile(cheshirePath + '/www/istc/output/istc-exchange.txt')
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -1022,7 +1033,9 @@ def build_architecture(data=None):
     session.database = 'db_istc'
     session.environment = 'apache'
 #    session.user = None
-    serv = SimpleServer(session, cheshirePath + '/cheshire3/configs/serverConfig.xml')
+    serv = SimpleServer(session, os.path.join(cheshire3Root,
+                                              'configs',
+                                              'serverConfig.xml'))
     db = serv.get_object(session, 'db_istc')
     dbusa = serv.get_object(session, 'db_usa')
     dbrefs = serv.get_object(session, 'db_refs')
@@ -1080,9 +1093,9 @@ def build_architecture(data=None):
                     'exact' : 'Exactly'
                     }
     
-    statspath = cheshirePath + '/cheshire3/www/istc/logs/'
+    statspath = cheshirePath + '/www/istc/logs/'
     searchlogfilepath = statspath + 'searchhandler.log'
-    logfilepath = cheshirePath + '/cheshire3/www/istc/logs/edithandler.log'
+    logfilepath = cheshirePath + '/www/istc/logs/edithandler.log'
     lockfilepath = db.get_path(session, 'defaultPath') + '/indexing.lock'
     reflockfilepath = db.get_path(session, 'defaultPath') + '/refindexing.lock'
     usalockfilepath = db.get_path(session, 'defaultPath') + '/usaindexing.lock'
@@ -1092,11 +1105,14 @@ def handler(req):
     global rebuild, logfilepath, cheshirePath, db, editStore, xmlp, formTxr, script                # get the remote host's IP
     script = req.subprocess_env['SCRIPT_NAME']
  #   req.register_cleanup(build_architecture)
-    try :
+    try:
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)
-        os.chdir(os.path.join(cheshirePath, 'cheshire3', 'www', 'istc', 'html'))     # cd to where html fragments are
-        lgr = FileLogger(cheshirePath + '/cheshire3/www/istc/logs/adminhandler.log', remote_host)                                  # initialise logger object
-        istcAdminHandler = IstcAdminHandler(lgr)                                      # initialise handler - with logger for this request
+        # cd to where html fragments are
+        os.chdir(os.path.join(cheshirePath, 'www', 'istc', 'html'))
+        # Initialise logger object
+        lgr = FileLogger(os.path.join(cheshirePath, 'www', 'istc', 'logs', '/adminhandler.log'), remote_host)
+        # Initialise handler - with logger for this request
+        istcAdminHandler = IstcAdminHandler(lgr)
         try:
             istcAdminHandler.handle(req)   
         finally:
@@ -1108,9 +1124,8 @@ def handler(req):
     except:
         req.content_type = "text/html"
         cgitb.Hook(file = req).handle()                                         # give error info
-    else :
+    else:
         return apache.OK
-
 
 
 def authenhandler(req):
