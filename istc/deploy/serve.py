@@ -41,7 +41,7 @@ def main(argv=None):
     dbs, oaipmh_configs = get_databasesAndConfigs(c3_session, c3_server)
     oaipmh_app = OAIPMHWsgiApplication(c3_session, oaipmh_configs, dbs)
     # Mount various Apps and static directories
-    urlmap = URLMap()
+    urlmap = URLMap(make_pkg_resources(None, 'istc', 'www/istc'))
     urlmap['/istc/css'] = make_pkg_resources(None, 'istc', 'www/istc/css')
     urlmap['/istc/images'] = make_pkg_resources(None, 'istc', 'www/istc/images')
     urlmap['/istc/javascript'] = make_pkg_resources(None, 'istc', 'www/istc/javascript')
