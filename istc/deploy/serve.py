@@ -23,6 +23,8 @@ from cheshire3.web.oaipmhWsgi import get_databasesAndConfigs
 from cheshire3.commands.cmd_utils import Cheshire3ArgumentParser
 
 from istc.web.search import application as search_app
+from istc.web.admin import application as admin_app
+
 
 def main(argv=None):
     """Start up a Paste server to serve ISTC."""
@@ -45,6 +47,7 @@ def main(argv=None):
     urlmap['/istc/css'] = make_pkg_resources(None, 'istc', 'www/istc/css')
     urlmap['/istc/images'] = make_pkg_resources(None, 'istc', 'www/istc/images')
     urlmap['/istc/javascript'] = make_pkg_resources(None, 'istc', 'www/istc/javascript')
+    urlmap['/admin'] = admin_app
     urlmap['/search'] = search_app
     urlmap['/services'] = sru_app
     urlmap['/OAI/2.0'] = oaipmh_app
