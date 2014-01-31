@@ -1221,7 +1221,8 @@ idxNames = {"anywhere": 'General Keywords',
         "idx-bibref": 'Bibliographical References',
             }
 
-logfilepath = cheshirePath + '/cheshire3/www/istc/logs/searchhandler.log'
+
+logfilepath = os.path.join(cheshirePath, 'www', 'istc', 'logs', 'searchhandler.log')
 
 
 def handler(req):
@@ -1232,7 +1233,8 @@ def handler(req):
 #            build_architecture()
 #        else:
         try:
-            fp = recStore.get_path(session, 'databasePath')    # attempt to find filepath for recordStore
+            # attempt to find filepath for recordStore
+            fp = recStore.get_path(session, 'databasePath')
         except:
             # architecture not built
             build_architecture()
@@ -1243,8 +1245,10 @@ def handler(req):
                 build_architecture()
 
         os.chdir(cheshirePath + "/www/istc/html/")
-        remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)                   # get the remote host's IP for logging
-        lgr = FileLogger(logfilepath, remote_host)                                  # initialise logger object
+        # get the remote host's IP for logging
+        remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)
+        # initialise logger object
+        lgr = FileLogger(logfilepath, remote_host)
         istchandler = IstcHandler(lgr)
         try:
             istchandler.handle(req)

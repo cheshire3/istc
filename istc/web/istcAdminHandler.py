@@ -49,12 +49,12 @@ from cheshire3.web.www_utils import *
 
 from istcLocalConfig import *
 
+dateRegex = re.compile('[\S]*-(([\d]*)-([\d]*)-([\d]*))T([\d]{2})([\d]{2})([\d]{2}).log')
+
 
 class IstcAdminHandler:
-    baseTemplatePath = cheshirePath + "/www/istc/html/baseTemplate.html"
-    editNavPath = cheshirePath + "/www/istc/html/editNav.html"
-    
-    
+    baseTemplatePath = os.path.join(cheshirePath, 'www', 'istc', 'html', 'baseTemplate.html')
+    editNavPath = os.path.join(cheshirePath, 'www', 'istc', 'html', 'editNav.html')
     
     def __init__(self, lgr):
         self.logger = lgr
@@ -395,12 +395,10 @@ class IstcAdminHandler:
 
         
     def show_stats(self, file='searchhandler.log'):
-
-        allstring = read_file('%s%s' % (statspath, file))
+        global dateRegex
+        allstring = read_file(os.path.join(statspath, file))
         output = []
         regex = re.compile('searchhandler\S')
-        dateRegex = re.compile('[\S]*-(([\d]*)-([\d]*)-([\d]*))T([\d]{2})([\d]{2})([\d]{2}).log')
-        
         files = os.listdir(statspath)
         files.sort(reverse=True)
         options= []
@@ -637,14 +635,20 @@ class IstcAdminHandler:
                             newrec = self._filter_lib(newrec, wstring)
                         output.append(indentTxr.process_record(session, newrec).get_raw(session))
                     output.append('</collection>')
-                    f = open(cheshirePath + '/www/istc/output/istc-marc21xml.xml', 'w')
+                    outpath = os.path.join(cheshirePath,
+                                           'www',
+                                           'istc',
+                                           'output',
+                                           'istc-marc21xml.xml'
+                                           )
+                    f = open(outpath, 'w')
                     f.write(''.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-marc21xml.xml"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile(cheshirePath + '/www/istc/output/istc-marc21xml.xml')
+                        req.sendfile(outpath)
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -658,14 +662,20 @@ class IstcAdminHandler:
                         if libraryfilter == 'on':
                             rec = self._filter_lib(rec, wstring)                        
                         output.append(marcAlephTxr.process_record(session, rec).get_raw(session))
-                    f = open(cheshirePath + '/www/istc/output/istc-aleph.txt', 'w')
+                    outpath = os.path.join(cheshirePath,
+                                           'www',
+                                           'istc',
+                                           'output',
+                                           'istc-aleph.txt'
+                                           )
+                    f = open(outpath, 'w')
                     f.write('\n\n'.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-aleph.txt"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile(cheshirePath + '/www/istc/output/istc-aleph.txt')
+                        req.sendfile(outpath)
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -679,14 +689,20 @@ class IstcAdminHandler:
                         if libraryfilter == 'on':
                             rec = self._filter_lib(rec, wstring)   
                         output.append(txr.process_record(session, rec).get_raw(session))
-                    f = codecs.open(cheshirePath + '/www/istc/output/istc-exchange.txt', 'w', 'utf-8')
+                    outpath = os.path.join(cheshirePath,
+                                           'www',
+                                           'istc',
+                                           'output',
+                                           'istc-exchange.txt'
+                                           )
+                    f = codecs.open(outpath, 'w', 'utf-8')
                     f.write(''.join(output))
                     f.flush()
                     f.close()
                     req.headers_out["Content-Disposition"] = "attachment; filename=istc-exchange.txt"
                     req.content_type = "text/plain"
                     try:
-                        req.sendfile(cheshirePath + '/www/istc/output/istc-exchange.txt')
+                        req.sendfile(outpath)
                     except IOError, e:
                         req.content_type = "text/html"
                         req.write("Raised exception reads:\n<br>%s" % str(e))
@@ -1010,6 +1026,7 @@ sourceDir = None
 editStore = None
 recordStore = None
 noteStore = None
+userStore = None
 authStore = None
 xmlp = None
 formTxr = None
@@ -1093,17 +1110,19 @@ def build_architecture(data=None):
                     'exact' : 'Exactly'
                     }
     
-    statspath = cheshirePath + '/www/istc/logs/'
-    searchlogfilepath = statspath + 'searchhandler.log'
-    logfilepath = cheshirePath + '/www/istc/logs/edithandler.log'
-    lockfilepath = db.get_path(session, 'defaultPath') + '/indexing.lock'
-    reflockfilepath = db.get_path(session, 'defaultPath') + '/refindexing.lock'
-    usalockfilepath = db.get_path(session, 'defaultPath') + '/usaindexing.lock'
+    statspath = os.path.join(cheshirePath, 'www', 'istc', 'logs')
+    searchlogfilepath = os.path.join(statspath, 'searchhandler.log')
+    logfilepath = os.path.join(cheshirePath, 'www', 'istc', 'logs', 'adminhandler.log')
+    lockfilepath = os.path.join(db.get_path(session, 'defaultPath'), 'indexing.lock')
+    reflockfilepath = os.path.join(db.get_path(session, 'defaultPath'), 'refindexing.lock')
+    usalockfilepath = os.path.join(db.get_path(session, 'defaultPath'), 'usaindexing.lock')
 
 
 def handler(req):
     global rebuild, logfilepath, cheshirePath, db, editStore, xmlp, formTxr, script                # get the remote host's IP
     script = req.subprocess_env['SCRIPT_NAME']
+    if (rebuild):
+        build_architecture()
  #   req.register_cleanup(build_architecture)
     try:
         remote_host = req.get_remote_host(apache.REMOTE_NOLOOKUP)
@@ -1131,13 +1150,24 @@ def handler(req):
 def authenhandler(req):
     global session, authStore, rebuild
     if (rebuild):
-        build_architecture()                                                    # build the architecture
+        build_architecture()
     pw = req.get_basic_auth_pw()
     un = req.user
-    try: session.user = authStore.fetch_object(session, un)
-    except: return apache.HTTP_UNAUTHORIZED    
-    if (session.user and session.user.password == crypt(pw, pw[:2])):
+    valid = check_password(un, pw)
+    if valid is None:
+        return apache.HTTP_UNAUTHORIZED
+    elif valid:
         return apache.OK
     else:
         return apache.HTTP_UNAUTHORIZED
     #- end authenhandler()
+
+
+def check_password(username, password):
+    global session
+    try:
+        user = session.user = authStore.fetch_object(session, username)
+    except:
+        return None
+
+    return (user and user.password == crypt(password, password[:2]))

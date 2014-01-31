@@ -21,6 +21,8 @@
 #
 #
 
+import os
+
 from pkg_resources import Requirement, resource_filename
 
 from istcHtmlFragments import *
