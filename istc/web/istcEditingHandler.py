@@ -838,16 +838,19 @@ class IstcEditingHandler:
                 if r.id == fullid:
                     exists = 'true'
                     break
+
             if exists == 'false':
                 for r in editStore:
                     if r.id[:r.id.rfind('-')] == id:
                         exists = 'true'
                         owner = r.id[r.id.rfind('-') + 1:]
                         break
+            try:
                 return ('<wrapper><value>{0}</value>'
                         '<owner>{1}</owner></wrapper>'.format(exists, owner)
                         )
-            else:
+            except NameError:
+                # There's no owner
                 return ('<wrapper><value>{0}</value>'
                         '<owner>user</owner></wrapper>'.format(exists)
                         )
