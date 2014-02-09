@@ -960,29 +960,38 @@ class IstcEditingHandler:
         editStore.delete_record(session, '%s-%s' % (recid, owner))
         editStore.commit_storing(session)
         req.write('<span class="ok">[OK]</span><br/>\n')
-        
+
         # Retrieve cookie and set link back to results
         cookie = Cookie.get_cookies(req, Cookie.Cookie)
         if cookie.has_key('searchResults'):
-            values = cookie['searchResults'].value.split('-')
-            rsid = values[0]
-            id = values[1]
-
-            #calculate start value
-            stringid = str(id)
-            if len(stringid) > 1:
-                lastdigit = stringid[-1]
-                id = int(id) - int(lastdigit)
-                if id % pagesize == 0:
-                    start = id
-                else:
-                    start = id-pagesize/2
+            try:
+                values = cookie['searchResults'].value.split('-')
+            except:
+                pass
             else:
-                start = 0
+                rsid = values[0]
+                id = values[1]
 
-            req.write('<p><a href="../search/search.html?operation=search&rsid=%s&start=%s">Back to Search Results</a></p>' % (rsid, start))
+                #calculate start value
+                stringid = str(id)
+                if len(stringid) > 1:
+                    lastdigit = stringid[-1]
+                    id = int(id) - int(lastdigit)
+                    if id % pagesize == 0:
+                        start = id
+                    else:
+                        start = id-pagesize/2
+                else:
+                    start = 0
 
-        req.write('<p><a href="menu.html">Back to \'Main Menu\' page.</a></p>')
+                req.write('<p>'
+                          '<a href="../search/search.html?'
+                          'operation=search&amp;rsid={0}&amp;start={1}">'
+                          'Back to Search Results'
+                          '</a></p>'.format(rsid, start)
+                          )
+
+        req.write('<p><a href="menu.html">Back to Main Menu page.</a></p>')
         foot = unicode(read_file('footer.html'))
         req.write('</div>')
         req.write(foot)
