@@ -1,0 +1,96 @@
+<div id="maincontent" onclick="clearSuggests()">
+	<script type="text/javascript" src="/istc/javascript/collapsibleLists.js"></script>
+	<script type="text/javascript">
+    <!--
+        var olf = function loadPage() {
+                createTreeFromList('storeDirTree', '', false, false);
+            } ; 
+        if (addLoadEvent) {
+          addLoadEvent(olf);
+        } else {
+          window.onload = olf; 
+        }
+
+    -->
+    </script>
+    
+	<h1>Edit Existing ISTC Description</h1>
+	
+    
+    <h3 class="editheader">A file from the main database</h3>
+    <h4>Type in ISTC Number</h4><div id="typediv">
+    <form id="sourceDirForm" name="sourceTypeForm" action="menu.html" method="post" enctype="multipart/form-data" onsubmit="return checkIds('text');">
+    <input type="hidden" name="operation" id="operation" value="edit"/>
+    
+   	<input id="ISTCNo" type="text"  name="filename" onkeyup="suggest(this.id, event);" onkeydown="if (event.keyCode == 13){return false;}" autocomplete="off"/><br/>
+   	<input type="submit" class="editbutton" value=" Edit File "/>
+    </form>
+    <br/><br/></div>
+    <h4>Look up ISTC Number Alphabetically</h4>
+    <div id="alphabet">
+    <form id="sourceDirForm" name="sourceDirForm" action="menu.html" method="post" enctype="multipart/form-data" onsubmit="return checkIds('checkbox');">
+	
+	<div id="alphalinks">
+	<a class="alpha" href="javascript: getAll('ia', 'radio');">A</a>
+	<a class="alpha" href="javascript: getAll('ib', 'radio');">B</a>
+	<a class="alpha" href="javascript: getAll('ic', 'radio');">C</a>
+	<a class="alpha" href="javascript: getAll('id', 'radio');">D</a>
+	<a class="alpha" href="javascript: getAll('ie', 'radio');">E</a>
+	<a class="alpha" href="javascript: getAll('if', 'radio');">F</a>
+	<a class="alpha" href="javascript: getAll('ig', 'radio');">G</a>
+	<a class="alpha" href="javascript: getAll('ih', 'radio');">H</a>
+	<a class="alpha" href="javascript: getAll('ii', 'radio');">I</a>
+	<a class="alpha" href="javascript: getAll('ij', 'radio');">J</a>
+	<a class="alpha" href="javascript: getAll('ik', 'radio');">K</a>
+	<a class="alpha" href="javascript: getAll('il', 'radio');">L</a>
+	<a class="alpha" href="javascript: getAll('im', 'radio');">M</a>
+	<a class="alpha" href="javascript: getAll('in', 'radio');">N</a>
+	<a class="alpha" href="javascript: getAll('io', 'radio');">O</a>
+	<a class="alpha" href="javascript: getAll('ip', 'radio');">P</a>
+	<a class="alpha" href="javascript: getAll('iq', 'radio');">Q</a>
+	<a class="alpha" href="javascript: getAll('ir', 'radio');">R</a>
+	<a class="alpha" href="javascript: getAll('is', 'radio');">S</a>
+	<a class="alpha" href="javascript: getAll('it', 'radio');">T</a>
+	<a class="alpha" href="javascript: getAll('iu', 'radio');">U</a>
+	<a class="alpha" href="javascript: getAll('iv', 'radio');">V</a>
+	<a class="alpha" href="javascript: getAll('iw', 'radio');">W</a>
+	<a class="alpha" href="javascript: getAll('ix', 'radio');">X</a>
+	<a class="alpha" href="javascript: getAll('iy', 'radio');">Y</a>
+	<a class="alpha" href="javascript: getAll('iz', 'radio');">Z</a>
+	<a class="alpha" href="javascript: getAll('', 'radio');">Clear</a>
+	</div>
+	<input type="hidden" name="operation" id="operation" value="edit"/>
+	<input  class="editbutton" type="submit" value=" Edit File "/>
+	<br />
+	<div id="colcontainer"></div>
+	</form>
+	</div>
+	<br/>
+
+    
+    <h3 class="editheader">A record from the main database with private location data</h3>
+    <div id="privatecontainer">
+    %%%PRIVATE%%%
+    
+    </div>
+    <h3 class="editheader">A draft file</h3>
+    <form name="storeDirForm" id="storeDirForm" action="menu.html" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="operation" id="operation3" value="load"/>
+   <input type="submit" value=" Load File "/>
+   <input type="button" onclick="deleteFromStore()" value=" Discard Draft "/>
+   
+   
+    <ul class="unmarked">
+    	<li class="unmarked"><img src="/istc/images/folderOpen.gif" alt=""/><span>User Files</span>
+    	<ul id="storeDirTree" class="unmarked">
+    	%%%RECORDS%%%
+    	</ul>
+    	</li>
+    </ul>
+    <input type="submit" value=" Load File "/>
+    <input type="button" onclick="deleteFromStore()" value=" Discard Draft "/>
+
+    </form>
+
+    
+</div>

@@ -1,0 +1,22 @@
+<div id="maincontent">
+	<h1>Administration Menu</h1>
+	
+    <h3 class="editheader">Rebuild Database</h3>
+    <form onsubmit="return confirm('This operation will rebuild the full database from the files in the data directory. The rebuild will take around an hour during which time the database will not be available for searching.\n\nAre you sure you want to continue?');" action="database.html">
+    <p>Rebuilding the database will reindex all of the files currently in the data directory. While the database is rebuilding the search facility will be unavailable</p>
+    <input type="hidden" name="operation" value="rebuild"/>
+    <input type="submit" value=" Rebuild " />
+    </form>
+    <h3 class="editheader"><a href="stats.html">View Statistics</a></h3>
+    <p>View and reset statistics</p>
+    <h3 class="editheader"><a href="data.html">Data Requests</a></h3>
+     <p>Output data for specific universities</p>
+    <h3 class="editheader"><a href="pdf.html">PDF Output</a></h3>
+     <p>Get output in pdf format</p>
+  	<h3 class="editheader">Add/Delete Users</h3>
+    <form >
+    <p>%USERS%</p>
+    </form>
+    
+
+</div>

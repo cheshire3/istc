@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+ <head>
+ 	  <link rel="stylesheet" href="/istc/css/istc.css" type="text/css" />
+ 	  <script type="text/javascript" src="/istc/javascript/prototype.js"></script>
+      <script type="text/javascript" src="/istc/javascript/istc.js"></script>
+ </head>
+ <body class="subForm">
+ 	<form>
+ 		<div id="subFormHeader"><h3 class="subFormTitle">Bibliographical Reference Editing</h3><input id="subrefclose" type="button" value="close" onClick="window.close()"/></div>
+ 		<br/>
+ 		<table id="subreftable"><tbody>
+ 		<tr><td class="subreflabel">Abbreviated Reference: </td><td><input id="subAbbrRef" readonly="readonly" type="text" size="68" value="%%ABBREV%%"/></td></tr>
+ 		<tr><td class="subreflabel">Full Reference: </td><td><textarea id="subFullRef" cols="66" rows="4">%%FULL%%</textarea></td></tr>
+ 		</tbody></table>
+ 		<input id="subrefsubmit" type="button" value="submit" onclick="submitReference"/>
+  	</form>
+ </body>
+</html>

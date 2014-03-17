@@ -1,0 +1,4 @@
+WebOb>=1.3
+cheshire3>=1.1.0c0
+## !! Could not determine repository location
+modpythonwsgi>=0.1

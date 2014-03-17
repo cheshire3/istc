@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<config type="database" id="db_istc">
+
+  <objectType>cheshire3.database.SimpleDatabase</objectType>
+
+  <options>
+      <setting type="srw">1</setting>
+      <setting type="z3950">0</setting>
+      <setting type="oai-pmh">0</setting>
+  </options>
+
+  <paths>
+      <path type="defaultPath">~/istc/dbs/istc</path>
+      <path type="metadataPath">stores/metadata.bdb</path>
+      <object type="recordStore" ref="recordStore"/>
+      <object type="indexStore" ref="indexStore"/>
+      <object type="functionLogger" ref="defaultLogger"/>
+  </paths>
+
+  <subConfigs>
+      <path type="includeConfigs">configs.d</path>
+  </subConfigs>
+
+  <subConfigs>
+
+    <subConfig type="queryFactory" id="baseQueryFactory">
+       <objectType>cheshire3.queryFactory.SimpleQueryFactory</objectType>
+    </subConfig>
+
+      <subConfig type="documentFactory" id="istcDocumentFactory">
+       <objectType>cheshire3.documentFactory.SimpleDocumentFactory</objectType>
+       <options>
+          <default type="data">data</default>
+          <default type="format">dir</default>
+          <default type="cache">0</default>
+          <default type="codec">utf-8</default>
+       </options>
+    </subConfig> 
+
+    <subConfig type="documentFactory" id="reportLabDocumentFactory">
+        <objectType>cheshire3.formats.documentFactory.ReportLabDocumentFactory</objectType>
+        <paths>
+            <object type="accumulatingTransformer" ref="printAllTxr"/>
+        </paths>
+        <options>
+            <default type="format">reportlab</default>       
+              <setting type="header">ISTC Records</setting>     
+              <setting type="footer">ISTC [date] © The British Library - [pages]</setting>
+            <setting type="ttfontNormal">/usr/share/fonts/msttcorefonts/times.ttf</setting>
+            <setting type="ttfontBold">/usr/share/fonts/msttcorefonts/timesbd.ttf</setting>
+            <setting type="ttfontItalic">/usr/share/fonts/msttcorefonts/timesi.ttf</setting>
+            <setting type="ttfontBoldItalic">/usr/share/fonts/msttcorefonts/timesbi.ttf</setting> 
+            <setting type="columns">1</setting>
+        </options>
+    </subConfig>
+
+    <subConfig type="recordStore" id="recordStore">
+      <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
+      <paths>
+       <path type="defaultPath">stores</path>
+       <path type="metadataPath">recordStoreMetadata.bdb</path>
+           <object type="inTransformer" ref="XmlTransformer"/>
+        <object type="outParser" ref="LxmlParser"/>
+      </paths>
+    </subConfig>
+
+    <subConfig type="indexStore" id="indexStore">
+      <objectType>cheshire3.indexStore.BdbIndexStore</objectType>
+      <paths>
+         <path type="defaultPath">indexes</path>
+         <path type="tempPath">temp</path>
+         <path type="recordStoreHash">recordStore</path>  
+      </paths> 
+    </subConfig>
+
+    <subConfig type="protocolMap" id="CQLProtocolMap">
+      <objectType>cheshire3.protocolMap.CQLProtocolMap</objectType>
+      <paths>
+        <path type="zeerexPath">zeerex_srw.xml</path>
+      </paths>
+    </subConfig>
+
+    <subConfig type="authStore" id="istcAuthStore">
+        <objectType>cheshire3.objectStore.BdbObjectStore</objectType>
+        <paths>
+            <path type="defaultPath">authStores</path>
+            <path type="databasePath">istcAuthStore.bdb</path>
+        </paths>
+    </subConfig>
+
+    <subConfig type="authStore" id="istcSuperAuthStore">
+        <objectType>cheshire3.objectStore.BdbObjectStore</objectType>
+        <paths>
+            <path type="defaultPath">authStores</path>
+            <path type="databasePath">istcSuperAuthStore.bdb</path>
+        </paths>
+    </subConfig>
+
+    <subConfig type="resultSetStore" id="resultSetStore">
+        <objectType>cheshire3.sql.postgres.PostgresResultSetStore</objectType>
+        <paths>
+            <path type="databaseName">db_istc</path>
+            <path type="tableName">istcResultSetStore</path>
+            <path type="recordStoreHash">recordStore</path>
+            <object type="idNormalizer" ref="StringIntNormalizer"/>
+        </paths>
+        <options>
+            <default type="expires">3600</default>
+        </options>
+    </subConfig>
+
+    <subConfig type="recordStore" id="bdbeditingStore">
+        <objectType>cheshire3.recordStore.BdbRecordStore</objectType>
+        <paths>
+            <path type="defaultPath">stores</path>
+            <path type="databasePath">editingStore.bdb</path>
+            <path type="metadataPath">editingStoreMetadata.bdb</path>
+            <object type="idNormalizer" ref="StringIntNormalizer"/>
+            <object type="inTransformer" ref="XmlTransformer" />
+            <object type="outParser" ref="LxmlParser" />
+        </paths>
+    </subConfig>
+
+    <subConfig type="recordStore" id="editingStore">
+        <objectType>cheshire3.sql.postgres.PostgresRecordStore</objectType>
+        <paths>
+            <path type="databaseName">db_istc</path>
+            <path type="tableName">editingStore</path>
+            <object type="inTransformer" ref="XmlTransformer" />
+            <object type="outParser" ref="LxmlParser" />
+        </paths>
+        <options>
+        </options>
+    </subConfig>
+
+    <subConfig type="documentStore" id="notesStore">
+        <objectType>cheshire3.sql.postgres.PostgresDocumentStore</objectType>
+        <paths>
+            <path type="databaseName">db_istc</path>
+            <path type="tableName">internalNotesStore</path>
+        </paths>
+    </subConfig>
+
+  </subConfigs>
+</config>
+

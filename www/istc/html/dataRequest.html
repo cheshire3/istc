@@ -1,0 +1,32 @@
+<div id="maincontent">
+	<h1>Library Data Request Form</h1>
+	<form action="data.html">
+	<input type="hidden" name="operation" value="library"/>
+	<table>
+	<tr><td class="label">Word(s) to find:</td><td><input type="text" id="words" name="q"/></td></tr>
+	<tr><td class="label">Output Format: </td><td><select name="format" id="output">
+		<option value="xml">MARC21XML</option>
+		<option value="aleph">MARC aleph</option>
+		<option value="exchange">MARC exchange</option>
+	</select></td></tr>
+	<tr><td class="label">Include locations:</td><td><select name="filter" id="filter"> 
+		<option value="'all'">All Location Data</option>
+		<option value="951">951 Field Only</option>
+		<option value="995">995 Field Only</option>
+		<option value="957">957 Field Only</option>
+		<option value="997">997 Field Only</option>
+		<option value="954">954 Field Only</option>
+		<option value="955">955 Field Only</option>
+		<option value="996">996 Field Only</option>
+		<option value="952">952 Field Only</option>
+		<option value="958">958 Field Only</option>
+		<option value="953">953 Field Only</option>
+		<option value="994">994 Field Only</option>	
+		<option value="993">993 Field Only</option>	
+	</select></td><tr/>
+	<tr><td class="label">Only include matched locations?</td><td><input name="libraryfilter" type="checkbox"/></td></tr>
+	</table>
+	<input type="submit" value=" Submit "/>
+	</form>
+
+</div>
