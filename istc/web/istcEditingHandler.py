@@ -473,6 +473,8 @@ class IstcEditingHandler:
             notes = noteStore.fetch_document(session, istcNo).get_raw(session)
         except:
             notes = ' '
+        else:
+            notes = unicode(notes, 'utf-8')
 
         page = unicode(read_file('editExtras.html'))
         content = unicode(formTxr.process_record(session, rec).get_raw(session))

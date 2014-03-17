@@ -8,8 +8,10 @@ as the installation method is followed.
 from __future__ import with_statement
 
 import os
-from os.path import abspath, dirname, join, exists, expanduser
 import inspect
+import istc
+
+from os.path import abspath, dirname, join, exists, expanduser
 
 # Import Setuptools
 from ez_setup import use_setuptools
@@ -24,7 +26,6 @@ from istc.setuptools.commands import (develop,
                                       )
 
 _name = 'istc'
-_version = '3.1'
 
 # Inspect to find current path
 setuppath = inspect.getfile(inspect.currentframe())
@@ -37,7 +38,7 @@ with open(os.path.join(setupdir, 'requirements.txt'), 'r') as fh:
 
 setup(
     name = _name,
-    version = _version,
+    version = istc.__version__,
     description = 'Cheshire3 for ISTC',
     packages=[],
     requires=['cheshire3'],
