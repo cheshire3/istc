@@ -31,12 +31,12 @@ import sys
 from lxml import etree
 
 # Cheshire3 imports
-sys.path.insert(1, os.path.expanduser('~/cheshire3/code'))
 from cheshire3.baseObjects import Session
 from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
+from cheshire3.internal import cheshire3Root
 
-from istcArguments import ISTCArgumentParser
+from istcArguments import BatchEditArgumentParser
 
 # Functions / Methods for parsing input files
 
@@ -112,10 +112,10 @@ def main(argv=None):
         args = argument_parser.parse_args(argv)
     else:
         args = argument_parser.parse_args()
-    
+
     if args.test:
         return test()
-        
+
     # Parse new data file
     istcDict = {}
     for newDataPath in args.transform:
@@ -134,7 +134,8 @@ def main(argv=None):
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, os.path.expanduser('~/cheshire3/configs/serverConfig.xml'))
+serverConfig = os.path.join(cheshire3Root, 'configs', 'serverConfig.xml')
+serv = SimpleServer(session, serverConfig)
 
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
@@ -145,10 +146,10 @@ dfp = db.get_path(session, 'defaultPath')
 
 # Init OptionParser
 docbits = __doc__.split('\n\n')
-argument_parser = ISTCArgumentParser(description=docbits[0],
-                                     epilog=docbits[-1])
+argument_parser = BatchEditArgumentParser(description=docbits[0],
+                                          epilog=docbits[-1]
+                                          )
 
 
 if __name__ == '__main__':
     sys.exit(main())
-

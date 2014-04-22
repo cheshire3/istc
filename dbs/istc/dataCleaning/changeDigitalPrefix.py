@@ -1,5 +1,23 @@
 # -*- coding: iso-8859-1 -*-
 """Change URLs for Microfiche data.
+
+Positional arguments:
+  match                 Regex to match against the content of the 530$u
+                        field.Default is to match anything.
+
+  replace               Replace value for the match in the 530$u field.
+                        Default is empty string, i.e. strip the match
+
+Optional arguments:
+  -h, --help            show this help message and exit
+  -t, --test            Carry out unit tests.
+
+Data Options:
+  -d INDIR, --indir INDIR
+                        Input data directory.
+  -o OUTDIR, --outdir OUTDIR
+                        Output data directory.
+
 """
 
 import logging
@@ -7,36 +25,23 @@ import os
 import re
 import sys
 
-from argparse import ArgumentParser
-
 # site-packages
 from lxml import etree
 
-cheshirePath = "/home/cheshire"
-sys.path.insert(1, os.path.join(cheshirePath, 'cheshire3', 'code'))
 
 from cheshire3.baseObjects import Session
-from cheshire3.server import SimpleServer
 from cheshire3.document import StringDocument
+from cheshire3.server import SimpleServer
+from cheshire3.internal import cheshire3Root
+
+from istcArguments import DirectoryArgumentParser
 
 
-class MyArgParser(ArgumentParser):
+class MyArgParser(DirectoryArgumentParser):
     """Custom argument parser for changing field value prefix."""
-    
+
     def __init__(self, **kwargs):
-        ArgumentParser.__init__(self, **kwargs)
-        # Data Options
-        group = self.add_argument_group(title="data I/O options")
-        group.add_argument(
-            "-d", "--indir", dest="indir",
-            default=os.path.join(dfp, 'data'),
-            help=("Input data directory."),
-        )
-        group.add_argument(
-            "-o", "--outdir", dest="outdir",
-            default=os.path.join(dfp, 'data_new'),
-            help=("Output data directory."),
-        )
+        DirectoryArgumentParser.__init__(self, **kwargs)
         # Operations
         """
         group = self.add_argument_group(title="Operations")
@@ -59,7 +64,7 @@ class MyArgParser(ArgumentParser):
             help=("Replace facsimile copies for the specified repository.")
         )
         """
-        
+
         # Debug options
         self.add_argument(
             "-t", "--test", action="store_true", dest="test",
@@ -81,7 +86,6 @@ class MyArgParser(ArgumentParser):
                   "Default is empty string, i.e. strip the match"
                   )
         )
-
 
 
 def replace(args):
@@ -126,7 +130,8 @@ def main(argv=None):
 
 # Build environment...
 session = Session()
-serv = SimpleServer(session, os.path.join(cheshirePath , 'cheshire3', 'configs', 'serverConfig.xml'))
+serverConfig = os.path.join(cheshire3Root, 'configs', 'serverConfig.xml')
+serv = SimpleServer(session, serverConfig)
 
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
