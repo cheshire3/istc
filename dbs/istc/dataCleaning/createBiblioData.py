@@ -1,28 +1,47 @@
+"""Create XML version of bibliographic references data.
 
-#Used to clean create new bibliographical refs data when moving from C2 to C3 (June 2009)
+Originally used to clean create new bibliographical refs data when moving
+from Cheshire 2 to Cheshire3 (June 2009)
+
+Subsequently modified to create a more up-to-date copy of the XML data
+following disaster recovery.
+
+"""
+
+import argparse
+import re
 
 from lxml import etree
 
-datafile = "newBiblioData.txt"
-outputfile = "../refsData/refs.xml"
+from istcArguments import FileArgumentParser
 
+# Init OptionParser
+docbits = __doc__.split('\n\n')
+arg_parser = FileArgumentParser(conflict_handler='resolve',
+                                description=docbits[0]
+                                )
+arg_parser.set_defaults(infile="newBiblioData.txt",
+                        outfile="../refsData/refs.xml"
+                        )
 
-file = open(datafile, 'r')
-lines = file.readlines()
-file.close()
+args = arg_parser.parse_args()
+
+lines = args.infile.readlines()
 output = []
 
 for l in lines:
-    toks = l.split('\t')
+    l = l.strip()
+    if not l:
+        continue
+    toks = re.split('\s+', l, maxsplit=1)
     output.append('<record><code>%s</code><full>%s</full></record>' % (toks[0].replace('&', '&amp;').strip(), toks[1].replace('&', '&amp;').strip()))
     test = etree.fromstring('<refs>%s</refs>' % ''.join(output))
-tree = etree.fromstring('<refs>%s</refs>' % ''.join(output))           
+tree = etree.fromstring('<refs>%s</refs>' % ''.join(output))
 parsedXslt = etree.parse("../xsl/reindent.xsl")
 txr = etree.XSLT(parsedXslt)
 
 result = txr(tree)
-resultfile = open(outputfile, 'w')
 
-resultfile.write(etree.tostring(result))
-resultfile.flush()
-resultfile.close()
+args.outfile.write(etree.tostring(result))
+args.outfile.flush()
+args.outfile.close()
