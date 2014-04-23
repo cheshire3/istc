@@ -12,6 +12,10 @@
     <full>New York NY, Museum of Biblical Art, American Bible Society Collection</full>
   </record>
   <record>
+    <code>AdML</code>
+    <full>Chicago IL, Adler Planetarium &amp; Astronomy Museum</full>
+  </record>
+  <record>
     <code>AICL</code>
     <full>Chicago IL, Art Institute of Chicago</full>
   </record>
@@ -152,6 +156,10 @@
     <full>Bryn Athyn PA, Bryn Athyn College Library</full>
   </record>
   <record>
+    <code>BrBoGL</code>
+    <full>Brooklyn NY, Brooklyn Botanic Garden</full>
+  </record>
+  <record>
     <code>BrCL</code>
     <full>Brooklyn NY, Brooklyn College Library</full>
   </record>
@@ -184,6 +192,10 @@
     <full>Conception MO, Conception Abbey Library</full>
   </record>
   <record>
+    <code>CalCL</code>
+    <full>Grand Rapids MI, Calvin College, Hekman Library</full>
+  </record>
+  <record>
     <code>CalSUNL</code>
     <full>Northridge CA, California State Univ., Northridge, Library</full>
   </record>
@@ -212,10 +224,6 @@
     <full>Berkeley CA, Graduate Theological Union</full>
   </record>
   <record>
-    <code>CBPac</code>
-    <full>Berkeley CA, Pacific School of Religion, Howell Bible Collection</full>
-  </record>
-  <record>
     <code>CC(NY)L</code>
     <full>New York NY, The City College</full>
   </record>
@@ -230,6 +238,10 @@
   <record>
     <code>ChapUL</code>
     <full>Orange CA, Chapman Univ.</full>
+  </record>
+  <record>
+    <code>ChemHFL</code>
+    <full>Philadelphia PA, Chemical Heritage Foundation, Othmer Library</full>
   </record>
   <record>
     <code>ChiBGL</code>
@@ -280,8 +292,12 @@
     <full>Worcester MA, Clark Univ. Library</full>
   </record>
   <record>
+    <code>ClSTL</code>
+    <full>Claremont CA, Claremont School of Theology Library</full>
+  </record>
+  <record>
     <code>CMU(H)L</code>
-    <full>Pittsburgh PA, Carnegie Mellon Univ., Hunt (Botanical) Collection</full>
+    <full>Pittsburgh PA, Carnegie Mellon Univ., Hunt Institute for Botanical Documentation</full>
   </record>
   <record>
     <code>CMU(P)L</code>
@@ -393,7 +409,7 @@
   </record>
   <record>
     <code>CStCL</code>
-    <full>St Paul MN, College of St Catherine</full>
+    <full>St Paul MN, St Catherine Univ. Library</full>
   </record>
   <record>
     <code>CStTL</code>
@@ -414,6 +430,10 @@
   <record>
     <code>DarCL</code>
     <full>Hanover NH, Dartmouth College, Rauner Special Collections Library</full>
+  </record>
+  <record>
+    <code>DavCL</code>
+    <full>Davidson NC, Davidson College</full>
   </record>
   <record>
     <code>DayUL</code>
@@ -449,7 +469,7 @@
   </record>
   <record>
     <code>DrexIL</code>
-    <full>Philadelphia PA, Drexel Univ.</full>
+    <full>Philadelphia PA, Drexel Univ., Hagerty Library</full>
   </record>
   <record>
     <code>DrUL</code>
@@ -480,10 +500,6 @@
     <full>New York NY, The Explorers Club</full>
   </record>
   <record>
-    <code>EDSL</code>
-    <full>Cambridge MA, Episcopal Divinity School</full>
-  </record>
-  <record>
     <code>EHFL</code>
     <full>East Hampton NY, East Hampton Free Library</full>
   </record>
@@ -505,7 +521,11 @@
   </record>
   <record>
     <code>EUL</code>
-    <full>Atlanta GA, Emory Univ. Library</full>
+    <full>Atlanta GA, Emory Univ., Woodruff Library</full>
+  </record>
+  <record>
+    <code>EU(T)L</code>
+    <full>Atlanta GA, Emory Univ., Pitts Theology Library</full>
   </record>
   <record>
     <code>FandMCL</code>
@@ -578,6 +598,10 @@
   <record>
     <code>GeUL</code>
     <full>Washington DC, Georgetown Univ.</full>
+  </record>
+  <record>
+    <code>GeU(L)L</code>
+    <full>Washington DC, Georgetown Univ., Law Library</full>
   </record>
   <record>
     <code>GEvTSL</code>
@@ -700,12 +724,16 @@
     <full>Haverhill MA, Haverhill Public Library</full>
   </record>
   <record>
+    <code>HBUL</code>
+    <full>Houston TX, Houston Baptist Univ., Dunham Bible Museum</full>
+  </record>
+  <record>
     <code>HEHL</code>
     <full>San Marino CA, The Huntington Library</full>
   </record>
   <record>
     <code>HFPRCL</code>
-    <full>Montreat NC, Historical Foundation of the Presbyterian &amp; Reformed Churches</full>
+    <full>Decatur GA, Columbia Theological Seminary, John Bulow Campbell Library</full>
   </record>
   <record>
     <code>HL(B)</code>
@@ -728,6 +756,10 @@
     <full>Roanoke VA, Hollins Univ. Library</full>
   </record>
   <record>
+    <code>HopCL</code>
+    <full>Holland MI, Hope College, Van Wylen Library</full>
+  </record>
+  <record>
     <code>HPL</code>
     <full>Houston TX, Houston Public Library</full>
   </record>
@@ -738,10 +770,6 @@
   <record>
     <code>HSERCL</code>
     <full>Lancaster PA, Historical Society of the Evangelical and Reformed Church</full>
-  </record>
-  <record>
-    <code>HSPaL</code>
-    <full>Philadelphia PA, Historical Society of Pennsylvania</full>
   </record>
   <record>
     <code>HSTL</code>
@@ -758,6 +786,10 @@
   <record>
     <code>HUL</code>
     <full>Hempstead NY, Hofstra Univ. Library</full>
+  </record>
+  <record>
+    <code>HWSCL</code>
+    <full>Geneva NY, Hobart &amp; William Smith Colleges</full>
   </record>
   <record>
     <code>HyCAML</code>
@@ -801,7 +833,7 @@
   </record>
   <record>
     <code>JCUL</code>
-    <full>University Heights OH, John Carroll Univ., Grasselli Library Library</full>
+    <full>University Heights OH, John Carroll Univ., Grasselli Library</full>
   </record>
   <record>
     <code>JFKL</code>
@@ -850,6 +882,10 @@
   <record>
     <code>KenCL</code>
     <full>Gambier OH, Kenyon College Library</full>
+  </record>
+  <record>
+    <code>KennSUL</code>
+    <full>Kennesaw GA, Kennesaw State Univ. Library</full>
   </record>
   <record>
     <code>KenSL</code>
@@ -980,20 +1016,16 @@
     <full>St Paul MN, Luther Seminary Library</full>
   </record>
   <record>
+    <code>LyCL</code>
+    <full>Lynchburg VA, Lynchburg College</full>
+  </record>
+  <record>
     <code>LyPL</code>
     <full>Lynn MA, Lynn Public Library</full>
   </record>
   <record>
-    <code>ManCL</code>
-    <full>New York NY, Manhattan College</full>
-  </record>
-  <record>
-    <code>MarCL</code>
-    <full>Marietta OH, Marietta College</full>
-  </record>
-  <record>
-    <code>MarqUL</code>
-    <full>Milwaukee WI, Marquette Univ., Raynor Library</full>
+    <code>MayClL</code>
+    <full>Rochester MN, Mayo Clinic, History of Medicine Library</full>
   </record>
   <record>
     <code>MBGL</code>
@@ -1013,7 +1045,7 @@
   </record>
   <record>
     <code>McTSL</code>
-    <full>Chicago IL, Jesuit-Krauss-McCormick Library</full>
+    <full>Chicago IL, JKM Library</full>
   </record>
   <record>
     <code>MedCWL</code>
@@ -1024,12 +1056,12 @@
     <full>Boston MA, Massachusetts Eye &amp; Ear Infirmary</full>
   </record>
   <record>
-    <code>MenFL</code>
-    <full>Topeka KS, Menninger Foundation</full>
-  </record>
-  <record>
     <code>MerL</code>
     <full>Philadelphia PA, Mercantile Library</full>
+  </record>
+  <record>
+    <code>MeUL</code>
+    <full>Macon GA, Mercer Univ., Tarver Library</full>
   </record>
   <record>
     <code>MFArtL</code>
@@ -1065,11 +1097,15 @@
   </record>
   <record>
     <code>MITL</code>
-    <full>Cambridge MA, Massachusetts Institute of Technology,</full>
+    <full>Cambridge MA, Massachusetts Institute of Technology</full>
   </record>
   <record>
     <code>MiUL</code>
     <full>Oxford OH, Miami Univ. Library</full>
+  </record>
+  <record>
+    <code>MLMP</code>
+    <full>Philadelphia PA, Masonic Library and Museum of Pennsylvania</full>
   </record>
   <record>
     <code>MLuColL</code>
@@ -1092,6 +1128,10 @@
     <full>Bethlehem PA, Moravian Archives</full>
   </record>
   <record>
+    <code>MSL</code>
+    <full>Augusta ME, Maine State Law and Legislative Reference Library</full>
+  </record>
+  <record>
     <code>MSML</code>
     <full>Pine City NY, Mt. Saviour Monastery</full>
   </record>
@@ -1104,10 +1144,6 @@
     <full>South Hadley MA, Mt. Holyoke College</full>
   </record>
   <record>
-    <code>MtSAL</code>
-    <full>Esopus NY, Mt. St Alphonsus Seminary</full>
-  </record>
-  <record>
     <code>MtSML</code>
     <full>Emmitsburg MD, Mt. St Mary's Univ.</full>
   </record>
@@ -1118,6 +1154,10 @@
   <record>
     <code>MulCoCL</code>
     <full>Portland OR, Multnomah County Central Library</full>
+  </record>
+  <record>
+    <code>NaHL</code>
+    <full>Nashotah WI, Nashotah House Theological Seminary</full>
   </record>
   <record>
     <code>NavAcL</code>
@@ -1144,12 +1184,12 @@
     <full>Chicago IL, The Newberry Library</full>
   </record>
   <record>
-    <code>NGA(R)</code>
-    <full>Washington DC, National Gallery of Art, Lessing J. Rosenwald Coll.</full>
+    <code>NGA</code>
+    <full>Washington DC, National Gallery of Art</full>
   </record>
   <record>
-    <code>NGA(W)</code>
-    <full>Washington DC, National Gallery of Art, Ian G. Woodner Collection</full>
+    <code>NGA(R)</code>
+    <full>Washington DC, National Gallery of Art, Lessing J. Rosenwald Coll.</full>
   </record>
   <record>
     <code>NGSL</code>
@@ -1170,6 +1210,10 @@
   <record>
     <code>NOBTSL</code>
     <full>New Orleans LA, New Orleans Baptist Theological Seminary, John T. Christian Library</full>
+  </record>
+  <record>
+    <code>NoIllUL</code>
+    <full>DeKalb IL, Northern Illinois Univ.</full>
   </record>
   <record>
     <code>N(SCh)L</code>
@@ -1253,7 +1297,7 @@
   </record>
   <record>
     <code>NYU(W)L</code>
-    <full>New York NY, New York Univ., Washington Square</full>
+    <full>New York NY, New York Univ., Bobst Library</full>
   </record>
   <record>
     <code>ObCL</code>
@@ -1265,11 +1309,7 @@
   </record>
   <record>
     <code>OClGC</code>
-    <full>Cleveland OH, Garden Center</full>
-  </record>
-  <record>
-    <code>OCPL</code>
-    <full>Syracuse NY, Onondaga County Public Library</full>
+    <full>Cleveland OH, Cleveland Botanical Garden</full>
   </record>
   <record>
     <code>ODL</code>
@@ -1289,7 +1329,7 @@
   </record>
   <record>
     <code>OMeH</code>
-    <full>Mentor OH, Holden Arboretum</full>
+    <full>Kirtland OH, Holden Arboretum</full>
   </record>
   <record>
     <code>OSGL</code>
@@ -1317,7 +1357,7 @@
   </record>
   <record>
     <code>PeqL</code>
-    <full>New Haven CT, Pequot Library, Yale Univ. Library</full>
+    <full>Southport CT, Pequot Library</full>
   </record>
   <record>
     <code>PExAcL</code>
@@ -1432,6 +1472,10 @@
     <full>New Brunswick NJ, Rutgers Univ. Library</full>
   </record>
   <record>
+    <code>SacPL</code>
+    <full>Sacramento CA, Sacramento Public Library</full>
+  </record>
+  <record>
     <code>SanAPL</code>
     <full>San Antonio TX, San Antonio Public Library</full>
   </record>
@@ -1454,6 +1498,10 @@
   <record>
     <code>ScrCL</code>
     <full>Claremont CA, Scripps College, Denison Library</full>
+  </record>
+  <record>
+    <code>SCUL</code>
+    <full>Santa Clara CA, Santa Clara Univ. Library</full>
   </record>
   <record>
     <code>SDPL</code>
@@ -1572,12 +1620,12 @@
     <full>Wynnewood PA, St Charles Borromeo Seminary Library</full>
   </record>
   <record>
-    <code>StFC(L)L</code>
-    <full>Loretto PA, St Francis College</full>
+    <code>STCL</code>
+    <full>Houston TX, South Texas College of Law</full>
   </record>
   <record>
-    <code>StFSL</code>
-    <full>St Francis WI, St Francis Seminary</full>
+    <code>StFC(L)L</code>
+    <full>Loretto PA, St Francis College</full>
   </record>
   <record>
     <code>StHSL</code>
@@ -1622,10 +1670,6 @@
   <record>
     <code>StM(B)L</code>
     <full>Baltimore MD, St Mary's Seminary &amp; Univ.</full>
-  </record>
-  <record>
-    <code>StM(P)L</code>
-    <full>Perryville MO, St Mary's Seminary</full>
   </record>
   <record>
     <code>StMC(X)L</code>
@@ -1676,6 +1720,10 @@
     <full>Evanston IL, Seabury-Western Theological Seminary</full>
   </record>
   <record>
+    <code>SwBrCL</code>
+    <full>Lynchburg VA, Sweet Briar College</full>
+  </record>
+  <record>
     <code>SwML</code>
     <full>Los Angeles CA, Southwest Museum</full>
   </record>
@@ -1717,7 +1765,7 @@
   </record>
   <record>
     <code>TrinC(W)L</code>
-    <full>Washington DC, Trinity College Library</full>
+    <full>Washington DC, Trinity Univ. Library</full>
   </record>
   <record>
     <code>TrinUL</code>
@@ -1776,6 +1824,10 @@
     <full>Los Angeles CA, Univ. of California at Los Angeles, Belt Library of Vinciana</full>
   </record>
   <record>
+    <code>UCalLA(L)L</code>
+    <full>Los Angeles CA, Univ. of California, Los Angeles, Law Library</full>
+  </record>
+  <record>
     <code>UCalLA(M)L</code>
     <full>Los Angeles CA, Univ. of California at Los Angeles, Biomedical Library</full>
   </record>
@@ -1828,6 +1880,10 @@
     <full>Athens GA, Univ. of Georgia, Hargrett Library</full>
   </record>
   <record>
+    <code>UHawL</code>
+    <full>Honolulu HI, Univ. of Hawai'i at Manoa, Hamilton Library</full>
+  </record>
+  <record>
     <code>UHouL</code>
     <full>Houston TX, Univ. of Houston</full>
   </record>
@@ -1853,7 +1909,7 @@
   </record>
   <record>
     <code>UKan(M)L</code>
-    <full>Kansas City KS, Univ. of Kansas Medical Center, Clendining Library</full>
+    <full>Kansas City KS, Univ. of Kansas Medical Center, Clendening Library</full>
   </record>
   <record>
     <code>UKanL</code>
@@ -1868,8 +1924,16 @@
     <full>Louisville KY, Univ. of Louisville, Ekstrom Library</full>
   </record>
   <record>
+    <code>UMaL</code>
+    <full>Orono ME, Univ. of Maine Library</full>
+  </record>
+  <record>
     <code>UMaryBL</code>
     <full>Baltimore MD, Univ. of Maryland, Health Sciences &amp; Human Services Library</full>
+  </record>
+  <record>
+    <code>UMass(R)L</code>
+    <full>Amherst MA, Univ. of Massachusetts, Massachusetts Center for Renaissance Studies</full>
   </record>
   <record>
     <code>UMiamL</code>
@@ -1965,7 +2029,7 @@
   </record>
   <record>
     <code>UnTS(V)L</code>
-    <full>Richmond VA, Union Theological Seminary Library</full>
+    <full>Richmond VA, Union Presbyterian Seminary Library</full>
   </record>
   <record>
     <code>UnTSL</code>
@@ -2022,6 +2086,10 @@
   <record>
     <code>UPRicoL</code>
     <full>Rio Piedras PR, Univ. of Puerto Rico</full>
+  </record>
+  <record>
+    <code>URichL</code>
+    <full>Richmond VA, Univ. of Richmond Library</full>
   </record>
   <record>
     <code>URo(M)L</code>
@@ -2086,6 +2154,10 @@
   <record>
     <code>UTenL</code>
     <full>Knoxville TN, Univ. of Tennessee</full>
+  </record>
+  <record>
+    <code>UTexEPL</code>
+    <full>El Paso TX, Univ. of Texas at El Paso Library</full>
   </record>
   <record>
     <code>UTex(M)L</code>
@@ -2172,6 +2244,10 @@
     <full>Vincennes IN, Vincennes Old Cathedral</full>
   </record>
   <record>
+    <code>VTL</code>
+    <full>Blacksburg VA, Virginia Polytechnic Institute &amp; State Univ.</full>
+  </record>
+  <record>
     <code>WACML</code>
     <full>Los Angeles CA, Univ. of California, William Andrews Clark Memorial Library</full>
   </record>
@@ -2240,6 +2316,10 @@
     <full>Middletown CT, Wesleyan Univ. Library</full>
   </record>
   <record>
+    <code>WFUL</code>
+    <full>Winston-Salem NC, Wake Forest Univ., Z. Smith Reynolds Library</full>
+  </record>
+  <record>
     <code>WillCL</code>
     <full>Williamstown MA, Williams College Library</full>
   </record>
@@ -2248,12 +2328,16 @@
     <full>Salem OR, Willamette Univ. Library</full>
   </record>
   <record>
+    <code>WiLSL</code>
+    <full>Mequon WI, Wisconsin Lutheran Seminary Library</full>
+  </record>
+  <record>
     <code>WiSUL</code>
     <full>Wichita KS, Wichita State Univ. Library</full>
   </record>
   <record>
     <code>WittUL</code>
-    <full>Cincinnati OH, Univ. of Cincinnati</full>
+    <full>Springfield OH, Wittenberg Univ. Library</full>
   </record>
   <record>
     <code>WJeCL</code>
@@ -2313,7 +2397,7 @@
   </record>
   <record>
     <code>YU(B)L</code>
-    <full>New Haven CT, Yale Univ., Centre for British Art</full>
+    <full>New Haven CT, Yale Univ., Center for British Art</full>
   </record>
   <record>
     <code>YUL</code>
@@ -2340,6 +2424,54 @@
     <full>Brookline MA, Zion Research Library</full>
   </record>
   <record>
+    <code>[ACB]</code>
+    <full>Alta California Bookstore, Berkeley CA</full>
+  </record>
+  <record>
+    <code>[CenBC]</code>
+    <full>Central Book Company (booksellers), Brooklyn NY</full>
+  </record>
+  <record>
+    <code>[FTH]</code>
+    <full>F. Thomas Heller, bookseller, New York NY</full>
+  </record>
+  <record>
+    <code>[HPK]</code>
+    <full>H.P. Kraus, bookseller, New York NY</full>
+  </record>
+  <record>
+    <code>[JFF]</code>
+    <full>John F. Fleming, Inc., bookseller, New York NY</full>
+  </record>
+  <record>
+    <code>[LCH]</code>
+    <full>Lathrop C. Harper, Inc., bookseller, New York NY</full>
+  </record>
+  <record>
+    <code>[LeaBS]</code>
+    <full>Leamington Book Shop, bookseller, Washington DC</full>
+  </record>
+  <record>
+    <code>[LW]</code>
+    <full>Lawrence Witten (bookseller), New Haven CT</full>
+  </record>
+  <record>
+    <code>[PSK]</code>
+    <full>P.S. Krivatsy, bookseller, Washington DC</full>
+  </record>
+  <record>
+    <code>[UPBS]</code>
+    <full>Univ. Place Book Shop (booksellers), New York NY</full>
+  </record>
+  <record>
+    <code>[WHS]</code>
+    <full>William H. Schab, bookseller, New York NY</full>
+  </record>
+  <record>
+    <code>[WSal]</code>
+    <full>William Salloch, bookseller, Ossining NY</full>
+  </record>
+  <record>
     <code>AAHj</code>
     <full>Queenstown MD, Arthur A. Houghton Jr.</full>
   </record>
@@ -2352,16 +2484,8 @@
     <full>Grand Rapids MI, Albert Doezema</full>
   </record>
   <record>
-    <code>AES</code>
-    <full>Austin TX, A.E. Skinner</full>
-  </record>
-  <record>
     <code>AEV</code>
     <full>Newton Centre MA, Arthur E. Vershbow</full>
-  </record>
-  <record>
-    <code>AH</code>
-    <full>Fort Worth TX, Arthur Haddaway</full>
   </record>
   <record>
     <code>AHR</code>
@@ -2424,14 +2548,6 @@
     <full>New York NY, Ben Grauer</full>
   </record>
   <record>
-    <code>BGO</code>
-    <full>, B.G. Odescalchi</full>
-  </record>
-  <record>
-    <code>BLU</code>
-    <full>Chapel Hill NC, Berthold L. Ullman</full>
-  </record>
-  <record>
     <code>BMar</code>
     <full>Detroit MI, Benedict Markowski</full>
   </record>
@@ -2460,10 +2576,6 @@
     <full>Barnard MO, Charles D. Humberd, M.D.</full>
   </record>
   <record>
-    <code>CDHP</code>
-    <full>New York NY, C. Doris Hellman Pepper (Mrs. Morton Pepper)</full>
-  </record>
-  <record>
     <code>CERj</code>
     <full>Cleveland Heights OH, Charles E. Roseman, Jr.</full>
   </record>
@@ -2480,20 +2592,8 @@
     <full>Washington DC, Campbell Jones</full>
   </record>
   <record>
-    <code>CJR</code>
-    <full>Pittsburgh PA, Charles J. Rosenbloom</full>
-  </record>
-  <record>
     <code>CLea</code>
     <full>Columbus OH, Chauncy D. Leake</full>
-  </record>
-  <record>
-    <code>CSS</code>
-    <full>White Plains NY, Clara S. Strassburger (Mrs. Irwin Strassburger)</full>
-  </record>
-  <record>
-    <code>CTC</code>
-    <full>San Francisco CA, C. Templeton Crocker, Estate of</full>
   </record>
   <record>
     <code>CWA</code>
@@ -2672,10 +2772,6 @@
     <full>Fulton MD, George L. Howe</full>
   </record>
   <record>
-    <code>GU</code>
-    <full>New York NY, Giogio Uzielli</full>
-  </record>
-  <record>
     <code>GWJ</code>
     <full>Falmouth VA, Gordon W. Jones, M.D.</full>
   </record>
@@ -2692,10 +2788,6 @@
     <full>Worcester MA, Harriet B. Lincoln</full>
   </record>
   <record>
-    <code>HBM</code>
-    <full>New York NY, H. Bradley Martin</full>
-  </record>
-  <record>
     <code>HC</code>
     <full>New York NY, H. Cahoon</full>
   </record>
@@ -2706,10 +2798,6 @@
   <record>
     <code>HDCo</code>
     <full>Washington DC, Harris Dunscombe Colt</full>
-  </record>
-  <record>
-    <code>HDH</code>
-    <full>New York NY, Harrison D. Horblit</full>
   </record>
   <record>
     <code>HG</code>
@@ -2726,10 +2814,6 @@
   <record>
     <code>HLam</code>
     <full>Beverly Hills CA, Harold Lamb</full>
-  </record>
-  <record>
-    <code>HLR</code>
-    <full>Roselle Park NJ, Harold L. Ruland, Estate of</full>
   </record>
   <record>
     <code>HN</code>
@@ -2769,7 +2853,7 @@
   </record>
   <record>
     <code>JCH</code>
-    <full>Washington DC, John C. Hirsch</full>
+    <full>Washington, DC, John C. Hirsch</full>
   </record>
   <record>
     <code>JDS</code>
@@ -2788,16 +2872,8 @@
     <full>Los Angeles CA, Justin G. Turner</full>
   </record>
   <record>
-    <code>JGVD</code>
-    <full>New York NY, James Grote VanDerpool</full>
-  </record>
-  <record>
     <code>JHN</code>
     <full>Niagara Falls NY, John H. Northup</full>
-  </record>
-  <record>
-    <code>JHPer</code>
-    <full>Denver CO, James H. Pershing</full>
   </record>
   <record>
     <code>JIE</code>
@@ -2825,23 +2901,19 @@
   </record>
   <record>
     <code>JO</code>
-    <full>New York NY, J. Onderwyzer</full>
+    <full>New York NY, Joseph Onderwyzer</full>
   </record>
   <record>
     <code>JPB</code>
     <full>Savannah GA, Rev. Joseph P. Bartak</full>
   </record>
   <record>
-    <code>JRS</code>
-    <full>Rochester NY, John Rothwell Slater</full>
+    <code>JRB</code>
+    <full>Pittsburgh PA, John Robinson Block</full>
   </record>
   <record>
     <code>JS</code>
     <full>Newport RI, John Slocum</full>
-  </record>
-  <record>
-    <code>JSF</code>
-    <full>New York NY, J.S. Fuchs</full>
   </record>
   <record>
     <code>JTB</code>
@@ -2904,16 +2976,16 @@
     <full>Passaic NJ, Morris H. Saffron, M.D.</full>
   </record>
   <record>
-    <code>MMZ</code>
-    <full>New York NY, Michael M. Zagayski</full>
-  </record>
-  <record>
     <code>MNB</code>
     <full>Los Angeles CA, M.N. Beigelman</full>
   </record>
   <record>
     <code>MP</code>
     <full>Dallas TX, M. Pollak</full>
+  </record>
+  <record>
+    <code>MS</code>
+    <full>Los Angeles CA, Michael Sabin</full>
   </record>
   <record>
     <code>MSC</code>
@@ -2938,10 +3010,6 @@
   <record>
     <code>NHS</code>
     <full>New York NY, Norman H. Strouse</full>
-  </record>
-  <record>
-    <code>NJN</code>
-    <full>Latrobe PA, N.J. Nakles</full>
   </record>
   <record>
     <code>NPH</code>
@@ -2981,7 +3049,7 @@
   </record>
   <record>
     <code>PO</code>
-    <full>Mount Kisco NY, P. Oliver, Estate of</full>
+    <full>Mount Kisco NY, Peter Oliver, Estate of</full>
   </record>
   <record>
     <code>PWH</code>
@@ -3000,24 +3068,12 @@
     <full>Ann Arbor MI, Robert B. Brown</full>
   </record>
   <record>
-    <code>RBL</code>
-    <full>Orono ME, Ronald B. Levinson</full>
-  </record>
-  <record>
-    <code>RBvKS</code>
-    <full>Los Angeles CA, Rufus B. von Klein-Smid, Estate of</full>
+    <code>RC</code>
+    <full>New Haven CT, Robert Crabtree</full>
   </record>
   <record>
     <code>RD</code>
     <full>King of Prussia PA, R. Dechert</full>
-  </record>
-  <record>
-    <code>RE</code>
-    <full>New York NY, Raphael Esmerian</full>
-  </record>
-  <record>
-    <code>REH</code>
-    <full>Madison NJ, Raymond E. Hartz</full>
   </record>
   <record>
     <code>RF</code>
@@ -3040,14 +3096,6 @@
     <full>San Antonio TX, Robert L.B. Tobin</full>
   </record>
   <record>
-    <code>RM</code>
-    <full>Los Angeles CA, Robert Moes M.D.</full>
-  </record>
-  <record>
-    <code>RMF</code>
-    <full>Meadowbrook PA, Richard M. Fichel</full>
-  </record>
-  <record>
     <code>RMR</code>
     <full>Cleveland OH, Rodney M. Rudd</full>
   </record>
@@ -3061,15 +3109,11 @@
   </record>
   <record>
     <code>RS</code>
-    <full>Villanova PA, Robin Satinsky</full>
+    <full>Sahuarita AZ, Robin Satinsky</full>
   </record>
   <record>
     <code>RTM</code>
     <full>Gaithersburg MD, Robert T. Meyer</full>
-  </record>
-  <record>
-    <code>RVS</code>
-    <full>Long Island NY, Mrs Rose Victor Stroly, Woodmere</full>
   </record>
   <record>
     <code>RWB</code>
@@ -3088,10 +3132,6 @@
     <full>New York NY, S.B. Schimmel</full>
   </record>
   <record>
-    <code>SH</code>
-    <full>New York NY, Sinclair Hamilton</full>
-  </record>
-  <record>
     <code>SHT</code>
     <full>Boulder CO, Samuel Harrison Thomson</full>
   </record>
@@ -3101,7 +3141,7 @@
   </record>
   <record>
     <code>STMj</code>
-    <full>Grosse Pointe Farms MI, Mrs S.T. Miller, Jr</full>
+    <full>Grosse Pointe Farms MI, Mrs Sidney Trowbridge Miller, Jr</full>
   </record>
   <record>
     <code>SXR</code>
@@ -3110,14 +3150,6 @@
   <record>
     <code>TAK</code>
     <full>Baton Rouge LA, Thomas A. Kirby</full>
-  </record>
-  <record>
-    <code>TEM</code>
-    <full>New Haven CT, Thomas E. Marston</full>
-  </record>
-  <record>
-    <code>TGH</code>
-    <full>Pasadena CA, Tyrus G. Harmsen</full>
   </record>
   <record>
     <code>TKB</code>
@@ -3138,10 +3170,6 @@
   <record>
     <code>VBG</code>
     <full>Chicago IL, Mrs Virginia Boyd Goult</full>
-  </record>
-  <record>
-    <code>VdeG</code>
-    <full>New York NY, Victor de Guinzbourg</full>
   </record>
   <record>
     <code>VK</code>
@@ -3177,7 +3205,7 @@
   </record>
   <record>
     <code>WDMer</code>
-    <full>Clarence Center NY, Walter D. Merwin</full>
+    <full>Clarence Center, NY, Walter D. Merwin</full>
   </record>
   <record>
     <code>WELo</code>
@@ -3196,20 +3224,12 @@
     <full>Los Angeles CA, Ward Ritchie</full>
   </record>
   <record>
-    <code>WS</code>
-    <full>Notre Dame IN, Wladimir Seidel</full>
-  </record>
-  <record>
     <code>WSG</code>
     <full>New York NY, William S. Glazier, Estate of</full>
   </record>
   <record>
     <code>WV</code>
     <full>Upperville VA, Willis Van Devanter</full>
-  </record>
-  <record>
-    <code>WW</code>
-    <full>Tucson AR, Webb Woodward</full>
   </record>
   <record>
     <code>WY</code>
