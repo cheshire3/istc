@@ -40,6 +40,20 @@ release of the software; development should take place in (or by creating a
 new ``feature/...`` branch from) the ``develop`` branch.
 
 
+Documentation
+-------------
+
+HTML documentation can be generate using the command::
+
+    python setup.py build_sphinx
+
+
+The generated HTML documentation can then be found in docs/build/html/.
+
+All scripts intended for use by administrative users should return help when
+passed the `--help` option.
+
+
 Licensing
 ---------
 
