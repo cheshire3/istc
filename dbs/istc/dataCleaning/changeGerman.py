@@ -3,11 +3,16 @@
 """Change German location data.
 
 Originally used to change the German location data when moving from
-Cheshire 2 to C3heshire (June 2009)
+Cheshire 2 to Cheshire3 (June 2009)
 """
 
-import time, sys, os, codecs
+import codecs
+import os
+import sys
+import time
+
 from lxml import etree
+
 from cheshire3.baseObjects import Session
 from cheshire3.document import StringDocument
 from cheshire3.internal import cheshire3Root
