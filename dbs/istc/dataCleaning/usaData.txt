@@ -1,0 +1,811 @@
+﻿
+AASL	Worcester MA, American Antiquarian Society
+AB(NY)L	New York NY, Association of the Bar of the City of New York
+ABSL	New York NY, Museum of Biblical Art, American Bible Society Collection
+AdML	Chicago IL, Adler Planetarium & Astronomy Museum
+AICL	Chicago IL, Art Institute of Chicago
+AlCL	Albion MI, Albion College
+AllCLL	Pittsburgh PA, Allegheny County Law Library
+AlvCL	Milwaukee WI, Alverno College
+AmBML	Providence RI, Brown Univ., Annmary Brown Memorial Collection
+AmCL	Amherst MA, Amherst College
+ANTSL	Newton Centre MA, Andover Newton Theological School
+APSL	Philadelphia PA, American Philosophical Society
+ArizUL	Tucson AZ, Univ. of Arizona Library
+ASCL	Tempe AZ, Arizona State Univ., Matthews Library
+AthOhL	Cincinnati OH, Athenaeum of Ohio, Mt St Mary's Seminary
+AubUL	Auburn AL, Auburn Univ. Library
+AugCL	Rock Island IL, Augustana College, Denkmann Memorial Library
+AUnL	Washington DC, American Univ.
+AusCL	Sherman TX, Austin College
+BACL	Belmont NC, Belmont Abbey College Library
+BakL	Minneapolis MN, Bakken Library of Electricity in Life
+BanPL	Bangor ME, Bangor Public Library
+BAthL	Boston MA, Boston Athenaeum
+BaUL	Baldwin KS, Baker Univ. Library
+BaSUL	Muncie IN, Ball State Univ., Alexander M. Bracken Library
+BayUL	Waco TX, Baylor Univ., Moody Library
+BCCL	San Francisco CA, Book Club of California Library
+BColL	Chestnut Hill MA, Boston College Library
+BCol(L)L	Newton Center MA, Boston College Law Library
+BECPL	Buffalo NY, Buffalo and Erie County Public Library
+BerCL	Berea KY, Berea College Library
+BexCML	San Antonio TX, Univ. of Texas Health Sciences Center, Briscoe Library
+BMawrCL	Bryn Mawr PA, Bryn Mawr College, Goodhart Medieval Library
+BMSL	Buffalo NY, Buffalo Museum of Science (Buffalo Society of Natural Sciences)
+BostUL	Boston MA, Boston Univ., Mugar Memorial Library
+BowCL	Brunswick ME, Bowdoin College
+BPubL	Boston MA, Boston Public Library
+BrandUL	Waltham MA, Brandeis Univ. Library
+BrAthCL	Bryn Athyn PA, Bryn Athyn College Library
+BrBoGL	Brooklyn NY, Brooklyn Botanic Garden
+BrCL	Brooklyn NY, Brooklyn College Library
+BrUL	Providence RI, Brown Univ., John Hay Library
+BSUL	Boise ID, Boise State Univ. Library
+BuCHSL	Doylestown PA, Bucks County Historical Society
+BUMCL	Dallas TX, Baylor Univ. Medical Center (R. & L. Sellers Coll.)
+ButUL	Indianapolis IN, Butler Univ.
+BYUL	Provo UT, Brigham Young Univ.
+CAbL	Conception MO, Conception Abbey Library
+CalCL	Grand Rapids MI, Calvin College, Hekman Library
+CalSUNL	Northridge CA, California State Univ., Northridge, Library
+CAML	Cincinnati OH, Cincinnati Art Museum Library
+CanCL	Buffalo NY, Canisius College
+CapCL	Washington DC, Capuchin College
+CarFL	Arlington VT, Carthusian Foundation
+CarL	Pittsburgh PA, Carnegie Library of Pittsburgh
+CBGTU	Berkeley CA, Graduate Theological Union
+CC(NY)L	New York NY, The City College
+CCL	New London CT, Connecticut College
+CdelCL	San Juan PR, La Casa del Libro
+ChapUL	Orange CA, Chapman Univ.
+ChemHFL	Philadelphia PA, Chemical Heritage Foundation, Othmer Library
+ChiBGL	Glencoe IL, Chicago Botanic Garden
+ChiPL	Chicago IL, Chicago Public Library
+ChiTSL	Chicago IL, Chicago Theological Seminary
+ChL	Williamstown MA, Williams College, Chapin Library
+CHPL	New York NY, Carl H. Pforzheimer Library, The Carl and Lily Pforzheimer Foundation, Inc.
+ChSHL	Yonkers NY, Church of the Sacred Heart, Province of St Joseph of the Capuchin Order of New York
+CIAL	Williamstown MA, Clark Institute of Art Library
+CinPL	Cincinnati OH, The Public Library of Cincinnati and Hamilton County
+CleMedL	Cleveland OH, Case Western Reserve Univ., Dittrick Medical History Center, Cleveland Medical Library Association
+CleML	Cleveland OH, Cleveland Museum of Art
+ClePL	Cleveland OH, Cleveland Public Library
+ClUL	Worcester MA, Clark Univ. Library
+ClSTL	Claremont CA, Claremont School of Theology Library
+CMU(H)L	Pittsburgh PA, Carnegie Mellon Univ., Hunt Institute for Botanical Documentation
+CMU(P)L	Pittsburgh PA, Carnegie Mellon Univ., Posner Memorial Collection
+CMUL	Pittsburgh PA, Carnegie Mellon Univ.
+ColCL	Waterville ME, Colby College
+ColgUL	Hamilton NY, Colgate Univ. Library
+ColoCL	Colorado Springs CO, Colorado College, Coburn Library
+ColoSL	Fort Collins CO, Colorado State University Libraries, Special Collections
+ColSL	Steubenville OH, Franciscan Univ. of Steubenville
+ColUL	New York NY, Columbia Univ., Butler Library
+ColU(A)L	New York NY, Columbia Univ., Avery Library
+ColU(L)L	New York NY, Columbia Univ., Law Library
+ColU(M)L	New York NY, Columbia Univ., Health Sciences Library
+ColU(P)L	New York NY, Columbia Univ., Plimpton Library
+ColU(T)L	New York NY, Columbia Univ., Teachers College
+ColWL	Wooster OH, College of Wooster
+ConCL	Mequon WI, Concordia Univ. Wisconsin
+ConHSL	St Louis MO, Concordia Historical Institute
+ConSL	St Louis MO, Concordia Seminary, Pritzlaff Memorial Library
+ConStL	Hartford CT, Connecticut State Library
+CorMGL	Corning NY, Corning Museum of Glass
+CornUL	Ithaca NY, Cornell Univ. Libraries
+COSA	Oakland CA, St Albert's Priory
+CPhL	Philadelphia PA, College of Physicians of Philadelphia
+CrPL	Glens Falls NY, Crandall Public Library
+CreigUL	Omaha NE, Creighton Univ. Library
+CS(Su)L	San Francisco CA, California State Library, Sutro Branch
+CSat	San Anselmo CA, San Francisco Theological Seminary
+CSL	Sacramento CA, California State Library
+CStCL	St Paul MN, St Catherine Univ. Library
+CStTL	St Paul MN, Univ. of St Thomas
+CTSL	Fort Wayne IN, Concordia Theological Seminary
+CUAL	Washington DC, Catholic Univ. of America
+DalPL	Dallas TX, Dallas Public Library
+DarCL	Hanover NH, Dartmouth College, Rauner Special Collections Library
+DavCL	Davidson NC, Davidson College
+DayUL	Dayton OH, Univ. of Dayton
+DenPL	Denver CO, Denver Public Library
+DenUL	Granville OH, Denison Univ.
+DePUL	Chicago IL, DePaul Univ. Libraries
+DetPL	Detroit MI, Detroit Public Library
+DHS(W)L	Washington, DC, Dominican House of Studies, Dominican College Library
+DIAL	Detroit MI, Detroit Institute of Arts
+DickCL	Carlisle PA, Dickinson College Library
+DrexIL	Philadelphia PA, Drexel Univ., Hagerty Library
+DrUL	Madison NJ, Drew Univ., Rose Memorial Library
+DruryUL	Springfield MO, Drury Univ.
+DTSL	Dallas TX, Dallas Theological Seminary, Mosher Library
+DuqUL	Pittsburgh PA, Duquesne Univ. Library
+DuU(M)L	Durham NC, Duke Univ. Medical Center Library
+DuUL	Durham NC, Duke Univ. Library
+ECl(NY)L	New York NY, The Explorers Club
+EHFL	East Hampton NY, East Hampton Free Library
+ElmCL	Elmira NY, Elmira College Library
+EMHL	Wilmington DE, Eleutherian Mills Historical Library, Hagley Museum
+EMichUL	Ypsilanti MI, Eastern Michigan Univ. Library
+EPFL	Baltimore MD, Enoch Pratt Free Library
+EUL	Atlanta GA, Emory Univ., Woodruff Library
+EU(T)L	Atlanta GA, Emory Univ., Pitts Theology Library
+FandMCL	Lancaster PA, Franklin and Marshall College, Fackenthal Library
+FDRL	Hyde Park NY, Franklin D. Roosevelt Library
+FDUL	Madison NJ, Fairleigh Dickinson Univ. Library
+FF(SB)L	Santa Barbara CA, Franciscan Fathers
+FIL	St Bonaventure NY, St Bonaventure Univ., Franciscan Institute
+FMC(R)L	Rensselaer NY, Friars Minor Conventuals
+FML	Washington DC, Franciscan Monastery Library
+FolgSL	Washington DC, Folger Shakespeare Library
+FordUL	New York NY, Fordham Univ. Library
+FrankIL	Philadelphia PA, Franklin Institute
+FSCL	Fresno CA, California State Univ.
+FSUL	Tallahassee FL, Florida State Univ. Library
+GanUL	Erie PA, Gannon Univ. Library
+GCL	Los Angeles CA, Getty Research Institute, Getty Centre
+GeM	Los Angeles CA, Getty Museum, Dept. of Manuscripts
+GetCL	Gettysburg PA, Gettysburg College Library
+GethAL	Trappist KY, Our Lady of Gethsemani Abbey
+GeUL	Washington DC, Georgetown Univ.
+GeU(L)L	Washington DC, Georgetown Univ., Law Library
+GEvTSL	Evanston IL, Garrett-Evangelical Theological Seminary Library
+GHSL	Savannah GA, Georgia Historical Society
+GoCL	Baltimore MD, Goucher College, Julia Rogers Library
+GonzUL	Spokane WA, Gonzaga Univ. Library
+GriCL	Grinnell IA, Grinnell College, Burling Library
+GroClL	New York NY, The Grolier Club
+GrPL	Greenville MS, Greenville Public Library
+GSUL	Atlanta GA, Georgia State Univ. Library
+GTSL	New York NY, General Theological Seminary
+GVSUL	Allendale MI, Grand Valley State Univ., Seidman Library
+GWUL	Washington DC, George Washington Univ. Library
+GWU(L)L	Washington DC, George Washington Univ. Law School, Jacob Burns Library
+HaColL	Haverford PA, Haverford College Library
+HamCL	Clinton NY, Hamilton College Library
+HaPL	Muskegon MI, Hackley Public Library
+Harv(AA)L	Jamaica Plain MA, Harvard Univ., Arnold Arboretum
+Harv(BA)L	Boston MA, Harvard Univ., Kress Library of Business and Economics
+Harv(Div)L	Cambridge MA, Harvard Univ., Divinity School, Andover-Harvard Theological Library
+Harv(DO)L	Washington DC, Harvard Univ., Dumbarton Oaks Library
+Harv(EB)L	Cambridge MA, Harvard Univ., Economic Botany Library of Oakes Ames
+Harv(F)L	Cambridge MA, Harvard Univ., Fogg Art Museum
+Harv(L)L	Cambridge MA, Harvard Univ., Law School Library
+Harv(M)L	Boston MA, Harvard Univ., Francis A. Countway Library of Medicine
+Harv(R)L	Cambridge MA, Harvard Univ., Radcliffe College Library
+Harv(T)L	Florence, Harvard Univ., Berenson Library, I Tatti
+Harv(Zoo)L	Cambridge MA, Harvard Univ., Museum of Comparative Zoology
+HarvCL	Cambridge MA, Harvard College Library, Houghton Library
+HAML	Houston TX, Houston Academy of Medicine - Texas Medical Center Library
+HASL	Houston TX, Houston Academy of Science
+HavPL	Haverhill MA, Haverhill Public Library
+HBUL	Houston TX, Houston Baptist Univ., Dunham Bible Museum
+HEHL	San Marino CA, The Huntington Library
+HFPRCL	Decatur GA, Columbia Theological Seminary, John Bulow Campbell Library
+HL(B)	Claremont CA, Claremont Colleges, Honnold Library (Bodman Coll.)
+HL(H)	Claremont CA, Claremont Colleges, Honnold Library (Hoover Coll.)
+HL	Claremont CA, Claremont Colleges, Honnold Library
+HNCL	Washington DC, Holy Name College
+HolCL	Roanoke VA, Hollins Univ. Library
+HopCL	Holland MI, Hope College, Van Wylen Library
+HPL	Houston TX, Houston Public Library
+HSAL	New York NY, Hispanic Society of America
+HSERCL	Lancaster PA, Historical Society of the Evangelical and Reformed Church
+HSTL	Independence MO, Harry S. Truman Library
+HTML	New Orleans LA, Howard Tilton Memorial Library, Tulane Univ.
+HUCL	Cincinnati OH, Hebrew Union College Library
+HUL	Hempstead NY, Hofstra Univ. Library
+HWSCL	Geneva NY, Hobart & William Smith Colleges
+HyCAML	Glens Falls NY, Hyde Collection Art Museum
+IllCL	Jacksonville IL, Illinois College Library
+InPL	Indianapolis IN, Indianapolis Public Library
+InSUL	Terre Haute IN, Indiana State Univ.
+InUL	Bloomington IN, Indiana Univ., The Lilly Library
+IoSUL	Ames IA, Iowa State Univ.
+ISGML	Boston MA, Isabella Stewart Gardner Museum
+ISTCL	Cedar Falls IA, Univ. of Northern Iowa
+JCBL	Providence RI, Brown Univ., John Carter Brown Library
+JCLor	Buffalo NY, Buffalo & Erie County Historical Society, John C. Lord Collection
+JCUL	University Heights OH, John Carroll Univ., Grasselli Library
+JFKL	Vallejo CA, John F. Kennedy Library, McCune Collection
+JHSch	Princeton NJ, Scheide Library, Princeton Univ.
+JHU(F)L	Baltimore MD, Johns Hopkins Univ., The Laurence Hall Fowler Collection
+JHU(W)L	Baltimore MD, Johns Hopkins Univ., William H. Welch Medical Library
+JHUL	Baltimore MD, Johns Hopkins Univ. Library
+JIRL	New York NY, Hebrew Union College, Jewish Institute of Religion
+JMCL	Philadelphia PA, Thomas Jefferson Univ. Library
+JTSL	New York NY, Jewish Theological Seminary of America
+JunCL	Huntingdon PA, Juniata College Library
+JWGL	Baltimore MD, Johns Hopkins Univ., John Work Garrett Library
+KalCL	Kalamazoo MI, Kalamazoo College
+KenCL	Gambier OH, Kenyon College Library
+KennSUL	Kennesaw GA, Kennesaw State Univ. Library
+KenSL	St Louis MO, Kenrick-Glennon Seminary Library
+KenSUL	Kent OH, Kent State Univ. Library
+KnCL	Galesburg IL, Knox College Library
+KSUL	Manhattan KS, Kansas State Univ. Library
+LaCL	Easton PA, Lafayette College, Van Wickle Library
+LACLL	Los Angeles CA, Los Angeles County Law Library
+LakePL	Chicago IL, Lakeside Press
+LanTSL	Lancaster PA, Lancaster Theological Seminary
+LAPL	Los Angeles CA, Los Angeles Public Library
+LaSUL	Baton Rouge LA, Louisiana State Univ. Library
+LaSUSL	Shreveport LA, Louisiana State Univ., James Smith Noel Library
+LC	Washington DC, Library of Congress, Rare Book Division
+LC(B)	Washington DC, Library of Congress, John Davis Batchelder Collection
+LC(L)	Washington DC, Library of Congress, Law Library
+LC(M)	Washington DC, Library of Congress, Music Division
+LC(R)	Washington DC, Library of Congress, Lessing J. Rosenwald Collection
+LC(T)	Washington DC, Library of Congress, John Boyd Thacher Collection
+LCPhL	Philadelphia PA, Library Company of Philadelphia
+LeUL	Bethlehem PA, Lehigh Univ. Library
+LIHSL	Brooklyn NY, Brooklyn Historical Society
+LindHL	Kansas City MO, Linda Hall Library
+LinUL	Lincoln Univ. PA, Lincoln Univ., Vail Memorial Library
+LLandML	Cincinnati OH, Lloyd Library & Museum
+LorCL	Dubuque IA, Loras College Library
+LoyMUL	Los Angeles CA, Loyola Marymount Univ. Library
+LoyU(NO)L	New Orleans LA, Loyola Univ. Library
+LoyUL	Chicago IL, Loyola Univ., E.M. Cudahy Memorial Library
+LTL	Lancaster MA, Lancaster Town Library
+LTS(G)L	Gettysburg PA, Lutheran Theological Seminary
+LTSL	Philadelphia PA, Lutheran Theological Seminary, Krauth Memorial Library
+LuCL	Decorah IA, Luther College Library
+LuSL	St Paul MN, Luther Seminary Library
+LyCL	Lynchburg VA, Lynchburg College
+LyPL	Lynn MA, Lynn Public Library
+MayClL	Rochester MN, Mayo Clinic, History of Medicine Library
+MBGL	St Louis MO, Missouri Botanical Garden
+MCFMdL	Baltimore MD, Medical and Chirurgical Faculty of the State of Maryland
+MCL	St Paul MN, Macalester College Library
+MCSHL	Purchase NY, Manhattanville College Library
+McTSL	Chicago IL, JKM Library
+MedCWL	Milwaukee WI, Medical College of Wisconsin Library
+MEEIL	Boston MA, Massachusetts Eye & Ear Infirmary
+MerL	Philadelphia PA, Mercantile Library
+MeUL	Macon GA, Mercer Univ., Tarver Library
+MFArtL	Boston MA, Museum of Fine Arts, Dept. of Prints, Drawings, and Photographs
+MHSL	Boston MA, Massachusetts Historical Society
+MiCL	Middlebury VT, Middlebury College
+MiL	Lansing MI, Library of Michigan
+MilCL	Oakland CA, Mills College
+MilPL	Milwaukee WI, Milwaukee Public Library
+MiPL	Minneapolis MN, Minneapolis Public Library
+MiSUL	East Lansing MI, Michigan State Univ.
+MITL	Cambridge MA, Massachusetts Institute of Technology
+MiUL	Oxford OH, Miami Univ. Library
+MLMP	Philadelphia PA, Masonic Library and Museum of Pennsylvania  
+MLuColL	New Ulm MN, Martin Luther College Library
+MMu(P)L	New York NY, Metropolitan Museum of Art, Department of Prints
+MMuL	New York NY, Metropolitan Museum of Art Library
+MorAL	Lisle IL, Morton Arboretum Library
+MorArch	Bethlehem PA, Moravian Archives
+MSL	Augusta ME, Maine State Law and Legislative Reference Library
+MSML	Pine City NY, Mt. Saviour Monastery
+MtAL	St Benedict OR, Mt. Angel Abbey
+MtHCL	South Hadley MA, Mt. Holyoke College
+MtSML	Emmitsburg MD, Mt. St Mary's Univ.
+MuhlCL	Allentown PA, Muhlenberg College
+MulCoCL	Portland OR, Multnomah County Central Library
+NaHL	Nashotah WI, Nashotah House Theological Seminary
+NavAcL	Annapolis MD, U.S. Naval Academy
+NavObL	Washington DC, U.S. Naval Observatory
+NBPL	New Bedford MA, New Bedford Free Public Library
+NBWM	New Bedford MA, New Bedford Whaling Museum
+NewaPL	Newark NJ, Newark Public Library
+NewL	Chicago IL, The Newberry Library
+NGA	Washington DC, National Gallery of Art
+NGA(R)	Washington DC, National Gallery of Art, Lessing J. Rosenwald Coll.
+NGSL	Washington DC, National Geographic Society
+NHStL	Concord NH, New Hampshire State Library
+NiUL	Niagara NY, Niagara Univ. Library
+NLM	Bethesda MD, National Library of Medicine
+NOBTSL	New Orleans LA, New Orleans Baptist Theological Seminary, John T. Christian Library
+NoIllUL	DeKalb IL, Northern Illinois Univ.
+N(SCh)L	Nazareth KY, Sisters of Charity of Nazareth Library
+NwUL	Evanston IL, Northwestern Univ. Library
+NwU(L)L	Chicago IL, Northwestern Univ., School of Law, Elbert H. Gary Library
+NwU(M)L	Chicago IL, Northwestern Univ., Galter Health Sciences Library
+NYAcMedL	New York NY, New York Academy of Medicine
+NYBoGL	New York NY, New York Botanical Garden
+NYHisSL	New York NY, New York Historical Society
+NYLawIL	New York NY, New York Law Institute
+NYPIL	New York NY, New York State Psychiatric Institute Library, Columbia Presbyterian Medical Center
+NYPL	New York NY, New York Public Library, Rare Book Division
+NYPL(B)	New York NY, New York Public Library, Berg Collection
+NYPL(D)	New York NY, New York Public Library, Drexel Collection
+NYPL(J)	New York NY, New York Public Library, Jewish Division
+NYPL(P)	New York NY, New York Public Library, Parsons Collection
+NYPL(S)	New York NY, New York Public Library, Spencer Collection
+NYPL(St)	New York NY, New York Public Library, Stuart Collection
+NYSL	New York NY, New York Society Library
+NYStL	Albany NY, New York State Library
+NYT(Ex)L	New York NY, New York Times, Exhibit of the Recorded Word
+NYU(H)L	New York NY, New York Univ., Univ. Heights Library
+NYU(W)L	New York NY, New York Univ., Bobst Library
+ObCL	Oberlin OH, Oberlin College Library
+OcCL	Los Angeles CA, Occidental College
+OClGC	Cleveland OH, Cleveland Botanical Garden
+ODL	New York NY, Oscar Diethelm Library
+OhStUL	Columbus OH, Ohio State Univ. Libraries
+OhWUL	Delaware OH, Ohio Wesleyan Univ. Library
+OkStUL	Stillwater OK, Oklahoma State Univ. Library
+OMeH	Kirtland OH, Holden Arboretum
+OSGL	Upperville VA, Oak Spring Garden Library
+OSUL	Corvallis OR, Oregon State Univ.
+PacUL	Forest Grove OR, Pacific Univ. Library
+PaHL	Philadelphia PA, Pennsylvania Hospital Library
+PCL	Providence RI, Providence College Library
+PedSL	Highstown NJ, The Peddie School
+PeqL	Southport CT, Pequot Library
+PExAcL	Exeter NH, Phillips Exeter Academy
+PhAcL	Andover MA, Phillips Academy, Oliver Wendell Holmes Library
+PhFL	Philadelphia PA, Free Library of Philadelphia
+PhF(W)L	Philadelphia PA, Free Library of Philadelphia, Copinger-Widener Collection
+PittTSL	Pittsburgh PA, Pittsburgh Theological Seminary Library
+PML	New York NY, Pierpont Morgan Library
+PonCJL	Worthington OH, Pontifical College Josephinum
+PPTJL	Philadelphia PA, T.F. Jenkins Memorial Law Library
+PrAthL	Providence RI, Providence Athenaeum
+PratIL	Brooklyn NY, Pratt Institute Library
+PrinTSL	Princeton NJ, Princeton Theological Seminary, Speer Library
+PrinUL	Princeton NJ, Princeton Univ., Firestone Library
+PrinU(A)L	Princeton NJ, Princeton Univ., Art Museum
+ProvPL	Providence RI, Providence Public Library
+PStL	Harrisburg PA, State Library of Pennsylvania
+PStUL	University Park PA, Pennsylvania State Univ.
+QCL	Quincy IL, Quincy Univ.
+RbergL	Galveston TX, Rosenberg Library
+RCL	Cleveland OH, Rowfant Club
+RedwL	Newport RI, Redwood Library and Athenaeum
+RISDL	Providence RI, Rhode Island School of Design
+RITL	Rochester NY, Rochester Institute of Technology
+RivPL	Riverside CA, Riverside Public Library
+R-MCL	Lynchburg VA, Randolph-Macon Woman's College
+RosML	Philadelphia PA, Rosenbach Museum & Library
+RossHSL	Chillicothe OH, Ross County Historical Society
+RUL	Houston TX, Rice Univ.
+RutgUL	New Brunswick NJ, Rutgers Univ. Library
+SacPL	Sacramento CA, Sacramento Public Library
+SanAPL	San Antonio TX, San Antonio Public Library
+SBCL	Stamford CT, St Basil College
+SchwHL	Pennsburg PA, Schwenkfelder Historical Library
+SCJL	Chicago IL, Spertus Institute of Jewish Studies
+SCML	Jefferson City MO, Supreme Court of Missouri, Library
+ScrCL	Claremont CA, Scripps College, Denison Library
+SCUL	Santa Clara CA, Santa Clara Univ. Library
+SDPL	San Diego CA, San Diego Public Library, Wangenheim Collection
+SDSUL	San Diego CA, San Diego State Univ., Malcolm A. Love Library
+SeHCL	Greensburg PA, Seton Hill College
+SFPL	San Francisco CA, San Francisco Public Library
+SFSUL	San Francisco CA, San Francisco State Univ. Library
+SHFL	Des Moines IA, Salisbury House Foundation Library
+SHSTL	Hales Corners WI, Sacred Heart School of Theology
+SiLCL	Manitowoc WI, Silver Lake College Library
+SkCL	Saratoga Springs NY, Skidmore College, Lucy Scribner Library
+SLL	Boston MA, Social Law Library
+SLPL	St Louis MO, St Louis Public Library
+Sm(CH)L	New York NY, Smithsonian Institution, Cooper-Hewitt, National Design Museum
+Sm(D)L	Washington DC, Smithsonian Institution, Dibner Library of the History of Science & Technology
+SmCL	Northampton MA, Smith College
+SmI(GA)L	Washington DC, Smithsonian Institution, National Museum of American History
+SoIllUL	Carbondale IL, Southern Illinois Univ.
+SoMeth(B)UL	Dallas TX, Southern Methodist Univ., Bridwell Library
+SoMeth(G)UL	Dallas TX, Southern Methodist Univ., de Golyer Library
+SpPL	Spokane WA, Spokane Public Library
+SprCL	Springfield MA, Springfield Library
+StAlL	Washington DC, St Albans National Cathedral School for Boys
+StanU(M)L	Stanford CA, Stanford Univ. Medical Center, Lane Medical Library
+StanUL	Stanford CA, Stanford Univ. Library
+StAPL	Washington DC, St Anselm's Abbey
+StBenCL	Atchison KS, Benedictine College
+StBerCL	St Bernard AL, St Bernard Junior College
+StBonUL	St Bonaventure NY, St Bonaventure Univ., Friedsam Memorial Library
+StChS(C)L	Carthagena OH, St Charles Seminary Library
+StChSL	Wynnewood PA, St Charles Borromeo Seminary Library
+STCL	Houston TX, South Texas College of Law
+StFC(L)L	Loretto PA, St Francis College
+StHSL	Granby MA, St Hyacinth College and Seminary
+StJCL	Annapolis MD, St John's College
+StJnSL	Brighton MA, St John's Seminary, Creagh Research Library
+StJ(NY)UL	Queens NY, St John's Univ. Library
+StJSL	Yonkers NY, St Joseph's Seminary
+StJUL	Collegeville MN, St John's Univ. Library, Hill Museum & Manuscript Library
+StLML	St Louis MO, St Louis Mercantile Library
+StLouUL	St Louis MO, St Louis Univ., Pius XII Memorial Library
+StLouU(L)L	St Louis MO, St Louis Univ., Law Library
+StLUL	Canton NY, St Lawrence Univ. Library
+StM(B)L	Baltimore MD, St Mary's Seminary & Univ.
+StMC(X)L	Leavenworth KS, University of St Mary, De Paul Library
+StMeinAL	St Meinrad IN, St Meinrad Archabbey, Library
+StMiCL	Colchester VT, St Michael's College
+StMLSL	Mundelein IL, Univ. of St Mary of the Lake, Mundelein Seminary, Feehan Memorial Library
+StOCL	Northfield MN, St Olaf College
+StPatSL	Menlo Park CA, St Patrick's Seminary
+StPML	Pittsburgh PA, St Paul of the Cross Monastery
+StPSL	Concord NH, St Paul's School
+StVAL	Latrobe PA, St Vincent College & Archabbey Library
+SUNY(B)L	Binghamton NY, State Univ. of New York at Binghamton
+SusUL	Selinsgrove PA, Susquehanna Univ. Library
+S-WeTSL	Evanston IL, Seabury-Western Theological Seminary
+SwBrCL	Lynchburg VA, Sweet Briar College
+SwML	Los Angeles CA, Southwest Museum
+SyrUL	Syracuse NY, Syracuse Univ. Library
+TBML	Mobile AL, Spring Hill College, Thomas Byrne Memorial Library
+TCL	Greenville PA, Thiel College Library
+TemUL	Philadelphia PA, Temple Univ. Library
+TexAMUL	College Station TX, Texas A&M Univ., Cushing Memorial Library
+TexCUL	Fort Worth TX, Texas Christian Univ., Mary Couts Burnett Library
+ThSL	New Brunswick NJ, New Brunswick Theological Seminary
+TolMAL	Toledo OH, Toledo Museum of Art
+TransUL	Lexington KY, Transylvania Univ. Library
+TrinC(W)L	Washington DC, Trinity Univ. Library
+TrinUL	San Antonio TX, Trinity Univ. Library
+TTUL	Lubbock TX, Texas Tech Univ. Library
+TuUL	Medford MA, Tufts Univ. Library
+UAlaBL	Birmingham AL, Univ. of Alabama Medical Center, Reynolds Historical Library
+UAlaL	Tuscaloosa AL, Univ. of Alabama
+UArkL	Fayetteville AR, Univ. of Arkansas
+UBufL	Buffalo NY, State Univ. of New York at Buffalo
+UCalB(L)L	Berkeley CA, Univ. of California, Law Library
+UCalB(M)L	Berkeley CA, Univ. of California, Music Library
+UCalBL	Berkeley CA, Univ. of California, Bancroft Library
+UCalDL	Davis CA, Univ. of California, Shields Library
+UCalIL	Irvine CA, Univ. of California
+UCalLAL	Los Angeles CA, Univ. of California at Los Angeles
+UCalLA(B)L	Los Angeles CA, Univ. of California at Los Angeles, Belt Library of Vinciana
+UCalLA(L)L	Los Angeles CA, Univ. of California, Los Angeles, Law Library
+UCalLA(M)L	Los Angeles CA, Univ. of California at Los Angeles, Biomedical Library
+UCalRL	Riverside CA, Univ. of California
+UCalS(M)L	San Francisco CA, Univ. of California, Medical Center
+UCalSBL	Santa Barbara CA, Univ. of California
+UCalSDL	San Diego CA, Univ. of California
+UChiL	Chicago IL, Univ. of Chicago Libraries
+UCinL	Cincinnati OH, Univ. of Cincinnati
+UCin(M)L	Cincinnati OH, Univ. of Cincinnati, Cincinnati Medical Heritage Library
+UColoL	Boulder CO, Univ. of Colorado Libraries
+UDelL	Newark DE, Univ. of Delaware
+UDenL	Denver CO, Univ. of Denver Libraries
+UFlaL	Gainesville FL, Univ. of Florida Libraries
+UGeoL	Athens GA, Univ. of Georgia, Hargrett Library
+UHawL	Honolulu HI, Univ. of Hawai'i at Manoa, Hamilton Library
+UHouL	Houston TX, Univ. of Houston
+UIdL	Moscow ID, Univ. of Idaho
+UIllCL	Chicago IL, Univ. of Illinois at Chicago, Main Library
+UIll(E)L	Urbana IL, Univ. of Illinois, Museum of European Culture
+UIllL	Urbana IL, Univ. of Illinois at Urbana-Champaign Library
+UIoL	Iowa City IA, Univ. of Iowa, The Univ. Libraries
+UKan(M)L	Kansas City KS, Univ. of Kansas Medical Center, Clendening Library
+UKanL	Lawrence KS, Univ. of Kansas, Spencer Library
+UKyL	Lexington KY, Univ. of Kentucky, Margaret I. King Library
+ULouL	Louisville KY, Univ. of Louisville, Ekstrom Library
+UMaL	Orono ME, Univ. of Maine Library
+UMaryBL	Baltimore MD, Univ. of Maryland, Health Sciences & Human Services Library
+UMass(R)L	Amherst MA, Univ. of Massachusetts, Massachusetts Center for Renaissance Studies
+UMiamL	Coral Gables FL, Univ. of Miami Library
+UMiam(M)L	Miami FL, Univ. of Miami School of Medicine, Bascom Palmer Eye Institute Library
+UMich(L)L	Ann Arbor MI, Univ. of Michigan, The Law Library
+UMich(S)L	Ann Arbor MI, Univ. of Michigan, Stephen Spaulding Collection
+UMichL	Ann Arbor MI, Univ. of Michigan, Univ. Library
+UMinL	Minneapolis MN, Univ. of Minnesota, The Univ. Library
+UMin(B)L	Minneapolis MN, Univ. of Minnesota, James Ford Bell Library
+UMinDL	Duluth MN, Univ. of Minnesota, Ramseyer-Northern Bible Society Coll.
+UMin(L)L	Minneapolis MN, Univ. of Minnesota Law Library
+UMin(W)L	Minneapolis MN, Univ. of Minnesota, Wangensteen Library
+UMisL	Columbia MO, Univ. of Missouri
+UMisKCL	Kansas City MO, Univ. of Missouri
+UMissL	University MS, Univ. of Mississippi
+UNCaCL	Charlotte NC, Univ. of North Carolina Library
+UNCaL	Chapel Hill NC, Univ. of North Carolina Library
+UnCL	Schenectady NY, Union College
+UNDamL	Notre Dame IN, Univ. of Notre Dame, The Univ. Library
+UNebL	Lincoln NE, Univ. of Nebraska, The Univ. Libraries
+UNeb(M)L	Omaha NE, Univ. of Nebraska Medical Center, McGoogan Library
+UNevL	Reno NV, Univ. of Nevada
+UNHL	Durham NH, Univ. of New Hampshire
+UNoFlaL	Jacksonville FL, Univ. of North Florida
+UNTexL	Denton TX, Univ. of North Texas, Willis Library
+UnTS(V)L	Richmond VA, Union Presbyterian Seminary Library
+UnTSL	New York NY, Union Theological Seminary, Burke Library
+UOkL	Norman OK, Univ. of Oklahoma Libraries
+UOreL	Eugene OR, Univ. of Oregon Library
+UPaL	Philadelphia PA, Univ. of Pennsylvania, Van Pelt Library
+UPa(B)L	Philadelphia PA, Univ. of Pennsylvania, Botany Library
+UPa(F)L	Philadelphia PA, Univ. of Pennsylvania, Furness Library
+UPa(J)L	Philadelphia PA, Univ. of Pennsylvania, Center for Advanced Judaic Studies
+UPa(L)L	Philadelphia PA, Univ. of Pennsylvania, Biddle Law Library
+UPa(Lea)L	Philadelphia PA, Univ. of Pennsylvania, Lea Library
+UPa(S)L	Philadelphia PA, Univ. of Pennsylvania, Edgar Fahs Smith Collection
+UPa(Y)L	Philadelphia PA, Univ. of Pennsylvania, Yarnall Collection, Van Pelt Library
+UPittL	Pittsburgh PA, Univ. of Pittsburgh Library
+UPitt(F)L	Pittsburgh PA, Univ. of Pittsburgh, Maurice and Laura Falk Library of the Health Professions
+UPRicoL	Rio Piedras PR, Univ. of Puerto Rico
+URichL	Richmond VA, Univ. of Richmond Library
+URo(M)L	Rochester NY, Univ. of Rochester Medical Center, Edward G. Miner Library
+URo(S)L	Rochester NY, Univ. of Rochester, Sibley Music Library, Eastman School of Music
+URoL	Rochester NY, Univ. of Rochester, Rush Rhees Library
+USA(C)L	Carlisle PA, U.S. Army War College, Military History Institute, Carlisle Barracks
+USAFAL	USAF Academy CO, U.S. Air Force Academy Library
+UScranL	Scranton PA, Univ. of Scranton
+USFL	San Francisco CA, Univ. of San Francisco, Gleeson Library
+USIUL	San Diego CA, U.S. International Univ.
+USoCalL	Los Angeles CA, Univ. of Southern California, Univ. Library
+USoCarL	Columbia SC, Univ. of South Carolina, Thomas Cooper Library
+USoFlaL	Tampa FL, Univ. of South Florida
+USoL	Sewanee TN, The Univ. of the South Library
+USoMaiL	Portland ME, Univ. of Southern Maine, Osher Map Library
+USSCL	Washington DC, U.S. Supreme Court Library
+UStTL	Houston TX, Univ. of St Thomas
+UTenL	Knoxville TN, Univ. of Tennessee
+UTexEPL	El Paso TX, Univ. of Texas at El Paso Library
+UTex(M)L	Galveston TX, Univ. of Texas Medical Branch, Moody Medical Library
+UTexL	Austin TX, Univ. of Texas at Austin, Harry Ransom Humanities Research Center
+UTex(L)L	Austin TX, Univ. of Texas School of Law, Tarlton Law Library
+UUtL	Salt Lake City UT, Univ. of Utah, J. Willard Marriott Library
+UVa(M)L	Charlottesville VA, Univ. of Virginia, Health Sciences Library
+UVa(Mc)L	Charlottesville VA, Univ. of Virginia, McGregor Library
+UVaL	Charlottesville VA, Univ. of Virginia, Alderman Library
+UVerL	Burlington VT, Univ. of Vermont, The Univ. Library
+UWashL	Seattle WA, Univ. of Washington Library
+UWash(H)L	Seattle WA, Univ. of Washington, Health Sciences Library
+UWash(L)L	Seattle WA, Univ. of Washington, Law Library`
+UWis(AGS)L	Milwaukee WI, Univ. of Wisconsin-Milwaukee, American Geographical Society Library
+UWis(M)L	Madison WI, Univ. of Wisconsin, Middleton Medical Library
+UWis(Mil)L	Milwaukee WI, Univ. of Wisconsin-Milwaukee
+UWisL	Madison WI, Univ. of Wisconsin
+UWyoL	Laramie WY, Univ. of Wyoming, Toppan Rare Books Library
+VanUL	Nashville TN, Vanderbilt Univ.
+VasCL	Poughkeepsie NY, Vassar College
+VaSL	Richmond VA, Library of Virginia
+VilUL	Villanova PA, Villanova Univ. Library
+VinOCathL	Vincennes IN, Vincennes Old Cathedral
+VTL	Blacksburg VA, Virginia Polytechnic Institute & State Univ.
+WACML	Los Angeles CA, Univ. of California, William Andrews Clark Memorial Library
+WandJCL	Washington PA, Washington & Jefferson College
+WandLUL	Lexington KY, Washington and Lee Univ.
+WandMCL	Williamsburg VA, William and Mary College, Swem Library
+WArtGL	Baltimore MD, Walters Art Gallery
+WarTSL	Dubuque IA, Wartburg Theological Seminary
+WaSUL	Detroit MI, Wayne State Univ., Univ. Libraries
+WatkL	Hartford CT, Trinity College, Watkinson Library
+WaUL	St Louis MO, Washington Univ. Libraries
+WaU(L)L	St Louis MO, Washington Univ., School of Law
+WaU(M)L	St Louis MO, Washington Univ., School of Medicine
+WCaL	Washington DC, Washington Cathedral Library
+WdCL	Washington DC, Georgetown Univ., Woodstock Theological Center Library
+WeBL	Silver Spring MD, National Oceanic & Atmospheric Administration Central Library
+WellCL	Wellesley MA, Wellesley College Library
+WellsCL	Aurora NY, Wells College Library
+WesUL	Middletown CT, Wesleyan Univ. Library
+WFUL	Winston-Salem NC, Wake Forest Univ., Z. Smith Reynolds Library
+WillCL	Williamstown MA, Williams College Library
+WillUL	Salem OR, Willamette Univ. Library
+WiLSL	Mequon WI, Wisconsin Lutheran Seminary Library
+WiSUL	Wichita KS, Wichita State Univ. Library
+WittUL	Springfield OH, Wittenberg Univ. Library
+WJeCL	Cincinnati OH, Univ. of Cincinnati, Cincinnati Medical Heritage Library
+WLCleL	Ann Arbor MI, Univ. of Michigan, William L. Clements Library
+WMU(C)L	Kalamazoo MI, Western Michigan Univ., Inst. of Cistercian Studies
+WobPL	Woburn MA, Woburn Public Library
+WorFPL	Worcester MA, Free Public Library
+WorHSL	Worcester MA, Worcester Historical Society
+WPtL	West Point NY, U.S. Military Academy
+WResHSL	Cleveland OH, Western Reserve Historical Society
+WResUL	Cleveland OH, Case Western Reserve Univ. Libraries
+WStCL	Pullman WA, Washington State Univ.
+WVUL	Morgantown WV, West Virginia Univ.
+XavUL	Cincinnati OH, Xavier Univ. Library
+YesUL	New York NY, Yeshiva Univ. Library
+YU(A)L	New Haven CT, Yale Univ., School of the Fine Arts
+YU(B)L	New Haven CT, Yale Univ., Center for British Art
+YUL	New Haven CT, Yale Univ., Beinecke Library
+YU(L)L 	New Haven CT, Yale Univ., Law School Library
+YU(M)L	New Haven CT, Yale Univ., Historical Library of the Medical School
+YU(Mus)L	New Haven CT, Yale Univ., Music School
+YU(T)L	New Haven CT, Yale Univ., Beinecke Library, Henry C. Taylor Collection
+ZReL	Brookline MA, Zion Research Library
+[ACB]	Alta California Bookstore, Berkeley CA
+[CenBC]	Central Book Company (booksellers), Brooklyn NY
+[FTH]	F. Thomas Heller, bookseller, New York NY
+[HPK]	H.P. Kraus, bookseller, New York NY
+[JFF]	John F. Fleming, Inc., bookseller, New York NY
+[LCH]	Lathrop C. Harper, Inc., bookseller, New York NY
+[LeaBS]	Leamington Book Shop, bookseller, Washington DC
+[LW]	Lawrence Witten (bookseller), New Haven CT
+[PSK]	P.S. Krivatsy, bookseller, Washington DC
+[UPBS]	Univ. Place Book Shop (booksellers), New York NY
+[WHS]	William H. Schab, bookseller, New York NY
+[WSal]	William Salloch, bookseller, Ossining NY
+AAHj	Queenstown MD, Arthur A. Houghton Jr.
+ACH	Brookline MA, Anna C. Hoyt
+AD	Grand Rapids MI, Albert Doezema
+AEV	Newton Centre MA, Arthur E. Vershbow
+AHR	New York NY, Arthur H. Raynolds, M.D.
+AJB	Omaha NE, Alfred J. Brown, M.D.
+ALCas	Honolulu HI, Mrs Alfred L. Castle
+ALdR	Silver Spring MD, A. Luini del Russo, M.D.
+ALG	New York NY, Arthur L. Gale
+ALGab	Notre Dame IN, Astrik L. Gabriel
+AMG	Larchmont PA, Albert M. Grier
+AMH	New York NY, Alfred M. Hellmann, M.D.
+AMTu	Orono ME, Albert Morton Turner
+AP	Tuckahoe NY, Arne Pettersen
+APR	New York NY, Mrs. Alexander P. Rosenberg
+APS	Miami FL, A.P. Smith
+APSy	Buffalo NY, Albert Philip Sy
+ASKB	Providence RI, Anne S.K. Brown
+BG	New York NY, Ben Grauer
+BMar	Detroit MI, Benedict Markowski
+BPen	Devon PA, Boies Penrose
+BRD	Detroit MI, Ben R. Donaldson
+CAF	Washington DC, Charles A. Foster
+CAM	Washington DC, Cyril A. Mango
+CCR	Dallas TX, Charles C. Ryrie
+CDH	Barnard MO, Charles D. Humberd, M.D.
+CERj	Cleveland Heights OH, Charles E. Roseman, Jr.
+CGA	Washington DC, C.G. Anthon
+CHMcM	Bloomington IN, C.H. McMullen
+CJ	Washington DC, Campbell Jones
+CLea	Columbus OH, Chauncy D. Leake
+CWA	Syracuse NY, Charles W. Andrews
+CWH	Flushing NY, C. Wesley Hallett
+DB	Boston MA, Davenport Brown
+DBor	Chicago IL, David Borowitz
+DDW	Baltimore OH, Rev. D.D. Wagner
+DHHF	Philadelphia PA, David H.H. Felix
+DHW	Kensington MD, Donald H. Williams
+DJMcW	San Juan PR, David Jackson McWilliams
+DK	St Louis MO, David Kaiser
+DRo	Seattle WA, D. Rome
+EandLB	Northampton MA, Esther & Leonard Baskin
+EB	New York NY, Edwin Bachmann
+EBK	Philadelphia PA, Edward B. Krumbhaar, M.D.
+EBS	 Ann Arbor MI, Elizabeth B. Steere
+EC	Greenwich CT, Eleanor Carey (Mrs W. Gibson Carey)
+EFH	Brooks KY, Estate of Emmet Field Horine, M.D.
+EHC	Washington DC, E.H. Cushing, M.D.
+EHLS	Rockport ME, Eric H.L. Sexton
+EHWi	Newton Centre MA, Ernest H. Wilkins
+EHZ	Cincinnati OH, Edwin H. Zeydel
+EJM	Minneapolis MN, Rev. E.J. Mahnke
+ELMjandGM	New York NY, Edward L. McAdam, Jr. & George Milne
+EOG	Winter Park FL, Edwin Osgood Grover
+ESO	New York NY, Edgar S. Oppenheimer
+EWd	Ann Arbor MI, Eunice Wead
+FCBj	Philadelphia PA, F.C. Benson, Jr., M.D.
+FDC	Madison WI, Frank D. Crane
+FEW	New York NY, Florence E. Wall
+FFR	New York NY, Francis F. Randolph
+FJj	Portland OR, Brian Johnson
+FJS	New York NY, Francis J., Cardinal Spellman
+FK	New York NY, Francis Kettaneh
+FM	Arlington VA, Foster Mohrhardt
+FMcG	Overland Park KS, F. McGraw
+FMR	Toledo OH, Frances M. Rogge
+FPj	Fairfield CT, Frederick Pope, Jr
+FPJon	Bennington VT, Franklin P. Jones
+FPL	Minneapolis, MN, Frank P. Leslie
+FRG	Washington DC, Frederick R. Goff
+FVdeB	San Francisco CA, Frank V. de Bellis
+FWA	Little Rock AR, Frederick W. Allsopp
+GB	Chevy Chase MD, G. Bechtel
+GH	New York NY, Gilbert Highet
+GLHo	Fulton MD, George L. Howe
+GWJ	Falmouth VA, Gordon W. Jones, M.D.
+HAWj	Covington VA, Harry A. Walton, Jr
+HBF	Upper Montclair NJ, Henry B. Fernald
+HBLin	Worcester MA, Harriet B. Lincoln
+HC	New York NY, H. Cahoon
+HDC	San Marino CA, Homer D. Crotty
+HDCo	Washington DC, Harris Dunscombe Colt
+HG	Williamsburg VA, H. Grunder
+HH	Madison WI, Herbert Howe
+HHu	Meriden CT, Harold Hugo
+HLam	Beverly Hills CA, Harold Lamb
+HN	Grand Island NE, Harold Null
+HRA	Williamstown MA, H.R. Archer
+HS	Washington DC, Lt Col. Helmuth Sorinz
+HSB	Philadelphia PA, Helen Safford Bonnell
+HWe	Lexington MA, Hollis Webster
+IR	New York NY, Isaac Rivkind M.D.
+IS	Portland ME, Irving Sporn M.D.
+JBD	Kalamazoo MI, J.B. Doukas
+JBP	Oak Park IL, Rev. J. Bradford Pengelly
+JCH	Washington, DC, John C. Hirsch
+JDS	University Heights OH, J.D. Stantz, M.D.
+JG	Brooklyn NY, Rev. James Griffith
+JGB	Greenfield NH, J.G. Brodie
+JGT	Los Angeles CA, Justin G. Turner
+JHN	Niagara Falls NY, John H. Northup
+JIE	St Louis MO, J.I. Edison
+JJBL	Lebanon PA, John J.B. Light, M.D.
+JJF	Chicago IL, Jean J. Fox
+JLH	Philadelphia PA, John Louis Haney
+JLW	Nappanee IN, James L. Weygand
+JMCj	New York NY, John M. Crawford, Jr.
+JO	New York NY, Joseph Onderwyzer
+JPB	Savannah GA, Rev. Joseph P. Bartak
+JRB	Pittsburgh PA, John Robinson Block
+JS	Newport RI, John Slocum
+JTB	Sandy Spring MD, John T. Bancroft
+JWDH	Andalusia PA, Josephine W. Drexel Henry
+JWo	New York NY, Julian Wolff, M.D.
+JWP	New Orleans LA, Mrs J. Wallace Paletou
+KS	New Haven CT, Kenneth Schott
+LEG	Washington DC, Lee Edmonds Grove
+LLM	Washington DC, L.L. Marton
+MCW	Baltimore MD, M.C. Wahl
+MD	Lorton VA, Myron Davey
+MDB	New York NY, Maryone D. Barlow
+MDV	Reading PA, Marie D. Vernon
+MEC	Los Angeles CA, M.E. Crahan, M.D.
+MFR	Fairfield CT, Margaret F. Rudkin
+MFRu	Santurce PR, Milton F. Rúa
+MHS	Passaic NJ, Morris H. Saffron, M.D.
+MNB	Los Angeles CA, M.N. Beigelman
+MP	Dallas TX, M. Pollak
+MS	Los Angeles CA, Michael Sabin
+MSC	Wyncote PA, Mary S. Collins, Estate of
+MSdeG	Yeadon PA, Mercedes S. de Gomez
+MSG	Urbana IL, M.S. Goldman
+NC	Watertown MA, Nelson Coon
+NCS	New York NY, N.C. Starr
+NHS	New York NY, Norman H. Strouse
+NPH	Heath MA, Norman P. Henderson
+OFE	Cleveland OH, Mrs Otto F. Ege
+OLW	Indianapolis IN, Oscar L. Watkins
+OOF	Detroit MI, O.O. Fischer, M.D., Estate of
+OWF	Elmhurst NY, Otto W. Fuhrmann
+PandJG	New York NY, Collection of the late Phyllis and John Gordan
+PFG	Chapel Hill NC, P.F. Grendler
+PH	Cambridge MA, Philip Hofer
+PM	Upperville VA, Paul Mellon
+PO	Mount Kisco NY, Peter Oliver, Estate of
+PWH	Stanford CA, Philip W. Harsh
+PWS	Silver Spring MD, Philip W. Schulte
+RAB	Chicago IL, Redmond A. Burke, C.S.V.
+RBB	Ann Arbor MI, Robert B. Brown
+RC	New Haven CT, Robert Crabtree
+RD	King of Prussia PA, R. Dechert
+RF	New York NY, Roland Folter
+RFL	Copiague NY, R.F. Lane
+RHB	Bethesda MD, Mr & Mrs R.H. Behrens
+RJD	South Hadley MA, Ruth J. Dean
+RLBT	San Antonio TX, Robert L.B. Tobin
+RMR	Cleveland OH, Rodney M. Rudd
+RP	New York NY, Richard Priest
+RQK	Chicago IL, Robert Q. Kelly
+RS	Sahuarita AZ, Robin Satinsky
+RTM	Gaithersburg MD, Robert T. Meyer
+RWB	Buffalo NY, Robert Warwick Bingham
+RWM	New Rochelle NY, Robert Walsingham Martin, Estate of
+SBH	New Haven CT, Mrs Samuel B. Hemingway
+SBS	New York NY, S.B. Schimmel
+SHT	Boulder CO, Samuel Harrison Thomson
+SI	Cambridge MA, S. Ives
+STMj	Grosse Pointe Farms MI, Mrs Sidney Trowbridge Miller, Jr
+SXR	Philadelphia PA, Samuel X. Radbill
+TAK	Baton Rouge LA, Thomas A. Kirby
+TKB	New York NY, T. Kimball Brooker
+TOM	New York NY, Thomas O. Mabbott
+TRA	Providence RI, Thomas R. Adams
+TS	Taylor MI, T. Smithey
+VBG	Chicago IL, Mrs Virginia Boyd Goult
+VK	Orlando FL, Van Kampen Collection
+WAD	Fort Wayne IN, William A. Didier
+WBB	Olympia WA, Mrs. Walter B. Beals
+WBE	Fairfax VA, Capt. William B. Edelman
+WBS	Denver CO, Walter B. Sheppard
+WCB	Waverly NY, William C. Beck, M.D.
+WCW	Gates Mills OH, Wesley C. Williams
+WDM	St Paul MN, William D. Morgan
+WDMer	Clarence Center, NY, Walter D. Merwin
+WELo	Providence RI, W. Easton Louttit, Jr.
+WGL	Boston MA, William G. Lennox, M.D.
+WMIj	Woodbury CT, William M. Ivins, Jr., Estate of
+WR	Los Angeles CA, Ward Ritchie
+WSG	New York NY, William S. Glazier, Estate of
+WV	Upperville VA, Willis Van Devanter
+WY	Chicago IL, Winona Young
+

@@ -1,4 +1,5 @@
 
+import argparse
 import os
 import sys
 
@@ -7,24 +8,49 @@ from argparse import ArgumentParser
 # Cheshire3 imports
 sys.path.insert(1, os.path.expanduser('~/cheshire3/code'))
 from cheshire3.baseObjects import Session
+from cheshire3.internal import cheshire3Root
 from cheshire3.server import SimpleServer
-from cheshire3.document import StringDocument
+
 
 class UsageException(Exception):
     """UI Script usage exception."""
-    
+
     def __init__(self, msg):
         self.msg = msg
-    
+
     def __str__(self):
         return self.msg
 
 
 class ISTCArgumentParser(ArgumentParser):
     """Custom argument parser."""
-    
+
     def __init__(self, **kwargs):
         ArgumentParser.__init__(self, **kwargs)
+
+
+class FileArgumentParser(ISTCArgumentParser):
+    """An ArgumentParser for process a file and produce output."""
+
+    def __init__(self, **kwargs):
+        ISTCArgumentParser.__init__(self, **kwargs)
+        self.add_argument('infile',
+                          nargs='?',
+                          type=argparse.FileType('r'),
+                          default=sys.stdin,
+                          )
+        self.add_argument('outfile',
+                          nargs='?',
+                          type=argparse.FileType('w'),
+                          default=sys.stdout,
+                          )
+
+
+class DirectoryArgumentParser(ISTCArgumentParser):
+    """An ArgumentParser for process whole directories at a time."""
+
+    def __init__(self, **kwargs):
+        ISTCArgumentParser.__init__(self, **kwargs)
         # Data Arguments
         group = self.add_argument_group("Data Options")
         group.add_argument(
@@ -35,6 +61,12 @@ class ISTCArgumentParser(ArgumentParser):
             "-o", "--outdir", dest="outdd", default=os.path.join(dfp, 'data_new'), 
             help=" ".join(["Output data directory."]), 
             metavar="OUTDIR")
+
+
+class BatchEditArgumentParser(DirectoryArgumentParser):
+
+    def __init__(self, **kwargs):
+        DirectoryArgumentParser.__init__(self, **kwargs)
 
         # Operation options
         group = self.add_mutually_exclusive_group()
@@ -53,7 +85,7 @@ class ISTCArgumentParser(ArgumentParser):
             dest="replace", action='store_true', default=False,
             help=("Replace fields.")
         )
-            
+
         # Debugging Arguments
         group3 = self.add_argument_group("Debug Options")
         group3.add_argument(
@@ -67,12 +99,12 @@ class ISTCArgumentParser(ArgumentParser):
             metavar="INPUTFILE",
             help=("Path to file containing data to strip/insert/replace")
         )
-        
+
     def parse_args(self, args=None, namespace=None):
         args = ArgumentParser.parse_args(self, args, namespace)
         if args.test:
             return args
-            
+
         ops = [args.strip,
                args.insert,
                args.replace]
@@ -91,9 +123,11 @@ class ISTCArgumentParser(ArgumentParser):
                     raise UsageException(msg)
         return args
 
+
 # Build environment...
 session = Session()
-serv = SimpleServer(session, os.path.expanduser('~/cheshire3/configs/serverConfig.xml'))
+serverConfig = os.path.join(cheshire3Root, 'configs', 'serverConfig.xml')
+serv = SimpleServer(session, serverConfig)
 
 session.database = 'db_istc'
 db = serv.get_object(session, 'db_istc')
