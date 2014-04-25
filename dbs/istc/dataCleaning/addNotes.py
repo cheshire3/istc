@@ -1,5 +1,6 @@
 """Add notes from a file into the ISTC database."""
 
+import codecs
 import os
 import sys
 
@@ -22,6 +23,9 @@ def main(argv=None):
     else:
         args = arg_parser.parse_args()
     for l in args.infile:
+        # Check for Byte Order Mark
+        if l.startswith(codecs.BOM_UTF8):
+            l = l[3:]
         try:
             istc_no, notes = l.strip().split('\t', 1)
         except ValueError:
