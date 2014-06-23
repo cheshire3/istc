@@ -27,13 +27,13 @@ from __future__ import with_statement
 
 import sys
 import os
+import re
 import time
 import csv
 
 from collections import defaultdict
 
 from lxml import etree
-
 
 from cheshire3.baseObjects import Session
 from cheshire3.document import StringDocument
@@ -84,17 +84,42 @@ def bsbDictFromText(filelike):
     bsbDict = defaultdict(list)
     for line in filelike.readlines():
         line = line.strip()
-        try:
-            foo, BSBno, uri = line.split()
-        except ValueError:
-            continue
+        if '$a' in line and '$u' in line:
+            istcNo, a_field, uri = re.split('\$[a|u]', line)
+            istcNo = istcNo.strip().split()[0]
+            for codec in ['ascii', 'utf-8', 'latin1', 'utf-16']:
+                try:
+                    bsbDict[istcNo].append(
+                        (a_field.decode(codec).strip(),
+                         uri.strip()
+                         )
+                    )
+                except UnicodeDecodeError:
+                    continue
+                else:
+                    break
+            else:
+                bsbDict[istcNo].append(
+                    (a_field.decode('ascii', 'xmlcharreplace').strip(),
+                     uri.strip()
+                     )
+                )
         else:
-            bsbDict[BSBno].append(uri)
+            try:
+                foo, BSBno, uri = line.split()
+            except ValueError:
+                continue
+            else:
+                bsbDict[BSBno].append(uri)
     return bsbDict
 
 
 def bsbDictFromTextFile(filepath):
-    """Construct and return dictionary of BSB no. to URI from text file at filepath."""
+    """Construct and return dict from text file at filepath.
+
+    Construct and return dictionary of BSB no. to URI from text file at
+    filepath.
+    """
     with open(filepath, 'r') as fh:
         bsbDict = bsbDictFromText(fh)
     return bsbDict
@@ -182,11 +207,15 @@ def insertSingle(args, fn, bsbDict):
         # new 530 field after final 510 field (i.e. before any existing
         # 530 fields.)
         for url in reversed(urls):
+            if isinstance(url, tuple) and len(url) == 2:
+                a_field_text, url = url
+            else:
+                a_field_text = aFieldStrings[repository]
             # Create new 530 node
             datafield = etree.Element('datafield', tag='530', ind1='0', ind2='0')
             # Create subfield $a
             subfieldA = etree.Element('subfield', code='a')
-            subfieldA.text = aFieldStrings[repository]
+            subfieldA.text = a_field_text
             datafield.append(subfieldA)
             # Create subfield $u
             subfieldU = etree.Element('subfield', code='u')
