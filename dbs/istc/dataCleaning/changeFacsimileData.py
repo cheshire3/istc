@@ -27,13 +27,13 @@ from __future__ import with_statement
 
 import sys
 import os
+import re
 import time
 import csv
 
-from optparse import OptionParser, OptionGroup
+from collections import defaultdict
 
 from lxml import etree
-
 
 from cheshire3.baseObjects import Session
 from cheshire3.document import StringDocument
@@ -67,34 +67,59 @@ def bsbDictFromXML(filepath):
     """Construct and return a dictionary of BSB no. to URI from XML file at filepath."""
     with open(filepath, 'r') as fh:
         xdoc = etree.parse(fh)
-    bsbDict = {}
+    bsbDict = defaultdict(list)
     incunab = xdoc.xpath('//incunabulum')
     for entry in incunab:
         BSBno = entry.xpath('./bsb-ink')[0].text
         if entry.xpath('./dig-art')[0].text == 'ZEND' or \
                entry.xpath('./dig-art')[0].text == 'Einblattdruck':
-            uris = bsbDict.setdefault(BSBno, [])
-            uris.append('http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno)
+            bsbDict[BSBno].append(
+                'http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno
+            )
     return bsbDict
 
 
 def bsbDictFromText(filelike):
     """Construct and return dictionary of BSB no. to URI from text in file-like object."""
-    bsbDict = {}
+    bsbDict = defaultdict(list)
     for line in filelike.readlines():
         line = line.strip()
-        try:
-            foo, BSBno, uri = line.split()
-        except ValueError:
-            continue
+        if '$a' in line and '$u' in line:
+            istcNo, a_field, uri = re.split('\$[a|u]', line)
+            istcNo = istcNo.strip().split()[0]
+            for codec in ['ascii', 'utf-8', 'latin1', 'utf-16']:
+                try:
+                    bsbDict[istcNo].append(
+                        (a_field.decode(codec).strip(),
+                         uri.strip()
+                         )
+                    )
+                except UnicodeDecodeError:
+                    continue
+                else:
+                    break
+            else:
+                bsbDict[istcNo].append(
+                    (a_field.decode('ascii', 'xmlcharreplace').strip(),
+                     uri.strip()
+                     )
+                )
         else:
-            uris = bsbDict.setdefault(BSBno, [])
-            uris.append(uri)
+            try:
+                foo, BSBno, uri = line.split()
+            except ValueError:
+                continue
+            else:
+                bsbDict[BSBno].append(uri)
     return bsbDict
 
 
 def bsbDictFromTextFile(filepath):
-    """Construct and return dictionary of BSB no. to URI from text file at filepath."""
+    """Construct and return dict from text file at filepath.
+
+    Construct and return dictionary of BSB no. to URI from text file at
+    filepath.
+    """
     with open(filepath, 'r') as fh:
         bsbDict = bsbDictFromText(fh)
     return bsbDict
@@ -125,7 +150,7 @@ def stripFacsimileNodes(tree, repository):
 # Functions / Method for main operations
 def strip(args):
     """Process files to remove 530 tags with the key words in them."""
-    if args.strip is not None:
+    if args.strip:
         repository = args.strip
     else:
         repository = args.replace
@@ -145,7 +170,7 @@ def strip(args):
 
 
 def insertSingle(args, fn, bsbDict):
-    if args.insert is not None:
+    if args.insert:
         repository = args.insert
     else:
         repository = args.replace
@@ -182,11 +207,15 @@ def insertSingle(args, fn, bsbDict):
         # new 530 field after final 510 field (i.e. before any existing
         # 530 fields.)
         for url in reversed(urls):
+            if isinstance(url, tuple) and len(url) == 2:
+                a_field_text, url = url
+            else:
+                a_field_text = aFieldStrings[repository]
             # Create new 530 node
             datafield = etree.Element('datafield', tag='530', ind1='0', ind2='0')
             # Create subfield $a
             subfieldA = etree.Element('subfield', code='a')
-            subfieldA.text = aFieldStrings[repository]
+            subfieldA.text = a_field_text
             datafield.append(subfieldA)
             # Create subfield $u
             subfieldU = etree.Element('subfield', code='u')
@@ -204,7 +233,7 @@ def insertSingle(args, fn, bsbDict):
         # Write output file
         outpath = os.path.join(args.outdd, fn)
         with open(outpath, 'w') as outfh:
-            outfh.write(doc2.get_raw(session))
+            outfh.write(doc2.get_raw(session).rstrip())
         print outpath, "inserted"
 
 
@@ -212,7 +241,7 @@ def insert(args):
     """Process files to add the new ones from the datafile."""
 
     # Parse new data file
-    newDataPath = os.path.join(dfp, 'dataCleaning', args[0])
+    newDataPath = os.path.join(dfp, 'dataCleaning', args.transform[0])
     if newDataPath.endswith('.xml'):
         bsbDict = bsbDictFromXML(newDataPath)
     elif newDataPath.endswith('.txt'):
@@ -236,11 +265,11 @@ def main(argv=None):
 
     if args.test:
         test()
-    elif args.strip is not None:
+    elif args.strip:
         strip(args)
-    elif args.insert is not None:
+    elif args.insert:
         insert(args)
-    elif args.replace is not None:
+    elif args.replace:
         strip(args)
         args.indd = args.outdd
         insert(args)
