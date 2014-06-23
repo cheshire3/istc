@@ -233,7 +233,7 @@ def insertSingle(args, fn, bsbDict):
         # Write output file
         outpath = os.path.join(args.outdd, fn)
         with open(outpath, 'w') as outfh:
-            outfh.write(doc2.get_raw(session))
+            outfh.write(doc2.get_raw(session).rstrip())
         print outpath, "inserted"
 
 
