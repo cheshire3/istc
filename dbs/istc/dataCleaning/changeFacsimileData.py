@@ -30,7 +30,7 @@ import os
 import time
 import csv
 
-from optparse import OptionParser, OptionGroup
+from collections import defaultdict
 
 from lxml import etree
 
@@ -67,20 +67,21 @@ def bsbDictFromXML(filepath):
     """Construct and return a dictionary of BSB no. to URI from XML file at filepath."""
     with open(filepath, 'r') as fh:
         xdoc = etree.parse(fh)
-    bsbDict = {}
+    bsbDict = defaultdict(list)
     incunab = xdoc.xpath('//incunabulum')
     for entry in incunab:
         BSBno = entry.xpath('./bsb-ink')[0].text
         if entry.xpath('./dig-art')[0].text == 'ZEND' or \
                entry.xpath('./dig-art')[0].text == 'Einblattdruck':
-            uris = bsbDict.setdefault(BSBno, [])
-            uris.append('http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno)
+            bsbDict[BSBno].append(
+                'http://mdzx.bib-bvb.de/bsbink/Ausgabe_%s.html' % BSBno
+            )
     return bsbDict
 
 
 def bsbDictFromText(filelike):
     """Construct and return dictionary of BSB no. to URI from text in file-like object."""
-    bsbDict = {}
+    bsbDict = defaultdict(list)
     for line in filelike.readlines():
         line = line.strip()
         try:
@@ -88,8 +89,7 @@ def bsbDictFromText(filelike):
         except ValueError:
             continue
         else:
-            uris = bsbDict.setdefault(BSBno, [])
-            uris.append(uri)
+            bsbDict[BSBno].append(uri)
     return bsbDict
 
 
