@@ -125,7 +125,7 @@ def stripFacsimileNodes(tree, repository):
 # Functions / Method for main operations
 def strip(args):
     """Process files to remove 530 tags with the key words in them."""
-    if args.strip is not None:
+    if args.strip:
         repository = args.strip
     else:
         repository = args.replace
@@ -145,7 +145,7 @@ def strip(args):
 
 
 def insertSingle(args, fn, bsbDict):
-    if args.insert is not None:
+    if args.insert:
         repository = args.insert
     else:
         repository = args.replace
@@ -212,7 +212,7 @@ def insert(args):
     """Process files to add the new ones from the datafile."""
 
     # Parse new data file
-    newDataPath = os.path.join(dfp, 'dataCleaning', args[0])
+    newDataPath = os.path.join(dfp, 'dataCleaning', args.transform[0])
     if newDataPath.endswith('.xml'):
         bsbDict = bsbDictFromXML(newDataPath)
     elif newDataPath.endswith('.txt'):
@@ -236,11 +236,11 @@ def main(argv=None):
 
     if args.test:
         test()
-    elif args.strip is not None:
+    elif args.strip:
         strip(args)
-    elif args.insert is not None:
+    elif args.insert:
         insert(args)
-    elif args.replace is not None:
+    elif args.replace:
         strip(args)
         args.indd = args.outdd
         insert(args)
